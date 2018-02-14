@@ -6,7 +6,7 @@
   "scripts": {
     "test": "mocha --recursive",
     "lint": "eslint .",
-    "coverage": "nyc -r html mocha",
+    "coverage": "nyc mocha --recursive",
     "start": "nodemon",
     "build": "sh bin/setup.sh && sh bin/tools.sh"
   },
