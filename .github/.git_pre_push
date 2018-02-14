@@ -1,0 +1,15 @@
+#!/bin/bash
+npm run coverage && nyc check-coverage
+TEST_STATUS=$?
+npm run lint
+LINT_STATUS=$?
+STATUS=$(($TEST_STATUS+$LINT_STATUS))
+UNSTAGED_CHANGES=$(git diff)
+STAGED_CHANGES=$(git diff --cached)
+
+if [ -n "$UNSTAGED_CHANGES" ] || [ -n "$STAGED_CHANGES" ] || [ $STATUS -ne 0 ] ; then
+  echo " Check your errors (i.e. linter,unstaged changes,test coverage) "
+   exit 1;
+fi
+
+exit 0

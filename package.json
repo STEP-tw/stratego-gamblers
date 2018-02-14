@@ -1,0 +1,42 @@
+{
+  "name": "stratego-gamblers",
+  "version": "0.0.1",
+  "description": "a strategy game",
+  "main": "server.js",
+  "scripts": {
+    "test": "mocha --recursive",
+    "lint": "eslint .",
+    "coverage": "nyc -r html mocha",
+    "start": "nodemon",
+    "build": "sh bin/setup.sh && sh bin/tools.sh"
+  },
+  "nodemonConfig": {
+    "ignore": [
+      "test/*",
+      "docs/*",
+      "public/*"
+    ],
+    "watch": "src/*",
+    "delay": "2500"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/STEP-tw/stratego-gamblers.git"
+  },
+  "keywords": [],
+  "author": "gamblers",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/STEP-tw/stratego-gamblers/issues"
+  },
+  "homepage": "https://github.com/STEP-tw/stratego-gamblers#readme",
+  "dependencies": {
+    "cookie-parser": "^1.4.3",
+    "express": "^4.16.2",
+    "morgan": "^1.9.0"
+  },
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "supertest": "^3.0.0"
+  }
+}
