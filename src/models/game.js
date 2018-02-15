@@ -1,6 +1,7 @@
 const Battlefield = require('./battlefield.js');
 const Pieces=require('./pieces.js');
 let team = 'red';
+let playerId = 0;
 class Game {
   constructor(){
     this.players = [];
@@ -11,7 +12,7 @@ class Game {
   setBattlefieldFor(playerId,placedArmyPos){
     this.battlefield.setField(this.pieces,placedArmyPos);
   }
-  createPiecesFor(gameType='quickGame'){
+  createPiecesFor(gameType){
     this.pieces.loadPieces(gameType,team);
   }
 }

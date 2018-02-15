@@ -14,4 +14,13 @@ describe('function', () => {
         .end(done);
     });
   });
+  describe('POST /setup/0',()=>{
+    it("resonds with home page", done => {    
+      request(app)
+        .post('/setup/0')
+        .send({'0_0':'F'})
+        .expect(200)
+        .end(done);
+    });      
+  });
 });

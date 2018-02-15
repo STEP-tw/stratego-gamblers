@@ -6,11 +6,12 @@ class Battlefield {
   setField(pieces,placedArmyPos){
     let allPos = Object.keys(placedArmyPos);
     allPos.forEach(pos=>{
+      let pieceId = placedArmyPos[pos];
       let piece = pieces.getPiece(pieceId);
-      this.addPiece(piece,pos,placedArmyPos[pos]);
+      this.addPiece(piece,pos);
     });
   }
-  addPiece(piece,pos,pieceId){
+  addPiece(piece,pos){
     let position={};
     position[pos]=piece;
     this.placedPositions.push(position);
