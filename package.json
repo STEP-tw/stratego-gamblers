@@ -7,7 +7,7 @@
     "test": "mocha --recursive",
     "lint": "eslint .",
     "coverage": "nyc -r html mocha --recursive",
-    "start": "nodemon",
+    "start": "node server.js",
     "build": "sh bin/setup.sh && sh bin/tools.sh"
   },
   "nodemonConfig": {
