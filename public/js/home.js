@@ -1,12 +1,14 @@
-const getGameCreationForm=function () {
-  return `<form  action="create_game" method="post">
-    Name: <input type="text" name="name" ><br>
-    <button type="submit" name="button">CREATE GAME</button>
-  </form>`
+const getInputBox=function (label,name) {
+  return `${label}: <input type="text" name=${name} ><br>`;
+};
+
+const getButton=function (type, name, text, cb = null) {
+  return `<button type=${type} name=${name} onclick=${cb}()>${text}</button>`;
 };
 
 const showCreateGameForm=function () {
   let container=document.getElementById('container');
-  let createForm = getGameCreationForm()
-  container.innerHTML = createForm;
+  let inputBox = getInputBox("Name","name");
+  let gameCreationButton = getButton("button", "name", "CREATE GAME");
+  container.innerHTML = `${inputBox}<br>${gameCreationButton}`;
 };
