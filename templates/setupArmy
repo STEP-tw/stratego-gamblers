@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Setup Army</title>
+  <link rel="stylesheet" href="../public/css/setupArmy.css">
+  <script src="../public/js/drawGrids.js" charset="utf-8"></script>
+  <script src="../public/js/setupRedArmy.js" charset="utf-8"></script>
+</head>
+
+<body>
+  <header>
+      <h1>DEPLOY ARMY ON BATTLEFIELD</h1>
+    <span class="playerDetails">
+      {{playerName}}
+    </span>
+  </header>
+  <main>
+    <div class="container">
+      <table id="grid">
+      </table>
+      <section>
+      </section>
+    </div>
+    <div class="armyBase">
+      <table class="baseGrid">
+      </table>
+    </div>
+  </main>
+</body>
+</html>
