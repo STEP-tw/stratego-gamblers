@@ -6,7 +6,7 @@
   "scripts": {
     "test": "mocha --recursive",
     "lint": "eslint .",
-    "coverage": "nyc mocha --recursive",
+    "coverage": "nyc -r html mocha --recursive",
     "start": "node server.js",
     "build": "sh bin/setup.sh && sh bin/tools.sh"
   },
@@ -16,7 +16,7 @@
       "docs/*",
       "public/*"
     ],
-    "watch": "src/*",
+    "watch": ["src/*","app.js","server.js"],
     "delay": "2500"
   },
   "repository": {

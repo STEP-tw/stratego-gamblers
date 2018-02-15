@@ -1,19 +1,31 @@
+const Battlefield = require('./battlefield.js');
 const Player = require('./player.js');
+const Pieces=require('./pieces.js');
+let team = 'red';
+let currentPlayerId = 0;
 class Game {
-  constructor(id) {
+  constructor(id){
     this.id=id;
-    this.playerId=0;
-    this.players=[];
+    this.players = [];
+    this.currentPlayerId = 0;
+    this.battlefield = new Battlefield();
+    this.pieces = new Pieces();
   }
   getId(){
     return this.id;
   }
   addPlayer(playerName){
-    let id=this.playerId;
+    let id=this.currentPlayerId;
     let player=new Player(playerName,id);
     this.players.push(player);
-    this.playerId++;
+    this.currentPlayerId++;
     return player;
   }
+  setBattlefieldFor(currentPlayerId,placedArmyPos){
+    this.battlefield.setField(this.pieces,placedArmyPos);
+  }
+  createPiecesFor(gameType){
+    this.pieces.loadPieces(gameType,team);
+  }
 }
-module.exports=Game;
+module.exports =Game;
