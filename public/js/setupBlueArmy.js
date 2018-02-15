@@ -1,3 +1,3 @@
 window.onload =()=>{
-  drawGrids(4,10,90);
+  drawGrid(4,10,90);
 };

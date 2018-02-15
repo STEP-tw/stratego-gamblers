@@ -1,5 +1,6 @@
-const drawGrids=function(numberOfRows,numberOfCols,initialID) {
-  let grid=document.getElementById("grid");
+const drawGrid=function(containerId,numberOfRows,numberOfCols,initialID) {
+  console.log(containerId);
+  let grid=document.getElementById(containerId);
   for (let rows = 0; rows < numberOfRows; rows++) {
     let row=document.createElement("tr");
     for (let cols = 0; cols < numberOfCols; cols++) {
