@@ -3,7 +3,7 @@ const Battlefield=require('../../src/models/battlefield.js');
 
 describe('Battlefield',()=>{
   describe('#addPiece',()=>{
-    it('',()=>{
+    it('should add piece into battlefield',()=>{
       let battlefield = new Battlefield();
       let piece = {id:'F',name:'Flag',rank:0,team:'red'}
       battlefield.addPiece(piece,'0_0','F');
