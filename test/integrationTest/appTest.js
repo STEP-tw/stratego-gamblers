@@ -6,7 +6,6 @@ describe('module', () => {
   describe('function', () => {
 
     it('should return ', () => {
-      let;
     });
   });
 });
