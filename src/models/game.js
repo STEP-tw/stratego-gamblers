@@ -9,7 +9,7 @@ class Game {
     return this.id;
   }
   addPlayer(playerName){
-    let id=this.playerId
+    let id=this.playerId;
     let player=new Player(playerName,id);
     this.players.push(player);
     this.playerId++;

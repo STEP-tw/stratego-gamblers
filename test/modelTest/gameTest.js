@@ -15,7 +15,7 @@ describe("Game", () => {
   });
   describe("Game.addPlayer()", () => {
     it("Game.addPlayer() should return game id", () => {
-      let expectedOutput = {name: "Ravi", id: 0}
+      let expectedOutput = {name: "Ravi", id: 0};
       let actual=game.addPlayer("Ravi");
       assert.deepEqual(actual, expectedOutput);
     });
