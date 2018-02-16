@@ -3,10 +3,10 @@ const request = require('supertest');
 const app = require('../../app.js');
 
 describe('app', () => {
-  describe("GET /home.html", () => {
+  describe("GET /index.html", () => {
     it("responds with home page", done => {
       request(app)
-        .get("/home.html")
+        .get("/index.html")
         .expect(200)
         .expect(/STRATREGO/)
         .expect(/JOIN GAME/)
