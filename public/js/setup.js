@@ -99,3 +99,30 @@ const appendPiecesToBase = (imgSrcDirectory) => {
     appendImage(element, index, imgSrcDirectory);
   });
 };
+
+const notifyPlayer=(message)=>{
+  document.getElementById("readyStatus").innerText=message;
+};
+
+const extractPieceID=(id)=>{
+  if(id=='10'){
+    return id;
+  }
+  return id[0];
+};
+
+const fetchBattleField=()=>{
+  let fetchedDetails="";
+  let battleField = document.getElementById("grid");
+  grid.childNodes.forEach(function(row){
+    row.childNodes.forEach(function(cell){
+      if(!cell.hasChildNodes()) {
+        return;
+      }
+      let pieceID = extractPieceID(cell.childNodes[0].id);
+      fetchedDetails+=`${cell.id}=${pieceID}&`;
+    });
+  });
+  console.log(fetchedDetails);
+  return fetchedDetails;
+};

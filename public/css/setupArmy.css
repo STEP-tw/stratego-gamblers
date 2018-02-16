@@ -2,7 +2,7 @@ header >.heading {
   float: left;
   margin: 1% 30%;
   text-align: center;
-  background-color: grey;
+  background-color: gray;
   border: 1px solid black;
 }
 
@@ -25,7 +25,7 @@ header >.heading {
 
 section {
   position: fixed;
-  margin-top: -17%;
+  margin-top: -15%;
   margin-left: 850px;
   width: 300px;
   height: 240px;
@@ -45,4 +45,28 @@ td{
 
 main {
   max-width: 960px;
+}
+
+button {
+  cursor: pointer;
+  margin-top: 50%;
+  margin-left: 108%;
+  background-color: gray;
+  height: 45px;
+  width: 100px;
+  font-size: 20px;
+}
+
+.status{
+  position: fixed;
+  margin-top: 28%;
+  margin-left: 62%;
+  height: 100px;
+  width: 200px;
+  text-align: center;
+  border: 1px solid black;
+}
+
+#readyStatus {
+  font-size: 25px;
 }
