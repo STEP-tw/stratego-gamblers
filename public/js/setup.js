@@ -143,8 +143,12 @@ const fetchBattleField = () => {
       fetchedDetails += fetchCellId(cell);
     });
   });
-  console.log(fetchedDetails.split("&").length-1);
   return fetchedDetails;
+};
+
+const hasPlacedAllPieces=(pieceAndLocation)=>{
+  let numberOfPlayingPiece =pieceAndLocation.split('&').length-1;
+  return numberOfPlayingPiece!=10;
 };
 
 const addEventListener = (listner, eventToAdd, elementID) => {

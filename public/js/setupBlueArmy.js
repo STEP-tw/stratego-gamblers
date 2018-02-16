@@ -11,6 +11,9 @@ const ready = () => {
   const onFail = ()=>{
     notifyPlayer("setup full army");
   };
+  if(hasPlacedAllPieces(postData)){
+    return notifyPlayer("setup full army");
+  }
   doXhr('/setup/player/1', 'POST', reqListener, postData,onFail);
 };
 
