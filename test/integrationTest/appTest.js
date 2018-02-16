@@ -67,6 +67,15 @@ describe('app', () => {
         .end(done);
     });
   });
+  describe('GET /isOpponentReady', () => {
+    it("returns true if opponent is ready", done => {
+      request(app)
+        .get('/isOpponentReady')
+        .expect(200)
+        .expect("false")
+        .end(done);
+    });
+  });
   describe('GET /joinGame', () => {
     it("redirect valid joining player to battlefield", done => {
       request(app)
@@ -84,6 +93,15 @@ describe('app', () => {
         .send("name=ankur&gameid=2")
         .expect(302)
         .expect("Location","/")
+        .end(done);
+    });
+  });
+  describe('GET /isOpponentReady', () => {
+    it("returns true if opponent is ready", done => {
+      request(app)
+        .get('/isOpponentReady')
+        .expect(200)
+        .expect("true")
         .end(done);
     });
   });

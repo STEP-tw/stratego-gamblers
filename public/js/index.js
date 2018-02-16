@@ -35,3 +35,20 @@ const reqGameId = function() {
     createRequest(showGameId, `/createGame/${name}`, null, "GET");
   }
 };
+
+const redirectToSetupPage = function () {
+  if (this.responseText == "true") {
+    window.location.href="/setupRedArmy";
+    return;
+  }
+  getGameStatus();
+};
+
+const getGameStatus=function () {
+  createRequest(redirectToSetupPage,"/isOpponentReady");
+};
+
+const startGame = function() {
+  reqGameId();
+  setInterval(getGameStatus,1000);
+};

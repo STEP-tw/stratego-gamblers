@@ -19,7 +19,7 @@ const setBattlefield = function(req,res,next){
   game.setBattlefieldFor(playerId,placedPositions);
   console.log(game.battlefield);
   if(game.hasAllPlyingPieces()){
-    game.updateStatus(); 
+    game.updateStatus();
     next();
     return;
   }
@@ -32,6 +32,11 @@ const checkForReady = function(req,res,next){
     return;
   }
   res.send('wait for opponent');
+};
+
+const areBothPlayersready = function (req,res) {
+  let game = req.app.game;
+  res.send(game.areBothPlayersready());
 };
 
 const setupRedArmy=function(req,res){
@@ -57,4 +62,5 @@ app.post('/setup/player/:playerId',setBattlefield);
 app.use('/setup/player/:playerId',checkForReady);
 app.get('/setupRedArmy',setupRedArmy);
 app.get('/setupBlueArmy', setupBlueArmy);
+app.get('/isOpponentReady',areBothPlayersready);
 module.exports=app;

@@ -24,8 +24,12 @@ class Game {
     this.currentPlayerId++;
     return player;
   }
+  areBothPlayersready(){
+    let numberOfPlayers = this.players.length;
+    return numberOfPlayers == 2;
+  }
   setBattlefieldFor(currentPlayerId,placedArmyPos){
-    this.createPiecesFor(team); 
+    this.createPiecesFor(team);
     this.battlefield.setField(this.pieces,placedArmyPos);
   }
   createPiecesFor(){
