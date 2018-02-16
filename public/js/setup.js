@@ -1,9 +1,11 @@
-const doXhr = function(url, method, reqListener, data) {
+const doXhr = function(url, method, reqListener, data,onFailed) {
   let xhr = new XMLHttpRequest();
   xhr.open(method, url);
   xhr.onreadystatechange = function() {
-    if (this.readyState == 4 && this.status == 200) {
+    if (this.status == 200) {
       reqListener.call(this);
+    }else{
+      onFailed();
     }
   };
   if (method == 'POST') {
@@ -125,17 +127,29 @@ const extractPieceID = (id) => {
   return id[0];
 };
 
+const fetchCellId = (cell)=>{
+  if (!cell.hasChildNodes()) {
+    return "";
+  }
+  let pieceID = extractPieceID(cell.childNodes[0].id);
+  return `${cell.id}=${pieceID}&`;
+};
+
 const fetchBattleField = () => {
   let fetchedDetails = "";
   let battleField = document.getElementById("grid");
   grid.childNodes.forEach(function(row) {
     row.childNodes.forEach(function(cell) {
-      if (!cell.hasChildNodes()) {
-        return;
-      }
-      let pieceID = extractPieceID(cell.childNodes[0].id);
-      fetchedDetails += `${cell.id}=${pieceID}&`;
+      fetchedDetails += fetchCellId(cell);
     });
   });
+  console.log(fetchedDetails.split("&").length-1);
   return fetchedDetails;
+};
+
+const addEventListener = (listner, eventToAdd, elementID) => {
+  let element = document.getElementById(elementID);
+  if (element) {
+    return element.addEventListener(eventToAdd, listner);
+  }
 };
