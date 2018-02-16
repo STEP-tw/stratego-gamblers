@@ -6,7 +6,7 @@ class AddPlayerHandler {
   execute(req, res) {
     this.id++;
     let game = new Game(this.id);
-    let userName = req.body.name;
+    let userName = req.params.name;
     game.addPlayer(userName);
     req.app.game = game;
     res.send(`${this.id}`);

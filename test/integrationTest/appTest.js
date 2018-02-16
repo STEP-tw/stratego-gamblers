@@ -52,11 +52,10 @@ describe('app', () => {
         .end(done);
     });
   });
-  describe('POST /gameId', () => {
+  describe('GET /gameId', () => {
     it("responds with sharing key", done => {
       request(app)
-        .post('/gameId')
-        .send("name=ravi")
+        .get('/gameId/ravi')
         .expect(200)
         .expect("1")
         .expect("Content-Type", "text/html; charset=utf-8")

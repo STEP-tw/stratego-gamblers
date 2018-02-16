@@ -20,7 +20,7 @@ const showGameId=function () {
 
 const reqGameId=function () {
   let name=document.getElementsByName("name")[0].value;
-  createRequest(showGameId,"/gameId", `name=${name}`,"POST");
+  createRequest(showGameId,`/gameId/${name}`, null ,"GET");
 };
 
 const getButton = function(type, name, text) {
