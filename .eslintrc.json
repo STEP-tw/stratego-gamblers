@@ -14,7 +14,7 @@
     "no-dupe-args": 2,
     "no-extra-semi": 2,
     "no-lone-blocks": 2,
-    "no-empty-function": 2,
+    "no-empty-function": 0,
     "no-multi-spaces": 2,
     "no-return-assign": 2,
     "no-self-assign": 2,

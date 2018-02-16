@@ -1,7 +1,5 @@
-const CompositeHandler = require('./CompositeHandler.js');
-class AddPlayerHandler extends CompositeHandler {
-  constructor(action) {
-    super();
+class AddPlayerHandler {
+  constructor() {
   }
   execute(req, res) {
     let userName = req.body.name;
@@ -9,6 +7,9 @@ class AddPlayerHandler extends CompositeHandler {
     game.addPlayer(userName);
     let id = userName;
     res.send(id);
+  }
+  getRequestHandler(){
+    return this.execute.bind(this);
   }
 }
 

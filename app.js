@@ -3,7 +3,6 @@ const cookieParser =require('cookie-parser');
 const Game=require('./src/models/game.js');
 const app = express();
 const log = require("./src/handlers/logger.js").log;
-const CompositeHandler = require('./src/handlers/compositeHandler.js');
 const AddPlayerHandler = require('./src/handlers/addPlayerHandler.js');
 
 let game = new Game();
