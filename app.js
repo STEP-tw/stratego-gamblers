@@ -3,6 +3,7 @@ const cookieParser =require('cookie-parser');
 const Game=require('./src/models/game.js');
 const app = express();
 const log = require("./src/handlers/logger.js").log;
+
 let game = new Game();
 
 const setBattlefield = function(req,res,next){

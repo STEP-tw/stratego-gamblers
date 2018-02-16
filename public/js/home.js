@@ -9,6 +9,7 @@ let createRequest = function(callback, url, reqBody = null, method = "GET") {
 const getInputBox = function(label, name) {
   return `${label}: <input type="text" name=${name} ><br>`;
 };
+
 const showGameId=function () {
   return;
 };

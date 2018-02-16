@@ -2,7 +2,7 @@ const assert = require('chai').assert;
 const request = require('supertest');
 const app = require('../../app.js');
 
-describe('function', () => {
+describe('app', () => {
   describe("GET /home.html", () => {
     it("resonds with home page", done => {
       request(app)
@@ -32,6 +32,6 @@ describe('function', () => {
         .expect(200)
         .expect(/show battle field/)
         .end(done);
-    });      
+    });
   });
 });
