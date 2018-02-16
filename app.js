@@ -4,7 +4,12 @@ const cookieParser =require('cookie-parser');
 const Game=require('./src/models/game.js');
 const app = express();
 const log = require("./src/handlers/logger.js").log;
+
+const AddPlayerHandler = require('./src/handlers/addPlayerHandler.js');
+
+
 app.fs=fs;
+
 let game = new Game();
 
 const setBattlefield = function(req,res,next){
@@ -35,11 +40,14 @@ const setupBlueArmy = function (req, res) {
   res.send(setupTemp);
 };
 
+app.game = new Game("ravi");
 app.use(log());
 app.use(express.urlencoded({extended:false}));
 app.use(cookieParser());
 
 app.use(express.static('public'));
+app.post("/gameId",new AddPlayerHandler().getRequestHandler());
+app.post('/setup/:playerId',setBattlefield);
 app.post('/setup/player/:playerId',setBattlefield);
 app.use('/setup/player/',checkForReady);
 app.get('/setupRedArmy',setupRedArmy);
