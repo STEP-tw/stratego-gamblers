@@ -1,3 +1,19 @@
+const doXhr = function(url, method, reqListener, data,onFailed) {
+  let xhr = new XMLHttpRequest();
+  xhr.open(method, url);
+  xhr.onreadystatechange = function() {
+    if (this.status == 200) {
+      reqListener.call(this);
+    }else{
+      onFailed();
+    }
+  };
+  if (method == 'POST') {
+    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+  }
+  data ? xhr.send(data) : xhr.send();
+};
+
 const drag = (event) => {
   event.dataTransfer.setData("imgId", event.target.id);
 };
@@ -98,4 +114,46 @@ const appendPiecesToBase = (imgSrcDirectory) => {
   firstRow.forEach((element, index) => {
     appendImage(element, index, imgSrcDirectory);
   });
+};
+
+const notifyPlayer = (message) => {
+  document.getElementById("readyStatus").innerText = message;
+};
+
+const extractPieceID = (id) => {
+  if (id == '10') {
+    return id;
+  }
+  return id[0];
+};
+
+const fetchCellId = (cell)=>{
+  if (!cell.hasChildNodes()) {
+    return "";
+  }
+  let pieceID = extractPieceID(cell.childNodes[0].id);
+  return `${cell.id}=${pieceID}&`;
+};
+
+const fetchBattleField = () => {
+  let fetchedDetails = "";
+  let battleField = document.getElementById("grid");
+  grid.childNodes.forEach(function(row) {
+    row.childNodes.forEach(function(cell) {
+      fetchedDetails += fetchCellId(cell);
+    });
+  });
+  return fetchedDetails;
+};
+
+const hasPlacedAllPieces=(pieceAndLocation)=>{
+  let numberOfPlayingPiece =pieceAndLocation.split('&').length-1;
+  return numberOfPlayingPiece!=10;
+};
+
+const addEventListener = (listner, eventToAdd, elementID) => {
+  let element = document.getElementById(elementID);
+  if (element) {
+    return element.addEventListener(eventToAdd, listner);
+  }
 };
