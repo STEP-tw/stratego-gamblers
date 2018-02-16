@@ -26,7 +26,7 @@ describe("Game", () => {
       game.createPiecesFor('quickGame');
       game.setBattlefieldFor(0,{'0_0':'F'});
       let actual = game.battlefield;
-      let pieces = [{"0_0": {id:'F',name:'Flag',rank:0,team:'red'}}];
+      let pieces = {"0_0": {id:'F',name:'Flag',rank:0,team:'red'}};
       let expected = {"lakeArea": [],"placedPositions": pieces};
       assert.deepEqual(expected,actual);
     });

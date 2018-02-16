@@ -29,8 +29,8 @@ describe('app', () => {
       request(app)
         .post('/setup/player/1')
         .send('0_0=F')
-        .expect(200)
-        .expect(/show battle field/)
+        .expect(302)
+        .expect('location','/battlefield.html')
         .end(done);
     });
   });
@@ -52,7 +52,7 @@ describe('app', () => {
         .end(done);
     });
   });
-  describe('POST /gameId', () => {
+  describe.skip('POST /gameId', () => {
     it("responds with sharing key", done => {
       request(app)
         .post('/gameId')

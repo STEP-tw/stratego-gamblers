@@ -16,13 +16,15 @@ const setBattlefield = function(req,res,next){
   let playerId = req.params.playerId;
   let placedPositions = req.body;
   game.setBattlefieldFor(playerId,placedPositions);
-  game.updateStatus();
+  console.log(game.battlefield);
+    
+  game.updateStatus(); 
   next();
 };
 
 const checkForReady = function(req,res,next){
   if(game.readyStatus){
-    res.send('show battle field');
+    res.redirect('/battlefield.html');
     return;
   }
   res.send('wait for opponent');
@@ -40,16 +42,15 @@ const setupBlueArmy = function (req, res) {
   res.send(setupTemp);
 };
 
-app.game = new Game("ravi");
+
 app.use(log());
 app.use(express.urlencoded({extended:false}));
 app.use(cookieParser());
 
 app.use(express.static('public'));
 app.post("/gameId",new AddPlayerHandler().getRequestHandler());
-app.post('/setup/:playerId',setBattlefield);
 app.post('/setup/player/:playerId',setBattlefield);
-app.use('/setup/player/',checkForReady);
+app.use('/setup/player/:playerId',checkForReady);
 app.get('/setupRedArmy',setupRedArmy);
 app.get('/setupBlueArmy', setupBlueArmy);
 module.exports=app;

@@ -12,6 +12,7 @@ class Game {
     this.pieces = new Pieces();
     this.playerCounts = 0;
     this.readyStatus = false;
+    this.gameType = 'quickGame';
   }
   getId(){
     return this.id;
@@ -24,11 +25,11 @@ class Game {
     return player;
   }
   setBattlefieldFor(currentPlayerId,placedArmyPos){
-    this.createPiecesFor('quickGame',team);    
+    this.createPiecesFor(team); 
     this.battlefield.setField(this.pieces,placedArmyPos);
   }
-  createPiecesFor(gameType){
-    this.pieces.loadPieces(gameType,team);
+  createPiecesFor(){
+    this.pieces.loadPieces(this.gameType,team);
   }
   updateStatus(){
     this.playerCounts++;

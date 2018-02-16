@@ -1,6 +1,6 @@
 class Battlefield {
   constructor(){
-    this.placedPositions = [];
+    this.placedPositions = {};
     this.lakeArea = [];
   }
   setField(pieces,placedArmyPos){
@@ -12,13 +12,12 @@ class Battlefield {
     });
   }
   addPiece(piece,pos){
-    let position={};
-    position[pos]=piece;
-    this.placedPositions.push(position);
+    if(piece){
+      this.placedPositions[pos] = piece;
+    }
   }
   getPlacedPositions(){
     return this.placedPositions;
   }
-
 }
 module.exports = Battlefield;
