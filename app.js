@@ -45,7 +45,7 @@ app.use(express.urlencoded({extended:false}));
 app.use(cookieParser());
 
 app.use(express.static('public'));
-app.get("/gameId/:name",new CreateGameHandler().getRequestHandler());
+app.get("/createGame/:name",new CreateGameHandler().getRequestHandler());
 app.post('/setup/player/:playerId',setBattlefield);
 app.use('/setup/player/',checkForReady);
 app.get('/setupRedArmy',setupRedArmy);
