@@ -49,7 +49,7 @@ const drawGrid = function(containerId, numberOfRows, numberOfCols, initialID) {
   let grid = document.getElementById(containerId);
   for (let rows = 0; rows < numberOfRows; rows++) {
     let row = generateRow(initialID, numberOfCols);
-    initialID -= 20;
+    initialID -= 10;
     grid.appendChild(row);
   }
 };
