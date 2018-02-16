@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <title>Setup Army</title>
   <link rel="stylesheet" href="css/setupArmy.css">
-  <script src="js/drawGrids.js" charset="utf-8"></script>
+  <script src="js/setup.js" charset="utf-8"></script>
   <script src="js/setup{{team}}Army.js" charset="utf-8"></script>
 </head>
 
@@ -29,6 +29,10 @@
       <table id="baseGrid">
       </table>
     </div>
+    <div class="status">
+      <span id="readyStatus"></span>
+    </div>
+    <button  id="ready" type="button" name="button">READY</button>
   </main>
 </body>
 

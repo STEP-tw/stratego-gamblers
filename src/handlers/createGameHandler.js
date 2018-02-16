@@ -1,12 +1,15 @@
+const Game = require('../models/game.js');
 class AddPlayerHandler {
   constructor() {
+    this.id = 0;
   }
   execute(req, res) {
-    let userName = req.body.name;
-    let game = req.app.game;
+    this.id++;
+    let game = new Game(this.id);
+    let userName = req.params.name;
     game.addPlayer(userName);
-    let id = userName;
-    res.send(id);
+    req.app.game = game;
+    res.send(`${this.id}`);
   }
   getRequestHandler(){
     return this.execute.bind(this);

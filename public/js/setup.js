@@ -1,3 +1,17 @@
+const doXhr = function(url, method, reqListener, data) {
+  let xhr = new XMLHttpRequest();
+  xhr.open(method, url);
+  xhr.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      reqListener.call(this);
+    }
+  };
+  if (method == 'POST') {
+    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+  }
+  data ? xhr.send(data) : xhr.send();
+};
+
 const drag = (event) => {
   event.dataTransfer.setData("imgId", event.target.id);
 };
@@ -49,7 +63,7 @@ const drawGrid = function(containerId, numberOfRows, numberOfCols, initialID) {
   let grid = document.getElementById(containerId);
   for (let rows = 0; rows < numberOfRows; rows++) {
     let row = generateRow(initialID, numberOfCols);
-    initialID -= 20;
+    initialID -= 10;
     grid.appendChild(row);
   }
 };
@@ -98,4 +112,30 @@ const appendPiecesToBase = (imgSrcDirectory) => {
   firstRow.forEach((element, index) => {
     appendImage(element, index, imgSrcDirectory);
   });
+};
+
+const notifyPlayer = (message) => {
+  document.getElementById("readyStatus").innerText = message;
+};
+
+const extractPieceID = (id) => {
+  if (id == '10') {
+    return id;
+  }
+  return id[0];
+};
+
+const fetchBattleField = () => {
+  let fetchedDetails = "";
+  let battleField = document.getElementById("grid");
+  grid.childNodes.forEach(function(row) {
+    row.childNodes.forEach(function(cell) {
+      if (!cell.hasChildNodes()) {
+        return;
+      }
+      let pieceID = extractPieceID(cell.childNodes[0].id);
+      fetchedDetails += `${cell.id}=${pieceID}&`;
+    });
+  });
+  return fetchedDetails;
 };
