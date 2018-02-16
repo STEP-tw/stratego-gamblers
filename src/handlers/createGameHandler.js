@@ -1,5 +1,5 @@
 const Game = require('../models/game.js');
-class AddPlayerHandler {
+class CreateGameHandler {
   constructor() {
     this.id = 0;
   }
@@ -16,4 +16,4 @@ class AddPlayerHandler {
   }
 }
 
-module.exports = AddPlayerHandler;
+module.exports = CreateGameHandler;

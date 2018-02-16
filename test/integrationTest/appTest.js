@@ -8,8 +8,9 @@ describe('app', () => {
       request(app)
         .get("/index.html")
         .expect(200)
-        .expect(/STRATREGO/)
-        .expect(/JOIN GAME/)
+        .expect(/Stratego/)
+        .expect(/Enter Your Name/)
+        .expect(/START BATTLE/)
         .expect("Content-Type", "text/html; charset=UTF-8")
         .end(done);
     });

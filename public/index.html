@@ -1,26 +1,72 @@
 <!DOCTYPE html>
+
 <html>
-  <head>
-    <meta charset="utf-8">
-    <title>Stratego</title>
-    <script src="/js/home.js" charset="utf-8"></script>
-  </head>
-  <body>
-    <header>
-      <div id="red-marshal">
-        <img src="" alt="red-marshal">
-      </div>
-      <div id="title">
-        STRATREGO
-      </div>
-      <div id="blue-marshal">
-        <img src="" alt="blue-marshal">
-      </div>
-    </header>
-    <div id="container">
-      <button type="button" id="create-game" onclick="showCreateGameForm()">CREATE GAME</button><br>
-      <button type="button" id="join-game" onclick="showJoinGameForm()">JOIN GAME</button><br>
-      <button type="button" id="help">HELP</button>
+<head>
+  <title>Stratego
+  </title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script type="text/javascript" src="/js/index.js"></script>
+  <link rel="stylesheet" href="/css/index.css">
+  <link href="https://fonts.googleapis.com/css?family=Alegreya" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=UnifrakturCook:700" rel="stylesheet">
+</head>
+
+<body>
+  <header>
+    <h1>Stratego</h1>
+
+  </header>
+  <div class="row">
+    <div class="column-side">
     </div>
-  </body>
+    <div class="column-middle">
+
+      <div class="basic">
+        <div class="button">
+          <button id="redbutton" onclick="getCreateForm()">Create Game</button>
+        </div>
+        <div class="button">
+          <button id="bluebutton" onclick="getJoinForm()">Join Game</button>
+        </div>
+        <div class="button">
+          <button id="help">Help</button>
+        </div>
+      </div>
+
+      <div class="basic" id="create">
+        <div class="popup-form">
+          <div class="form-input">
+            <label for="name"> Enter Your Name</label>
+            <input type="text" id="name" name="name" required>
+          </div>
+          <div class="button">
+            <button id="redbutton" onclick="reqGameId()">Create Game</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="basic" id="join">
+        <form class="popup-form">
+          <div class="form-input">
+            <label for="name"> Enter Your Name</label>
+            <input type="text" id="name" name="name" required>
+          </div>
+          <div class="form-input">
+            <label for="name"> Enter Sharing Key</label>
+            <input type="text" id="gameid" name="gameid" required>
+          </div>
+          <div class="button">
+            <button id="redbutton">START BATTLE</button>
+          </div>
+        </form>
+      </div>
+
+    </div>
+    <div class="column-side">
+    </div>
+
+  </div>
+
+</body>
+
 </html>

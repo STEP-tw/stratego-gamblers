@@ -1,0 +1,37 @@
+let createRequest = function(callback, url, reqBody = null, method = "GET") {
+  let xhr = new XMLHttpRequest();
+  xhr.onload = callback;
+  xhr.open(method, url);
+  xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+  xhr.send(reqBody);
+};
+
+const getCreateForm = function() {
+  document.getElementById('create').style.display = 'block';
+};
+
+const getJoinForm = function() {
+  document.getElementById('join').style.display = 'block';
+};
+
+const showGameId = function() {
+  let sharingKey = this.responseText;
+  let createForm = document.getElementById("create");
+  createForm.style.display = "none";
+  let sharingKeyDiv = `<div class="alert" id="waiting-message">
+    <div>
+      <p>Your sharing key is {sharing-key}</p>
+      <p>Please wait for the opponent to join</p>
+    </div>
+  </div>`;
+  sharingKeyDiv = sharingKeyDiv.replace("{sharing-key}", sharingKey);
+  let container = document.getElementsByClassName("column-middle")[0];
+  container.innerHTML = sharingKeyDiv;
+};
+
+const reqGameId = function() {
+  let name = document.getElementsByName("name")[0].value;
+  if (name) {
+    createRequest(showGameId, `/createGame/${name}`, null, "GET");
+  }
+};
