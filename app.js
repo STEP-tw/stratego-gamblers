@@ -5,7 +5,7 @@ const Game=require('./src/models/game.js');
 const app = express();
 const log = require("./src/handlers/logger.js").log;
 
-const AddPlayerHandler = require('./src/handlers/addPlayerHandler.js');
+const CreateGameHandler = require('./src/handlers/createGameHandler.js');
 
 
 app.fs=fs;
@@ -40,13 +40,12 @@ const setupBlueArmy = function (req, res) {
   res.send(setupTemp);
 };
 
-app.game = new Game("ravi");
 app.use(log());
 app.use(express.urlencoded({extended:false}));
 app.use(cookieParser());
 
 app.use(express.static('public'));
-app.post("/gameId",new AddPlayerHandler().getRequestHandler());
+app.post("/gameId",new CreateGameHandler().getRequestHandler());
 app.post('/setup/:playerId',setBattlefield);
 app.post('/setup/player/:playerId',setBattlefield);
 app.use('/setup/player/',checkForReady);

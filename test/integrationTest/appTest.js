@@ -58,7 +58,7 @@ describe('app', () => {
         .post('/gameId')
         .send("name=ravi")
         .expect(200)
-        .expect(/ravi/)
+        .expect("1")
         .expect("Content-Type", "text/html; charset=utf-8")
         .end(done);
     });
