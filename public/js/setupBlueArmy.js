@@ -3,18 +3,19 @@ const drawBaseGrid = () => {
 };
 
 const ready = () => {
-  notifyPlayer("wait...let opponent setup his army");
   let postData = fetchBattleField();
   let reqListener = () => {
     return;
   };
   const onFail = ()=>{
-    notifyPlayer("setup full army");
+    return;
   };
-  if(hasPlacedAllPieces(postData)){
+  if(notDeployedFullArmy(postData)){
     return notifyPlayer("setup full army");
   }
   doXhr('/setup/player/1', 'POST', reqListener, postData,onFail);
+  notifyPlayer("wait...let opponent setup his army");
+  removeEventListener(ready, "click", "ready");
 };
 
 window.onload = () => {
