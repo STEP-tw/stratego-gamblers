@@ -34,4 +34,22 @@ describe('app', () => {
         .end(done);
     });
   });
+  describe('GET /setupRedArmy', () => {
+    it("should render setup page for player1", done => {
+      request(app)
+        .get('/setupRedArmy')
+        .expect(200)
+        .expect(/setupRedArmy.js/)
+        .end(done);
+    });
+  });
+  describe('GET /setupBlueArmy', () => {
+    it("should render setup page for player2", done => {
+      request(app)
+        .get('/setupBlueArmy')
+        .expect(200)
+        .expect(/setupBlueArmy.js/)
+        .end(done);
+    });
+  });
 });

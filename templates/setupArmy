@@ -4,9 +4,9 @@
 <head>
   <meta charset="utf-8">
   <title>Setup Army</title>
-  <link rel="stylesheet" href="../public/css/setupArmy.css">
-  <script src="../public/js/drawGrids.js" charset="utf-8"></script>
-  <script src="../public/js/setupRedArmy.js" charset="utf-8"></script>
+  <link rel="stylesheet" href="css/setupArmy.css">
+  <script src="js/drawGrids.js" charset="utf-8"></script>
+  <script src="js/setup{{team}}Army.js" charset="utf-8"></script>
 </head>
 
 <body>

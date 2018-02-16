@@ -83,7 +83,7 @@ const appendImage = (baseCell, index, imgSrcDirectory) => {
   let playingPieceId = getPlayingPieceId();
   let basePosition = document.getElementById(baseCell.id);
   let image = document.createElement("img");
-  let src = `../public/img/${imgSrcDirectory}/${playingPieces[index]}`;
+  let src = `img/${imgSrcDirectory}/${playingPieces[index]}`;
   let id = playingPieceId[index];
   let height = "60";
   let width = "60";
