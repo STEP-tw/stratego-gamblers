@@ -1,10 +1,9 @@
 const Game = require('../models/game.js');
 class CreateGameHandler {
   constructor() {
-    this.id = 0;
+    this.id = 1;
   }
   execute(req, res) {
-    this.id++;
     let game = new Game(this.id);
     let userName = req.params.name;
     game.addPlayer(userName);

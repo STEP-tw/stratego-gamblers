@@ -53,13 +53,33 @@ describe('app', () => {
         .end(done);
     });
   });
-  describe('GET /createGame', () => {
+  describe('GET /createGame/:name', () => {
     it("responds with sharing key", done => {
       request(app)
         .get('/createGame/ravi')
         .expect(200)
         .expect("1")
         .expect("Content-Type", "text/html; charset=utf-8")
+        .end(done);
+    });
+  });
+  describe('GET /joinGame', () => {
+    it("redirect valid joining player to battlefield", done => {
+      request(app)
+        .post('/joinGame')
+        .send("name=ankur&gameid=1")
+        .expect(302)
+        .expect("Location","/setupBlueArmy")
+        .end(done);
+    });
+  });
+  describe('GET /joinGame', () => {
+    it("redirect invalid joining player to home", done => {
+      request(app)
+        .post('/joinGame')
+        .send("name=ankur&gameid=2")
+        .expect(302)
+        .expect("Location","/")
         .end(done);
     });
   });
