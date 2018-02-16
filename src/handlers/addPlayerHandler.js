@@ -6,7 +6,7 @@ class AddPlayerHandler extends CompositeHandler {
   execute(req, res) {
     let userName = req.body.name;
     let game = req.app.game;
-    game.addUser(userName);
+    game.addPlayer(userName);
     let id = userName;
     res.send(id);
   }
