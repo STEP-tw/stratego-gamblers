@@ -38,6 +38,8 @@ section {
 }
 
 td{
+  text-align: center;
+  padding: 0%;
   width: 60px;
   height: 60px;
   border: 1px solid black;
