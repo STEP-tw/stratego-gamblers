@@ -1,10 +1,10 @@
-const doXhr = function(url, method, reqListener, data,onFailed) {
+const doXhr = function(url, method, reqListener, data, onFailed) {
   let xhr = new XMLHttpRequest();
   xhr.open(method, url);
   xhr.onreadystatechange = function() {
     if (this.status == 200) {
       reqListener.call(this);
-    }else{
+    } else {
       onFailed();
     }
   };
@@ -127,7 +127,7 @@ const extractPieceID = (id) => {
   return id[0];
 };
 
-const fetchCellId = (cell)=>{
+const fetchCellId = (cell) => {
   if (!cell.hasChildNodes()) {
     return "";
   }
@@ -146,14 +146,27 @@ const fetchBattleField = () => {
   return fetchedDetails;
 };
 
-const hasPlacedAllPieces=(pieceAndLocation)=>{
-  let numberOfPlayingPiece =pieceAndLocation.split('&').length-1;
-  return numberOfPlayingPiece!=10;
+const notDeployedFullArmy = (pieceAndLocation) => {
+  let numberOfPlayingPiece = pieceAndLocation.split('&').length - 1;
+  return numberOfPlayingPiece != 10;
 };
 
-const addEventListener = (listner, eventToAdd, elementID) => {
+const addEventListener = (listner,type, elementID) => {
   let element = document.getElementById(elementID);
   if (element) {
-    return element.addEventListener(eventToAdd, listner);
+    return element.addEventListener(type, listner);
   }
+};
+
+const removeEventListener = (listner,type, elementID) => {
+  let element = document.getElementById(elementID);
+  if (element) {
+    return element.removeEventListener(type, listner);
+  }
+};
+
+const getElement = (id) => document.querySelector(id);
+
+const setText = (id, text) => {
+  getElement(id).innerText = text;
 };
