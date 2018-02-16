@@ -37,5 +37,10 @@ class Game {
       this.readyStatus = true;
     }
   }
+  hasAllPlyingPieces(){
+    let positions = Object.keys(this.battlefield.placedPositions);
+    let piecesCount = positions.length;
+    return piecesCount==10;
+  }
 }
 module.exports =Game;

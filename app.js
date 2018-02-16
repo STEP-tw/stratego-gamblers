@@ -17,9 +17,12 @@ const setBattlefield = function(req,res,next){
   let placedPositions = req.body;
   game.setBattlefieldFor(playerId,placedPositions);
   console.log(game.battlefield);
-    
-  game.updateStatus(); 
-  next();
+  if(game.hasAllPlyingPieces()){
+    game.updateStatus(); 
+    next();
+    return;
+  }
+  res.status(206).send('pieces or location missing!');
 };
 
 const checkForReady = function(req,res,next){

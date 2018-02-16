@@ -3,6 +3,10 @@ const request = require('supertest');
 const app = require('../../app.js');
 
 describe('app', () => {
+  beforeEach(()=>{
+    validPieceWithLoc = ['3_2=2','3_9=B','2_3=2','2_6=B','1_1=S',
+      '1_4=9','1_5=1','1_6=3','1_8=3','0_0=F','0_1=10'].join('&');
+  });
   describe("GET /index.html", () => {
     it("responds with home page", done => {
       request(app)
@@ -18,17 +22,17 @@ describe('app', () => {
     it("resonds with home page", done => {
       request(app)
         .post('/setup/player/0')
-        .send('0_0=F')
+        .send(validPieceWithLoc)
         .expect(200)
         .expect(/wait for opponent/)
         .end(done);
     });
   });
-  describe('POST /setup/player/0', () => {
+  describe('POST /setup/player/1', () => {
     it("resonds with home page", done => {
       request(app)
         .post('/setup/player/1')
-        .send('0_0=F')
+        .send(validPieceWithLoc)
         .expect(302)
         .expect('location','/battlefield.html')
         .end(done);
