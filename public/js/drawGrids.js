@@ -32,18 +32,31 @@ const getPlayingPieceId = ()=>{
   return playingPieceId;
 };
 
-const appendPiecesToBase = (imgSrcDirectory) => {
+const setImageAttributes = (img,src,id,height,width)=>{
+  img.src = src;
+  img.id=id;
+  img.height= height;
+  img.width= width;
+  return img;
+};
+
+const appendImage=(baseCell,index,imgSrcDirectory)=>{
   let playingPieces = getPlayingPiece();
   let playingPieceId = getPlayingPieceId();
+  let basePosition = document.getElementById(baseCell.id);
+  let image = document.createElement("img");
+  let src = `../public/img/${imgSrcDirectory}/${playingPieces[index]}`;
+  let id=playingPieceId[index];
+  let height= "60";
+  let width= "60";
+  let img = setImageAttributes(image,src,id,height,width);
+  basePosition.appendChild(img);
+};
+
+const appendPiecesToBase = (imgSrcDirectory) => {
   let baseGrid = document.getElementById("baseGrid");
   let firstRow = baseGrid.childNodes[1].childNodes;
   firstRow.forEach((element,index) => {
-    let basePosition = document.getElementById(element.id);
-    let img = document.createElement("img");
-    img.src = `../public/img/${imgSrcDirectory}/${playingPieces[index]}`;
-    img.id=playingPieceId[index];
-    img.height= "60";
-    img.width= "60";
-    basePosition.appendChild(img);
+    appendImage(element,index,imgSrcDirectory);
   });
 };
