@@ -24,6 +24,13 @@ class Game {
     this.currentPlayerId++;
     return player;
   }
+  getPlayerName(teamColor) {
+    let players = this.players;
+    if(teamColor == "red") {
+      return players[0].getName();
+    }
+    return players[1].getName();
+  }
   areBothPlayersready(){
     let numberOfPlayers = this.players.length;
     return numberOfPlayers == 2;
