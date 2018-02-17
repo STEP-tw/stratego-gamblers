@@ -10,30 +10,41 @@
 </head>
 
 <body>
-  <header>
-    <div class="heading">
-      <h2>DEPLOY ARMY ON BATTLEFIELD</h2>
+  <div class="heading">
+    <span id="title">DEPLOY ARMY ON BATTLEFIELD</span>
+    <div class="playerDetails">
+      PROFILE : {{playerName}}
     </div>
-    <span class="playerDetails">
-      {{playerName}}
-    </span>
-  </header>
-  <main>
-    <div class="container">
-      <table id="grid">
-      </table>
-      <section>
-      </section>
+  </div>
+  <div class="main">
+    <div class="leftBlock">
+      <div class="battlefieldGrid">
+        <span id="battlefield">
+          BATTLEFIELD
+        </span>
+        <table id="grid">
+        </table>
+      </div>
+      <div class="armyBaseGrid">
+        <span id="armyBase">
+          ARMY BASE
+        </span>
+        <table id="baseGrid">
+        </table>
+      </div>
     </div>
-    <div class="armyBase">
-      <table id="baseGrid">
-      </table>
+    <div class="rightBlock">
+      <div class="pieceDescription">
+
+      </div>
+      <div class="waitMessage">
+        <span id="readyStatus"></span>
+      </div>
+      <div class="ready">
+        <button id="ready" type="button" name="button">READY</button>
+      </div>
     </div>
-    <div class="status">
-      <span id="readyStatus"></span>
-    </div>
-    <button  id="ready" type="button" name="button">READY</button>
-  </main>
+  </div>
 </body>
 
 </html>

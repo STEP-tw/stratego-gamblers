@@ -45,13 +45,14 @@ describe("Game", () => {
   });
   describe('setBattlefield',()=>{
     it('should set the battlefield for a player',()=>{
-      let game = new Game();
-      game.createPiecesFor('quickGame');
       game.setBattlefieldFor(0,{'0_0':'F'});
-      let actual = game.battlefield;
-      let pieces = {"0_0": {id:'F',name:'Flag',rank:0,team:'red'}};
-      let expected = {"lakeArea": [],"placedPositions": pieces};
-      assert.deepEqual(expected,actual);
+      game.setBattlefieldFor(1,{'3_7':'B'});
+      let actual = game.getBattlefieldFor(0);
+      let expected = {'0_0':'F','3_7':0};
+      assert.deepEqual(actual,expected);
+      actual = game.getBattlefieldFor(1);
+      expected = {'0_0':0,'3_7':'B'};   
+      assert.deepEqual(actual,expected);         
     });
   });
 });

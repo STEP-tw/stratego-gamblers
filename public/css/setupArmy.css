@@ -1,74 +1,103 @@
-header >.heading {
-  float: left;
-  margin: 1% 30%;
+.heading {
   text-align: center;
+  width: 100%;
+  height: 20%;
+  margin: 3% 0%;
+}
+
+#title {
+  margin-left: 15%;
+  font-size: 150%;
+  padding: 0.5% 2%;
   background-color: gray;
-  border: 1px solid black;
 }
 
 .playerDetails {
   float: right;
+  margin: 0% 11% 0% 0%;
+  padding: 0.5% 1%;
+  background-color: lightgray;
 }
 
-.container {
-  position: fixed;
-  margin: 10% 6%;
+.main {
+  width: 100%;
+  height: 700px;
 }
 
-#grid {
+.leftBlock {
+  width: 65%;
+  height: 100%;
+}
+
+.battlefieldGrid {
+  width: 100%;
+  height: 55%;
+}
+
+#battlefield {
+  margin: 0% 10%;
+  padding: 0.5%;
+  background-color: lightgray;
+}
+
+table{
+  margin: 2% 10%;
   border-collapse: collapse;
 }
 
-#baseGrid {
-  border-collapse: collapse;
-}
-
-section {
-  position: fixed;
-  margin-top: -15%;
-  margin-left: 850px;
-  width: 300px;
-  height: 240px;
-  border: 1px solid black;
-}
-
-.armyBase {
-  position: fixed;
-  margin: 30% 6%;
-}
-
-td{
+td {
   text-align: center;
   padding: 0%;
-  width: 60px;
-  height: 60px;
+  width: 70px;
+  height: 70px;
   border: 1px solid black;
 }
 
-main {
-  max-width: 960px;
+.armyBaseGrid {
+  width: 100%;
+  height: 45%;
 }
 
-button {
-  cursor: pointer;
-  margin-top: 50%;
-  margin-left: 108%;
-  background-color: gray;
-  height: 50px;
-  width: 100px;
-  font-size: 20px;
+#armyBase {
+  margin: 0% 10%;
+  padding: 0.5%;
+  background-color: lightgray;
 }
 
-.status{
-  position: fixed;
-  margin-top: 28%;
-  margin-left: 62%;
-  height: 100px;
-  width: 200px;
+.rightBlock {
+  float: right;
+  width: 35%;
+  height: 100%;
+  margin-top: -47%;
+}
+
+.pieceDescription {
+  margin: 5% 0%;
+  width: 70%;
+  height: 35%;
+  border: 1px solid black;
+}
+
+.waitMessage {
   text-align: center;
+  width: 70%;
+  height: 20%;
   border: 1px solid black;
 }
 
 #readyStatus {
-  font-size: 25px;
+  font-size: 140%;
+}
+
+.ready {
+  width: 100%;
+  height: 20%;
+}
+
+#ready {
+  font-size: 100%;
+  width: 15%;
+  height: 25%;
+  margin: 7% 27%;
+  background-color: lightgray;
 }

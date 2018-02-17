@@ -2,6 +2,7 @@ const assert = require('chai').assert;
 const request = require('supertest');
 const app = require('../../app.js');
 
+
 describe('app', () => {
   beforeEach(()=>{
     validPieceWithLoc = ['3_2=2','3_9=B','2_3=2','2_6=B','1_1=S',
@@ -20,7 +21,15 @@ describe('app', () => {
     });
   });
   describe('POST /setup/player/0', () => {
-    it("resonds with home page", done => {
+    it("should return status with missing piece", done => {
+      request(app)
+        .post('/setup/player/0')
+        .send('0_0=4')
+        .expect(206)
+        .expect(/pieces or location missing!/)
+        .end(done);
+    });
+    it("should return wait status", done => {
       request(app)
         .post('/setup/player/0')
         .send(validPieceWithLoc)
@@ -30,7 +39,7 @@ describe('app', () => {
     });
   });
   describe('POST /setup/player/1', () => {
-    it("resonds with home page", done => {
+    it("should redirect to battlefield", done => {
       request(app)
         .post('/setup/player/1')
         .send(validPieceWithLoc)

@@ -18,8 +18,8 @@ const setBattlefield = function(req,res,next){
   let placedPositions = req.body;
   game.setBattlefieldFor(playerId,placedPositions);
   console.log(game.battlefield);
-  if(game.hasAllPlyingPieces()){
-    game.updateStatus();
+  if(game.hasAllPlyingPieces(playerId)){
+    game.updatePlayerCount();
     next();
     return;
   }
@@ -27,7 +27,7 @@ const setBattlefield = function(req,res,next){
 };
 
 const checkForReady = function(req,res,next){
-  if(game.readyStatus){
+  if(game.isBothPlayerReady()){
     res.redirect('/battlefield.html');
     return;
   }
@@ -40,14 +40,24 @@ const areBothPlayersready = function (req,res) {
 };
 
 const setupRedArmy=function(req,res){
-  let setupTemp = app.fs.readFileSync('./templates/setupArmy','utf8');
+  let setupTemp = req.app.fs.readFileSync('./templates/setupArmy','utf8');
   setupTemp = setupTemp.replace('{{team}}','Red');
+  let game =req.app.game;
+  if(game){
+    let name = game.getPlayerName("red");
+    setupTemp = setupTemp.replace('{{playerName}}',name);
+  }
   res.send(setupTemp);
 };
 
 const setupBlueArmy = function (req, res) {
   let setupTemp = app.fs.readFileSync('./templates/setupArmy', 'utf8');
   setupTemp = setupTemp.replace('{{team}}', 'Blue');
+  let game =req.app.game;
+  if(game){
+    let name = game.getPlayerName("blue");
+    setupTemp = setupTemp.replace('{{playerName}}',name);
+  }
   res.send(setupTemp);
 };
 
