@@ -1,7 +1,7 @@
 class JoinGameHandler {
   constructor() {}
   execute(req, res) {
-    let game = req.app.game;
+    let game = req.app.game || {};
     let playerName = req.body.name;
     let gameId = req.body.gameid;
     if (gameId != game.id) {
