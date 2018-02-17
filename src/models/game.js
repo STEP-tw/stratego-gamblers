@@ -17,6 +17,9 @@ class Game {
   getId(){
     return this.id;
   }
+  getPlayers(){
+    return this.players;
+  }
   addPlayer(playerName){
     let id=this.currentPlayerId;
     let player=new Player(playerName,id);

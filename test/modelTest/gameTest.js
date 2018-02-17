@@ -8,9 +8,18 @@ describe("Game", () => {
       game = new Game("gameId");
     }
   );
-  describe("Game.getId()", () => {
+  describe("Game.getPlayers()", () => {
     it("Game.getId() should return game id", () => {
       assert.equal(game.getId(), "gameId");
+    });
+  });
+  describe("Game.getPlayers()", () => {
+    it("should return empty array when game has no players", () => {
+      assert.deepEqual(game.getPlayers(),[]);
+    });
+    it("should return players array when game has players", () => {
+      game.addPlayer("ravi");
+      assert.deepEqual(game.getPlayers(),[{name:"ravi", id:0}]);
     });
   });
   describe("Game.addPlayer()", () => {
