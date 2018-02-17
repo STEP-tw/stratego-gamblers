@@ -18,8 +18,8 @@ const setBattlefield = function(req,res,next){
   let placedPositions = req.body;
   game.setBattlefieldFor(playerId,placedPositions);
   console.log(game.battlefield);
-  if(game.hasAllPlyingPieces()){
-    game.updateStatus();
+  if(game.hasAllPlyingPieces(playerId)){
+    game.updatePlayerCount();
     next();
     return;
   }
@@ -27,7 +27,7 @@ const setBattlefield = function(req,res,next){
 };
 
 const checkForReady = function(req,res,next){
-  if(game.readyStatus){
+  if(game.isBothPlayerReady()){
     res.redirect('/battlefield.html');
     return;
   }

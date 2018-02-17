@@ -2,6 +2,7 @@ class Battlefield {
   constructor(){
     this.placedPositions = {};
     this.lakeArea = [];
+    this.battlePositions = {};
   }
   setField(pieces,placedArmyPos){
     let allPos = Object.keys(placedArmyPos);
@@ -18,6 +19,22 @@ class Battlefield {
   }
   getPlacedPositions(){
     return this.placedPositions;
+  }
+  setFieldFor(playerId,pieces,placedArmyPos){
+    this.setField(pieces,placedArmyPos);
+    this.battlePositions[playerId] = this.placedPositions;
+    this.placedPositions = {};
+  }
+  getArmyPos(playerId){
+    let armyPos = {};
+    let allPos = Object.keys(this.battlePositions[playerId]);
+    allPos.forEach(pos=>{
+      armyPos[pos]=this.battlePositions[playerId][pos].id;
+    });
+    return armyPos;
+  }
+  getOpponentPos(playerId){
+    return Object.keys(this.battlePositions[1-playerId]);
   }
 }
 module.exports = Battlefield;
