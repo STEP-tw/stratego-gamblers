@@ -7,10 +7,14 @@ let createRequest = function(callback, url, reqBody = null, method = "GET") {
 };
 
 const getCreateForm = function() {
+  document.getElementById("help").disabled = true;
+  document.getElementById("bluebutton").disabled = true;
   document.getElementById('create').style.display = 'block';
 };
 
 const getJoinForm = function() {
+  document.getElementById("help").disabled = true;
+  document.getElementById("bluebutton").disabled = true;
   document.getElementById('join').style.display = 'block';
 };
 
