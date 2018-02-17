@@ -1,15 +1,18 @@
 class JoinGameHandler {
   constructor() {}
   execute(req, res) {
-    let game=req.app.game;
+    let game = req.app.game;
     let playerName = req.body.name;
     let gameId = req.body.gameid;
-    if (gameId != game.id){
+    if (gameId != game.id) {
       res.redirect("/");
       return;
     }
-    game.addPlayer(playerName);
-    res.redirect('/setupBlueArmy');
+    if (!game.areBothPlayersready()) {
+      game.addPlayer(playerName);
+      res.redirect('/setupBlueArmy');
+    }
+    res.end();
   }
   getRequestHandler() {
     return this.execute.bind(this);
