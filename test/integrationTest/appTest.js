@@ -29,22 +29,20 @@ describe('app', () => {
         .expect(/pieces or location missing!/)
         .end(done);
     });
-    it("should return wait status", done => {
+    it("should set army for given player and return status with OK", done => {
       request(app)
         .post('/setup/player/0')
         .send(validPieceWithLoc)
         .expect(200)
-        .expect(/wait for opponent/)
         .end(done);
     });
   });
   describe('POST /setup/player/1', () => {
-    it("should redirect to battlefield", done => {
+    it("should set army for another player and responds with OK", done => {
       request(app)
         .post('/setup/player/1')
         .send(validPieceWithLoc)
-        .expect(302)
-        .expect('location','/battlefield.html')
+        .expect(200)
         .end(done);
     });
   });

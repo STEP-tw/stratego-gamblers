@@ -10,7 +10,6 @@ class Game {
     this.currentPlayerId = 0;
     this.battlefield = new Battlefield();
     this.pieces = new Pieces();
-    this.playerCounts = 0;
     this.gameType = 'quickGame';
   }
   getId(){
@@ -44,16 +43,10 @@ class Game {
   createPiecesFor(){
     this.pieces.loadPieces(this.gameType,team);
   }
-  isBothPlayerReady(){
-    return this.playerCounts==2;
-  }
   hasAllPlyingPieces(playerId){
     let positions = Object.keys(this.battlefield.battlePositions[playerId]);
     let piecesCount = positions.length;
     return piecesCount==10;
-  }
-  updatePlayerCount(){
-    this.playerCounts++;
   }
   getBattlefieldFor(playerId){
     let armyPos = this.battlefield.getArmyPos(playerId);
