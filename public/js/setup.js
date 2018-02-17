@@ -24,7 +24,7 @@ const drop = (event) => {
   event.preventDefault();
   let data = event.dataTransfer.getData("imgId");
   let target = event.target;
-  if (target.tagName=="IMG"){
+  if (target.tagName=="IMG"||target.hasChildNodes()){
     return;
   }
   target.appendChild(document.getElementById(data));
