@@ -47,6 +47,16 @@ describe('app', () => {
         .end(done);
     });
   });
+  describe('POST /joinGame', () => {
+    it("redirect joining player to home if game is not created ", done => {
+      request(app)
+        .post('/joinGame')
+        .send("name=ankur&gameid=1")
+        .expect(302)
+        .expect("Location","/")
+        .end(done);
+    });
+  });
   describe('SetupPage', () => {
     beforeEach(() => {
       app.game = new Game();
@@ -93,7 +103,7 @@ describe('app', () => {
         .end(done);
     });
   });
-  describe('GET /joinGame', () => {
+  describe('POST /joinGame', () => {
     it("redirect valid joining player to battlefield", done => {
       request(app)
         .post('/joinGame')
@@ -103,7 +113,7 @@ describe('app', () => {
         .end(done);
     });
   });
-  describe('GET /joinGame', () => {
+  describe('POST /joinGame', () => {
     it("redirect invalid joining player to home", done => {
       request(app)
         .post('/joinGame')

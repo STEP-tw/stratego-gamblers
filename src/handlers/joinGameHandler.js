@@ -12,7 +12,7 @@ class JoinGameHandler {
       game.addPlayer(playerName);
       res.redirect('/setupBlueArmy');
     }
-    res.end();
+    res.redirect("/");
   }
   getRequestHandler() {
     return this.execute.bind(this);
