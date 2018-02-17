@@ -6,6 +6,7 @@ const app = express();
 const log = require("./src/handlers/logger.js").log;
 
 const CreateGameHandler = require('./src/handlers/createGameHandler.js');
+const JoinGameHandler = require('./src/handlers/joinGameHandler.js');
 
 
 app.fs=fs;
@@ -33,6 +34,11 @@ const checkForReady = function(req,res,next){
   res.send('wait for opponent');
 };
 
+const areBothPlayersready = function (req,res) {
+  let game = req.app.game;
+  res.send(game.areBothPlayersready());
+};
+
 const setupRedArmy=function(req,res){
   let setupTemp = app.fs.readFileSync('./templates/setupArmy','utf8');
   setupTemp = setupTemp.replace('{{team}}','Red');
@@ -51,8 +57,10 @@ app.use(cookieParser());
 
 app.use(express.static('public'));
 app.get("/createGame/:name",new CreateGameHandler().getRequestHandler());
+app.post("/joinGame",new JoinGameHandler().getRequestHandler());
 app.post('/setup/player/:playerId',setBattlefield);
 app.use('/setup/player/:playerId',checkForReady);
 app.get('/setupRedArmy',setupRedArmy);
 app.get('/setupBlueArmy', setupBlueArmy);
+app.get('/isOpponentReady',areBothPlayersready);
 module.exports=app;

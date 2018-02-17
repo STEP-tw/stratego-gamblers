@@ -12,8 +12,9 @@ describe('app', () => {
       request(app)
         .get("/index.html")
         .expect(200)
-        .expect(/STRATREGO/)
-        .expect(/JOIN GAME/)
+        .expect(/Stratego/)
+        .expect(/Enter Your Name/)
+        .expect(/START BATTLE/)
         .expect("Content-Type", "text/html; charset=UTF-8")
         .end(done);
     });
@@ -64,14 +65,51 @@ describe('app', () => {
         .end(done);
     });
   });
-
-  describe('GET /createGame', () => {
+  describe('GET /createGame/:name', () => {
     it("responds with sharing key", done => {
       request(app)
         .get('/createGame/ravi')
         .expect(200)
         .expect("1")
         .expect("Content-Type", "text/html; charset=utf-8")
+        .end(done);
+    });
+  });
+  describe('GET /isOpponentReady', () => {
+    it("returns true if opponent is ready", done => {
+      request(app)
+        .get('/isOpponentReady')
+        .expect(200)
+        .expect("false")
+        .end(done);
+    });
+  });
+  describe('GET /joinGame', () => {
+    it("redirect valid joining player to battlefield", done => {
+      request(app)
+        .post('/joinGame')
+        .send("name=ankur&gameid=1")
+        .expect(302)
+        .expect("Location","/setupBlueArmy")
+        .end(done);
+    });
+  });
+  describe('GET /joinGame', () => {
+    it("redirect invalid joining player to home", done => {
+      request(app)
+        .post('/joinGame')
+        .send("name=ankur&gameid=2")
+        .expect(302)
+        .expect("Location","/")
+        .end(done);
+    });
+  });
+  describe('GET /isOpponentReady', () => {
+    it("returns true if opponent is ready", done => {
+      request(app)
+        .get('/isOpponentReady')
+        .expect(200)
+        .expect("true")
         .end(done);
     });
   });

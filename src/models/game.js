@@ -27,6 +27,17 @@ class Game {
     this.createPiecesFor(team); 
     this.battlefield.setFieldFor(playerId,this.pieces,placedArmyPos);
   }
+  getPlayerName(teamColor) {
+    let players = this.players;
+    if(teamColor == "red") {
+      return players[0].getName();
+    }
+    return players[1].getName();
+  }
+  areBothPlayersready(){
+    let numberOfPlayers = this.players.length;
+    return numberOfPlayers == 2;
+  }
   createPiecesFor(){
     this.pieces.loadPieces(this.gameType,team);
   }
