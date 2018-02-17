@@ -7,6 +7,7 @@
   <link rel="stylesheet" href="css/setupArmy.css">
   <script src="js/setup.js" charset="utf-8"></script>
   <script src="js/setup{{team}}Army.js" charset="utf-8"></script>
+  <link href="https://fonts.googleapis.com/css?family=Bellefair" rel="stylesheet">
 </head>
 
 <body>
@@ -37,6 +38,7 @@
       <div class="pieceDescription">
 
       </div>
+      <span id="message">MESSAGE</span>
       <div class="waitMessage">
         <span id="readyStatus"></span>
       </div>

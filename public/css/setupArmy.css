@@ -1,3 +1,15 @@
+body {
+  background: rgba(233, 212, 179, 1);
+  background: -moz-linear-gradient(top, rgba(233, 212, 179, 1) 0%, rgba(233, 212, 179, 1) 0%, rgba(182, 141, 76, 1) 1%, rgba(193, 158, 103, 1) 5%, rgba(243, 226, 199, 1) 100%);
+  background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(233, 212, 179, 1)), color-stop(0%, rgba(233, 212, 179, 1)), color-stop(1%, rgba(182, 141, 76, 1)), color-stop(5%, rgba(193, 158, 103, 1)), color-stop(100%, rgba(243, 226, 199, 1)));
+  background: -webkit-linear-gradient(top, rgba(233, 212, 179, 1) 0%, rgba(233, 212, 179, 1) 0%, rgba(182, 141, 76, 1) 1%, rgba(193, 158, 103, 1) 5%, rgba(243, 226, 199, 1) 100%);
+  background: -o-linear-gradient(top, rgba(233, 212, 179, 1) 0%, rgba(233, 212, 179, 1) 0%, rgba(182, 141, 76, 1) 1%, rgba(193, 158, 103, 1) 5%, rgba(243, 226, 199, 1) 100%);
+  background: -ms-linear-gradient(top, rgba(233, 212, 179, 1) 0%, rgba(233, 212, 179, 1) 0%, rgba(182, 141, 76, 1) 1%, rgba(193, 158, 103, 1) 5%, rgba(243, 226, 199, 1) 100%);
+  background: linear-gradient(to bottom, rgba(233, 212, 179, 1) 0%, rgba(233, 212, 179, 1) 0%, rgba(182, 141, 76, 1) 1%, rgba(193, 158, 103, 1) 5%, rgba(243, 226, 199, 1) 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e9d4b3', endColorstr='#f3e2c7', GradientType=0);
+  font-family: 'Bellefair', serif;
+}
+
 .heading {
   text-align: center;
   width: 100%;
@@ -7,16 +19,17 @@
 
 #title {
   margin-left: 15%;
-  font-size: 150%;
+  font-size: 180%;
   padding: 0.5% 2%;
-  background-color: gray;
+  background-color: #a78d43;
 }
 
 .playerDetails {
   float: right;
+  font-size: 130%;
   margin: 0% 11% 0% 0%;
   padding: 0.5% 1%;
-  background-color: lightgray;
+  background-color: #a78d43;
 }
 
 .main {
@@ -35,9 +48,10 @@
 }
 
 #battlefield {
+  font-size: 130%;
   margin: 0% 10%;
   padding: 0.5%;
-  background-color: lightgray;
+  background-color: #a78d43;
 }
 
 table{
@@ -59,34 +73,43 @@ td {
 }
 
 #armyBase {
+  font-size: 130%;
   margin: 0% 10%;
   padding: 0.5%;
-  background-color: lightgray;
+  background-color: #a78d43;
 }
 
 .rightBlock {
   float: right;
   width: 35%;
   height: 100%;
-  margin-top: -47%;
+  margin-top: -43%;
 }
 
 .pieceDescription {
   margin: 5% 0%;
   width: 70%;
   height: 35%;
-  border: 1px solid black;
 }
 
 .waitMessage {
+  margin-top: 3%;
   text-align: center;
   width: 70%;
   height: 20%;
   border: 1px solid black;
 }
 
+#message {
+  padding: 0.5%;
+  text-align: left;
+  font-size: 130%;
+  background-color: #a78d43;
+}
+
 #readyStatus {
-  font-size: 140%;
+  font-size: 150%;
+  text-transform: uppercase;
 }
 
 .ready {
@@ -95,9 +118,15 @@ td {
 }
 
 #ready {
-  font-size: 100%;
+  font-size: 130%;
   width: 15%;
   height: 25%;
   margin: 7% 27%;
-  background-color: lightgray;
+  background-color: #a78d43;
+  font-family: 'Bellefair', serif;
+}
+
+@media only screen and (max-width: 500px) {
+  .pieceDescription {width:100%;},
+  .waitMessage {width: 100%;},
 }
