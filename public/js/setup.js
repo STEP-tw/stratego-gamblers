@@ -21,7 +21,11 @@ const drag = (event) => {
 const drop = (event) => {
   event.preventDefault();
   let data = event.dataTransfer.getData("imgId");
-  event.target.appendChild(document.getElementById(data));
+  let target = event.target;
+  if (target.tagName=="IMG"){
+    return;
+  }
+  target.appendChild(document.getElementById(data));
 };
 
 const allowDrop = (event) => {
