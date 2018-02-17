@@ -20,6 +20,20 @@ describe("Game", () => {
       assert.deepEqual(actual, expectedOutput);
     });
   });
+  describe('Game.getPlayerName()', () => {
+    beforeEach(
+      ()=>{
+        game.addPlayer("ravi");
+        game.addPlayer("ankur");
+      }
+    );
+    it('should return first player name for red color team', () => {
+      assert.equal(game.getPlayerName("red"),"ravi");
+    });
+    it('should return first player name for blue color team', () => {
+      assert.equal(game.getPlayerName("blue"),"ankur");
+    });
+  });
   describe('setBattlefield',()=>{
     it('should set the battlefield for a player',()=>{
       let game = new Game();
