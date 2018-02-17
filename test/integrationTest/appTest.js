@@ -1,8 +1,7 @@
 const assert = require('chai').assert;
 const request = require('supertest');
 const app = require('../../app.js');
-
-
+const Game = require("../../src/models/game");
 describe('app', () => {
   beforeEach(()=>{
     validPieceWithLoc = ['3_2=2','3_9=B','2_3=2','2_6=B','1_1=S',
@@ -48,22 +47,31 @@ describe('app', () => {
         .end(done);
     });
   });
-  describe('GET /setupRedArmy', () => {
-    it("should render setup page for player1", done => {
-      request(app)
-        .get('/setupRedArmy')
-        .expect(200)
-        .expect(/setupRedArmy.js/)
-        .end(done);
+  describe('SetupPage', () => {
+    beforeEach(() => {
+      app.game = new Game();
+      app.game.addPlayer("player1");
+      app.game.addPlayer("player2");
     });
-  });
-  describe('GET /setupBlueArmy', () => {
-    it("should render setup page for player2", done => {
-      request(app)
-        .get('/setupBlueArmy')
-        .expect(200)
-        .expect(/setupBlueArmy.js/)
-        .end(done);
+    describe('GET /setupRedArmy', () => {
+      it("should render setup page for player1", done => {
+        request(app)
+          .get('/setupRedArmy')
+          .expect(200)
+          .expect(/setupRedArmy.js/)
+          .expect(/player1/)
+          .end(done);
+      });
+    });
+    describe('GET /setupBlueArmy', () => {
+      it("should render setup page for player2", done => {
+        request(app)
+          .get('/setupBlueArmy')
+          .expect(200)
+          .expect(/setupBlueArmy.js/)
+          .expect(/player2/)
+          .end(done);
+      });
     });
   });
   describe('GET /createGame/:name', () => {

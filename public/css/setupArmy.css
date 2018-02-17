@@ -26,6 +26,7 @@ body {
 
 .playerDetails {
   float: right;
+  text-transform: uppercase;
   font-size: 130%;
   margin: 0% 11% 0% 0%;
   padding: 0.5% 1%;
