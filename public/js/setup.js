@@ -14,6 +14,8 @@ const doXhr = function(url, method, reqListener, data, onFailed) {
   data ? xhr.send(data) : xhr.send();
 };
 
+const getElement = (id) => document.querySelector(id);
+
 const drag = (event) => {
   event.dataTransfer.setData("imgId", event.target.id);
 };
@@ -36,6 +38,14 @@ const applyDragProperty = (img) => {
   img.draggable = true;
   img.addEventListener('dragstart', drag, false);
   return img;
+};
+
+const removeDraggable = ()=>{
+  let playingPieceId = getPlayingPieceId();
+  playingPieceId.forEach(id=>{
+    let element = document.getElementById(id);
+    element.removeEventListener('dragstart', drag, false);
+  });
 };
 
 const applyDropProperty = (container) => {
@@ -135,7 +145,8 @@ const fetchCellId = (cell) => {
   if (!cell.hasChildNodes()) {
     return "";
   }
-  let pieceID = extractPieceID(cell.childNodes[0].id);
+  let piece = cell.childNodes[0];
+  let pieceID = extractPieceID(piece.id);
   return `${cell.id}=${pieceID}&`;
 };
 
@@ -169,7 +180,6 @@ const removeEventListener = (listner,type, elementID) => {
   }
 };
 
-const getElement = (id) => document.querySelector(id);
 
 const setText = (id, text) => {
   getElement(id).innerText = text;

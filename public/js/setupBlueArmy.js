@@ -5,7 +5,7 @@ const drawBaseGrid = () => {
 const ready = () => {
   let postData = fetchBattleField();
   let reqListener = () => {
-    return;
+    removeDraggable();
   };
   const onFail = ()=>{
     return;
