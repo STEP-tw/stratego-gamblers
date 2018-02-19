@@ -184,3 +184,17 @@ const removeEventListener = (listner,type, elementID) => {
 const setText = (id, text) => {
   getElement(id).innerText = text;
 };
+
+const getOpponentStatus = function () {
+  let reqListener = function () {
+    window.location.href = this.responseURL;
+    clearInterval(interval);
+  };
+  let onFail = () => {
+    notifyPlayer("wait...let opponent setup his army");
+  };
+  let callBack = () => {
+    doXhr('/isOpponentReady', 'GET', reqListener, '', onFail);
+  };
+  let interval = setInterval(callBack, 1000);
+};

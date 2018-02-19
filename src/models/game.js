@@ -36,12 +36,20 @@ class Game {
     }
     return players[1].getName();
   }
-  areBothPlayersready(){
+  haveBothPlayerJoined(){
     let numberOfPlayers = this.players.length;
     return numberOfPlayers == 2;
   }
   createPiecesFor(){
     this.pieces.loadPieces(this.gameType,team);
+  }
+  hasAllPlyingPieces(playerId){
+    let positions = Object.keys(this.battlefield.battlePositions[playerId]);
+    let piecesCount = positions.length;
+    return piecesCount==10;
+  }
+  areBothPlayerReady(){
+    return this.battlefield.areBothArmyDeployed(); 
   }
   getBattlefieldFor(playerId){
     let armyPos = this.battlefield.getArmyPos(playerId);

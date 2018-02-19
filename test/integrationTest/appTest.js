@@ -102,10 +102,10 @@ describe("app", () => {
         .end(done);
     });
   });
-  describe("GET /isOpponentReady", () => {
+  describe('GET /hasOpponentJoined', () => {
     it("returns true if opponent is ready", done => {
       request(app)
-        .get("/isOpponentReady")
+        .get('/hasOpponentJoined')
         .expect(200)
         .expect("false")
         .end(done);
@@ -130,7 +130,7 @@ describe("app", () => {
         .post("/joinGame")
         .send("name=ankur&gameid=1")
         .expect(302)
-        .expect("Location","/setupBlueArmy")
+        .expect("Location", "/setupBlueArmy")
         .end(done);
     });
     it("redirect invalid joining player to home", done => {
@@ -138,7 +138,7 @@ describe("app", () => {
         .post("/joinGame")
         .send("name=ankur&gameid=2")
         .expect(302)
-        .expect("Location","/")
+        .expect("Location", "/")
         .end(done);
     });
     it("redirect third joining player to home", done => {
@@ -159,7 +159,7 @@ describe("app", () => {
         .end(done);
     });
   });
-  describe("GET /isOpponentReady", () => {
+  describe('GET /hasOpponentJoined', () => {
     beforeEach(
       () => {
         app.game = new Game(1);
@@ -168,7 +168,7 @@ describe("app", () => {
     );
     it("returns false if opponent is not ready", done => {
       request(app)
-        .get("/isOpponentReady")
+        .get('/hasOpponentJoined')
         .expect(200)
         .expect("false")
         .end(done);
@@ -176,7 +176,7 @@ describe("app", () => {
     it("returns true if opponent is ready", done => {
       app.game.addPlayer("player2");
       request(app)
-        .get("/isOpponentReady")
+        .get('/hasOpponentJoined')
         .expect(200)
         .expect("true")
         .end(done);
@@ -191,6 +191,38 @@ describe("app", () => {
         .get("/selectPiece/0/1_1")
         .expect(200)
         .expect("S")
+        .end(done);
+    });
+  });
+  describe('GET /play', () => {
+    it('should respond with hello', (done) => {
+      request(app)
+        .get('/play')
+        .expect(200)
+        .expect(/hello/)
+        .end(done);
+    });
+  });
+  describe('GET /isOpponentReady', () => {
+    beforeEach(() => {
+      app.game = new Game();
+      app.game.addPlayer("player1");
+      app.game.addPlayer("player2");
+    });
+    it('should redirect with 202 when any of player is not ready', (done) => {
+      request(app)
+        .get('/isOpponentReady')
+        .expect(202)
+        .expect(/wait..let opponent be ready/)
+        .end(done);
+    });
+    it('should redirect to /play when both player are ready', (done) => {
+      app.game.setBattlefieldFor(1, validPieceWithLoc);
+      app.game.setBattlefieldFor(0, validPieceWithLoc);
+      request(app)
+        .get('/isOpponentReady')
+        .expect(302)
+        .expect('Location','/play')
         .end(done);
     });
   });

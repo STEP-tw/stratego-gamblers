@@ -34,5 +34,9 @@ class Battlefield {
   getOpponentPos(playerId){
     return Object.keys(this.battlePositions[1-playerId]);
   }
+  areBothArmyDeployed(){
+    let battlePositions = this.battlePositions;
+    return Object.keys(battlePositions).length==2;
+  }
 }
 module.exports = Battlefield;

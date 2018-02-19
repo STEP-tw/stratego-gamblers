@@ -12,7 +12,7 @@ class JoinGameHandler {
       res.redirect("/");
       return;
     }
-    if (!game.areBothPlayersready()) {
+    if (!game.haveBothPlayerJoined()) {
       game.addPlayer(playerName);
       res.redirect('/setupBlueArmy');
       return;
