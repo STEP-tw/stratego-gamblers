@@ -1,7 +1,7 @@
 const Battlefield = require('./battlefield.js');
 const Player = require('./player.js');
 const Pieces=require('./pieces.js');
-let team = 'red';
+
 class Game {
   constructor(id){
     this.id=id;
@@ -23,7 +23,7 @@ class Game {
     return player;
   }
   setBattlefieldFor(playerId,placedArmyPos){
-    this.createPiecesFor(team);
+    this.createPiecesFor();
     this.battlefield.setFieldFor(playerId,this.pieces,placedArmyPos);
   }
   getPlayerName(teamColor) {
@@ -38,7 +38,7 @@ class Game {
     return numberOfPlayers == 2;
   }
   createPiecesFor(){
-    this.pieces.loadPieces(this.gameType,team);
+    this.pieces.loadPieces(this.gameType);
   }
   areBothPlayerReady(){
     return this.battlefield.areBothArmyDeployed();

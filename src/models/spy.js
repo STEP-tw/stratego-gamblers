@@ -1,9 +1,8 @@
 class Spy {
-  constructor(team){
+  constructor(){
     this.id = 'S';
     this.name = 'Spy';
     this.rank = 1;
-    this.team = team;
   }
 }
 module.exports = Spy;

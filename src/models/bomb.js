@@ -1,9 +1,8 @@
 class Bomb {
-  constructor(team){
+  constructor(){
     this.id = 'B';
     this.name = 'Bomb';
     this.rank = 0;
-    this.team = team;
   }
 }
 module.exports = Bomb;

@@ -1,9 +1,8 @@
 class Scout {
-  constructor(team){
+  constructor(){
     this.id = '2';
     this.name = 'Scout';
     this.rank = 2;
-    this.team = team;
   }
 }
 module.exports = Scout;

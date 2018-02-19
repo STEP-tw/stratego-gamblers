@@ -1,9 +1,8 @@
 class Flag {
-  constructor(team){
+  constructor(){
     this.id = 'F';
     this.name = 'Flag';
     this.rank = 0;
-    this.team = team;
   }
 }
 module.exports = Flag;

@@ -10,14 +10,14 @@ class Pieces {
   constructor(){
     this.pieces =[];
   }
-  loadPieces(gameType,team){
-    this.pieces.push(new Flag(team));
-    this.pieces.push(new Bomb(team));
-    this.pieces.push(new Marshal(team));
-    this.pieces.push(new Miner(team));
-    this.pieces.push(new Spy(team));
-    this.pieces.push(new Scout(team));
-    this.pieces.push(new General(team));
+  loadPieces(gameType){
+    this.pieces.push(new Flag());
+    this.pieces.push(new Bomb());
+    this.pieces.push(new Marshal());
+    this.pieces.push(new Miner());
+    this.pieces.push(new Spy());
+    this.pieces.push(new Scout());
+    this.pieces.push(new General());
   }
   getPiece(pieceId){
     return this.pieces.find(piece=>piece.id==pieceId);
