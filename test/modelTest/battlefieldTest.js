@@ -11,16 +11,6 @@ describe('Battlefield',()=>{
       let actual=battlefield.getPlacedPositions();
       assert.deepEqual(expected,actual);
     });
-    it('should not add piece for undefined piece',()=>{
-      let battlefield = new Battlefield();
-      let piece = {id:'F',name:'Flag',rank:0,team:'red'};
-      let invalidPiece = undefined;   
-      battlefield.addPiece(piece,'0_0');
-      battlefield.addPiece(invalidPiece,'0_1');      
-      let expected = {'0_0':{id:'F',name:'Flag',rank:0,team:'red'}};  
-      let actual=battlefield.getPlacedPositions();
-      assert.deepEqual(expected,actual);
-    });
     it('should add multiple piece into battlefield',()=>{
       let battlefield = new Battlefield();
       let flag = {id:'F',name:'Flag',rank:0,team:'red'};

@@ -8,9 +8,8 @@ describe('app', () => {
       request(app)
         .get("/index.html")
         .expect(200)
-        .expect(/Stratego/)
-        .expect(/Enter Your Name/)
-        .expect(/START BATTLE/)
+        .expect(/Create Game/)
+        .expect(/Join Game/)
         .expect("Content-Type", "text/html; charset=UTF-8")
         .end(done);
     });
@@ -18,6 +17,7 @@ describe('app', () => {
   describe('POST /setup/player/0', () => {
     beforeEach(
       () =>{
+        app.game = new Game();
         validPieceWithLoc = ['3_2=2','3_9=B','2_3=2','2_6=B','1_1=S',
           '1_4=9','1_5=1','1_6=3','1_8=3','0_0=F','0_1=10'].join('&');
       }
@@ -30,10 +30,22 @@ describe('app', () => {
         .expect(/pieces or location missing!/)
         .end(done);
     });
-    it("should set army for given player and return status with OK", done => {
+    it("should not set army for wrong number of pieces", done => {
+      let redArmyPos = ['3_2=2','3_9=B','2_3=2','2_6=B','1_1=S',
+        '1_4=9','1_6=3','1_8=3','0_0=F','0_1=10','0_6=10'].join('&');
       request(app)
         .post('/setup/player/0')
-        .send(validPieceWithLoc)
+        .send(redArmyPos)
+        .expect(206)
+        .expect(/pieces or location missing!/)
+        .end(done);
+    });
+    it("should set army for given player and return status with OK", done => {
+      let redArmyPos = ['3_2=2','3_9=B','2_3=2','2_6=B','1_1=S',
+        '1_4=9','1_6=3','1_8=3','0_0=F','0_1=10'].join('&');
+      request(app)
+        .post('/setup/player/0')
+        .send(redArmyPos)
         .expect(200)
         .end(done);
     });
@@ -44,9 +56,11 @@ describe('app', () => {
         '1_4=9','1_5=1','1_6=3','1_8=3','0_0=F','0_1=10'].join('&');
     });
     it("should set army for another player and responds with OK", done => {
+      let blueArmyPos = ['9_2=2','9_9=B','8_3=2','8_6=B','7_1=S',
+        '7_4=9','7_6=3','7_8=3','6_0=F','6_1=10'].join('&');
       request(app)
         .post('/setup/player/1')
-        .send(validPieceWithLoc)
+        .send(blueArmyPos)
         .expect(200)
         .end(done);
     });
