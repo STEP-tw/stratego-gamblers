@@ -45,6 +45,14 @@ const setupBlueArmy = function (req, res) {
   res.send(setupTemp);
 };
 
+const getPieceFromLocation = function (req, res) {
+  let pieceLoc = req.params.pieceLoc;
+  let playerId = req.params.playerId;
+  let game = req.app.game;
+  let battlePosition=game.battlefield.getArmyPos(playerId);
+  res.send(battlePosition[pieceLoc]);
+};
+
 app.use(log());
 app.use(express.urlencoded({extended: false}));
 app.use(cookieParser());
@@ -56,4 +64,5 @@ app.post('/setup/player/:playerId',setBattlefield);
 app.get('/setupRedArmy',setupRedArmy);
 app.get('/setupBlueArmy', setupBlueArmy);
 app.get('/isOpponentReady', areBothPlayersready);
+app.get('/selectPiece/:playerId/:pieceLoc', getPieceFromLocation);
 module.exports = app;
