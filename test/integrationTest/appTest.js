@@ -150,6 +150,14 @@ describe('app', () => {
         .expect("Location","/")
         .end(done);
     });
+    it("redirect joining player with white spaces as name to home", done => {
+      request(app)
+        .post('/joinGame')
+        .send("name=  &gameid=1")
+        .expect(302)
+        .expect("Location","/")
+        .end(done);
+    });
   });
   describe('GET /isOpponentReady', () => {
     beforeEach(
