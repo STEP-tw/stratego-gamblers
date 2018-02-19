@@ -1,15 +1,10 @@
-const createBattlefield = ()=>{
-  drawGrid('battlefieldGrid',10,10,90);
-  assignCellValue();
+window.onload=function(){
+  drawGrid('battlefield',10,10,90);
+  let reqListener = function(){
+    let battlefield = JSON.parse(this.responseText);
+    updateBattleField(battlefield);
+  };
+  doXhr('/battlefield','GET',reqListener,'',()=>{
+    console.log("fail");
+  });
 };
-
-const assignCellValue = ()=>{
-  for (let row=0; row<=9; row++) {
-    for (let col=0; col<=9; col++) {
-      let cell = document.getElementById(`${row}_${col}`);
-      cell.innerText = `{${row}_${col}}`;
-    }    
-  }
-};
-
-window.onload = createBattlefield;

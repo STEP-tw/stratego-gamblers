@@ -163,7 +163,7 @@ const fetchBattleField = () => {
 
 const notDeployedFullArmy = (pieceAndLocation) => {
   let numberOfPlayingPiece = pieceAndLocation.split('&').length - 1;
-  return numberOfPlayingPiece != 10;
+  return numberOfPlayingPiece != 3;
 };
 
 const addEventListener = (listner,type, elementID) => {

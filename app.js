@@ -17,27 +17,33 @@ const setBattlefield = function (req, res) {
   let game = req.app.game;
   let playerId = req.params.playerId;
   let placedPos = req.body;
-  if(validator.isValidData(playerId,placedPos)){
-    game.setBattlefieldFor(playerId, placedPos);
-    res.end();
-    return;
-  }
+  // if(validator.isValidData(playerId,placedPos)){
+  game.setBattlefieldFor(playerId, placedPos);
+  res.end();
+  return;
+  // }
   res.status(206).send('pieces or location missing!');
 };
 
-const getBattlefield = function(req,res){
-  let game = req.app.game;
-  // let sessionId = req.cookies.sessionId; 
-  // let playerId = session.getPlayerId(sessionId);
-  // let battlefieldPos = game.getBattlefieldFor(playerId);
-  res.send('hello');
-};
+// const getBattlefield = function(req,res){
+//   let game = req.app.game;
+//   let battlefieldPos = game.getBattlefieldFor(0);
+//   battlefield = battlefield.replace()
+//   console.log(battlefieldPos);
+//   res.send('hello');
+// };
 
 const haveBothPlayersJoined = function (req, res) {
   let game = req.app.game;
   res.send(game.haveBothPlayersJoined());
 };
 
+const getBattlefield = function(req,res){
+  let game = req.app.game;
+  let battlefieldPos = game.getBattlefieldFor(0);
+  console.log(battlefieldPos);
+  res.send(JSON.stringify(battlefieldPos));
+};
 const setupRedArmy = function (req, res) {
   let setupTemp = req.app.fs.readFileSync('./templates/setupArmy', 'utf8');
   setupTemp = setupTemp.replace('{{team}}', 'Red');
@@ -72,6 +78,11 @@ const sendOpponentStatus = function(req,res){
   res.status(202).send('wait..let opponent be ready');
 };
 
+const renderGamePage = function(req,res){
+  let battlefield = req.app.fs.readFileSync('./templates/battlefield', 'utf8');
+  res.send(battlefield);
+};
+
 app.use(log());
 app.use(express.urlencoded({extended: false}));
 app.use(cookieParser());
@@ -85,5 +96,6 @@ app.get('/isOpponentReady',sendOpponentStatus);
 app.get('/setupBlueArmy', setupBlueArmy);
 app.get('/hasOpponentJoined', haveBothPlayersJoined);
 app.get('/selectPiece/:playerId/:pieceLoc', getPieceFromLocation);
-app.get('/play',getBattlefield);
+app.get('/play',renderGamePage);
+app.get('/battlefield',getBattlefield);
 module.exports = app;
