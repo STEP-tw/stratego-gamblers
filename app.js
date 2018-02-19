@@ -5,10 +5,12 @@ const Game = require('./src/models/game.js');
 const app = express();
 const log = require("./src/handlers/logger.js").log;
 const validator = require('./src/lib/validate.js');
+const SessionManager = require('./src/models/sessionManager.js');
 const CreateGameHandler = require('./src/handlers/createGameHandler.js');
 const JoinGameHandler = require('./src/handlers/joinGameHandler.js');
 
 app.fs = fs;
+app.sessionManager = new SessionManager();
 
 
 const setBattlefield = function (req, res) {

@@ -13,11 +13,8 @@ class SessionManager {
     return this.sessions[sessionId];
   }
   deleteSession(sessionId) {
-    let Player = this.getPlayerBySessionId(sessionId);
-    if (Player) {
-      return delete this.sessions[sessionId];
-    }
-    return false;
+    let player = this.getPlayerBySessionId(sessionId);
+    return delete this.sessions[sessionId];
   }
   isLoggedin(sessionId) {
     return sessionId in this.sessions;
