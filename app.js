@@ -15,7 +15,7 @@ const setBattlefield = function (req, res) {
   let playerId = req.params.playerId;
   let placedPos = req.body;
   if(validator.isValidData(playerId,placedPos)){
-    game.setBattlefieldFor(playerId, placedPos);
+    game.setBattlefieldFor(playerId, placedPos); 
     res.end();
     return;
   }
