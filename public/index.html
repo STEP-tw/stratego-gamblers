@@ -13,54 +13,25 @@
 </head>
 
 <body>
-  <header>
-    <h1>Stratego</h1>
 
-  </header>
-  <div class="row">
-    <div class="column-side">
+  <img id="logo" src="../img/background/logo.png">
+
+  <div class="column-middle">
+
+    <button id="redbutton" onclick="getCreateForm()">Create Game</button>
+    <button id="bluebutton" onclick="getJoinForm()">Join Game</button>
+
+    <div id="create" class="popup-form">
+      <input type="text" placeholder="Enter your name" id="name" name="name" required>
+      <button id="redbutton" onclick="startGame()">Create Game</button>
     </div>
-    <div class="column-middle">
 
-      <div class="basic">
-        <div class="button">
-          <button id="redbutton" onclick="getCreateForm()">Create Game</button>
-        </div>
-        <div class="button">
-          <button id="bluebutton" onclick="getJoinForm()">Join Game</button>
-        </div>
-      </div>
-
-      <div class="basic" id="create">
-        <div class="popup-form">
-          <div class="form-input">
-            <label for="name"> Enter Your Name</label>
-            <input type="text" placeholder="Ex: Sayima" id="name" name="name" required>
-          </div>
-          <div class="button">
-            <button id="redbutton" onclick="startGame()">Create Game</button>
-          </div>
-        </div>
-      </div>
-
-      <div class="basic" id="join">
-        <form action="joinGame" class="popup-form" method="POST">
-          <div class="form-input">
-            <label for="name"> Enter Your Name</label>
-            <input pattern="[A-Za-z]+" type="text" id="name" placeholder="Ex: Sayima" name="name" required>
-          </div>
-          <div class="form-input">
-            <label for="name"> Enter Sharing Key</label>
-            <input type="text" id="gameid" placeholder="Sharing key" name="gameid" required>
-          </div>
-          <div class="button">
-            <button id="redbutton">START BATTLE</button>
-          </div>
-        </form>
-      </div>
-
-    </div>
-    <div class="column-side">
+    <div id="join" class="popup-form">
+      <form action="joinGame" method="POST">
+        <input pattern="[A-Za-z]+" type="text" id="name" placeholder="Enter Your Name" name="name" required>
+        <input type="text" id="gameid" placeholder="Enter sharing key" name="gameid" required>
+        <button id="redbutton">Start Battle</button>
+      </form>
     </div>
 
   </div>
