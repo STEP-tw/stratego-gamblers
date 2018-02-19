@@ -4,21 +4,18 @@ const cookieParser = require('cookie-parser');
 const Game = require('./src/models/game.js');
 const app = express();
 const log = require("./src/handlers/logger.js").log;
-
+const validator = require('./src/lib/validate.js');
 const CreateGameHandler = require('./src/handlers/createGameHandler.js');
 const JoinGameHandler = require('./src/handlers/joinGameHandler.js');
 
-
 app.fs = fs;
 
-let game = new Game();
-
-const setBattlefield = function (req, res, next) {
+const setBattlefield = function (req, res) {
+  let game = req.app.game;
   let playerId = req.params.playerId;
-  let placedPositions = req.body;
-  game.setBattlefieldFor(playerId, placedPositions);
-  console.log(game.battlefield);
-  if(game.hasAllPlyingPieces(playerId)){
+  let placedPos = req.body;
+  if(validator.isValidData(playerId,placedPos)){
+    game.setBattlefieldFor(playerId, placedPos);
     res.end();
     return;
   }

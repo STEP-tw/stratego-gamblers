@@ -3,10 +3,6 @@ const request = require('supertest');
 const app = require('../../app.js');
 const Game = require("../../src/models/game");
 describe('app', () => {
-  beforeEach(()=>{
-    validPieceWithLoc = ['3_2=2','3_9=B','2_3=2','2_6=B','1_1=S',
-      '1_4=9','1_5=1','1_6=3','1_8=3','0_0=F','0_1=10'].join('&');
-  });
   describe("GET /index.html", () => {
     it("responds with home page", done => {
       request(app)
@@ -20,6 +16,9 @@ describe('app', () => {
     });
   });
   describe('POST /setup/player/0', () => {
+    beforeEach(()=>{
+      app.game = new Game();
+    });
     it("should return status with missing piece", done => {
       request(app)
         .post('/setup/player/0')
@@ -28,19 +27,33 @@ describe('app', () => {
         .expect(/pieces or location missing!/)
         .end(done);
     });
-    it("should set army for given player and return status with OK", done => {
+    it("should not set army for wrong number of pieces", done => {
+      let redArmyPos = ['3_2=2','3_9=B','2_3=2','2_6=B','1_1=S',
+        '1_4=9','1_6=3','1_8=3','0_0=F','0_1=10','0_6=10'].join('&');
       request(app)
         .post('/setup/player/0')
-        .send(validPieceWithLoc)
+        .send(redArmyPos)
+        .expect(206)
+        .expect(/pieces or location missing!/)        
+        .end(done);
+    });
+    it("should set army for given player and return status with OK", done => {
+      let redArmyPos = ['3_2=2','3_9=B','2_3=2','2_6=B','1_1=S',
+        '1_4=9','1_6=3','1_8=3','0_0=F','0_1=10'].join('&');
+      request(app)
+        .post('/setup/player/0')
+        .send(redArmyPos)
         .expect(200)
         .end(done);
     });
   });
   describe('POST /setup/player/1', () => {
     it("should set army for another player and responds with OK", done => {
+      let blueArmyPos = ['9_2=2','9_9=B','8_3=2','8_6=B','7_1=S',
+        '7_4=9','7_6=3','7_8=3','6_0=F','6_1=10'].join('&');
       request(app)
         .post('/setup/player/1')
-        .send(validPieceWithLoc)
+        .send(blueArmyPos)
         .expect(200)
         .end(done);
     });
@@ -57,7 +70,7 @@ describe('app', () => {
   });
   describe('SetupPage', () => {
     beforeEach(() => {
-      app.game = new Game();
+      app.game = new Game();      
       app.game.addPlayer("player1");
       app.game.addPlayer("player2");
     });

@@ -13,9 +13,7 @@ class Battlefield {
     });
   }
   addPiece(piece,pos){
-    if(piece){
-      this.placedPositions[pos] = piece;
-    }
+    this.placedPositions[pos] = piece;
   }
   getPlacedPositions(){
     return this.placedPositions;
