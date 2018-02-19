@@ -23,6 +23,14 @@ const setBattlefield = function (req, res) {
   res.status(206).send('pieces or location missing!');
 };
 
+const getBattlefield = function(req,res){
+  let game = req.app.game;
+  // let sessionId = req.cookies.sessionId; 
+  // let playerId = session.getPlayerId(sessionId);
+  // let battlefieldPos = game.getBattlefieldFor(playerId);
+  res.send('hello');
+};
+
 const haveBothPlayerJoined = function (req, res) {
   let game = req.app.game;
   res.send(game.haveBothPlayerJoined());
@@ -66,5 +74,5 @@ app.get('/setupRedArmy',setupRedArmy);
 app.get('/isOpponentReady',sendOpponentStatus);
 app.get('/setupBlueArmy', setupBlueArmy);
 app.get('/hasOpponentJoined', haveBothPlayerJoined);
-app.get('/play',(req,res)=>res.send('hello'));
+app.get('/play',getBattlefield);
 module.exports = app;

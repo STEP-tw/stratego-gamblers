@@ -1,0 +1,9 @@
+#battlefieldGrid{
+  border: 2px solid black;
+  height: 1000px;
+  width: 1000px;
+  border-collapse: collapse;
+}
+#battlefieldGrid td {
+  border: 1px solid black;
+}

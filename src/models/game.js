@@ -43,11 +43,6 @@ class Game {
   createPiecesFor(){
     this.pieces.loadPieces(this.gameType,team);
   }
-  hasAllPlyingPieces(playerId){
-    let positions = Object.keys(this.battlefield.battlePositions[playerId]);
-    let piecesCount = positions.length;
-    return piecesCount==10;
-  }
   areBothPlayerReady(){
     return this.battlefield.areBothArmyDeployed(); 
   }
