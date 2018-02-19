@@ -3,6 +3,10 @@ const request = require('supertest');
 const app = require('../../app.js');
 const Game = require("../../src/models/game");
 describe('app', () => {
+  beforeEach(() => {
+    validPieceWithLoc = ['3_2=2', '3_9=B', '2_3=2', '2_6=B', '1_1=S',
+      '1_4=9', '1_5=1', '1_6=3', '1_8=3', '0_0=F', '0_1=10'].join('&');
+  });
   describe("GET /index.html", () => {
     it("responds with home page", done => {
       request(app)
@@ -15,9 +19,13 @@ describe('app', () => {
     });
   });
   describe('POST /setup/player/0', () => {
-    beforeEach(()=>{
-      app.game = new Game();
-    });
+    beforeEach(
+      () =>{
+        app.game = new Game();
+        validPieceWithLoc = ['3_2=2','3_9=B','2_3=2','2_6=B','1_1=S',
+          '1_4=9','1_5=1','1_6=3','1_8=3','0_0=F','0_1=10'].join('&');
+      }
+    );
     it("should return status with missing piece", done => {
       request(app)
         .post('/setup/player/0')
@@ -33,7 +41,7 @@ describe('app', () => {
         .post('/setup/player/0')
         .send(redArmyPos)
         .expect(206)
-        .expect(/pieces or location missing!/)        
+        .expect(/pieces or location missing!/)
         .end(done);
     });
     it("should set army for given player and return status with OK", done => {
@@ -47,6 +55,10 @@ describe('app', () => {
     });
   });
   describe('POST /setup/player/1', () => {
+    beforeEach(()=>{
+      validPieceWithLoc = ['3_2=2','3_9=B','2_3=2','2_6=B','1_1=S',
+        '1_4=9','1_5=1','1_6=3','1_8=3','0_0=F','0_1=10'].join('&');
+    });
     it("should set army for another player and responds with OK", done => {
       let blueArmyPos = ['9_2=2','9_9=B','8_3=2','8_6=B','7_1=S',
         '7_4=9','7_6=3','7_8=3','6_0=F','6_1=10'].join('&');
@@ -63,13 +75,13 @@ describe('app', () => {
         .post('/joinGame')
         .send("name=ankur&gameid=1")
         .expect(302)
-        .expect("Location","/")
+        .expect("Location", "/")
         .end(done);
     });
   });
   describe('SetupPage', () => {
     beforeEach(() => {
-      app.game = new Game();      
+      app.game = new Game();
       app.game.addPlayer("player1");
       app.game.addPlayer("player2");
     });
@@ -104,41 +116,116 @@ describe('app', () => {
         .end(done);
     });
   });
-  describe('GET /isOpponentReady', () => {
+  describe('GET /hasOpponentJoined', () => {
     it("returns true if opponent is ready", done => {
       request(app)
-        .get('/isOpponentReady')
+        .get('/hasOpponentJoined')
         .expect(200)
         .expect("false")
         .end(done);
     });
   });
   describe('POST /joinGame', () => {
+    it("redirect joining player to home if game is not created ", done => {
+      app.game = undefined;
+      request(app)
+        .post('/joinGame')
+        .send("name=ankur&gameid=1")
+        .expect(302)
+        .expect("Location","/")
+        .end(done);
+    });
+    beforeEach(() => {
+      app.game = new Game(1);
+      app.game.addPlayer("player1");
+    });
     it("redirect valid joining player to battlefield", done => {
       request(app)
         .post('/joinGame')
         .send("name=ankur&gameid=1")
         .expect(302)
-        .expect("Location","/setupBlueArmy")
+        .expect("Location", "/setupBlueArmy")
         .end(done);
     });
-  });
-  describe('POST /joinGame', () => {
     it("redirect invalid joining player to home", done => {
       request(app)
         .post('/joinGame')
         .send("name=ankur&gameid=2")
         .expect(302)
+        .expect("Location", "/")
+        .end(done);
+    });
+    it('redirect third joining player to home', done => {
+      app.game.addPlayer("player2");
+      request(app)
+        .post('/joinGame')
+        .send("name=ankur&gameid=1")
+        .expect(302)
+        .expect("Location","/")
+        .end(done);
+    });
+    it("redirect joining player with white spaces as name to home", done => {
+      request(app)
+        .post('/joinGame')
+        .send("name=  &gameid=1")
+        .expect(302)
         .expect("Location","/")
         .end(done);
     });
   });
-  describe('GET /isOpponentReady', () => {
-    it("returns true if opponent is ready", done => {
+  describe('GET /hasOpponentJoined', () => {
+    beforeEach(
+      () => {
+        app.game = new Game(1);
+        app.game.addPlayer("player1");
+      }
+    );
+    it("returns false if opponent is not ready", done => {
       request(app)
-        .get('/isOpponentReady')
+        .get('/hasOpponentJoined')
+        .expect(200)
+        .expect("false")
+        .end(done);
+    });
+    it("returns true if opponent is ready", done => {
+      app.game.addPlayer("player2");
+      request(app)
+        .get('/hasOpponentJoined')
         .expect(200)
         .expect("true")
+        .end(done);
+    });
+
+  });
+  describe('GET /play', () => {
+    it('should respond with hello', (done) => {
+      request(app)
+        .get('/play')
+        .expect(200)
+        .expect(/hello/)
+        .end(done);
+    });
+  });
+  describe('GET /isOpponentReady', () => {
+    beforeEach(() => {
+      app.game = new Game();
+      app.game.addPlayer("player1");
+      app.game.addPlayer("player2");
+    });
+    it('should redirect with 202 when any of player is not ready', (done) => {
+      request(app)
+        .get('/isOpponentReady')
+        .expect(202)
+        .expect(/wait..let opponent be ready/)
+        .end(done);
+    });
+    it('should redirect to /play when both player are ready', (done) => {
+      app.game.setBattlefieldFor(1, validPieceWithLoc);
+      app.game.setBattlefieldFor(0, validPieceWithLoc);
+      request(app)
+        .get('/isOpponentReady')
+        .expect(302)
+        .expect('Location','/play')
         .end(done);
     });
   });

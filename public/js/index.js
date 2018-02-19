@@ -53,7 +53,7 @@ const redirectToSetupPage = function () {
 };
 
 const getGameStatus=function () {
-  createRequest(redirectToSetupPage,"/isOpponentReady");
+  createRequest(redirectToSetupPage,"/hasOpponentJoined");
 };
 
 const startGame = function() {

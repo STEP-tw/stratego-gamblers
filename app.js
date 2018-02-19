@@ -10,6 +10,7 @@ const JoinGameHandler = require('./src/handlers/joinGameHandler.js');
 
 app.fs = fs;
 
+
 const setBattlefield = function (req, res) {
   let game = req.app.game;
   let playerId = req.params.playerId;
@@ -22,9 +23,9 @@ const setBattlefield = function (req, res) {
   res.status(206).send('pieces or location missing!');
 };
 
-const areBothPlayersready = function (req, res) {
+const haveBothPlayerJoined = function (req, res) {
   let game = req.app.game;
-  res.send(game.areBothPlayersready());
+  res.send(game.haveBothPlayerJoined());
 };
 
 const setupRedArmy = function (req, res) {
@@ -45,6 +46,14 @@ const setupBlueArmy = function (req, res) {
   res.send(setupTemp);
 };
 
+const sendOpponentStatus = function(req,res){
+  let game = req.app.game;
+  if(game.areBothPlayerReady()){
+    return res.redirect('/play');
+  }
+  res.status(202).send('wait..let opponent be ready');
+};
+
 app.use(log());
 app.use(express.urlencoded({extended: false}));
 app.use(cookieParser());
@@ -54,6 +63,8 @@ app.get("/createGame/:name",new CreateGameHandler().getRequestHandler());
 app.post("/joinGame",new JoinGameHandler().getRequestHandler());
 app.post('/setup/player/:playerId',setBattlefield);
 app.get('/setupRedArmy',setupRedArmy);
+app.get('/isOpponentReady',sendOpponentStatus);
 app.get('/setupBlueArmy', setupBlueArmy);
-app.get('/isOpponentReady', areBothPlayersready);
+app.get('/hasOpponentJoined', haveBothPlayerJoined);
+app.get('/play',(req,res)=>res.send('hello'));
 module.exports = app;
