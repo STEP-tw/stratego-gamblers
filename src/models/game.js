@@ -46,8 +46,12 @@ class Game {
   getBattlefieldFor(playerId){
     let armyPos = this.battlefield.getArmyPos(playerId);
     let opponentPos = this.battlefield.getOpponentPos(playerId);
+    let lakePos = this.battlefield.getLakePos();
     opponentPos.forEach(pos=>{
       armyPos[pos]=0;
+    });
+    lakePos.forEach(pos=>{
+      armyPos[pos]='X';
     });
     return armyPos;
   }
