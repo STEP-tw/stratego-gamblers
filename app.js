@@ -5,10 +5,12 @@ const Game = require('./src/models/game.js');
 const app = express();
 const log = require("./src/handlers/logger.js").log;
 const validator = require('./src/lib/validate.js');
+const Sessions = require('./src/models/sessions.js');
 const CreateGameHandler = require('./src/handlers/createGameHandler.js');
 const JoinGameHandler = require('./src/handlers/joinGameHandler.js');
 
 app.fs = fs;
+app.sessions = new Sessions();
 
 
 const setBattlefield = function (req, res) {
@@ -31,9 +33,9 @@ const getBattlefield = function(req,res){
   res.send('hello');
 };
 
-const haveBothPlayerJoined = function (req, res) {
+const haveBothPlayersJoined = function (req, res) {
   let game = req.app.game;
-  res.send(game.haveBothPlayerJoined());
+  res.send(game.haveBothPlayersJoined());
 };
 
 const setupRedArmy = function (req, res) {
@@ -52,6 +54,14 @@ const setupBlueArmy = function (req, res) {
   let name = game.getPlayerName("blue");
   setupTemp = setupTemp.replace('{{playerName}}', name);
   res.send(setupTemp);
+};
+
+const getPieceFromLocation = function (req, res) {
+  let pieceLoc = req.params.pieceLoc;
+  let playerId = req.params.playerId;
+  let game = req.app.game;
+  let battlePosition=game.battlefield.getArmyPos(playerId);
+  res.send(battlePosition[pieceLoc]);
 };
 
 const sendOpponentStatus = function(req,res){
@@ -73,6 +83,7 @@ app.post('/setup/player/:playerId',setBattlefield);
 app.get('/setupRedArmy',setupRedArmy);
 app.get('/isOpponentReady',sendOpponentStatus);
 app.get('/setupBlueArmy', setupBlueArmy);
-app.get('/hasOpponentJoined', haveBothPlayerJoined);
+app.get('/hasOpponentJoined', haveBothPlayersJoined);
+app.get('/selectPiece/:playerId/:pieceLoc', getPieceFromLocation);
 app.get('/play',getBattlefield);
 module.exports = app;

@@ -5,8 +5,10 @@ class CreateGameHandler {
   }
   execute(req, res) {
     let game = new Game(this.id);
-    let userName = req.params.name;
-    game.addPlayer(userName);
+    let playerName = req.params.name;
+    let playerId = req.app.sessions.createSession(playerName);
+    res.cookie('sessionId',playerId);
+    game.addPlayer(playerName,playerId,'red');
     req.app.game = game;
     res.send(`${this.id}`);
   }

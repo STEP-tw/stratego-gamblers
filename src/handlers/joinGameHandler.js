@@ -3,6 +3,7 @@ class JoinGameHandler {
   execute(req, res) {
     let game = req.app.game || {};
     let playerName = req.body.name.trim();
+    let playerId = req.app.sessions.createSession(playerName);
     let gameId = req.body.gameid;
     if(!playerName.length){
       res.redirect("/");
@@ -12,8 +13,9 @@ class JoinGameHandler {
       res.redirect("/");
       return;
     }
-    if (!game.haveBothPlayerJoined()) {
-      game.addPlayer(playerName);
+    if (!game.haveBothPlayersJoined()) {
+      game.addPlayer(playerName,playerId,'blue');
+      res.cookie('sessionId',playerId);
       res.redirect('/setupBlueArmy');
       return;
     }

@@ -18,14 +18,14 @@ describe("Game", () => {
       assert.deepEqual(game.getPlayers(),[]);
     });
     it("should return players array when game has players", () => {
-      game.addPlayer("ravi");
-      assert.deepEqual(game.getPlayers(),[{name:"ravi", id:0}]);
+      game.addPlayer("ravi",0,'red');
+      assert.deepEqual(game.getPlayers(),[{name:"ravi", id:0,color:'red'}]);
     });
   });
   describe("Game.addPlayer()", () => {
     it("Game.addPlayer() should return game id", () => {
-      let expectedOutput = {name: "Ravi", id: 0};
-      let actual=game.addPlayer("Ravi");
+      let expectedOutput = {name: "Ravi", id: 0,color:"red"};
+      let actual=game.addPlayer("Ravi",0,"red");
       assert.deepEqual(actual, expectedOutput);
     });
   });
@@ -51,8 +51,8 @@ describe("Game", () => {
       let expected = {'0_0':'F','3_7':0};
       assert.deepEqual(actual,expected);
       actual = game.getBattlefieldFor(1);
-      expected = {'0_0':0,'3_7':'B'};   
-      assert.deepEqual(actual,expected);         
+      expected = {'0_0':0,'3_7':'B'};
+      assert.deepEqual(actual,expected);
     });
   });
 });

@@ -1,6 +1,8 @@
-const assert = require('chai').assert;
-const request = require('supertest');
-const app = require('../../app.js');
+const assert = require("chai").assert;
+const request = require("supertest");
+const Sessions = require("../../src/models/sessions.js");
+const app = require("../../app.js");
+app.sessions = new Sessions(()=>1234);
 const Game = require("../../src/models/game");
 describe('app', () => {
   beforeEach(() => {
@@ -20,15 +22,15 @@ describe('app', () => {
         .end(done);
     });
   });
-  describe('POST /setup/player/0', () => {
+  describe("POST /setup/player/0", () => {
     beforeEach(
       () =>{
         app.game = new Game();
       });
     it("should return status with missing piece", done => {
       request(app)
-        .post('/setup/player/0')
-        .send('0_0=4')
+        .post("/setup/player/0")
+        .send("0_0=4")
         .expect(206)
         .expect(/pieces or location missing!/)
         .end(done);
@@ -45,7 +47,7 @@ describe('app', () => {
     });
     it("should set army for given player and return status with OK", done => {
       request(app)
-        .post('/setup/player/0')
+        .post("/setup/player/0")
         .send(redArmyPos)
         .expect(200)
         .end(done);
@@ -54,42 +56,32 @@ describe('app', () => {
   describe('POST /setup/player/1', () => {
     it("should set army for another player and responds with OK", done => {
       request(app)
-        .post('/setup/player/1')
+        .post("/setup/player/1")
         .send(blueArmyPos)
         .expect(200)
         .end(done);
     });
   });
-  describe('POST /joinGame', () => {
-    it("redirect joining player to home if game is not created ", done => {
-      request(app)
-        .post('/joinGame')
-        .send("name=ankur&gameid=1")
-        .expect(302)
-        .expect("Location", "/")
-        .end(done);
-    });
-  });
-  describe('SetupPage', () => {
+  describe("SetupPage", () => {
     beforeEach(() => {
       app.game = new Game();
       app.game.addPlayer("player1");
       app.game.addPlayer("player2");
     });
-    describe('GET /setupRedArmy', () => {
+    describe("GET /setupRedArmy", () => {
       it("should render setup page for player1", done => {
         request(app)
-          .get('/setupRedArmy')
+          .get("/setupRedArmy")
           .expect(200)
           .expect(/setupRedArmy.js/)
           .expect(/player1/)
           .end(done);
       });
     });
-    describe('GET /setupBlueArmy', () => {
+    describe("GET /setupBlueArmy", () => {
       it("should render setup page for player2", done => {
         request(app)
-          .get('/setupBlueArmy')
+          .get("/setupBlueArmy")
           .expect(200)
           .expect(/setupBlueArmy.js/)
           .expect(/player2/)
@@ -97,10 +89,10 @@ describe('app', () => {
       });
     });
   });
-  describe('GET /createGame/:name', () => {
+  describe("GET /createGame/:name", () => {
     it("responds with sharing key", done => {
       request(app)
-        .get('/createGame/ravi')
+        .get("/createGame/ravi")
         .expect(200)
         .expect("1")
         .expect("Content-Type", "text/html; charset=utf-8")
@@ -116,11 +108,11 @@ describe('app', () => {
         .end(done);
     });
   });
-  describe('POST /joinGame', () => {
+  describe("POST /joinGame", () => {
     it("redirect joining player to home if game is not created ", done => {
       app.game = undefined;
       request(app)
-        .post('/joinGame')
+        .post("/joinGame")
         .send("name=ankur&gameid=1")
         .expect(302)
         .expect("Location","/")
@@ -132,7 +124,7 @@ describe('app', () => {
     });
     it("redirect valid joining player to battlefield", done => {
       request(app)
-        .post('/joinGame')
+        .post("/joinGame")
         .send("name=ankur&gameid=1")
         .expect(302)
         .expect("Location", "/setupBlueArmy")
@@ -140,16 +132,16 @@ describe('app', () => {
     });
     it("redirect invalid joining player to home", done => {
       request(app)
-        .post('/joinGame')
+        .post("/joinGame")
         .send("name=ankur&gameid=2")
         .expect(302)
         .expect("Location", "/")
         .end(done);
     });
-    it('redirect third joining player to home', done => {
+    it("redirect third joining player to home", done => {
       app.game.addPlayer("player2");
       request(app)
-        .post('/joinGame')
+        .post("/joinGame")
         .send("name=ankur&gameid=1")
         .expect(302)
         .expect("Location","/")
@@ -157,7 +149,7 @@ describe('app', () => {
     });
     it("redirect joining player with white spaces as name to home", done => {
       request(app)
-        .post('/joinGame')
+        .post("/joinGame")
         .send("name=  &gameid=1")
         .expect(302)
         .expect("Location","/")
@@ -186,7 +178,18 @@ describe('app', () => {
         .expect("true")
         .end(done);
     });
-
+  });
+  describe("GET /selectPiece/:pieceLoc", () => {
+    app.game = new Game(1);
+    placedArmyPos = {"1_1":"S","3_9":"B"};
+    it("should return the piece name on the requested location", (done) => {
+      app.game.setBattlefieldFor(0,placedArmyPos);
+      request(app)
+        .get("/selectPiece/0/1_1")
+        .expect(200)
+        .expect("S")
+        .end(done);
+    });
   });
   describe('GET /play', () => {
     it('should respond with hello', (done) => {
