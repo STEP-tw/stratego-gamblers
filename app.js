@@ -46,6 +46,14 @@ const setupBlueArmy = function (req, res) {
   res.send(setupTemp);
 };
 
+const getPieceFromLocation = function (req, res) {
+  let pieceLoc = req.params.pieceLoc;
+  let playerId = req.params.playerId;
+  let game = req.app.game;
+  let battlePosition=game.battlefield.getArmyPos(playerId);
+  res.send(battlePosition[pieceLoc]);
+};
+
 const sendOpponentStatus = function(req,res){
   let game = req.app.game;
   if(game.areBothPlayerReady()){
@@ -66,5 +74,6 @@ app.get('/setupRedArmy',setupRedArmy);
 app.get('/isOpponentReady',sendOpponentStatus);
 app.get('/setupBlueArmy', setupBlueArmy);
 app.get('/hasOpponentJoined', haveBothPlayerJoined);
+app.get('/selectPiece/:playerId/:pieceLoc', getPieceFromLocation);
 app.get('/play',(req,res)=>res.send('hello'));
 module.exports = app;

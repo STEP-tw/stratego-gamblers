@@ -26,7 +26,7 @@ class Game {
     return player;
   }
   setBattlefieldFor(playerId,placedArmyPos){
-    this.createPiecesFor(team); 
+    this.createPiecesFor(team);
     this.battlefield.setFieldFor(playerId,this.pieces,placedArmyPos);
   }
   getPlayerName(teamColor) {
