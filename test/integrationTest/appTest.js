@@ -1,8 +1,8 @@
 const assert = require("chai").assert;
 const request = require("supertest");
-const SessionManager = require("../../src/models/sessionManager.js");
+const Sessions = require("../../src/models/sessions.js");
 const app = require("../../app.js");
-app.sessionManager = new SessionManager(()=>1234);
+app.sessions = new Sessions(()=>1234);
 const Game = require("../../src/models/game");
 describe("app", () => {
   describe("GET /index.html", () => {

@@ -1,5 +1,5 @@
 const getTimeInSecond = () => new Date().getTime();
-class SessionManager {
+class Sessions {
   constructor(sessionIdGenerator = getTimeInSecond, sessions) {
     this.sessionIdGenerator = sessionIdGenerator;
     this.sessions = sessions || {};
@@ -21,4 +21,4 @@ class SessionManager {
   }
 }
 
-module.exports = SessionManager;
+module.exports = Sessions;
