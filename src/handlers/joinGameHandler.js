@@ -11,6 +11,7 @@ class JoinGameHandler {
     if (!game.areBothPlayersready()) {
       game.addPlayer(playerName);
       res.redirect('/setupBlueArmy');
+      return;
     }
     res.redirect("/");
   }
