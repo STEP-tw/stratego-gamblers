@@ -1,5 +1,5 @@
 const drawBaseGrid = () => {
-  drawGrid("baseGrid", 2, 10, 120);
+  drawGrid("baseGrid", 2, 10, 120, 10);
 };
 
 
@@ -20,7 +20,7 @@ const ready = () => {
 };
 
 window.onload = () => {
-  drawGrid("grid", 4, 10, 90);
+  drawGrid("grid", 4, 10, 60, 10);
   drawBaseGrid();
   appendPiecesToBase("blueArmy");
   addEventListener(ready, "click", "ready");

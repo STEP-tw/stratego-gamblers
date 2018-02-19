@@ -51,5 +51,14 @@ class Game {
     });
     return armyPos;
   }
+  getPlayerColorBy(playerId){
+    let players = this.getPlayers();
+    let player = players.find(player=>player.id==playerId);
+    return player.getColor();
+  }
+  getPlayerIndexBy(playerId){
+    let players = this.getPlayers();
+    return players.findIndex(player=>player.id==playerId);
+  }
 }
 module.exports =Game;
