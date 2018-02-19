@@ -6,12 +6,19 @@ let createRequest = function(callback, url, reqBody = null, method = "GET") {
   xhr.send(reqBody);
 };
 
+const hideElements = function() {
+  document.getElementById('redbutton').style.visibility = 'hidden';
+  document.getElementById('bluebutton').style.visibility = 'hidden';
+};
+
 const getCreateForm = function() {
+  hideElements();
   document.getElementById("bluebutton").disabled = true;
   document.getElementById('create').style.display = 'block';
 };
 
 const getJoinForm = function() {
+  hideElements();
   document.getElementById("bluebutton").disabled = true;
   document.getElementById('join').style.display = 'block';
 };

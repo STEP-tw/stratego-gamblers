@@ -1,13 +1,6 @@
 body {
-  background: rgba(233, 212, 179, 1);
-  background: -moz-linear-gradient(top, rgba(233, 212, 179, 1) 0%, rgba(233, 212, 179, 1) 0%, rgba(182, 141, 76, 1) 1%, rgba(193, 158, 103, 1) 5%, rgba(243, 226, 199, 1) 100%);
-  background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(233, 212, 179, 1)), color-stop(0%, rgba(233, 212, 179, 1)), color-stop(1%, rgba(182, 141, 76, 1)), color-stop(5%, rgba(193, 158, 103, 1)), color-stop(100%, rgba(243, 226, 199, 1)));
-  background: -webkit-linear-gradient(top, rgba(233, 212, 179, 1) 0%, rgba(233, 212, 179, 1) 0%, rgba(182, 141, 76, 1) 1%, rgba(193, 158, 103, 1) 5%, rgba(243, 226, 199, 1) 100%);
-  background: -o-linear-gradient(top, rgba(233, 212, 179, 1) 0%, rgba(233, 212, 179, 1) 0%, rgba(182, 141, 76, 1) 1%, rgba(193, 158, 103, 1) 5%, rgba(243, 226, 199, 1) 100%);
-  background: -ms-linear-gradient(top, rgba(233, 212, 179, 1) 0%, rgba(233, 212, 179, 1) 0%, rgba(182, 141, 76, 1) 1%, rgba(193, 158, 103, 1) 5%, rgba(243, 226, 199, 1) 100%);
-  background: linear-gradient(to bottom, rgba(233, 212, 179, 1) 0%, rgba(233, 212, 179, 1) 0%, rgba(182, 141, 76, 1) 1%, rgba(193, 158, 103, 1) 5%, rgba(243, 226, 199, 1) 100%);
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e9d4b3', endColorstr='#f3e2c7', GradientType=0);
   font-family: 'Bellefair', serif;
+  background-image: url("../img/background/background.png");
 }
 
 .heading {
@@ -34,100 +27,122 @@ body {
 }
 
 .main {
+  margin: 3% 0%;
   width: 100%;
-  height: 700px;
+  height: 600px;
 }
 
 .leftBlock {
   width: 65%;
   height: 100%;
+
 }
 
 .battlefieldGrid {
   width: 100%;
-  height: 55%;
+  height: 65%;
 }
 
 #battlefield {
   font-size: 130%;
   margin: 0% 10%;
-  padding: 0.5%;
+  padding: 0.5% 1%;
   background-color: #a78d43;
 }
 
-table{
+#grid {
+  width: 700px;
+  height: 280px;
   margin: 2% 10%;
   border-collapse: collapse;
 }
 
 td {
   text-align: center;
-  padding: 0%;
   width: 70px;
   height: 70px;
-  border: 1px solid black;
+  border: 1px solid #a78d43;
 }
 
 .armyBaseGrid {
   width: 100%;
-  height: 45%;
+  height: 35%;
 }
 
 #armyBase {
   font-size: 130%;
   margin: 0% 10%;
-  padding: 0.5%;
+  padding: 0.5% 1%;
   background-color: #a78d43;
+}
+
+#baseGrid {
+  width: 700px;
+  height: 140px;
+  margin: 2% 10%;
+  border-collapse: collapse;
 }
 
 .rightBlock {
   float: right;
   width: 35%;
   height: 100%;
-  margin-top: -43%;
+  margin: -42.2% 0% 0% 0%;
 }
 
 .pieceDescription {
-  margin: 5% 0%;
-  width: 70%;
+  margin: 9% 0%;
+  width: 80%;
   height: 35%;
+  border: 1px solid #a78d43;
 }
 
 .waitMessage {
-  margin-top: 3%;
+  margin: 3.5% 0% 10% 0%;
   text-align: center;
-  width: 70%;
-  height: 20%;
-  border: 1px solid black;
+  width: 80%;
+  height: 15%;
+  border: 1px solid #a78d43;
 }
 
 #message {
-  padding: 0.5%;
-  text-align: left;
+  padding: 0.5% 1%;
   font-size: 130%;
   background-color: #a78d43;
 }
 
 #readyStatus {
+  margin-top: 5%;
   font-size: 150%;
+  color: #a78d43;
   text-transform: uppercase;
 }
 
-.ready {
-  width: 100%;
-  height: 20%;
-}
-
 #ready {
-  font-size: 130%;
-  width: 15%;
-  height: 25%;
-  margin: 7% 27%;
+  font-size: 150%;
+  width: 25%;
+  height: 8%;
+  padding: 2% 2% 5% 2%;
+  margin: 0% 30%;
   background-color: #a78d43;
   font-family: 'Bellefair', serif;
 }
 
-@media only screen and (max-width: 500px) {
-  .pieceDescription {width:100%;},
-  .waitMessage {width: 100%;},
+button {
+  border: none;
+}
+
+button:focus{
+  outline: 0;
+}
+
+
+@media only screen and (min-width: 1000px) {
+  .pieceDescription {
+    width: 80%;
+  }
+  , .waitMessage {
+    width: 80%;
+  }
+  ,
 }
