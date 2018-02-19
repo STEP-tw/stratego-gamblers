@@ -16,7 +16,11 @@
       "docs/*",
       "public/*"
     ],
-    "watch": ["src/*","app.js","server.js"],
+    "watch": [
+      "src/*",
+      "app.js",
+      "server.js"
+    ],
     "delay": "2500"
   },
   "repository": {

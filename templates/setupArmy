@@ -23,14 +23,14 @@
         <span id="battlefield">
           BATTLEFIELD
         </span>
-        <table id="grid">
+        <table id="grid" cellspacing="0" cellpadding="0">
         </table>
       </div>
       <div class="armyBaseGrid">
         <span id="armyBase">
           ARMY BASE
         </span>
-        <table id="baseGrid">
+        <table id="baseGrid" cellspacing="0" cellpadding="0">
         </table>
       </div>
     </div>
@@ -40,11 +40,9 @@
       </div>
       <span id="message">MESSAGE</span>
       <div class="waitMessage">
-        <span id="readyStatus"></span>
+        <p id="readyStatus"></p>
       </div>
-      <div class="ready">
-        <button id="ready" type="button" name="button">READY</button>
-      </div>
+      <button id="ready" type="button" name="button">READY</button>
     </div>
   </div>
 </body>

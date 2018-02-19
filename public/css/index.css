@@ -1,122 +1,67 @@
 body {
-  background: rgba(233, 212, 179, 1);
-  background: -moz-linear-gradient(top, rgba(233, 212, 179, 1) 0%, rgba(233, 212, 179, 1) 0%, rgba(182, 141, 76, 1) 1%, rgba(193, 158, 103, 1) 5%, rgba(243, 226, 199, 1) 100%);
-  background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(233, 212, 179, 1)), color-stop(0%, rgba(233, 212, 179, 1)), color-stop(1%, rgba(182, 141, 76, 1)), color-stop(5%, rgba(193, 158, 103, 1)), color-stop(100%, rgba(243, 226, 199, 1)));
-  background: -webkit-linear-gradient(top, rgba(233, 212, 179, 1) 0%, rgba(233, 212, 179, 1) 0%, rgba(182, 141, 76, 1) 1%, rgba(193, 158, 103, 1) 5%, rgba(243, 226, 199, 1) 100%);
-  background: -o-linear-gradient(top, rgba(233, 212, 179, 1) 0%, rgba(233, 212, 179, 1) 0%, rgba(182, 141, 76, 1) 1%, rgba(193, 158, 103, 1) 5%, rgba(243, 226, 199, 1) 100%);
-  background: -ms-linear-gradient(top, rgba(233, 212, 179, 1) 0%, rgba(233, 212, 179, 1) 0%, rgba(182, 141, 76, 1) 1%, rgba(193, 158, 103, 1) 5%, rgba(243, 226, 199, 1) 100%);
-  background: linear-gradient(to bottom, rgba(233, 212, 179, 1) 0%, rgba(233, 212, 179, 1) 0%, rgba(182, 141, 76, 1) 1%, rgba(193, 158, 103, 1) 5%, rgba(243, 226, 199, 1) 100%);
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e9d4b3', endColorstr='#f3e2c7', GradientType=0);
+  background-image: url("../img/background/background.png");
 }
 
-.alert {
-  font-size: 26px;
-  width:800px;
-  height:200px;
-  position: absolute;
-  right: 0;
-  top: 35%;
-  left: 2.5%;
-  bottom: 0;
-  margin: auto;
-  padding: 20px;
-  box-sizing: border-box;
-  padding: 20px;
-  background-color:rgb(78,73,75);
-  border-radius: 12px;
-  color: white;
+#logo {
+  height: 50%;
+  width: 50%;
+  margin: 5% 23%;
 }
 
-h1 {
-  padding: 70px;
-  text-align: center;
-  font-family: 'UnifrakturCook', cursive;
-  font-size: 200px;
-  color: darkgoldenrod;
-  text-shadow: 4px 4px 6px #7E481C;
-}
-
-button {
+#redbutton, #bluebutton {
+  font-size: 250%;
   font-family: 'Alegreya', serif;
-  font-weight: bold;
-  width: 300px;
+  width: 50%;
+  margin: 1% 24%;
+  color: #EDC35A;
+  background: none;
   border: none;
-  color: white;
-  padding: 15px 32px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 26px;
-  margin: 8px 2px;
   cursor: pointer;
-  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-  border-radius: 12px;
 }
 
-#redbutton {
-  background-color: #f44336;
+button:focus{
+  outline: 0;
 }
 
-#bluebutton {
-  background-color: #008CBA;
+.column-middle .alert {
+  text-align: center;
+  font-size: 200%;
+  font-family: 'Alegreya', serif;
+  width: 80%;
+  margin: 0% 9.5%;
+  color: #EDC35A;
+  background: none;
+  border: none;
 }
 
-#help {
-  background-color: #4CAF50;
+.popup-form{
+  animation: animatezoom 0.6s;
+  width: 40%;
+  margin: -13% 0% 0% 30%;
+  overflow: auto;
 }
 
-.basic {
-  width: 400px;
-  height: 300px;
-  position: absolute;
-  right: 0;
-  top: 35%;
-  left: 2.5%;
-  bottom: 0;
-  margin: auto;
-  padding: 20px;
-  box-sizing: border-box;
+@keyframes animatezoom {
+  from { transform:scale(0)}
+  to {transform:scale(01)}
 }
 
-.popup-form {
-  height: 300px;
-  border-radius: 5px;
-  background-color: #f2f2f2;
-  padding: 20px;
-  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+.popup-form input {
+  outline: 0;
 }
 
 .popup-form button {
-  width: 100%;
-  padding: 5px 15px;
+  font-size: 40%;
 }
 
 input[type=text] {
   font-size: larger;
   width: 100%;
-  padding: 12px 20px;
-  margin: 8px 0;
-  display: inline-block;
-  border: 1px solid #ccc;
+  padding: 3% 10%;
+  margin: 2% 0%;
+  border: none;
   border-radius: 12px;
   box-sizing: border-box;
-}
-
-input[type=text]:focus {
-  border-radius: 4px;
-  border: 3px solid #555;
-}
-
-.form-input {
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 10px;
-}
-
-.form-input label {
-  margin: 6px 10px;
-  font-weight: 100;
-  color: rgb(91, 91, 93);
 }
 
 #join {
