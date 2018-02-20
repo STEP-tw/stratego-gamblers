@@ -8,5 +8,8 @@ describe('Bomb',()=>{
     let actual = bomb;
     assert.deepEqual(expected,actual);
   });
+  it('should return false for movement',()=>{
+    let bomb = new Bomb();
+    assert.isNotOk(bomb.isMovable());
+  });
 });
-

@@ -8,5 +8,8 @@ describe('Flag',()=>{
     let actual = flag;
     assert.deepEqual(expected,actual);
   });
+  it('should return false for movement',()=>{
+    let flag = new Flag();
+    assert.isNotOk(flag.isMovable());
+  });
 });
-
