@@ -90,6 +90,15 @@ const renderGamePage = function(req, res) {
   res.send(battlefield);
 };
 
+const validatePlayerStatus=function(req,res,next){
+  let game = req.app.game;
+  if(game.areBothPlayerReady()){
+    next(); 
+  }else{
+    res.redirect('/setupArmy');
+  }
+};
+
 app.use(log());
 app.use(express.urlencoded({
   extended: false
@@ -106,6 +115,7 @@ app.get('/isOpponentReady', sendOpponentStatus);
 app.get('/hasOpponentJoined', haveBothPlayersJoined);
 app.get('/selectPiece/:playerId/:pieceLoc', getPieceFromLocation);
 app.get('/potentialMoves/:playerId/:pieceLoc', getPotentialMoves);
+app.use('/play',validatePlayerStatus);
 app.get('/play', renderGamePage);
 app.get('/battlefield', getBattlefield);
 // app.post('/selectedLoc',updateLocation);
