@@ -65,25 +65,27 @@ describe('app', () => {
   describe("SetupPage", () => {
     beforeEach(() => {
       app.game = new Game();
-      app.game.addPlayer("player1");
-      app.game.addPlayer("player2");
+      app.game.addPlayer("player1",12345,'red');
+      app.game.addPlayer("player2",123456,'blue');
     });
-    describe("GET /setupRedArmy", () => {
+    describe("GET /setupArmy", () => {
       it("should render setup page for player1", done => {
         request(app)
-          .get("/setupRedArmy")
+          .get("/setupArmy")
+          .set('cookie', 'sessionId=12345')
           .expect(200)
-          .expect(/setupRedArmy.js/)
+          .expect(/redSetup.js/)
           .expect(/player1/)
           .end(done);
       });
     });
-    describe("GET /setupBlueArmy", () => {
+    describe("GET /setupArmy", () => {
       it("should render setup page for player2", done => {
         request(app)
-          .get("/setupBlueArmy")
+          .get("/setupArmy")
+          .set('cookie', 'sessionId=123456')
           .expect(200)
-          .expect(/setupBlueArmy.js/)
+          .expect(/blueSetup.js/)
           .expect(/player2/)
           .end(done);
       });
@@ -127,7 +129,7 @@ describe('app', () => {
         .post("/joinGame")
         .send("name=ankur&gameid=1")
         .expect(302)
-        .expect("Location", "/setupBlueArmy")
+        .expect("Location", "/setupArmy")
         .end(done);
     });
     it("redirect invalid joining player to home", done => {
