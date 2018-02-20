@@ -44,7 +44,9 @@ const getBattlefield = function(req, res) {
   let playerId = req.cookies.sessionId;
   let playerIndex = game.getPlayerIndexBy(playerId);
   let battlefieldPos = game.getBattlefieldFor(playerIndex);
-  res.send(JSON.stringify(battlefieldPos));
+  let currentPlayer = game.getCurrentPlayer();
+  let respond = {'currentPlayer':currentPlayer,'battlefield':battlefieldPos};
+  res.send(JSON.stringify(respond));
 };
 const setupArmy = function(req, res) {
   let setupTemp = req.app.fs.readFileSync('./templates/setupArmy', 'utf8');
@@ -93,7 +95,7 @@ const renderGamePage = function(req, res) {
 const validatePlayerStatus=function(req,res,next){
   let game = req.app.game;
   if(game.areBothPlayerReady()){
-    next(); 
+    next();
   }else{
     res.redirect('/setupArmy');
   }

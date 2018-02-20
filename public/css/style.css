@@ -4,9 +4,25 @@ body {
 }
 
 #logo {
-  margin: 0% 40.3%;
-  height: 16%;
-  width: 16%;
+  margin: 0% 44%;
+  height: 12%;
+  width: 12%;
+}
+
+.turnMessage {
+  text-align: center;
+  margin: auto;
+  margin-bottom: 1%;
+  width: 30%;
+  height: 40px;
+}
+
+#currentPlayer {
+  text-transform: uppercase;
+  color: #a78d43;
+  font-size: 175%;
+  width: 100%;
+  height: 100%;
 }
 
 .container {

@@ -11,6 +11,9 @@
 
 <body>
   <img id="logo" src="img/background/logo.png">
+  <div class="turnMessage">
+    <span id="currentPlayer"></span>
+  </div>
   <div class="container">
     <div class="redArmy">
       <table id="redArmyPieces">

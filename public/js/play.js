@@ -71,7 +71,11 @@ const showBattlefield = (battlefield,imgSrcDirectory) => {
 
 const updateBattleField = function(imgSrcDirectory) {
   let reqListener = function() {
-    let battlefield = JSON.parse(this.responseText);
+    let gameData = JSON.parse(this.responseText);
+    let battlefield =gameData['battlefield'];
+    let name = gameData['currentPlayer'];
+    let turnBox = document.getElementById('currentPlayer');
+    turnBox.innerText = `${name}'s turn`;
     showBattlefield(battlefield,imgSrcDirectory);
   };
   doXhr('/battlefield', 'GET', reqListener, '', () => {
