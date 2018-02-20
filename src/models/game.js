@@ -51,5 +51,8 @@ class Game {
     });
     return armyPos;
   }
+  getPotentialMoves(playerId, pieceLoc) {
+
+  }
 }
 module.exports =Game;

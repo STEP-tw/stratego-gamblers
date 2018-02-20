@@ -1,3 +1,10 @@
+const filterFrom = function(array) {
+  return function(element) {
+    array.includes(element);
+  };
+};
+
+
 class Battlefield {
   constructor(){
     this.placedPositions = {};
@@ -37,6 +44,13 @@ class Battlefield {
   areBothArmyDeployed(){
     let battlePositions = this.battlePositions;
     return Object.keys(battlePositions).length==2;
+  }
+  getAttackMovesFor(playerId, pieceLoc){
+    let opponentPos = this.getOpponentPos(playerId);
+    let piece = this.getPiece(playerId, pieceLoc);
+    let neighbourPositions = piece.getNeighbourPositions();
+    let filterAttackingMoves = filterFrom(opponentPos);
+    return neighbourPositions.filter(filterAttackingMoves);
   }
 }
 module.exports = Battlefield;

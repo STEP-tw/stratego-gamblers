@@ -73,7 +73,12 @@ const sendOpponentStatus = function(req,res){
 };
 
 const getPotentialMoves = function(req,res){
-  res.send(["2_1", "2_3" ,"1_2", "3_2"]);
+  let game = req.app.game;
+  let playerId = req.params.playerId;
+  let pieceLoc = req.params.pieceLoc;
+  let potentialMoves = game.getPotentialMoves(playerId, pieceLoc);
+  res.send({"freeMoves": ["2_1", "2_3", "1_2", "3_2"]});
+  // res.send(potentialMoves);
 };
 
 app.use(log());

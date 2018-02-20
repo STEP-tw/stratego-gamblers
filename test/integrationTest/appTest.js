@@ -233,7 +233,7 @@ describe('app', () => {
       request(app)
         .get("/potentialMoves/0/2_2")
         .expect(200)
-        .expect(["2_1", "2_3" ,"1_2", "3_2"])
+        .expect({freeMoves:["2_1", "2_3" ,"1_2", "3_2"]})
         .end(done);
     });
   });
