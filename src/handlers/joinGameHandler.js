@@ -16,7 +16,7 @@ class JoinGameHandler {
     if (!game.haveBothPlayersJoined()) {
       game.addPlayer(playerName,playerId,'blue');
       res.cookie('sessionId',playerId);
-      res.redirect('/setupBlueArmy');
+      res.redirect('/setupArmy');
       return;
     }
     res.redirect("/");

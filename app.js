@@ -37,20 +37,13 @@ const getBattlefield = function(req, res) {
   let battlefieldPos = game.getBattlefieldFor(playerIndex);
   res.send(JSON.stringify(battlefieldPos));
 };
-const setupRedArmy = function(req, res) {
+const setupArmy = function(req, res) {
   let setupTemp = req.app.fs.readFileSync('./templates/setupArmy', 'utf8');
-  setupTemp = setupTemp.replace('{{team}}', 'Red');
   let game = req.app.game;
-  let name = game.getPlayerName("red");
-  setupTemp = setupTemp.replace('{{playerName}}', name);
-  res.send(setupTemp);
-};
-
-const setupBlueArmy = function(req, res) {
-  let setupTemp = app.fs.readFileSync('./templates/setupArmy', 'utf8');
-  setupTemp = setupTemp.replace('{{team}}', 'Blue');
-  let game = req.app.game;
-  let name = game.getPlayerName("blue");
+  let playerId = req.cookies.sessionId;
+  let teamColor = game.getPlayerColorBy(playerId);
+  setupTemp = setupTemp.replace('{{team}}', teamColor);
+  let name = game.getPlayerName(teamColor);
   setupTemp = setupTemp.replace('{{playerName}}', name);
   res.send(setupTemp);
 };
@@ -98,9 +91,8 @@ app.use(express.static('public'));
 app.get("/createGame/:name", new CreateGameHandler().getRequestHandler());
 app.post("/joinGame", new JoinGameHandler().getRequestHandler());
 app.post('/setup/player/:playerId', setBattlefield);
-app.get('/setupRedArmy', setupRedArmy);
+app.get('/setupArmy', setupArmy);
 app.get('/isOpponentReady', sendOpponentStatus);
-app.get('/setupBlueArmy', setupBlueArmy);
 app.get('/hasOpponentJoined', haveBothPlayersJoined);
 app.get('/selectPiece/:playerId/:pieceLoc', getPieceFromLocation);
 app.get('/potentialMoves/:playerId/:pieceLoc', getPotentialMoves);
