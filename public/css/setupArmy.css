@@ -1,6 +1,6 @@
 body {
-  font-family: 'Bellefair', serif;
   background-image: url("../img/background/background.png");
+  font-family: 'Bellefair', serif;
 }
 
 .heading {
@@ -35,7 +35,6 @@ body {
 .leftBlock {
   width: 65%;
   height: 100%;
-
 }
 
 .battlefieldGrid {
@@ -132,10 +131,9 @@ button {
   border: none;
 }
 
-button:focus{
+button:focus {
   outline: 0;
 }
-
 
 @media only screen and (min-width: 1000px) {
   .pieceDescription {

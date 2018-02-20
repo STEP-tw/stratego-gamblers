@@ -1,17 +1,30 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <title>Stratego</title>
-    <script src="js/play.js" charset="utf-8"></script>
-    <script src="js/{{team}}battlefield.js" charset="utf-8"></script>
-    <link rel="stylesheet" href="css/style.css">
-  </head>
-  <body>
-    <div class="heading">
-      BATTLEFIELD
+
+<head>
+  <meta charset="utf-8">
+  <title>Stratego</title>
+  <script src="js/play.js" charset="utf-8"></script>
+  <script src="js/{{team}}battlefield.js" charset="utf-8"></script>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+  <img id="logo" src="img/background/logo.png">
+  <div class="container">
+    <div class="redArmy">
+      <table id="redArmyPieces">
+      </table>
     </div>
-    <table id="battlefield">
-    </table>
-  </body>
+    <div class="blueArmy">
+      <table id="blueArmyPieces">
+      </table>
+    </div>
+    <div class="battlefield">
+      <table id="battlefield">
+      </table>
+    </div>
+  </div>
+</body>
+
 </html>
