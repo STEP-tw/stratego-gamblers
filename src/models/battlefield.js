@@ -8,7 +8,7 @@ const filterFrom = function(array) {
 class Battlefield {
   constructor(){
     this.placedPositions = {};
-    this.lakeArea = [];
+    this.lakeArea = ['5_2','5_3','4_2','4_3','5_6','5_7','4_6','4_7'];
     this.battlePositions = {};
   }
   setField(pieces,placedArmyPos){
@@ -51,6 +51,9 @@ class Battlefield {
     let neighbourPositions = piece.getNeighbourPositions();
     let filterAttackingMoves = filterFrom(opponentPos);
     return neighbourPositions.filter(filterAttackingMoves);
+  }
+  getLakePos(){
+    return this.lakeArea;
   }
 }
 module.exports = Battlefield;

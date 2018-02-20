@@ -19,7 +19,7 @@ body {
   cursor: pointer;
 }
 
-button:focus{
+button:focus {
   outline: 0;
 }
 
@@ -34,7 +34,7 @@ button:focus{
   border: none;
 }
 
-.popup-form{
+.popup-form {
   animation: animatezoom 0.6s;
   width: 40%;
   margin: -13% 0% 0% 30%;
@@ -42,8 +42,12 @@ button:focus{
 }
 
 @keyframes animatezoom {
-  from { transform:scale(0)}
-  to {transform:scale(01)}
+  from {
+    transform: scale(0)
+  }
+  to {
+    transform: scale(01)
+  }
 }
 
 .popup-form input {

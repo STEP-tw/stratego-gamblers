@@ -1,9 +1,10 @@
-class Scout {
-  constructor(team){
+const Piece=require('./piece.js');
+class Scout extends Piece {
+  constructor(){
+    super();
     this.id = '2';
     this.name = 'Scout';
     this.rank = 2;
-    this.team = team;
   }
 }
 module.exports = Scout;

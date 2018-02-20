@@ -196,7 +196,7 @@ describe('app', () => {
       request(app)
         .get('/play')
         .expect(200)
-        .expect(/hello/)
+        .expect(/battlefield/)
         .end(done);
     });
   });
@@ -234,6 +234,25 @@ describe('app', () => {
         .get("/potentialMoves/0/2_2")
         .expect(200)
         .expect({freeMoves:["2_1", "2_3" ,"1_2", "3_2"]})
+        .end(done);
+    });
+  });
+  describe('GET /battlefield', () => {
+    beforeEach(() => {
+      app.game = new Game();
+      app.game.addPlayer("player1",12345,'red');
+      app.game.addPlayer("player2",123456,'blue');
+      let redArmyPos = {'3_2':'2','3_9':'B'};
+      let blueArmyPos = {'9_2':'2','9_9':'B'};
+      app.game.setBattlefieldFor(0,redArmyPos);
+      app.game.setBattlefieldFor(1, blueArmyPos);
+    });
+    it('should respond with battlefield of given player', (done) => {
+      request(app)
+        .get('/battlefield')
+        .set('cookie','sessionId=12345')
+        .expect(200)
+        .expect(/"3_2":"2","3_9":"B","9_2":0,"9_9":0/)
         .end(done);
     });
   });

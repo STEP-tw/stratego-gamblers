@@ -75,20 +75,20 @@ const generateRow = (initialID, numberOfCols) => {
   return row;
 };
 
-const drawGrid = function(containerId, numberOfRows, numberOfCols, initialID) {
+const drawGrid = (containerId, numOfRows, numOfCols, initialID,idGrowth)=> {
   let grid = document.getElementById(containerId);
-  for (let rows = 0; rows < numberOfRows; rows++) {
-    let row = generateRow(initialID, numberOfCols);
-    initialID -= 10;
+  for (let rows = 0; rows < numOfRows; rows++) {
+    let row = generateRow(initialID, numOfCols);
+    initialID += idGrowth;
     grid.appendChild(row);
   }
 };
 
 const getPlayingPiece = () => {
   let playingPieces = [
-    "flag.png", "spy.png", "scout.png", "scout.png", "miner.png", "miner.png",
-    "marshal.png", "general.png",
-    "bomb.png", "bomb.png",
+    "F.png", "S.png", "2.png", "2.png", "3.png", "3.png",
+    "10.png", "9.png",
+    "B.png", "B.png",
   ];
   return playingPieces;
 };

@@ -1,9 +1,13 @@
-class Flag {
-  constructor(team){
+const Piece=require('./piece.js');
+class Flag extends Piece {
+  constructor(){
+    super();
     this.id = 'F';
     this.name = 'Flag';
     this.rank = 0;
-    this.team = team;
+  }
+  isMovable(){
+    return false;
   }
 }
 module.exports = Flag;

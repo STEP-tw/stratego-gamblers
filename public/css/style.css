@@ -1,9 +1,59 @@
-#battlefieldGrid{
-  border: 2px solid black;
-  height: 1000px;
-  width: 1000px;
+body {
+  background-image: url("../img/background/background.png");
+  font-family: 'Bellefair', serif;
+}
+
+#logo {
+  margin: 0% 40.3%;
+  height: 16%;
+  width: 16%;
+}
+
+.container {
+  margin: auto;
+  width: 75%;
+  height: 628px;
+}
+
+.redArmy {
+  float: left;
+  margin-left: 2%;
+  width: 12%;
+  height: 100%;
+  border: 1px solid #a78d43;
+}
+
+#redArmyPieces {
   border-collapse: collapse;
 }
-#battlefieldGrid td {
-  border: 1px solid black;
+
+.blueArmy {
+  float: right;
+  margin-right: 2%;
+  width: 12%;
+  height: 100%;
+  border: 1px solid #a78d43;
+}
+
+#blueArmyPieces {
+  border-collapse: collapse;
+}
+
+.battlefield {
+  margin: auto;
+  width: 60%;
+  height: 100%;
+}
+
+#battlefield {
+  margin: auto;
+  border-collapse: collapse;
+}
+
+td {
+  color: #a78d43;
+  text-align: center;
+  width: 60px;
+  height: 60px;
+  border: 1px solid #a78d43;
 }
