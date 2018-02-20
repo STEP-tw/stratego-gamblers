@@ -12,6 +12,15 @@ const JoinGameHandler = require('./src/handlers/joinGameHandler.js');
 app.fs = fs;
 app.sessions = new Sessions();
 
+const redirectToHome = function(req,res,next){
+  let unauthorizedUrls = ['/play', '/setupArmy', '/battlefield',
+    'isOpponentReady', '/hasOpponentJoined','/setup/player'];
+  if(unauthorizedUrls.includes(req.url) && !req.app.game){
+    res.redirect('/');
+  }else{
+    next();
+  }
+};
 
 const setBattlefield = function(req, res) {
   let game = req.app.game;
@@ -88,6 +97,7 @@ app.use(express.urlencoded({
 app.use(cookieParser());
 
 app.use(express.static('public'));
+app.use(redirectToHome);
 app.get("/createGame/:name", new CreateGameHandler().getRequestHandler());
 app.post("/joinGame", new JoinGameHandler().getRequestHandler());
 app.post('/setup/player/:playerId', setBattlefield);
