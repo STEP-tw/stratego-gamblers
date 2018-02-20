@@ -250,6 +250,27 @@ describe('app', () => {
         .end(done);
     });
   });
+  describe('#updateBattlefield',()=>{
+    app.game = new Game();
+    app.game.addPlayer("player1",12345,'red');
+    app.game.addPlayer("player2",123456,'blue');
+    it('should should response with ok  ',(done)=>{
+      request(app)
+        .post('/selectedLoc')
+        .set('cookie','sessionId=12345')
+        .expect(200)
+        .expect(/hello/)
+        .end(done);
+    });
+    it('should should response with 406 for in valid player ',(done)=>{
+      request(app)
+        .post('/selectedLoc')
+        .set('cookie','sessionId=123456')
+        .expect(406)
+        .expect(/invalid request/)
+        .end(done);        
+    });
+  });
   describe('GET /battlefield', () => {
     it('should redirect to / if there is no game', (done) => {
       app.game=undefined;

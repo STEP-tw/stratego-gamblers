@@ -74,6 +74,18 @@ const renderGamePage = function(req, res) {
   res.send(battlefield);
 };
 
+const updateBattlefield = function(req,res){
+  let game = req.app.game;
+  let sessionId = req.cookies.sessionId;
+  let playerId = game.getPlayerIndexBy(sessionId);
+  if(game.isCurrentPlayer(playerId)){
+    res.send('hello');
+    return;
+  }
+  res.status(406);
+  res.send('invalid request');
+  res.end();
+};
 const validatePlayerStatus=function(req,res,next){
   let game = req.app.game;
   if(game.areBothPlayerReady()){
@@ -100,6 +112,5 @@ app.get('/hasOpponentJoined', haveBothPlayersJoined);
 app.use('/play',validatePlayerStatus);
 app.get('/play', renderGamePage);
 app.get('/battlefield', getBattlefield);
-// app.post('/selectedLoc',updateLocation);
-// app.get('/updateBattlefield',updateBattlefield);
+app.post('/selectedLoc',updateBattlefield);
 module.exports = app;
