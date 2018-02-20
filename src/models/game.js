@@ -67,5 +67,8 @@ class Game {
     let players = this.getPlayers();
     return players.findIndex(player=>player.id==playerId);
   }
+  isCurrentPlayer(playerId){
+    return this.currentPlayerId==playerId;
+  }
 }
 module.exports =Game;
