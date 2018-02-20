@@ -1,9 +1,4 @@
-const filterFrom = function(array) {
-  return function(element) {
-    array.includes(element);
-  };
-};
-
+const filterFrom = require("../lib/lib.js").filterFrom;
 
 class Battlefield {
   constructor(){
@@ -45,10 +40,13 @@ class Battlefield {
     let battlePositions = this.battlePositions;
     return Object.keys(battlePositions).length==2;
   }
+  getPiece(playerId, pieceLoc){
+    return this.battlePositions[playerId][pieceLoc];
+  }
   getAttackMovesFor(playerId, pieceLoc){
     let opponentPos = this.getOpponentPos(playerId);
     let piece = this.getPiece(playerId, pieceLoc);
-    let neighbourPositions = piece.getNeighbourPositions();
+    let neighbourPositions = piece.getPotentialMove(pieceLoc);
     let filterAttackingMoves = filterFrom(opponentPos);
     return neighbourPositions.filter(filterAttackingMoves);
   }

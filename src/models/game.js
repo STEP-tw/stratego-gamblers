@@ -55,9 +55,6 @@ class Game {
     });
     return armyPos;
   }
-  getPotentialMoves(playerId, pieceLoc) {
-
-  }
   getPlayerColorBy(playerId){
     let players = this.getPlayers();
     let player = players.find(player=>player.id==playerId);

@@ -179,18 +179,6 @@ describe('app', () => {
         .end(done);
     });
   });
-  describe("GET /selectPiece/:pieceLoc", () => {
-    app.game = new Game(1);
-    placedArmyPos = {"1_1":"S","3_9":"B"};
-    it("should return the piece name on the requested location", (done) => {
-      app.game.setBattlefieldFor(0,placedArmyPos);
-      request(app)
-        .get("/selectPiece/0/1_1")
-        .expect(200)
-        .expect("S")
-        .end(done);
-    });
-  });
   describe('GET /play', () => {
     it('should respond with hello', (done) => {
       request(app)
@@ -220,20 +208,6 @@ describe('app', () => {
         .get('/isOpponentReady')
         .expect(302)
         .expect('Location','/play')
-        .end(done);
-    });
-  });
-  describe('GET /potentialMoves/:playerId/:pieceLoc', function() {
-    beforeEach(() => {
-      app.game = new Game(1);
-      placedArmyPos = {"2_2":"S","3_9":"B"};
-    });
-    it("should return the potential moves for the requested piece", (done) => {
-      app.game.setBattlefieldFor(0,placedArmyPos);
-      request(app)
-        .get("/potentialMoves/0/2_2")
-        .expect(200)
-        .expect({freeMoves:["2_1", "2_3" ,"1_2", "3_2"]})
         .end(done);
     });
   });

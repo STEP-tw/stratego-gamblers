@@ -24,3 +24,9 @@ exports.isEquivalent = (obj1, obj2)=>{
   }
   return true;
 };
+
+exports.filterFrom = function(array) {
+  return function(element) {
+    return array.includes(element);
+  };
+};

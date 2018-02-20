@@ -55,14 +55,6 @@ const setupBlueArmy = function(req, res) {
   res.send(setupTemp);
 };
 
-const getPieceFromLocation = function(req, res) {
-  let pieceLoc = req.params.pieceLoc;
-  let playerId = req.params.playerId;
-  let game = req.app.game;
-  let battlePosition = game.battlefield.getArmyPos(playerId);
-  res.send(battlePosition[pieceLoc]);
-};
-
 const sendOpponentStatus = function(req, res) {
   let game = req.app.game;
   if (game.areBothPlayerReady()) {
@@ -71,14 +63,6 @@ const sendOpponentStatus = function(req, res) {
   res.status(202).send('wait..let opponent be ready');
 };
 
-const getPotentialMoves = function(req,res){
-  let game = req.app.game;
-  let playerId = req.params.playerId;
-  let pieceLoc = req.params.pieceLoc;
-  let potentialMoves = game.getPotentialMoves(playerId, pieceLoc);
-  res.send({"freeMoves": ["2_1", "2_3", "1_2", "3_2"]});
-};
-// res.send(potentialMoves);
 const renderGamePage = function(req, res) {
   let game = req.app.game;
   let battlefield = req.app.fs.readFileSync('./templates/battlefield', 'utf8');
@@ -102,8 +86,6 @@ app.get('/setupRedArmy', setupRedArmy);
 app.get('/isOpponentReady', sendOpponentStatus);
 app.get('/setupBlueArmy', setupBlueArmy);
 app.get('/hasOpponentJoined', haveBothPlayersJoined);
-app.get('/selectPiece/:playerId/:pieceLoc', getPieceFromLocation);
-app.get('/potentialMoves/:playerId/:pieceLoc', getPotentialMoves);
 app.get('/play', renderGamePage);
 app.get('/battlefield', getBattlefield);
 // app.post('/selectedLoc',updateLocation);
