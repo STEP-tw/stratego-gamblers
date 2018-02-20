@@ -1,4 +1,5 @@
 const filterFrom = require("../lib/lib.js").filterFrom;
+const filterNotIn = require("../lib/lib.js").filterNotIn;
 
 class Battlefield {
   constructor(){
@@ -47,8 +48,16 @@ class Battlefield {
     let opponentPos = this.getOpponentPos(playerId);
     let piece = this.getPiece(playerId, pieceLoc);
     let neighbourPositions = piece.getPotentialMove(pieceLoc);
-    let filterAttackingMoves = filterFrom(opponentPos);
-    return neighbourPositions.filter(filterAttackingMoves);
+    let isAttackingMove = filterFrom(opponentPos);
+    return neighbourPositions.filter(isAttackingMove);
+  }
+  getFreeMoves(playerId, pieceLoc){
+    let piece = this.getPiece(playerId, pieceLoc);
+    let playerPos = Object.keys(this.getArmyPos(playerId));
+    let attackingMoves = this.getAttackMovesFor(playerId, pieceLoc);
+    let neighbourPositions = piece.getPotentialMove(pieceLoc);
+    let isFreeMove = filterNotIn(playerPos, attackingMoves);
+    return neighbourPositions.filter(isFreeMove);
   }
   getLakePos(){
     return this.lakeArea;

@@ -30,3 +30,9 @@ exports.filterFrom = function(array) {
     return array.includes(element);
   };
 };
+
+exports.filterNotIn = function (array1,array2) {
+  return function(element){
+    return !array1.includes(element) && !array2.includes(element);
+  };
+};

@@ -1,68 +1,75 @@
 const Battlefield = require('./battlefield.js');
 const Player = require('./player.js');
-const Pieces=require('./pieces.js');
+const Pieces = require('./pieces.js');
 
 class Game {
-  constructor(id){
-    this.id=id;
+  constructor(id) {
+    this.id = id;
     this.players = [];
     this.currentPlayerId = 0;
     this.battlefield = new Battlefield();
     this.pieces = new Pieces();
     this.gameType = 'quickGame';
   }
-  getId(){
+  getId() {
     return this.id;
   }
-  getPlayers(){
+  getPlayers() {
     return this.players;
   }
-  addPlayer(playerName,id,color){
-    let player=new Player(playerName,id,color);
+  addPlayer(playerName, id, color) {
+    let player = new Player(playerName, id, color);
     this.players.push(player);
     return player;
   }
-  setBattlefieldFor(playerId,placedArmyPos){
+  setBattlefieldFor(playerId, placedArmyPos) {
     this.createPiecesFor();
-    this.battlefield.setFieldFor(playerId,this.pieces,placedArmyPos);
+    this.battlefield.setFieldFor(playerId, this.pieces, placedArmyPos);
   }
   getPlayerName(teamColor) {
     let players = this.players;
-    if(teamColor == "red") {
+    if (teamColor == "red") {
       return players[0].getName();
     }
     return players[1].getName();
   }
-  haveBothPlayersJoined(){
+  haveBothPlayersJoined() {
     let numberOfPlayers = this.players.length;
     return numberOfPlayers == 2;
   }
-  createPiecesFor(){
+  createPiecesFor() {
     this.pieces.loadPieces(this.gameType);
   }
-  areBothPlayerReady(){
+  areBothPlayerReady() {
     return this.battlefield.areBothArmyDeployed();
   }
-  getBattlefieldFor(playerId){
+  getBattlefieldFor(playerId) {
     let armyPos = this.battlefield.getArmyPos(playerId);
     let opponentPos = this.battlefield.getOpponentPos(playerId);
     let lakePos = this.battlefield.getLakePos();
-    opponentPos.forEach(pos=>{
-      armyPos[pos]=0;
+    opponentPos.forEach(pos => {
+      armyPos[pos] = 0;
     });
-    lakePos.forEach(pos=>{
-      armyPos[pos]='X';
+    lakePos.forEach(pos => {
+      armyPos[pos] = 'X';
     });
     return armyPos;
   }
-  getPlayerColorBy(playerId){
+  getPotentialMoves(playerId, pieceLoc) {
+    let battlefield = this.battlefield;
+    let freeMoves = battlefield.getFreeMoves(playerId, pieceLoc);
+    let attackMoves = battlefield.getAttackMovesFor(playerId, pieceLoc);
+    let potentialMoves = {freeMoves: freeMoves, attackMoves: attackMoves};
+    return potentialMoves;
+  }
+  getPlayerColorBy(playerId) {
     let players = this.getPlayers();
-    let player = players.find(player=>player.id==playerId);
+    let player = players.find(player => player.id == playerId);
     return player.getColor();
   }
-  getPlayerIndexBy(playerId){
+  getPlayerIndexBy(playerId) {
     let players = this.getPlayers();
-    return players.findIndex(player=>player.id==playerId);
+    return players.findIndex(player => player.id == playerId);
   }
 }
-module.exports =Game;
+module.exports = Game;

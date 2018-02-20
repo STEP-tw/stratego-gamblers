@@ -23,17 +23,32 @@ describe('Battlefield',()=>{
       let actual=battlefield.getPlacedPositions();
       assert.deepEqual(expected,actual);
     });
-    it('should give potential moves for piece of a particular player',()=>{
+  });
+  describe('#getAttackMovesFor', () => {
+    it('should give attack moves for piece of a particular player',()=>{
       let battlefield = new Battlefield();
       let pieces = new Pieces();
       pieces.loadPieces('quickGame');
       let redArmyPos = {'3_2':'S','3_4':'B'};
-      let blueArmyPos = {'3_3':'2','3_1':'B'};
+      let blueArmyPos = {'3_3':'2','3_1':'B','4_9':'S'};
       battlefield.setFieldFor(0,pieces,redArmyPos);
       battlefield.setFieldFor(1,pieces,blueArmyPos);
-      console.log(JSON.stringify(battlefield,null,2));
       let expected = ['3_3','3_1'];
       let actual=battlefield.getAttackMovesFor(0,'3_2');
+      assert.deepEqual(expected,actual);
+    });
+  });
+  describe('#getFreeMoves', () => {
+    it('should give free moves for a piece',()=>{
+      let battlefield = new Battlefield();
+      let pieces = new Pieces();
+      pieces.loadPieces('quickGame');
+      let redArmyPos = {'3_2':'S','3_1':'B'};
+      let blueArmyPos = {'3_5':'2','4_1':'B','3_3':'S'};
+      battlefield.setFieldFor(0,pieces,redArmyPos);
+      battlefield.setFieldFor(1,pieces,blueArmyPos);
+      let expected = ['4_2','2_2'];
+      let actual=battlefield.getFreeMoves(0,'3_2');
       assert.deepEqual(expected,actual);
     });
   });
