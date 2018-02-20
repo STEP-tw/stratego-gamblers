@@ -93,4 +93,32 @@ describe("Game", () => {
       assert.equal(game.getPlayerIndexBy(123456),1);
     });
   });
+  describe('Game.getPotentialMoves()', () => {
+    beforeEach(
+      () => {
+        game.addPlayer("ravi",0,'red');
+        game.addPlayer("ankur",1,'blue');
+        let redArmyPos = {'3_2':'S','3_1':'B'};
+        let blueArmyPos = {'3_5':'2','4_1':'B','3_3':'S'};
+        game.setBattlefieldFor(0,redArmyPos);
+        game.setBattlefieldFor(1,blueArmyPos);
+      }
+    );
+    it('should give potential moves for a piece', () => {
+      let actualOutput = game.getPotentialMoves(0,'3_2');
+      let expectedOutput = {
+        freeMoves:['4_2','2_2'],
+        attackMoves: ['3_3']
+      };
+      assert.deepEqual(actualOutput,expectedOutput);
+    });
+    it('should give potential moves for a piece', () => {
+      let actualOutput = game.getPotentialMoves(0,'3_1');
+      let expectedOutput = {
+        freeMoves:["2_1",'3_0'],
+        attackMoves: ['4_1']
+      };
+      assert.deepEqual(actualOutput,expectedOutput);
+    });
+  });
 });

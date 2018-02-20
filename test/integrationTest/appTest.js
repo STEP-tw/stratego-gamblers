@@ -181,20 +181,6 @@ describe('app', () => {
         .end(done);
     });
   });
-  describe("GET /selectPiece/:pieceLoc", () => {
-    beforeEach(() => {
-      app.game = new Game();
-    });
-    placedArmyPos = {"1_1":"S","3_9":"B"};
-    it("should return the piece name on the requested location", (done) => {
-      app.game.setBattlefieldFor(0,placedArmyPos);
-      request(app)
-        .get("/selectPiece/0/1_1")
-        .expect(200)
-        .expect("S")
-        .end(done);
-    });
-  });
   describe('GET /play', () => {
     beforeEach(() => {
       app.game = new Game();
@@ -245,20 +231,6 @@ describe('app', () => {
         .end(done);
     });
   });
-  describe('GET /potentialMoves/:playerId/:pieceLoc', function() {
-    beforeEach(() => {
-      app.game = new Game(1);
-      placedArmyPos = {"2_2":"S","3_9":"B"};
-    });
-    it("should return the potential moves for the requested piece", (done) => {
-      app.game.setBattlefieldFor(0,placedArmyPos);
-      request(app)
-        .get("/potentialMoves/0/2_2")
-        .expect(200)
-        .expect({freeMoves:["2_1", "2_3" ,"1_2", "3_2"]})
-        .end(done);
-    });
-  });
   describe('GET /battlefield', () => {
     beforeEach(() => {
       app.game = new Game();
@@ -276,6 +248,27 @@ describe('app', () => {
         .expect(200)
         .expect(/"3_2":"2","3_9":"B","9_2":0,"9_9":0/)
         .end(done);
+    });
+  });
+  describe('#updateBattlefield',()=>{
+    app.game = new Game();
+    app.game.addPlayer("player1",12345,'red');
+    app.game.addPlayer("player2",123456,'blue');
+    it('should should response with ok  ',(done)=>{
+      request(app)
+        .post('/selectedLoc')
+        .set('cookie','sessionId=12345')
+        .expect(200)
+        .expect(/hello/)
+        .end(done);
+    });
+    it('should should response with 406 for in valid player ',(done)=>{
+      request(app)
+        .post('/selectedLoc')
+        .set('cookie','sessionId=123456')
+        .expect(406)
+        .expect(/invalid request/)
+        .end(done);        
     });
   });
   describe('GET /battlefield', () => {

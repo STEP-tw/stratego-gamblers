@@ -59,14 +59,6 @@ const setupArmy = function(req, res) {
   res.send(setupTemp);
 };
 
-const getPieceFromLocation = function(req, res) {
-  let pieceLoc = req.params.pieceLoc;
-  let playerId = req.params.playerId;
-  let game = req.app.game;
-  let battlePosition = game.battlefield.getArmyPos(playerId);
-  res.send(battlePosition[pieceLoc]);
-};
-
 const sendOpponentStatus = function(req, res) {
   let game = req.app.game;
   if (game.areBothPlayerReady()) {
@@ -75,14 +67,6 @@ const sendOpponentStatus = function(req, res) {
   res.status(202).send('wait..let opponent be ready');
 };
 
-const getPotentialMoves = function(req,res){
-  let game = req.app.game;
-  let playerId = req.params.playerId;
-  let pieceLoc = req.params.pieceLoc;
-  let potentialMoves = game.getPotentialMoves(playerId, pieceLoc);
-  res.send({"freeMoves": ["2_1", "2_3", "1_2", "3_2"]});
-};
-// res.send(potentialMoves);
 const renderGamePage = function(req, res) {
   let game = req.app.game;
   let battlefield = req.app.fs.readFileSync('./templates/battlefield', 'utf8');
@@ -92,6 +76,18 @@ const renderGamePage = function(req, res) {
   res.send(battlefield);
 };
 
+const updateBattlefield = function(req,res){
+  let game = req.app.game;
+  let sessionId = req.cookies.sessionId;
+  let playerId = game.getPlayerIndexBy(sessionId);
+  if(game.isCurrentPlayer(playerId)){
+    res.send('hello');
+    return;
+  }
+  res.status(406);
+  res.send('invalid request');
+  res.end();
+};
 const validatePlayerStatus=function(req,res,next){
   let game = req.app.game;
   if(game.areBothPlayerReady()){
@@ -115,11 +111,8 @@ app.post('/setup/player/:playerId', setBattlefield);
 app.get('/setupArmy', setupArmy);
 app.get('/isOpponentReady', sendOpponentStatus);
 app.get('/hasOpponentJoined', haveBothPlayersJoined);
-app.get('/selectPiece/:playerId/:pieceLoc', getPieceFromLocation);
-app.get('/potentialMoves/:playerId/:pieceLoc', getPotentialMoves);
 app.use('/play',validatePlayerStatus);
 app.get('/play', renderGamePage);
 app.get('/battlefield', getBattlefield);
-// app.post('/selectedLoc',updateLocation);
-// app.get('/updateBattlefield',updateBattlefield);
+app.post('/selectedLoc',updateBattlefield);
 module.exports = app;
