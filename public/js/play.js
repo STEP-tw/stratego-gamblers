@@ -43,17 +43,44 @@ const drawGrid = (containerId, numOfRows, numOfCols, initialID, idGrowth)=>{
   }
 };
 
-const showBattlefield = (battlefield) => {
+const setImageAttributes = (img, src, id, height, width) => {
+  img.src = src;
+  img.id = id;
+  img.height = height;
+  img.width = width;
+  return img;
+};
+
+const appendImage = (baseCell, id, imgSrcDirectory) => {
+  let basePosition = document.getElementById(baseCell.id);
+  let image = document.createElement("img");
+  let src = `img/${imgSrcDirectory}/${id}.png`;
+  let height = "50";
+  let width = "50";
+  let img = setImageAttributes(image, src, id, height, width);
+  basePosition.appendChild(img);
+};
+
+// const appendPiecesToField = (imgSrcDirectory) => {
+//   let battlefield = document.getElementById("battlefield");
+//   let firstRow = battlefield.childNodes[1].childNodes;
+//   firstRow.forEach((element, index) => {
+//     appendImage(element, index, imgSrcDirectory);
+//   });
+// };
+
+const showBattlefield = (battlefield,imgSrcDirectory) => {
   let locations = Object.keys(battlefield);
   locations.forEach(function(location) {
-    document.getElementById(location).innerText = battlefield[location];
+    let cell = document.getElementById(location);
+    appendImage(cell,battlefield[location],imgSrcDirectory);
   });
 };
 
-const updateBattleField = function() {
+const updateBattleField = function(imgSrcDirectory) {
   let reqListener = function() {
     let battlefield = JSON.parse(this.responseText);
-    showBattlefield(battlefield);
+    showBattlefield(battlefield,imgSrcDirectory);
   };
   doXhr('/battlefield', 'GET', reqListener, '', () => {
     console.log("fail");

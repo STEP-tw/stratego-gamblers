@@ -1,9 +1,13 @@
-class Bomb {
-  constructor(team){
+const Piece=require('./piece.js');
+class Bomb extends Piece {
+  constructor(){
+    super();
     this.id = 'B';
     this.name = 'Bomb';
     this.rank = 0;
-    this.team = team;
+  }
+  isMovable(){
+    return false;
   }
 }
 module.exports = Bomb;

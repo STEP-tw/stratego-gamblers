@@ -1,7 +1,7 @@
 class Battlefield {
   constructor(){
     this.placedPositions = {};
-    this.lakeArea = [];
+    this.lakeArea = ['5_2','5_3','4_2','4_3','5_6','5_7','4_6','4_7'];
     this.battlePositions = {};
   }
   setField(pieces,placedArmyPos){
@@ -37,6 +37,9 @@ class Battlefield {
   areBothArmyDeployed(){
     let battlePositions = this.battlePositions;
     return Object.keys(battlePositions).length==2;
+  }
+  getLakePos(){
+    return this.lakeArea;
   }
 }
 module.exports = Battlefield;

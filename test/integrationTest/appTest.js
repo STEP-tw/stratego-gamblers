@@ -238,7 +238,7 @@ describe('app', () => {
         .get('/battlefield')
         .set('cookie','sessionId=12345')
         .expect(200)
-        .expect(/{"3_2":"2","3_9":"B","9_2":0,"9_9":0}/)
+        .expect(/"3_2":"2","3_9":"B","9_2":0,"9_9":0/)
         .end(done);
     });
   });

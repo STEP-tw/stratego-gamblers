@@ -86,9 +86,9 @@ const drawGrid = (containerId, numOfRows, numOfCols, initialID,idGrowth)=> {
 
 const getPlayingPiece = () => {
   let playingPieces = [
-    "flag.png", "spy.png", "scout.png", "scout.png", "miner.png", "miner.png",
-    "marshal.png", "general.png",
-    "bomb.png", "bomb.png",
+    "F.png", "S.png", "2.png", "2.png", "3.png", "3.png",
+    "10.png", "9.png",
+    "B.png", "B.png",
   ];
   return playingPieces;
 };

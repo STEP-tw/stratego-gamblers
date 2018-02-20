@@ -53,23 +53,15 @@ describe("Game", () => {
   });
   describe('setBattlefield', () => {
     it('should set the battlefield for a player', () => {
-      game.setBattlefieldFor(0, {
-        '0_0': 'F'
-      });
-      game.setBattlefieldFor(1, {
-        '3_7': 'B'
-      });
+      game.setBattlefieldFor(0, {'0_0': 'F'});
+      game.setBattlefieldFor(1, {'3_7': 'B'});
       let actual = game.getBattlefieldFor(0);
-      let expected = {
-        '0_0': 'F',
-        '3_7': 0
-      };
+      let expected = {'0_0': 'F','3_7': 0,'4_2': 'X','4_3': 'X','4_6': 'X',
+        '4_7': 'X','5_2': 'X','5_3': 'X','5_6': 'X','5_7': 'X'};
       assert.deepEqual(actual, expected);
       actual = game.getBattlefieldFor(1);
-      expected = {
-        '0_0': 0,
-        '3_7': 'B'
-      };
+      expected = {'0_0': 0,'3_7': 'B','4_2': 'X','4_3': 'X','4_6': 'X',
+        '4_7': 'X','5_2': 'X','5_3': 'X','5_6': 'X','5_7': 'X'};
       assert.deepEqual(actual, expected);
     });
   });

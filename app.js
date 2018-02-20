@@ -97,4 +97,6 @@ app.get('/hasOpponentJoined', haveBothPlayersJoined);
 app.get('/selectPiece/:playerId/:pieceLoc', getPieceFromLocation);
 app.get('/play', renderGamePage);
 app.get('/battlefield', getBattlefield);
+// app.post('/selectedLoc',updateLocation);
+// app.get('/updateBattlefield',updateBattlefield);
 module.exports = app;

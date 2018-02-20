@@ -1,9 +1,10 @@
-class Marshal {
-  constructor(team){
+const Piece=require('./piece.js');
+class Marshal extends Piece {
+  constructor(){
+    super();
     this.id = '10';
     this.name = 'Marshal';
     this.rank = 10;
-    this.team = team;
   }
 }
 module.exports = Marshal;
