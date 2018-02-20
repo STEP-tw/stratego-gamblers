@@ -12,6 +12,15 @@ const JoinGameHandler = require('./src/handlers/joinGameHandler.js');
 app.fs = fs;
 app.sessions = new Sessions();
 
+const redirectToHome = function(req,res,next){
+  let unauthorizedUrls = ['/play', '/setupArmy', '/battlefield',
+    'isOpponentReady', '/hasOpponentJoined','/setup/player'];
+  if(unauthorizedUrls.includes(req.url) && !req.app.game){
+    res.redirect('/');
+  }else{
+    next();
+  }
+};
 
 const setBattlefield = function(req, res) {
   let game = req.app.game;
@@ -37,20 +46,13 @@ const getBattlefield = function(req, res) {
   let battlefieldPos = game.getBattlefieldFor(playerIndex);
   res.send(JSON.stringify(battlefieldPos));
 };
-const setupRedArmy = function(req, res) {
+const setupArmy = function(req, res) {
   let setupTemp = req.app.fs.readFileSync('./templates/setupArmy', 'utf8');
-  setupTemp = setupTemp.replace('{{team}}', 'Red');
   let game = req.app.game;
-  let name = game.getPlayerName("red");
-  setupTemp = setupTemp.replace('{{playerName}}', name);
-  res.send(setupTemp);
-};
-
-const setupBlueArmy = function(req, res) {
-  let setupTemp = app.fs.readFileSync('./templates/setupArmy', 'utf8');
-  setupTemp = setupTemp.replace('{{team}}', 'Blue');
-  let game = req.app.game;
-  let name = game.getPlayerName("blue");
+  let playerId = req.cookies.sessionId;
+  let teamColor = game.getPlayerColorBy(playerId);
+  setupTemp = setupTemp.replace('{{team}}', teamColor);
+  let name = game.getPlayerName(teamColor);
   setupTemp = setupTemp.replace('{{playerName}}', name);
   res.send(setupTemp);
 };
@@ -72,6 +74,15 @@ const renderGamePage = function(req, res) {
   res.send(battlefield);
 };
 
+const validatePlayerStatus=function(req,res,next){
+  let game = req.app.game;
+  if(game.areBothPlayerReady()){
+    next();
+  }else{
+    res.redirect('/setupArmy');
+  }
+};
+
 app.use(log());
 app.use(express.urlencoded({
   extended: false
@@ -79,13 +90,14 @@ app.use(express.urlencoded({
 app.use(cookieParser());
 
 app.use(express.static('public'));
+app.use(redirectToHome);
 app.get("/createGame/:name", new CreateGameHandler().getRequestHandler());
 app.post("/joinGame", new JoinGameHandler().getRequestHandler());
 app.post('/setup/player/:playerId', setBattlefield);
-app.get('/setupRedArmy', setupRedArmy);
+app.get('/setupArmy', setupArmy);
 app.get('/isOpponentReady', sendOpponentStatus);
-app.get('/setupBlueArmy', setupBlueArmy);
 app.get('/hasOpponentJoined', haveBothPlayersJoined);
+app.use('/play',validatePlayerStatus);
 app.get('/play', renderGamePage);
 app.get('/battlefield', getBattlefield);
 // app.post('/selectedLoc',updateLocation);

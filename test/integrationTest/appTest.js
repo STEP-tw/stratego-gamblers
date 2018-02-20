@@ -65,25 +65,27 @@ describe('app', () => {
   describe("SetupPage", () => {
     beforeEach(() => {
       app.game = new Game();
-      app.game.addPlayer("player1");
-      app.game.addPlayer("player2");
+      app.game.addPlayer("player1",12345,'red');
+      app.game.addPlayer("player2",123456,'blue');
     });
-    describe("GET /setupRedArmy", () => {
+    describe("GET /setupArmy", () => {
       it("should render setup page for player1", done => {
         request(app)
-          .get("/setupRedArmy")
+          .get("/setupArmy")
+          .set('cookie', 'sessionId=12345')
           .expect(200)
-          .expect(/setupRedArmy.js/)
+          .expect(/redSetup.js/)
           .expect(/player1/)
           .end(done);
       });
     });
-    describe("GET /setupBlueArmy", () => {
+    describe("GET /setupArmy", () => {
       it("should render setup page for player2", done => {
         request(app)
-          .get("/setupBlueArmy")
+          .get("/setupArmy")
+          .set('cookie', 'sessionId=123456')
           .expect(200)
-          .expect(/setupBlueArmy.js/)
+          .expect(/blueSetup.js/)
           .expect(/player2/)
           .end(done);
       });
@@ -127,7 +129,7 @@ describe('app', () => {
         .post("/joinGame")
         .send("name=ankur&gameid=1")
         .expect(302)
-        .expect("Location", "/setupBlueArmy")
+        .expect("Location", "/setupArmy")
         .end(done);
     });
     it("redirect invalid joining player to home", done => {
@@ -180,11 +182,29 @@ describe('app', () => {
     });
   });
   describe('GET /play', () => {
-    it('should respond with hello', (done) => {
+    beforeEach(() => {
+      app.game = new Game();
+      app.game.addPlayer("player1", 12345, 'red');
+      app.game.addPlayer("player2", 123456, 'blue');
+    });
+    it('should respond with corresponding game page of player', (done) => {
+      let redArmyPos = {'3_2': '2', '3_9': 'B'};
+      let blueArmyPos = {'9_2': '2', '9_9': 'B'};
+      app.game.setBattlefieldFor(0, redArmyPos);
+      app.game.setBattlefieldFor(1, blueArmyPos);
       request(app)
         .get('/play')
+        .set('cookie','sessionId=12345')
         .expect(200)
         .expect(/battlefield/)
+        .end(done);
+    });
+    it('should redirect to /setupArmy if both player not deployed their army', (done) => {
+      request(app)
+        .get('/play')
+        .set('cookie', 'sessionId=12345')
+        .expect(302)
+        .expect('Location','/setupArmy')
         .end(done);
     });
   });
@@ -227,6 +247,16 @@ describe('app', () => {
         .set('cookie','sessionId=12345')
         .expect(200)
         .expect(/"3_2":"2","3_9":"B","9_2":0,"9_9":0/)
+        .end(done);
+    });
+  });
+  describe('GET /battlefield', () => {
+    it('should redirect to / if there is no game', (done) => {
+      app.game=undefined;
+      request(app)
+        .get('/battlefield')
+        .expect(302)
+        .expect('Location','/')
         .end(done);
     });
   });
