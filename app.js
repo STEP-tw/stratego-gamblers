@@ -86,6 +86,14 @@ const updateBattlefield = function(req,res){
   res.send('invalid request');
   res.end();
 };
+const validatePlayerStatus=function(req,res,next){
+  let game = req.app.game;
+  if(game.areBothPlayerReady()){
+    next(); 
+  }else{
+    res.redirect('/setupArmy');
+  }
+};
 
 app.use(log());
 app.use(express.urlencoded({
@@ -101,6 +109,7 @@ app.post('/setup/player/:playerId', setBattlefield);
 app.get('/setupArmy', setupArmy);
 app.get('/isOpponentReady', sendOpponentStatus);
 app.get('/hasOpponentJoined', haveBothPlayersJoined);
+app.use('/play',validatePlayerStatus);
 app.get('/play', renderGamePage);
 app.get('/battlefield', getBattlefield);
 app.post('/selectedLoc',updateBattlefield);
