@@ -27,7 +27,7 @@ const setBattlefield = function (req, res) {
 
 const getBattlefield = function(req,res){
   let game = req.app.game;
-  // let sessionId = req.cookies.sessionId; 
+  // let sessionId = req.cookies.sessionId;
   // let playerId = session.getPlayerId(sessionId);
   // let battlefieldPos = game.getBattlefieldFor(playerId);
   res.send('hello');
@@ -72,6 +72,10 @@ const sendOpponentStatus = function(req,res){
   res.status(202).send('wait..let opponent be ready');
 };
 
+const getPotentialMoves = function(req,res){
+  res.send(["2_1", "2_3" ,"1_2", "3_2"]);
+};
+
 app.use(log());
 app.use(express.urlencoded({extended: false}));
 app.use(cookieParser());
@@ -85,5 +89,6 @@ app.get('/isOpponentReady',sendOpponentStatus);
 app.get('/setupBlueArmy', setupBlueArmy);
 app.get('/hasOpponentJoined', haveBothPlayersJoined);
 app.get('/selectPiece/:playerId/:pieceLoc', getPieceFromLocation);
+app.get('/potentialMoves/:playerId/:pieceLoc', getPotentialMoves);
 app.get('/play',getBattlefield);
 module.exports = app;
