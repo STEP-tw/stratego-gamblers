@@ -61,14 +61,6 @@ const appendImage = (baseCell, id, imgSrcDirectory) => {
   basePosition.appendChild(img);
 };
 
-// const appendPiecesToField = (imgSrcDirectory) => {
-//   let battlefield = document.getElementById("battlefield");
-//   let firstRow = battlefield.childNodes[1].childNodes;
-//   firstRow.forEach((element, index) => {
-//     appendImage(element, index, imgSrcDirectory);
-//   });
-// };
-
 const showBattlefield = (battlefield,imgSrcDirectory) => {
   let locations = Object.keys(battlefield);
   locations.forEach(function(location) {

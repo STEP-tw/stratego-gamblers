@@ -196,7 +196,7 @@ describe('app', () => {
       request(app)
         .get('/play')
         .expect(200)
-        .expect(/BATTLEFIELD/)
+        .expect(/battlefield/)
         .end(done);
     });
   });
