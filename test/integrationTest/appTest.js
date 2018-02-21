@@ -276,7 +276,7 @@ describe('app', () => {
         .send('location=3_2')
         .expect(406)
         .expect(/invalid request/)
-        .end(done);        
+        .end(done);
     });
   });
   describe('GET /battlefield', () => {
