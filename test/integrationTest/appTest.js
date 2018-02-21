@@ -268,7 +268,7 @@ describe('app', () => {
         .set('cookie','sessionId=123456')
         .expect(406)
         .expect(/invalid request/)
-        .end(done);        
+        .end(done);
     });
   });
   describe('GET /battlefield', () => {

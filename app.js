@@ -14,8 +14,10 @@ app.sessions = new Sessions();
 
 const redirectToHome = function(req,res,next){
   let unauthorizedUrls = ['/play', '/setupArmy', '/battlefield',
-    'isOpponentReady', '/hasOpponentJoined','/setup/player'];
-  if(unauthorizedUrls.includes(req.url) && !req.app.game){
+    'isOpponentReady','/setup/player'];
+  let game = req.app.game;
+  let gameStatus = game && game.haveBothPlayersJoined();
+  if(unauthorizedUrls.includes(req.url) && !gameStatus){
     res.redirect('/');
   }else{
     next();
