@@ -106,15 +106,15 @@ describe("Game", () => {
         game.setBattlefieldFor(1,blueArmyPos);
       }
     );
-    it('should give potential moves for a piece', () => {
+    it('should give potential moves for a piece and remove lake area', () => {
       let actualOutput = game.getPotentialMoves('3_2');
       let expectedOutput = {
-        freeMoves:['4_2','2_2'],
+        freeMoves:['2_2'],
         attackMoves: ['3_3']
       };
       assert.deepEqual(actualOutput,expectedOutput);
     });
-    it('should give potential moves for a piece', () => {
+    it('should give potential moves for a piece ', () => {
       let actualOutput = game.getPotentialMoves('3_1');
       let expectedOutput = {
         freeMoves:["2_1",'3_0'],

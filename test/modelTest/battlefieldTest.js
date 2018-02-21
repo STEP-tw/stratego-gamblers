@@ -49,7 +49,7 @@ describe('Battlefield',()=>{
       let blueArmyPos = {'3_5':'2','4_1':'B','3_3':'S'};
       battlefield.setFieldFor(0,pieces,redArmyPos);
       battlefield.setFieldFor(1,pieces,blueArmyPos);
-      let expected = ['4_2','2_2'];
+      let expected = ['2_2'];
       let actual=battlefield.getFreeMoves(0,'3_2');
       assert.deepEqual(expected,actual);
     });

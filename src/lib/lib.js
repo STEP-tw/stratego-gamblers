@@ -31,9 +31,10 @@ exports.filterFrom = function(array) {
   };
 };
 
-exports.filterNotIn = function (array1,array2) {
+exports.filterNotInAmong = function (array1,array2,array3) {
   return function(element){
-    return !array1.includes(element) && !array2.includes(element);
+    return !array1.includes(element) && !array2.includes(element) &&
+     !array3.includes(element);
   };
 };
 
