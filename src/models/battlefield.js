@@ -30,6 +30,7 @@ class Battlefield {
   }
   getArmyPos(playerId){
     let armyPos = {};
+    console.log(playerId);
     let allPos = Object.keys(this.battlePositions[playerId]);
     allPos.forEach(pos=>{
       armyPos[pos]=this.battlePositions[playerId][pos].id;
