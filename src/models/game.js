@@ -92,5 +92,11 @@ class Game {
       }
     }
   }
+  getTurnMessage(playerIndex){
+    if(playerIndex==this.currentPlayerId){
+      return 'Your turn';
+    }
+    return 'Opponent\'s turn';
+  }
 }
 module.exports =Game;
