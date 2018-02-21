@@ -48,7 +48,7 @@ const reqGameId = function() {
 
 const redirectToSetupPage = function () {
   if (this.responseText == "true") {
-    window.location.href="/setupRedArmy";
+    window.location.href ="/setupArmy";
   }
 };
 

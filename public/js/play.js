@@ -34,6 +34,21 @@ const generateRow = (initialID, numberOfCols) => {
   return row;
 };
 
+const getLocation = (event)=>{
+  let target = event.target;
+  if(target.tagName=='IMG') {
+    target = target.parentNode;
+  }
+  let postData = `location=${target.id}`;
+  const reqListener = function(){
+    console.log(this.responseText);
+  };
+  const onFail = function(){
+    console.log(this.responseText);    
+  };
+  doXhr('/selectedLoc','POST',reqListener,postData,onFail);
+};
+
 const drawGrid = (containerId, numOfRows, numOfCols, initialID, idGrowth)=>{
   let grid = document.getElementById(containerId);
   for (let rows = 0; rows < numOfRows; rows++) {
@@ -41,7 +56,9 @@ const drawGrid = (containerId, numOfRows, numOfCols, initialID, idGrowth)=>{
     initialID += idGrowth;
     grid.appendChild(row);
   }
+  grid.addEventListener('click',getLocation);
 };
+
 
 const setImageAttributes = (img, src, id, height, width) => {
   img.src = src;
@@ -61,20 +78,36 @@ const appendImage = (baseCell, id, imgSrcDirectory) => {
   basePosition.appendChild(img);
 };
 
+const updateEmptyCell=(cell)=>{
+  if(cell.hasChildNodes()){
+    let child = cell.childNodes[0];
+    child.remove();
+  }
+};
 const showBattlefield = (battlefield,imgSrcDirectory) => {
   let locations = Object.keys(battlefield);
   locations.forEach(function(location) {
     let cell = document.getElementById(location);
+    if(locations[location]=="E") {
+      return updateEmptyCell(cell);
+    }
     appendImage(cell,battlefield[location],imgSrcDirectory);
   });
-};
+}; 
 
 const updateBattleField = function(imgSrcDirectory) {
   let reqListener = function() {
-    let battlefield = JSON.parse(this.responseText);
+    let gameData = JSON.parse(this.responseText);
+    let battlefield =gameData['battlefield'];
+    let name = gameData['currentPlayer'];
+    let turnBox = document.getElementById('currentPlayer');
+    turnBox.innerText = `${name}'s turn`;
     showBattlefield(battlefield,imgSrcDirectory);
   };
-  doXhr('/battlefield', 'GET', reqListener, '', () => {
-    console.log("fail");
-  });
+  let callBack = function(){
+    doXhr('/battlefield', 'GET', reqListener, '', () => {
+      console.log("fail");
+    });
+  }; 
+  let interval= setInterval(callBack,1000); 
 };

@@ -24,3 +24,22 @@ exports.isEquivalent = (obj1, obj2)=>{
   }
   return true;
 };
+
+exports.filterFrom = function(array) {
+  return function(element) {
+    return array.includes(element);
+  };
+};
+
+exports.filterNotIn = function (array1,array2) {
+  return function(element){
+    return !array1.includes(element) && !array2.includes(element);
+  };
+};
+
+exports.getSymbolForPos = function(positionsWithId,positionsArray,symbol){
+  positionsArray.forEach(position=>{
+    positionsWithId[position] = symbol;
+  });
+  return positionsWithId;
+};
