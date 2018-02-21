@@ -58,11 +58,11 @@ describe("Game", () => {
       game.setBattlefieldFor(0, {'0_0': 'F'});
       game.setBattlefieldFor(1, {'3_7': 'B'});
       let actual = game.getBattlefieldFor(0);
-      let expected = {'0_0': 'F','3_7': 0,'4_2': 'X','4_3': 'X','4_6': 'X',
+      let expected = {'0_0': 'F','3_7': 'O','4_2': 'X','4_3': 'X','4_6': 'X',
         '4_7': 'X','5_2': 'X','5_3': 'X','5_6': 'X','5_7': 'X'};
       assert.deepEqual(actual, expected);
       actual = game.getBattlefieldFor(1);
-      expected = {'0_0': 0,'3_7': 'B','4_2': 'X','4_3': 'X','4_6': 'X',
+      expected = {'0_0': 'O','3_7': 'B','4_2': 'X','4_3': 'X','4_6': 'X',
         '4_7': 'X','5_2': 'X','5_3': 'X','5_6': 'X','5_7': 'X'};
       assert.deepEqual(actual, expected);
     });
@@ -107,7 +107,7 @@ describe("Game", () => {
       }
     );
     it('should give potential moves for a piece', () => {
-      let actualOutput = game.getPotentialMoves(0,'3_2');
+      let actualOutput = game.getPotentialMoves('3_2');
       let expectedOutput = {
         freeMoves:['4_2','2_2'],
         attackMoves: ['3_3']
@@ -115,7 +115,7 @@ describe("Game", () => {
       assert.deepEqual(actualOutput,expectedOutput);
     });
     it('should give potential moves for a piece', () => {
-      let actualOutput = game.getPotentialMoves(0,'3_1');
+      let actualOutput = game.getPotentialMoves('3_1');
       let expectedOutput = {
         freeMoves:["2_1",'3_0'],
         attackMoves: ['4_1']

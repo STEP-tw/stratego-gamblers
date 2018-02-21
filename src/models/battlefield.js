@@ -3,6 +3,7 @@ const filterNotIn = require("../lib/lib.js").filterNotIn;
 
 class Battlefield {
   constructor(){
+    this.allPositions = [];
     this.placedPositions = {};
     this.lakeArea = ['5_2','5_3','4_2','4_3','5_6','5_7','4_6','4_7'];
     this.battlePositions = {};
@@ -94,6 +95,12 @@ class Battlefield {
   }
   removeSelectedPos(){
     this.selectedPos = false;
+  }
+  getEmptyPositions(armyPos){
+    return this.allPositions.filter(pos=>!armyPos[pos]);
+  }
+  addPosition(pos){
+    this.allPositions.push(pos);
   }
 }
 module.exports = Battlefield;

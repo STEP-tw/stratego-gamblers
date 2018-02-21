@@ -36,3 +36,10 @@ exports.filterNotIn = function (array1,array2) {
     return !array1.includes(element) && !array2.includes(element);
   };
 };
+
+exports.getSymbolForPos = function(positionsWithId,positionsArray,symbol){
+  positionsArray.forEach(position=>{
+    positionsWithId[position] = symbol;
+  });
+  return positionsWithId;
+};
