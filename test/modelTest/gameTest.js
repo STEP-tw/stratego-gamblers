@@ -53,6 +53,20 @@ describe("Game", () => {
       assert.equal(game.getPlayerName("blue"), "ankur");
     });
   });
+  describe('Game.getOpponentName()', () => {
+    beforeEach(
+      () => {
+        game.addPlayer("ravi",12345,'red');
+        game.addPlayer("ankur",123456,'blue');
+      }
+    );
+    it('should return opponent name for red color team', () => {
+      assert.equal(game.getOpponentName("red"), "ankur");
+    });
+    it('should return opponent name for blue color team', () => {
+      assert.equal(game.getOpponentName("blue"), "ravi");
+    });
+  });
   describe('setBattlefield', () => {
     it('should set the battlefield for a player', () => {
       game.setBattlefieldFor(0, {'0_0': 'F'});
@@ -133,7 +147,7 @@ describe("Game", () => {
   });
   describe('updatePieceLocation',()=>{
     beforeEach(() => {
-      game = new Game("gameId");      
+      game = new Game("gameId");
       game.addPlayer("ravi",0,'red');
       game.addPlayer("ankur",1,'blue');
       let redArmyPos = {'3_2':'S','3_1':'B'};
@@ -150,14 +164,14 @@ describe("Game", () => {
       let spy = new Spy();
       game.updatePieceLocation('3_2');
       assert.isOk(game.battlefield.hasLastSelectedLoc());
-      game.updatePieceLocation('2_2'); 
+      game.updatePieceLocation('2_2');
       assert.deepEqual(game.battlefield.getPiece(0,'2_2'),spy);
     });
     it('should not replace piece location with invalid location',()=>{
       let spy = new Spy();
       game.updatePieceLocation('3_2');
       assert.isOk(game.battlefield.hasLastSelectedLoc());
-      game.updatePieceLocation('5_2'); 
+      game.updatePieceLocation('5_2');
       assert.deepEqual(game.battlefield.getPiece(0,'5_2'));
       assert.deepEqual(game.battlefield.getPiece(0,'3_2'),spy);
     });
@@ -165,7 +179,7 @@ describe("Game", () => {
       let bomb = new Bomb();
       game.updatePieceLocation('3_1');
       assert.isNotOk(game.battlefield.hasLastSelectedLoc());
-      game.updatePieceLocation('3_1'); 
+      game.updatePieceLocation('3_1');
       assert.deepEqual(game.battlefield.getPiece(0,'2_1'));
       assert.deepEqual(game.battlefield.getPiece(0,'3_1'),bomb);
     });

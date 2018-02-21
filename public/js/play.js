@@ -44,7 +44,7 @@ const getLocation = (event)=>{
     console.log(this.responseText);
   };
   const onFail = function(){
-    console.log(this.responseText);    
+    console.log(this.responseText);
   };
   doXhr('/selectedLoc','POST',reqListener,postData,onFail);
 };
@@ -96,13 +96,12 @@ const showBattlefield = (battlefield,imgSrcDirectory) => {
     }
     appendImage(cell,battlefield[location],imgSrcDirectory);
   });
-}; 
+};
 
 const updateBattleField = function(imgSrcDirectory) {
   let reqListener = function() {
     let gameData = JSON.parse(this.responseText);
     let battlefield =gameData['battlefield'];
-    // let name = gameData['currentPlayer'];
     let turnBox = document.getElementById('currentPlayer');
     turnBox.innerText = `${gameData.turnMessage}`;
     showBattlefield(battlefield,imgSrcDirectory);
@@ -111,6 +110,6 @@ const updateBattleField = function(imgSrcDirectory) {
     doXhr('/battlefield', 'GET', reqListener, '', () => {
       console.log("fail");
     });
-  }; 
-  let interval= setInterval(callBack,1000); 
+  };
+  let interval= setInterval(callBack,1000);
 };
