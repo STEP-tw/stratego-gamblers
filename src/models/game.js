@@ -1,7 +1,7 @@
 const Battlefield = require('./battlefield.js');
 const Player = require('./player.js');
 const Pieces = require('./pieces.js');
-
+const getSymbolForPos=require('../lib/lib.js').getSymbolForPos;
 class Game {
   constructor(id) {
     this.id = id;
@@ -47,17 +47,15 @@ class Game {
     let armyPos = this.battlefield.getArmyPos(playerId);
     let opponentPos = this.battlefield.getOpponentPos(playerId);
     let lakePos = this.battlefield.getLakePos();
-    opponentPos.forEach(pos => {
-      armyPos[pos] = 0;
-    });
-    lakePos.forEach(pos => {
-      armyPos[pos] = 'X';
-    });
+    armyPos = getSymbolForPos(armyPos,opponentPos,'O');
+    armyPos = getSymbolForPos(armyPos,lakePos,'X');
+    let emptyPos = this.battlefield.getEmptyPositions(armyPos);
+    armyPos = getSymbolForPos(armyPos,emptyPos,'E');
     return armyPos;
   }
-  getPotentialMoves(playerId, pieceLoc) {
+  getPotentialMoves( pieceLoc) {
     let battlefield = this.battlefield;
-    return battlefield.getPotentialMoves(playerId, pieceLoc);
+    return battlefield.getPotentialMoves(this.currentPlayerId, pieceLoc);
   }
   getPlayerColorBy(playerId) {
     let players = this.getPlayers();
@@ -86,6 +84,13 @@ class Game {
   }
   changeCurrentPlayer(){
     this.currentPlayerId = (1 - this.currentPlayerId); 
+  }
+  createBattlefield(){
+    for (let row=0; row<=9; row++) {
+      for (let col=0; col<=9; col++) {
+        this.battlefield.addPosition(`${row}_${col}`);
+      }
+    }
   }
 }
 module.exports =Game;
