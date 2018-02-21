@@ -75,12 +75,15 @@ class Game {
     return player.getName();
   }
   updatePieceLocation(location){
-    if(this.battlefield.hasLastSelectedLoc()){
-      this.battlefield.updateLocation(this.currentPlayerId,location);
+    let battlefield = this.battlefield;
+    if(battlefield.hasLastSelectedLoc()){
+      let isUpdated = battlefield.updateLocation(this.currentPlayerId,location);
+    }
+    if(isUpdated){
       this.changeCurrentPlayer();
       return ;
     }
-    this.battlefield.addAsLastSelectedLoc(this.currentPlayerId,location);
+    battlefield.addAsLastSelectedLoc(this.currentPlayerId,location);
   }
   changeCurrentPlayer(){
     this.currentPlayerId = (1 - this.currentPlayerId); 

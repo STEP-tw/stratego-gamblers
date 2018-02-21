@@ -81,7 +81,9 @@ class Battlefield {
   updateLocation(playerId,pieceLoc){
     if(this.isFreeMove(playerId,pieceLoc)){
       this.replacePieceLoc(playerId,pieceLoc);
+      return true;
     }
+    return false;
   }
   isFreeMove(playerId,pieceLoc){
     let freeMoves = this.getFreeMoves(playerId,this.selectedPos);
