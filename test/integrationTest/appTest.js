@@ -199,7 +199,7 @@ describe('app', () => {
         .expect(/battlefield/)
         .end(done);
     });
-    it('should redirect to /setupArmy if both player not deployed their army', (done) => {
+    it('should redirect to /setupArmy if both army not deployed', (done) => {
       request(app)
         .get('/play')
         .set('cookie', 'sessionId=12345')
@@ -251,13 +251,20 @@ describe('app', () => {
     });
   });
   describe('#updateBattlefield',()=>{
-    app.game = new Game();
-    app.game.addPlayer("player1",12345,'red');
-    app.game.addPlayer("player2",123456,'blue');
+    beforeEach(() => {
+      app.game = new Game();
+      app.game.addPlayer("player1",12345,'red');
+      app.game.addPlayer("player2",123456,'blue');
+      let redArmyPos = {'3_2':'2','3_9':'B'};
+      let blueArmyPos = {'9_2':'2','9_9':'B'};
+      app.game.setBattlefieldFor(0,redArmyPos);
+      app.game.setBattlefieldFor(1, blueArmyPos);
+    });
     it('should should response with ok  ',(done)=>{
       request(app)
         .post('/selectedLoc')
         .set('cookie','sessionId=12345')
+        .send('location=3_2')
         .expect(200)
         .expect(/hello/)
         .end(done);
@@ -266,6 +273,7 @@ describe('app', () => {
       request(app)
         .post('/selectedLoc')
         .set('cookie','sessionId=123456')
+        .send('location=3_2')
         .expect(406)
         .expect(/invalid request/)
         .end(done);        

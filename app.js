@@ -79,8 +79,11 @@ const renderGamePage = function(req, res) {
 const updateBattlefield = function(req,res){
   let game = req.app.game;
   let sessionId = req.cookies.sessionId;
+  let location = req.body.location;
   let playerId = game.getPlayerIndexBy(sessionId);
   if(game.isCurrentPlayer(playerId)){
+    game.updatePieceLocation(location);
+    // let status = getStatus();
     res.send('hello');
     return;
   }

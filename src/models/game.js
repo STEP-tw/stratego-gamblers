@@ -57,10 +57,7 @@ class Game {
   }
   getPotentialMoves(playerId, pieceLoc) {
     let battlefield = this.battlefield;
-    let freeMoves = battlefield.getFreeMoves(playerId, pieceLoc);
-    let attackMoves = battlefield.getAttackMovesFor(playerId, pieceLoc);
-    let potentialMoves = {freeMoves: freeMoves, attackMoves: attackMoves};
-    return potentialMoves;
+    return battlefield.getPotentialMoves(playerId, pieceLoc);
   }
   getPlayerColorBy(playerId) {
     let players = this.getPlayers();
@@ -78,6 +75,17 @@ class Game {
     let currentPlayerId = this.currentPlayerId;
     let player = this.players[currentPlayerId];
     return player.getName();
+  }
+  updatePieceLocation(location){
+    if(this.battlefield.hasLastSelectedLoc()){
+      this.battlefield.updateLocation(this.currentPlayerId,location);
+      this.changeCurrentPlayer();
+      return ;
+    }
+    this.battlefield.addAsLastSelectedLoc(this.currentPlayerId,location);
+  }
+  changeCurrentPlayer(){
+    this.currentPlayerId = (1 - this.currentPlayerId); 
   }
 }
 module.exports =Game;

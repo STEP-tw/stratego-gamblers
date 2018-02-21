@@ -1,5 +1,7 @@
 const assert = require("chai").assert;
 const Game = require("../../src/models/game.js");
+const Spy=require('../../src/models/spy.js');
+const Bomb=require('../../src/models/bomb.js');
 
 describe("Game", () => {
   let game = {};
@@ -119,6 +121,45 @@ describe("Game", () => {
         attackMoves: ['4_1']
       };
       assert.deepEqual(actualOutput,expectedOutput);
+    });
+  });
+  describe('updatePieceLocation',()=>{
+    beforeEach(() => {
+      game = new Game("gameId");      
+      game.addPlayer("ravi",0,'red');
+      game.addPlayer("ankur",1,'blue');
+      let redArmyPos = {'3_2':'S','3_1':'B'};
+      let blueArmyPos = {'3_5':'2','4_1':'B','3_3':'S'};
+      game.setBattlefieldFor(0,redArmyPos);
+      game.setBattlefieldFor(1,blueArmyPos);
+    });
+    it('should add given location as a last selected location',()=>{
+      assert.isNotOk(game.battlefield.hasLastSelectedLoc());
+      game.updatePieceLocation('3_2');
+      assert.isOk(game.battlefield.hasLastSelectedLoc());
+    });
+    it('should replace piece location with given location',()=>{
+      let spy = new Spy();
+      game.updatePieceLocation('3_2');
+      assert.isOk(game.battlefield.hasLastSelectedLoc());
+      game.updatePieceLocation('2_2'); 
+      assert.deepEqual(game.battlefield.getPiece(0,'2_2'),spy);
+    });
+    it('should not replace piece location with invalid location',()=>{
+      let spy = new Spy();
+      game.updatePieceLocation('3_2');
+      assert.isOk(game.battlefield.hasLastSelectedLoc());
+      game.updatePieceLocation('5_2'); 
+      assert.deepEqual(game.battlefield.getPiece(0,'5_2'));
+      assert.deepEqual(game.battlefield.getPiece(0,'3_2'),spy);
+    });
+    it('should not move Bomb piece',()=>{
+      let bomb = new Bomb();
+      game.updatePieceLocation('3_1');
+      assert.isNotOk(game.battlefield.hasLastSelectedLoc());
+      game.updatePieceLocation('3_1'); 
+      assert.deepEqual(game.battlefield.getPiece(0,'2_1'));
+      assert.deepEqual(game.battlefield.getPiece(0,'3_1'),bomb);
     });
   });
 });
