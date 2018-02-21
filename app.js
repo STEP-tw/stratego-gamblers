@@ -46,8 +46,8 @@ const getBattlefield = function(req, res) {
   let playerId = req.cookies.sessionId;
   let playerIndex = game.getPlayerIndexBy(playerId);
   let battlefieldPos = game.getBattlefieldFor(playerIndex);
-  let currentPlayer = game.getCurrentPlayer();
-  let respond = {'currentPlayer':currentPlayer,'battlefield':battlefieldPos};
+  let turnMessage = game.getTurnMessage(playerIndex);
+  let respond = {'battlefield':battlefieldPos,'turnMessage':turnMessage};
   res.send(JSON.stringify(respond));
 };
 const setupArmy = function(req, res) {
