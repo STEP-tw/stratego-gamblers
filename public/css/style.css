@@ -4,15 +4,15 @@ body {
 }
 
 #logo {
-  margin: 0% 44%;
-  height: 12%;
+  margin: 1% 44%;
+  height: 10%;
   width: 12%;
 }
 
 .turnMessage {
   text-align: center;
   margin: auto;
-  margin-bottom: 1%;
+  margin-top: 6%;
   width: 30%;
   height: 40px;
 }
@@ -27,33 +27,9 @@ body {
 
 .container {
   margin: auto;
-  margin-top: 10%;
+  margin-top: 2%;
   width: 75%;
-  height: 628px;
-}
-
-.redArmy {
-  float: left;
-  margin-left: 2%;
-  width: 12%;
-  height: 100%;
-  border: 1px solid #a78d4333;
-}
-
-#redArmyPieces {
-  border-collapse: collapse;
-}
-
-.blueArmy {
-  float: right;
-  margin-right: 2%;
-  width: 12%;
-  height: 100%;
-  border: 1px solid #a78d4333;
-}
-
-#blueArmyPieces {
-  border-collapse: collapse;
+  height: 630px;
 }
 
 .battlefield {
@@ -68,8 +44,8 @@ body {
 }
 
 img {
-  height: 52px;
-  width: 52px;
+  height: 62px;
+  width: 62px;
   right: 0;
   left: 0;
   top: 0;
@@ -80,7 +56,7 @@ img {
 td {
   position: relative;
   text-align: center;
-  width: 50px;
-  height: 50px;
+  width: 60px;
+  height: 60px;
   border: 1px solid #a78d4333;
 }
