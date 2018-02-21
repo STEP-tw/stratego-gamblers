@@ -75,7 +75,11 @@ const renderGamePage = function(req, res) {
   let battlefield = req.app.fs.readFileSync('./templates/battlefield', 'utf8');
   let playerId = req.cookies.sessionId;
   let teamColor = game.getPlayerColorBy(playerId);
+  let myName = game.getPlayerName(teamColor);
+  let opponent = game.getOpponentName(teamColor);
   battlefield = battlefield.replace('{{team}}',teamColor);
+  battlefield = battlefield.replace('{{myname}}',myName);
+  battlefield = battlefield.replace('{{opponent}}',opponent);
   res.send(battlefield);
 };
 
@@ -86,8 +90,8 @@ const updateBattlefield = function(req,res){
   let playerId = game.getPlayerIndexBy(sessionId);
   if(game.isCurrentPlayer(playerId)){
     game.updatePieceLocation(location);
-    // let status = getStatus();
-    res.send('hello');
+    let status = game.getStatus();
+    res.send(status);
     return;
   }
   res.status(406);

@@ -10,6 +10,7 @@ class Game {
     this.battlefield = new Battlefield();
     this.pieces = new Pieces();
     this.gameType = 'quickGame';
+    this.status = {};
   }
   getId() {
     return this.id;
@@ -29,6 +30,13 @@ class Game {
   getPlayerName(teamColor) {
     let players = this.players;
     if (teamColor == "red") {
+      return players[0].getName();
+    }
+    return players[1].getName();
+  }
+  getOpponentName(teamColor){
+    let players = this.players;
+    if (teamColor == "blue") {
       return players[0].getName();
     }
     return players[1].getName();
@@ -76,18 +84,20 @@ class Game {
   }
   updatePieceLocation(location){
     let battlefield = this.battlefield;
-    let isUpdated = false;
+    let isUpdatedLoc = false;
     if(battlefield.hasLastSelectedLoc()){
-      isUpdated = battlefield.updateLocation(this.currentPlayerId,location);
+      isUpdatedLoc = battlefield.updateLocation(this.currentPlayerId,location);
     }
-    if(isUpdated){
+    if(isUpdatedLoc){
       this.changeCurrentPlayer();
       return ;
     }
     battlefield.addAsLastSelectedLoc(this.currentPlayerId,location);
+    let potentialMoves = this.getPotentialMoves(location);
+    this.status.potentialMoves = potentialMoves;
   }
   changeCurrentPlayer(){
-    this.currentPlayerId = (1 - this.currentPlayerId); 
+    this.currentPlayerId = (1 - this.currentPlayerId);
   }
   createBattlefield(){
     for (let row=0; row<=9; row++) {
@@ -95,6 +105,9 @@ class Game {
         this.battlefield.addPosition(`${row}_${col}`);
       }
     }
+  }
+  getStatus(){
+    return this.status;
   }
   getTurnMessage(playerIndex){
     if(playerIndex==this.currentPlayerId){

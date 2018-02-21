@@ -11,18 +11,18 @@
 
 <body>
   <img id="logo" src="img/background/logo.png">
+  <div class="profiles">
+    <div class="me">
+      <span id="me">Your Profile : {{myname}}</span>
+    </div>
+    <div class="opponent">
+      <span id="opponent">Opponent : {{opponent}}</span>
+    </div>
+  </div>
   <div class="turnMessage">
     <span id="currentPlayer"></span>
   </div>
   <div class="container">
-    <div class="redArmy">
-      <table id="redArmyPieces">
-      </table>
-    </div>
-    <div class="blueArmy">
-      <table id="blueArmyPieces">
-      </table>
-    </div>
     <div class="battlefield">
       <table id="battlefield">
       </table>
