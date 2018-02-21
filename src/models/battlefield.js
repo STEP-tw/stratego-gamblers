@@ -1,5 +1,5 @@
 const filterFrom = require("../lib/lib.js").filterFrom;
-const filterNotIn = require("../lib/lib.js").filterNotIn;
+const filterNotInAmong = require("../lib/lib.js").filterNotInAmong;
 
 class Battlefield {
   constructor(){
@@ -58,7 +58,7 @@ class Battlefield {
     let playerPos = Object.keys(this.getArmyPos(playerId));
     let attackingMoves = this.getAttackMovesFor(playerId, pieceLoc);
     let neighbourPositions = piece.getPotentialMove(pieceLoc);
-    let isFreeMove = filterNotIn(playerPos, attackingMoves);
+    let isFreeMove = filterNotInAmong(playerPos, attackingMoves,this.lakeArea);
     return neighbourPositions.filter(isFreeMove);
   }
   getLakePos(){
