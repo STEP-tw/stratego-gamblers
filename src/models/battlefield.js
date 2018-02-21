@@ -30,7 +30,6 @@ class Battlefield {
   }
   getArmyPos(playerId){
     let armyPos = {};
-    console.log(playerId);
     let allPos = Object.keys(this.battlePositions[playerId]);
     allPos.forEach(pos=>{
       armyPos[pos]=this.battlePositions[playerId][pos].id;
@@ -66,6 +65,10 @@ class Battlefield {
     return this.lakeArea;
   }
   getPotentialMoves(playerId, pieceLoc){
+    let piece = this.getPiece(playerId,pieceLoc);
+    if(!piece){
+      return {};
+    } 
     let freeMoves = this.getFreeMoves(playerId, pieceLoc);
     let attackMoves = this.getAttackMovesFor(playerId, pieceLoc);
     return {freeMoves: freeMoves, attackMoves: attackMoves};
@@ -77,6 +80,7 @@ class Battlefield {
     let piece = this.getPiece(playerId,pos);
     if(piece && piece.isMovable()){
       this.selectedPos = pos;
+      return true;
     }
   }
   updateLocation(playerId,pieceLoc){
