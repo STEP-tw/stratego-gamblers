@@ -102,9 +102,9 @@ const updateBattleField = function(imgSrcDirectory) {
   let reqListener = function() {
     let gameData = JSON.parse(this.responseText);
     let battlefield =gameData['battlefield'];
-    let name = gameData['currentPlayer'];
+    // let name = gameData['currentPlayer'];
     let turnBox = document.getElementById('currentPlayer');
-    turnBox.innerText = `${name}'s turn`;
+    turnBox.innerText = `${gameData.turnMessage}`;
     showBattlefield(battlefield,imgSrcDirectory);
   };
   let callBack = function(){

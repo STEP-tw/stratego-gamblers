@@ -80,6 +80,9 @@ describe("Game", () => {
     it('should return team color of given playerId', () => {
       assert.equal(game.getPlayerColorBy(123456), "blue");
     });
+    it('should give current players name', () => {
+      assert.equal(game.getCurrentPlayer(),'ravi');
+    });
   });
   describe('Game.getPlayerIndexBy()', () => {
     beforeEach(
@@ -93,6 +96,11 @@ describe("Game", () => {
     });
     it('should return index of player given playerId', () => {
       assert.equal(game.getPlayerIndexBy(123456),1);
+    });
+    it('should give turn message according according to players id', () => {
+      assert.equal(game.getTurnMessage(0),'Your turn');
+      game.currentPlayerId=1;
+      assert.equal(game.getTurnMessage(0),'Opponent\'s turn');
     });
   });
   describe('Game.getPotentialMoves()', () => {

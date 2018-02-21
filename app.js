@@ -46,8 +46,8 @@ const getBattlefield = function(req, res) {
   let playerId = req.cookies.sessionId;
   let playerIndex = game.getPlayerIndexBy(playerId);
   let battlefieldPos = game.getBattlefieldFor(playerIndex);
-  let currentPlayer = game.getCurrentPlayer();
-  let respond = {'currentPlayer':currentPlayer,'battlefield':battlefieldPos};
+  let turnMessage = game.getTurnMessage(playerIndex);
+  let respond = {'battlefield':battlefieldPos,'turnMessage':turnMessage};
   res.send(JSON.stringify(respond));
 };
 const setupArmy = function(req, res) {
@@ -75,7 +75,11 @@ const renderGamePage = function(req, res) {
   let battlefield = req.app.fs.readFileSync('./templates/battlefield', 'utf8');
   let playerId = req.cookies.sessionId;
   let teamColor = game.getPlayerColorBy(playerId);
+  let myName = game.getPlayerName(teamColor);
+  let opponent = game.getOpponentName(teamColor);
   battlefield = battlefield.replace('{{team}}',teamColor);
+  battlefield = battlefield.replace('{{myname}}',myName);
+  battlefield = battlefield.replace('{{opponent}}',opponent);
   res.send(battlefield);
 };
 

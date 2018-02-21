@@ -34,6 +34,13 @@ class Game {
     }
     return players[1].getName();
   }
+  getOpponentName(teamColor){
+    let players = this.players;
+    if (teamColor == "blue") {
+      return players[0].getName();
+    }
+    return players[1].getName();
+  }
   haveBothPlayersJoined() {
     let numberOfPlayers = this.players.length;
     return numberOfPlayers == 2;
@@ -90,7 +97,7 @@ class Game {
     this.status.potentialMoves = potentialMoves;
   }
   changeCurrentPlayer(){
-    this.currentPlayerId = (1 - this.currentPlayerId); 
+    this.currentPlayerId = (1 - this.currentPlayerId);
   }
   createBattlefield(){
     for (let row=0; row<=9; row++) {
@@ -101,6 +108,12 @@ class Game {
   }
   getStatus(){
     return this.status;
+  }
+  getTurnMessage(playerIndex){
+    if(playerIndex==this.currentPlayerId){
+      return 'Your turn';
+    }
+    return 'Opponent\'s turn';
   }
 }
 module.exports =Game;
