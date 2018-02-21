@@ -17,4 +17,28 @@ describe('Position',()=>{
       assert.sameMembers(position.getNeighbourPos(),['9_8','8_9']);
     });
   });
+  describe('#getAllPosAhead', () => {
+    it('should return all ahead positions of a piece', () => {
+      let position=new Position('5_5');
+      assert.sameMembers(position.getAllPosAhead(),['5_6','5_7','5_8','5_9']);
+    });
+  });
+  describe('#getAllPosBack', () => {
+    it('should return all back positions of a piece', () => {
+      let position=new Position('5_5');
+      assert.sameMembers(position.getAllPosBack(),['5_4','5_3','5_2','5_1']);
+    });
+  });
+  describe('#getAllPosLeft', () => {
+    it('should return all left positions of a piece', () => {
+      let position=new Position('5_5');
+      assert.sameMembers(position.getAllPosLeft(),['4_5','3_5','2_5','1_5']);
+    });
+  });
+  describe('#getAllPosRight', () => {
+    it('should return all right positions of a piece', () => {
+      let position=new Position('5_5');
+      assert.sameMembers(position.getAllPosRight(),['6_5','7_5','8_5','9_5']);
+    });
+  });
 });

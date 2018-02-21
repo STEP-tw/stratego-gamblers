@@ -43,6 +43,42 @@ class Position {
     }
     return this.neighbour;
   }
+  getAllPosAhead(){
+    let yPos = this.yPos;
+    let allPosAhead = [];
+    while(+yPos < 9){
+      allPosAhead.push(`${this.xPos}_${+yPos+1}`);
+      yPos++;
+    }
+    return allPosAhead;
+  }
+  getAllPosBack(){
+    let yPos = this.yPos;
+    let allPosBack = [];
+    while(+yPos > 1){
+      allPosBack.push(`${this.xPos}_${+yPos-1}`);
+      yPos--;
+    }
+    return allPosBack;
+  }
+  getAllPosLeft(){
+    let xPos = this.xPos;
+    let allPosLeft = [];
+    while(+xPos > 1){
+      allPosLeft.push(`${+xPos-1}_${this.yPos}`);
+      xPos--;
+    }
+    return allPosLeft;
+  }
+  getAllPosRight(){
+    let xPos = this.xPos;
+    let allPosRight = [];
+    while(+xPos < 9){
+      allPosRight.push(`${+xPos+1}_${this.xPos}`);
+      xPos++;
+    }
+    return allPosRight;
+  }
 }
 
 module.exports = Position;
