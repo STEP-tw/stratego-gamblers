@@ -6,6 +6,7 @@ class Battlefield {
     this.placedPositions = {};
     this.lakeArea = ['5_2','5_3','4_2','4_3','5_6','5_7','4_6','4_7'];
     this.battlePositions = {};
+    this.selectedPos = '';
   }
   setField(pieces,placedArmyPos){
     let allPos = Object.keys(placedArmyPos);
@@ -61,6 +62,38 @@ class Battlefield {
   }
   getLakePos(){
     return this.lakeArea;
+  }
+  getPotentialMoves(playerId, pieceLoc){
+    let freeMoves = this.getFreeMoves(playerId, pieceLoc);
+    let attackMoves = this.getAttackMovesFor(playerId, pieceLoc);
+    return {freeMoves: freeMoves, attackMoves: attackMoves};
+  }
+  hasLastSelectedLoc(){
+    return this.selectedPos;
+  }
+  addAsLastSelectedLoc(playerId,pos){
+    let piece = this.getPiece(playerId,pos);
+    if(piece.isMovable()){
+      this.selectedPos = pos;
+    }
+  }
+  updateLocation(playerId,pieceLoc){
+    if(this.isFreeMove(playerId,pieceLoc)){
+      this.replacePieceLoc(playerId,pieceLoc);
+    }
+  }
+  isFreeMove(playerId,pieceLoc){
+    let freeMoves = this.getFreeMoves(playerId,this.selectedPos);
+    return freeMoves.includes(pieceLoc);
+  }
+  replacePieceLoc(playerId,pieceLoc){
+    let piece = this.getPiece(playerId,this.selectedPos);
+    this.battlePositions[playerId][pieceLoc] = piece;
+    delete this.battlePositions[playerId][this.selectedPos];
+    this.removeSelectedPos();
+  }
+  removeSelectedPos(){
+    this.selectedPos = false;
   }
 }
 module.exports = Battlefield;

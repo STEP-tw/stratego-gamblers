@@ -14,8 +14,10 @@ app.sessions = new Sessions();
 
 const redirectToHome = function(req,res,next){
   let unauthorizedUrls = ['/play', '/setupArmy', '/battlefield',
-    'isOpponentReady', '/hasOpponentJoined','/setup/player'];
-  if(unauthorizedUrls.includes(req.url) && !req.app.game){
+    'isOpponentReady','/setup/player'];
+  let game = req.app.game;
+  let gameStatus = game && game.haveBothPlayersJoined();
+  if(unauthorizedUrls.includes(req.url) && !gameStatus){
     res.redirect('/');
   }else{
     next();
@@ -79,8 +81,11 @@ const renderGamePage = function(req, res) {
 const updateBattlefield = function(req,res){
   let game = req.app.game;
   let sessionId = req.cookies.sessionId;
+  let location = req.body.location;
   let playerId = game.getPlayerIndexBy(sessionId);
   if(game.isCurrentPlayer(playerId)){
+    game.updatePieceLocation(location);
+    // let status = getStatus();
     res.send('hello');
     return;
   }
