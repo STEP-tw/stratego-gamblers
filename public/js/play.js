@@ -75,6 +75,9 @@ const appendImage = (baseCell, id, imgSrcDirectory) => {
   let height = "50";
   let width = "50";
   let img = setImageAttributes(image, src, id, height, width);
+  if(basePosition.hasChildNodes()){
+    return;
+  }
   basePosition.appendChild(img);
 };
 
@@ -88,7 +91,7 @@ const showBattlefield = (battlefield,imgSrcDirectory) => {
   let locations = Object.keys(battlefield);
   locations.forEach(function(location) {
     let cell = document.getElementById(location);
-    if(locations[location]=="E") {
+    if(battlefield[location]=="E") {
       return updateEmptyCell(cell);
     }
     appendImage(cell,battlefield[location],imgSrcDirectory);
