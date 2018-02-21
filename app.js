@@ -47,8 +47,6 @@ const getBattlefield = function(req, res) {
   let playerIndex = game.getPlayerIndexBy(playerId);
   let battlefieldPos = game.getBattlefieldFor(playerIndex);
   let currentPlayer = game.getCurrentPlayer();
-  console.log(battlefieldPos);
-  
   let respond = {'currentPlayer':currentPlayer,'battlefield':battlefieldPos};
   res.send(JSON.stringify(respond));
 };
