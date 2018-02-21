@@ -75,7 +75,7 @@ class Battlefield {
   }
   addAsLastSelectedLoc(playerId,pos){
     let piece = this.getPiece(playerId,pos);
-    if(piece.isMovable()){
+    if(piece && piece.isMovable()){
       this.selectedPos = pos;
     }
   }
@@ -84,7 +84,6 @@ class Battlefield {
       this.replacePieceLoc(playerId,pieceLoc);
       return true;
     }
-    return false;
   }
   isFreeMove(playerId,pieceLoc){
     let freeMoves = this.getFreeMoves(playerId,this.selectedPos);

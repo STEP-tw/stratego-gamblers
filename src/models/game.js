@@ -76,8 +76,9 @@ class Game {
   }
   updatePieceLocation(location){
     let battlefield = this.battlefield;
+    let isUpdated = false;
     if(battlefield.hasLastSelectedLoc()){
-      let isUpdated = battlefield.updateLocation(this.currentPlayerId,location);
+      isUpdated = battlefield.updateLocation(this.currentPlayerId,location);
     }
     if(isUpdated){
       this.changeCurrentPlayer();
