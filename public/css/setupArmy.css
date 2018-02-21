@@ -56,11 +56,22 @@ body {
   border-collapse: collapse;
 }
 
+img {
+  height: 70px;
+  width: 70px;
+  right: 0;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  position: absolute;
+}
+
 td {
+  position: relative;
   text-align: center;
   width: 70px;
   height: 70px;
-  border: 1px solid #a78d43;
+  border: 1px solid #a78d4333;
 }
 
 .armyBaseGrid {
@@ -93,7 +104,7 @@ td {
   margin: 9% 0%;
   width: 80%;
   height: 35%;
-  border: 1px solid #a78d43;
+  border: 1px solid #a78d4333;
 }
 
 .waitMessage {
@@ -101,7 +112,7 @@ td {
   text-align: center;
   width: 80%;
   height: 15%;
-  border: 1px solid #a78d43;
+  border: 1px solid #a78d4333;
 }
 
 #message {
