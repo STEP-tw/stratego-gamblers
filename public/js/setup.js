@@ -24,7 +24,7 @@ const drop = (event) => {
   event.preventDefault();
   let data = event.dataTransfer.getData("imgId");
   let target = event.target;
-  if (target.tagName=="IMG"||target.hasChildNodes()){
+  if (target.tagName == "IMG" || target.hasChildNodes()) {
     return;
   }
   target.appendChild(document.getElementById(data));
@@ -40,9 +40,9 @@ const applyDragProperty = (img) => {
   return img;
 };
 
-const removeDraggable = ()=>{
+const removeDraggable = () => {
   let playingPieceId = getPlayingPieceId();
-  playingPieceId.forEach(id=>{
+  playingPieceId.forEach(id => {
     let element = document.getElementById(id);
     element.removeEventListener('dragstart', drag, false);
   });
@@ -75,7 +75,7 @@ const generateRow = (initialID, numberOfCols) => {
   return row;
 };
 
-const drawGrid = (containerId, numOfRows, numOfCols, initialID,idGrowth)=> {
+const drawGrid = (containerId, numOfRows, numOfCols, initialID, idGrowth) => {
   let grid = document.getElementById(containerId);
   for (let rows = 0; rows < numOfRows; rows++) {
     let row = generateRow(initialID, numOfCols);
@@ -100,11 +100,32 @@ const getPlayingPieceId = () => {
   return playingPieceId;
 };
 
+const getNameForRank = (rank) => {
+  let pieces = {
+    'B': 'bomb',
+    'F': 'flag',
+    'S': 'spy',
+    2: 'scout',
+    3: 'miner',
+    9: 'general',
+    10: 'marshal'
+  };
+  rank = extractPieceID(rank);
+  return pieces[rank];
+};
+
 const setImageAttributes = (img, src, id, height, width) => {
+  let className = getNameForRank(id);
   img.src = src;
   img.id = id;
   img.height = height;
   img.width = width;
+  img.onmouseover = () => {
+    document.querySelector(`.${className}`).style.display = "block";
+  };
+  img.onmouseout = () => {
+    document.querySelector(`.${className}`).style.display = "none";
+  };
   return img;
 };
 
@@ -135,10 +156,7 @@ const notifyPlayer = (message) => {
 };
 
 const extractPieceID = (id) => {
-  if (id == '10') {
-    return id;
-  }
-  return id[0];
+  return id == '10' ? id : id[0];
 };
 
 const fetchCellId = (cell) => {
@@ -166,32 +184,31 @@ const notDeployedFullArmy = (pieceAndLocation) => {
   return numberOfPlayingPiece != 10;
 };
 
-const addEventListener = (listner,type, elementID) => {
+const addEventListener = (listner, type, elementID) => {
   let element = document.getElementById(elementID);
   if (element) {
     return element.addEventListener(type, listner);
   }
 };
 
-const removeEventListener = (listner,type, elementID) => {
+const removeEventListener = (listner, type, elementID) => {
   let element = document.getElementById(elementID);
   if (element) {
     return element.removeEventListener(type, listner);
   }
 };
 
-
 const setText = (id, text) => {
   getElement(id).innerText = text;
 };
 
-const getOpponentStatus = function () {
-  let reqListener = function () {
+const getOpponentStatus = function() {
+  let reqListener = function() {
     window.location.href = this.responseURL;
     clearInterval(interval);
   };
   let onFail = () => {
-    notifyPlayer("wait...let opponent setup his army");
+    notifyPlayer("Waiting for opponent to be ready");
   };
   let callBack = () => {
     doXhr('/isOpponentReady', 'GET', reqListener, '', onFail);

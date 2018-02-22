@@ -68,7 +68,7 @@ class Battlefield {
     let piece = this.getPiece(playerId,pieceLoc);
     if(!piece){
       return {};
-    } 
+    }
     let freeMoves = this.getFreeMoves(playerId, pieceLoc);
     let attackMoves = this.getAttackMovesFor(playerId, pieceLoc);
     return {freeMoves: freeMoves, attackMoves: attackMoves};
