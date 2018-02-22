@@ -17,6 +17,11 @@ class Game {
   getPlayers() {
     return this.players;
   }
+  getKilledPieces(){
+    let redCapturedArmy = this.players[0].getKilledPieces();
+    let blueCapturedArmy = this.players[1].getKilledPieces();
+    return {redArmy:redCapturedArmy,blueArmy:blueCapturedArmy};
+  }
   addPlayer(playerName, id, color) {
     let player = new Player(playerName, id, color);
     this.players.push(player);
