@@ -112,5 +112,12 @@ class Game {
     }
     return 'Opponent\'s turn';
   }
+  updatePlayerPieces(){
+    let battleResults = this.battlefield.getBattleResults();
+    battleResults.forEach(result=>{
+      let deadPieceId = result.killedPiece.id;
+      this.players[result.playerId].kill(deadPieceId);
+    });
+  }
 }
 module.exports =Game;
