@@ -86,6 +86,12 @@ class Battlefield {
   updateLocation(playerId,pieceLoc){
     if(this.isFreeMove(playerId,pieceLoc)){
       this.replacePieceLoc(playerId,pieceLoc);
+      this.removeSelectedPos();      
+      return true;
+    }
+    if(this.isAttackMove(playerId,pieceLoc)){
+      this.battle(playerId,pieceLoc);
+      this.removeSelectedPos();
       return true;
     }
   }
@@ -93,11 +99,28 @@ class Battlefield {
     let freeMoves = this.getFreeMoves(playerId,this.selectedPos);
     return freeMoves.includes(pieceLoc);
   }
+  isAttackMove(playerId,pieceLoc){
+    let attackMove = this.getAttackMovesFor(playerId,this.selectedPos);
+    return attackMove.includes(pieceLoc);
+  }
+  battle(playerId,pieceLoc){
+    let opponentId = 1-playerId;
+    let piece = this.getPiece(playerId,this.selectedPos);
+    let opponentPiece = this.getPiece(opponentId,pieceLoc);
+    let killedPieces = opponentPiece.attackedBy(piece);
+    if(killedPieces.opponentPiece){
+      delete this.battlePositions[opponentId][pieceLoc];
+    }
+    if(killedPieces.myPiece){
+      delete this.battlePositions[playerId][this.selectedPos];
+    } else {
+      this.replacePieceLoc(playerId,pieceLoc);
+    }
+  }
   replacePieceLoc(playerId,pieceLoc){
     let piece = this.getPiece(playerId,this.selectedPos);
     this.battlePositions[playerId][pieceLoc] = piece;
     delete this.battlePositions[playerId][this.selectedPos];
-    this.removeSelectedPos();
   }
   removeSelectedPos(){
     this.selectedPos = false;
@@ -107,6 +130,10 @@ class Battlefield {
   }
   addPosition(pos){
     this.allPositions.push(pos);
+  }
+  getPiecesOf(playerId){
+    let battlePositions = this.battlePositions;
+    return Object.values(battlePositions[playerId]);
   }
 }
 module.exports = Battlefield;

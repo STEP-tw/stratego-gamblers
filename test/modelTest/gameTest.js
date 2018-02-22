@@ -2,6 +2,8 @@ const assert = require("chai").assert;
 const Game = require("../../src/models/game.js");
 const Spy=require('../../src/models/spy.js');
 const Bomb=require('../../src/models/bomb.js');
+const Marshal=require('../../src/models/marshal.js');
+const Miner=require('../../src/models/miner.js');
 
 describe("Game", () => {
   let game = {};
@@ -24,7 +26,9 @@ describe("Game", () => {
       assert.deepEqual(game.getPlayers(), [{
         name: "ravi",
         id: 0,
-        color: 'red'
+        color: 'red',
+        "deadPieces": [],
+        "livePieces": []
       }]);
     });
   });
@@ -33,7 +37,9 @@ describe("Game", () => {
       let expectedOutput = {
         name: "Ravi",
         id: 0,
-        color: "red"
+        color: "red",
+        "deadPieces": [],
+        "livePieces": []
       };
       let actual = game.addPlayer("Ravi", 0, "red");
       assert.deepEqual(actual, expectedOutput);
@@ -68,6 +74,10 @@ describe("Game", () => {
     });
   });
   describe('setBattlefield', () => {
+    beforeEach(() => {
+      game.addPlayer("ravi", 12345, 'red');
+      game.addPlayer("ankur", 123456, 'blue');
+    });
     it('should set the battlefield for a player', () => {
       game.setBattlefieldFor(0, {'0_0': 'F'});
       game.setBattlefieldFor(1, {'3_7': 'B'});
@@ -144,14 +154,19 @@ describe("Game", () => {
       };
       assert.deepEqual(actualOutput,expectedOutput);
     });
+    it('should not return potential moves for location with no piece',()=>{
+      let actualOutput = game.getPotentialMoves('9_1');
+      let expectedOutput = {};
+      assert.deepEqual(actualOutput,expectedOutput);
+    });
   });
   describe('updatePieceLocation',()=>{
     beforeEach(() => {
       game = new Game("gameId");
       game.addPlayer("ravi",0,'red');
       game.addPlayer("ankur",1,'blue');
-      let redArmyPos = {'3_2':'S','3_1':'B'};
-      let blueArmyPos = {'3_5':'2','4_1':'B','3_3':'S'};
+      let redArmyPos = {'3_2':'S','3_1':'B','9_0':'10'};
+      let blueArmyPos = {'3_5':'2','4_1':'B','3_3':'S','9_1':'3'};
       game.setBattlefieldFor(0,redArmyPos);
       game.setBattlefieldFor(1,blueArmyPos);
     });
@@ -175,13 +190,31 @@ describe("Game", () => {
       assert.deepEqual(game.battlefield.getPiece(0,'5_2'));
       assert.deepEqual(game.battlefield.getPiece(0,'3_2'),spy);
     });
-    it('should not move Bomb piece',()=>{
+    it('should not move Bomb',()=>{
       let bomb = new Bomb();
       game.updatePieceLocation('3_1');
       assert.isNotOk(game.battlefield.hasLastSelectedLoc());
       game.updatePieceLocation('3_1');
       assert.deepEqual(game.battlefield.getPiece(0,'2_1'));
       assert.deepEqual(game.battlefield.getPiece(0,'3_1'),bomb);
+    });
+    it('should attack on opponent piece and replace its position',()=>{
+      let marshal = new Marshal();
+      game.updatePieceLocation('9_0');
+      assert.isOk(game.battlefield.hasLastSelectedLoc());
+      game.updatePieceLocation('9_1');
+      assert.deepEqual(game.battlefield.getPiece(0,'9_1'),marshal);
+      assert.deepEqual(game.battlefield.getPiece(0,'9_0'));
+    });
+  });
+  describe('getEmptyPosition',()=>{
+    it('should return all empty positions on battlefield',()=>{
+      game = new Game();
+      game.createBattlefield();
+      let armyPos = {'3_2':'S','3_1':'B','9_0':'10'};
+      let actual = game.battlefield.getEmptyPositions(armyPos);
+      let expected = {'3_2':'S','3_1':'B','9_0':'10'};
+      assert.notDeepEqual(actual,expected);
     });
   });
 });

@@ -10,7 +10,6 @@ class Game {
     this.battlefield = new Battlefield();
     this.pieces = new Pieces();
     this.gameType = 'quickGame';
-    this.status = {};
   }
   getId() {
     return this.id;
@@ -25,7 +24,10 @@ class Game {
   }
   setBattlefieldFor(playerId, placedArmyPos) {
     this.createPiecesFor();
+    let player = this.players[playerId];
     this.battlefield.setFieldFor(playerId, this.pieces, placedArmyPos);
+    let pieces = this.battlefield.getPiecesOf(playerId);
+    player.addPieces(pieces);
   }
   getPlayerName(teamColor) {
     let players = this.players;
@@ -93,8 +95,6 @@ class Game {
       return ;
     }
     battlefield.addAsLastSelectedLoc(this.currentPlayerId,location);
-    let potentialMoves = this.getPotentialMoves(location);
-    this.status.potentialMoves = potentialMoves;
   }
   changeCurrentPlayer(){
     this.currentPlayerId = (1 - this.currentPlayerId);
@@ -105,9 +105,6 @@ class Game {
         this.battlefield.addPosition(`${row}_${col}`);
       }
     }
-  }
-  getStatus(){
-    return this.status;
   }
   getTurnMessage(playerIndex){
     if(playerIndex==this.currentPlayerId){
