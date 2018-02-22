@@ -24,7 +24,9 @@ describe("Game", () => {
       assert.deepEqual(game.getPlayers(), [{
         name: "ravi",
         id: 0,
-        color: 'red'
+        color: 'red',
+        "deadPieces": [],
+        "livePieces": []
       }]);
     });
   });
@@ -33,7 +35,9 @@ describe("Game", () => {
       let expectedOutput = {
         name: "Ravi",
         id: 0,
-        color: "red"
+        color: "red",
+        "deadPieces": [],
+        "livePieces": []
       };
       let actual = game.addPlayer("Ravi", 0, "red");
       assert.deepEqual(actual, expectedOutput);
