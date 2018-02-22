@@ -1,6 +1,3 @@
-const filterFrom = require("../lib/lib.js").filterFrom;
-const filterNotInAmong = require("../lib/lib.js").filterNotInAmong;
-
 class Battlefield {
   constructor(){
     this.allPositions = [];
@@ -46,32 +43,24 @@ class Battlefield {
   getPiece(playerId, pieceLoc){
     return this.battlePositions[playerId][pieceLoc];
   }
-  getAttackMovesFor(playerId, pieceLoc){
-    let opponentPos = this.getOpponentPos(playerId);
-    let piece = this.getPiece(playerId, pieceLoc);
-    let neighbourPositions = piece.getPotentialMove(pieceLoc);
-    let isAttackingMove = filterFrom(opponentPos);
-    return neighbourPositions.filter(isAttackingMove);
-  }
-  getFreeMoves(playerId, pieceLoc){
-    let piece = this.getPiece(playerId, pieceLoc);
-    let playerPos = Object.keys(this.getArmyPos(playerId));
-    let attackingMoves = this.getAttackMovesFor(playerId, pieceLoc);
-    let neighbourPositions = piece.getPotentialMove(pieceLoc);
-    let isFreeMove = filterNotInAmong(playerPos, attackingMoves,this.lakeArea);
-    return neighbourPositions.filter(isFreeMove);
-  }
   getLakePos(){
     return this.lakeArea;
+  }
+  getPosMap(playerId){
+    let posMap = {};
+    let armyPos = this.getArmyPos(playerId);
+    posMap.myArmy = Object.keys(armyPos);
+    posMap.opponentArmy = this.getOpponentPos(playerId);
+    posMap.lakeArea = this.getLakePos();
+    return posMap;
   }
   getPotentialMoves(playerId, pieceLoc){
     let piece = this.getPiece(playerId,pieceLoc);
     if(!piece){
       return {};
     }
-    let freeMoves = this.getFreeMoves(playerId, pieceLoc);
-    let attackMoves = this.getAttackMovesFor(playerId, pieceLoc);
-    return {freeMoves: freeMoves, attackMoves: attackMoves};
+    let posMap = this.getPosMap(playerId);
+    return piece.getPotentialMoves(pieceLoc,posMap);
   }
   hasLastSelectedLoc(){
     return this.selectedPos;
@@ -84,24 +73,23 @@ class Battlefield {
     }
   }
   updateLocation(playerId,pieceLoc){
-    if(this.isFreeMove(playerId,pieceLoc)){
+    let potentialMoves = this.getPotentialMoves(playerId,this.selectedPos);
+    if(this.isFreeMove(potentialMoves,pieceLoc)){
       this.replacePieceLoc(playerId,pieceLoc);
-      this.removeSelectedPos();      
+      this.removeSelectedPos();
       return true;
     }
-    if(this.isAttackMove(playerId,pieceLoc)){
+    if(this.isAttackMove(potentialMoves,pieceLoc)){
       this.battle(playerId,pieceLoc);
       this.removeSelectedPos();
       return true;
     }
   }
-  isFreeMove(playerId,pieceLoc){
-    let freeMoves = this.getFreeMoves(playerId,this.selectedPos);
-    return freeMoves.includes(pieceLoc);
+  isFreeMove(potentialMoves,pieceLoc){
+    return potentialMoves.freeMoves.includes(pieceLoc);
   }
-  isAttackMove(playerId,pieceLoc){
-    let attackMove = this.getAttackMovesFor(playerId,this.selectedPos);
-    return attackMove.includes(pieceLoc);
+  isAttackMove(potentialMoves,pieceLoc){
+    return potentialMoves.attackMoves.includes(pieceLoc);
   }
   battle(playerId,pieceLoc){
     let opponentId = 1-playerId;

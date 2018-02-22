@@ -1,21 +1,49 @@
-const Position=require('./position.js');
+const Position = require('./position.js');
 class Piece {
-  constructor(){
+  constructor() {
 
   }
-  isMovable(){
+  isMovable() {
     return true;
   }
-  getPotentialMove(pos){
-    let position = new Position(pos);
-    return position.getNeighbourPos();
+
+  isFreePosition(position, posMap) {
+    let myArmy = posMap.myArmy;
+    let oppArmy = posMap.opponentArmy;
+    let lakeArea = posMap.lakeArea;
+    let condition = !myArmy.includes(position) && !oppArmy.includes(position);
+    return condition && !lakeArea.includes(position);
   }
-  attackedBy(attackingPiece){
-    let killedPieces = {myPiece:true,opponentPiece:true};
-    if(this.rank<attackingPiece.rank){
+
+  isOpponent(position, opponentArmy) {
+    return opponentArmy.includes(position);
+  }
+
+  getPotentialMoves(pos, posMap) {
+    let potentialMoves = {
+      freeMoves: [],
+      attackMoves: []
+    };
+    let position = new Position(pos);
+    let neighbours = position.getNeighbourPos();
+    neighbours.forEach(currentPos => {
+      if (this.isFreePosition(currentPos, posMap)) {
+        potentialMoves.freeMoves.push(currentPos);
+      } else if (this.isOpponent(currentPos, posMap.opponentArmy)) {
+        potentialMoves.attackMoves.push(currentPos);
+      }
+    });
+    return potentialMoves;
+  }
+  attackedBy(attackingPiece) {
+    let killedPieces = {
+      myPiece: true,
+      opponentPiece: true
+    };
+    if (this.rank < attackingPiece.rank) {
       killedPieces.myPiece = false;
     }
-    if(this.rank>attackingPiece.rank){
+    if (this.rank > attackingPiece.rank) {
       killedPieces.opponentPiece = false;
     }
     return killedPieces;

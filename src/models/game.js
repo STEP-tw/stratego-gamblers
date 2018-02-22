@@ -63,7 +63,7 @@ class Game {
     armyPos = getSymbolForPos(armyPos,emptyPos,'E');
     return armyPos;
   }
-  getPotentialMoves( pieceLoc) {
+  getPotentialMoves(pieceLoc) {
     let battlefield = this.battlefield;
     return battlefield.getPotentialMoves(this.currentPlayerId, pieceLoc);
   }

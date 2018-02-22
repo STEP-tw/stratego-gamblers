@@ -139,20 +139,20 @@ describe("Game", () => {
       }
     );
     it('should give potential moves for a piece and remove lake area', () => {
-      let actualOutput = game.getPotentialMoves('3_2');
-      let expectedOutput = {
+      let actual = game.getPotentialMoves('3_2');
+      let expected = {
         freeMoves:['2_2'],
         attackMoves: ['3_3']
       };
-      assert.deepEqual(actualOutput,expectedOutput);
+      assert.deepEqual(actual,expected);
     });
     it('should give potential moves for a piece ', () => {
-      let actualOutput = game.getPotentialMoves('3_1');
-      let expectedOutput = {
+      let actual = game.getPotentialMoves('3_1');
+      let expected = {
         freeMoves:["2_1",'3_0'],
         attackMoves: ['4_1']
       };
-      assert.deepEqual(actualOutput,expectedOutput);
+      assert.deepEqual(actual,expected);
     });
     it('should not return potential moves for location with no piece',()=>{
       let actualOutput = game.getPotentialMoves('9_1');

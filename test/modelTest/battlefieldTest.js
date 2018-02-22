@@ -10,7 +10,7 @@ describe('Battlefield',()=>{
   let pieces = {};
   beforeEach(() => {
     battlefield = new Battlefield();
-    pieces = new Pieces();    
+    pieces = new Pieces();
   });
   describe('#addPiece',()=>{
     it('should add piece into battlefield',()=>{
@@ -28,30 +28,6 @@ describe('Battlefield',()=>{
       let expected = {'0_0':{id:'F',name:'Flag',rank:0},
         '0_4':{id:'10',name:'Marshal',rank:10}};
       let actual=battlefield.getPlacedPositions();
-      assert.deepEqual(expected,actual);
-    });
-  });
-  describe('#getAttackMovesFor', () => {
-    it('should give attack moves for piece of a particular player',()=>{
-      pieces.loadPieces('quickGame');
-      let redArmyPos = {'3_2':'S','3_4':'B'};
-      let blueArmyPos = {'3_3':'2','3_1':'B','4_9':'S'};
-      battlefield.setFieldFor(0,pieces,redArmyPos);
-      battlefield.setFieldFor(1,pieces,blueArmyPos);
-      let expected = ['3_3','3_1'];
-      let actual=battlefield.getAttackMovesFor(0,'3_2');
-      assert.deepEqual(expected,actual);
-    });
-  });
-  describe('#getFreeMoves', () => {
-    it('should give free moves for a piece',()=>{
-      pieces.loadPieces('quickGame');
-      let redArmyPos = {'3_2':'S','3_1':'B'};
-      let blueArmyPos = {'3_5':'2','4_1':'B','3_3':'S'};
-      battlefield.setFieldFor(0,pieces,redArmyPos);
-      battlefield.setFieldFor(1,pieces,blueArmyPos);
-      let expected = ['2_2'];
-      let actual=battlefield.getFreeMoves(0,'3_2');
       assert.deepEqual(expected,actual);
     });
   });
@@ -92,8 +68,8 @@ describe('Battlefield',()=>{
       let expected = new Miner();
       assert.deepEqual(actual,expected);
       actual = battlefield.getPiece(1,'4_2');
-      expected = undefined;      
-      assert.deepEqual(actual,expected);      
+      expected = undefined;
+      assert.deepEqual(actual,expected);
     });
     it('should kill both pieces when both pieces are of same rank',()=>{
       battlefield.addAsLastSelectedLoc(1,'4_2');
@@ -102,8 +78,8 @@ describe('Battlefield',()=>{
       let expected = undefined;
       assert.deepEqual(actual,expected);
       actual = battlefield.getPiece(1,'4_3');
-      expected = undefined;      
-      assert.deepEqual(actual,expected);      
+      expected = undefined;
+      assert.deepEqual(actual,expected);
     });
   });
 });
