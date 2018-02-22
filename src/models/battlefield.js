@@ -108,5 +108,9 @@ class Battlefield {
   addPosition(pos){
     this.allPositions.push(pos);
   }
+  getPiecesOf(playerId){
+    let battlePositions = this.battlePositions;
+    return Object.values(battlePositions[playerId]);
+  }
 }
 module.exports = Battlefield;
