@@ -28,11 +28,13 @@ class Player {
   }
   hasLost(){
     let deadPieces = this.deadPieces;
-    let deadFlag = deadPieces.find(piece => piece.id == "F");
-    if (deadFlag){
-      return true;
-    }
-    return false;
+    return deadPieces.find(piece => piece.id == "F");
+  }
+  hasAnyMovingPieceLeft(){
+    let livePieces = this.livePieces;
+    return livePieces.some(function(piece){
+      return piece.isMovable();
+    });
   }
 }
 module.exports=Player;

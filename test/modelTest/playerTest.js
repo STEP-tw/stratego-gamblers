@@ -1,14 +1,15 @@
 const assert = require("chai").assert;
 const Player = require("../../src/models/player.js");
-
+const Marshal = require('../../src/models/marshal');
+const Flag = require('../../src/models/flag');
 describe("Player", () => {
   let player = {};
   let pieces = [];  
   beforeEach(
     () => {
       player = new Player("Ravi", 1, 'red');
-      pieces = [{id: '10', name: 'Marshal', rank: 10},
-        {id: 'F', name: 'Flag', rank: 0}];
+      pieces = [new Marshal(),
+        new Flag()];
     }
   );
   describe("Player.getId()", () => {
@@ -32,13 +33,13 @@ describe("Player", () => {
     it('should remove given piece from player\'s live pieces', () => {
       player.addPieces(pieces);
       player.kill('F');
-      let piece = {id: 'F', name: 'Flag', rank: 0};
+      let piece = new Flag();
       assert.notInclude(player.livePieces, piece);
     });
     it('should add dead piece to player\'s dead pieces', () => {
       player.addPieces(pieces);
       player.kill('F');
-      let piece = {id: 'F', name: 'Flag', rank: 0};
+      let piece = new Flag();
       assert.notInclude(player.deadPieces, piece);
     });
     it('should give piece index of given piece Id', () => {
@@ -49,12 +50,21 @@ describe("Player", () => {
   describe('#hasLost', () => {
     it('should return false if flag is not captured', () => {
       player.addPieces(pieces);
-      assert.isNotOk(player.hasLost());
+      assert.isUndefined(player.hasLost());
     });
     it('should return true if flag is captured', () => {
       player.addPieces(pieces);
       player.kill('F');
-      assert.isOk(player.hasLost());
+      assert.isDefined(player.hasLost());
+    });
+    it('should return true if player is left with moving pieces', () => {
+      player.addPieces(pieces);
+      assert.isOk(player.hasAnyMovingPieceLeft());
+    });
+    it('should return false if player is left with no moving pieces', () => {
+      player.addPieces(pieces);
+      player.kill('10');
+      assert.isNotOk(player.hasAnyMovingPieceLeft());
     });
   });
 });
