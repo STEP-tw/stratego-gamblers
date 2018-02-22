@@ -26,9 +26,12 @@ class Player {
     let deadPiece = this.livePieces.splice(pieceIndex,1);
     this.deadPieces.push(deadPiece[0]);
   }
-  hasLost(){
+  hasFlagCaptured(){
     let deadPieces = this.deadPieces;
     return deadPieces.find(piece => piece.id == "F");
+  }
+  hasLost(){
+    return this.hasFlagCaptured() || !this.hasAnyMovingPieceLeft();
   }
   hasAnyMovingPieceLeft(){
     let livePieces = this.livePieces;

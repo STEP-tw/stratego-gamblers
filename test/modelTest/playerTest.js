@@ -50,12 +50,12 @@ describe("Player", () => {
   describe('#hasLost', () => {
     it('should return false if flag is not captured', () => {
       player.addPieces(pieces);
-      assert.isUndefined(player.hasLost());
+      assert.isUndefined(player.hasFlagCaptured());
     });
     it('should return true if flag is captured', () => {
       player.addPieces(pieces);
       player.kill('F');
-      assert.isDefined(player.hasLost());
+      assert.isDefined(player.hasFlagCaptured());
     });
     it('should return true if player is left with moving pieces', () => {
       player.addPieces(pieces);
@@ -65,6 +65,16 @@ describe("Player", () => {
       player.addPieces(pieces);
       player.kill('10');
       assert.isNotOk(player.hasAnyMovingPieceLeft());
+    });
+    it('should return true if player has lost by capturing flag', () => {
+      player.addPieces(pieces);
+      player.kill('F');
+      assert.isOk(player.hasLost());
+    });
+    it('should return true if player has lost by not having any moving piece', () => {
+      player.addPieces(pieces);
+      player.kill('10');
+      assert.isOk(player.hasLost());
     });
   });
 });
