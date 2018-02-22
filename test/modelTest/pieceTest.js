@@ -2,6 +2,9 @@ const assert = require('chai').assert;
 const Piece =require('../../src/models/piece.js');
 const Scout=require('../../src/models/scout.js');
 const Marshal=require('../../src/models/marshal.js');
+const Bomb=require('../../src/models/bomb.js');
+const Miner=require('../../src/models/miner.js');
+const Spy=require('../../src/models/spy.js');
 
 describe('Piece',()=>{
   describe('#getPotentialMove',()=>{
@@ -20,20 +23,34 @@ describe('Piece',()=>{
       let scout = new Scout();
       let marshal = new Marshal();    
       let actual = scout.attackedBy(marshal);
-      let expected = {myPiece: false, opponentPiece: true};
+      let expected = {attackingPiece: false, defendingPiece: true};
       assert.deepEqual(actual,expected);
     });
     it('should kill my piece when opponent piece is of higher rank',()=>{
       let scout = new Scout();
       let marshal = new Marshal();    
       let actual = marshal.attackedBy(scout);
-      let expected = {myPiece: true, opponentPiece: false};
+      let expected = {attackingPiece: true, defendingPiece: false};
       assert.deepEqual(actual,expected);
     });
     it('should kill both piece when both pieces are of same rank',()=>{
       let scout = new Scout();    
       let actual = scout.attackedBy(scout);
-      let expected = {myPiece: true, opponentPiece: true};
+      let expected = {attackingPiece: true, defendingPiece: true};
+      assert.deepEqual(actual,expected);
+    });
+    it('should diffuse bomb when attacked by miner',()=>{
+      let miner = new Miner();    
+      let bomb = new Bomb();    
+      let actual = bomb.attackedBy(miner);
+      let expected = {attackingPiece: false, defendingPiece: true};
+      assert.deepEqual(actual,expected);
+    });
+    it('should kill marshal when attacked by spy',()=>{
+      let spy = new Spy();     
+      let marshal = new Marshal();    
+      let actual = marshal.attackedBy(spy);
+      let expected = {attackingPiece: false, defendingPiece: true};
       assert.deepEqual(actual,expected);
     });
   });

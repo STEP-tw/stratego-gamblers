@@ -9,5 +9,14 @@ class Bomb extends Piece {
   isMovable(){
     return false;
   }
+  attackedBy(attackingPiece){
+    let killedPieces = {attackingPiece:true,defendingPiece:false};
+    if(attackingPiece.rank==3){
+      
+      killedPieces.defendingPiece = true;
+      killedPieces.attackingPiece = false;
+    }
+    return killedPieces; 
+  }
 }
 module.exports = Bomb;

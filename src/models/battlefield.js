@@ -108,10 +108,10 @@ class Battlefield {
     let piece = this.getPiece(playerId,this.selectedPos);
     let opponentPiece = this.getPiece(opponentId,pieceLoc);
     let killedPieces = opponentPiece.attackedBy(piece);
-    if(killedPieces.opponentPiece){
+    if(killedPieces.defendingPiece){
       delete this.battlePositions[opponentId][pieceLoc];
     }
-    if(killedPieces.myPiece){
+    if(killedPieces.attackingPiece){
       delete this.battlePositions[playerId][this.selectedPos];
     } else {
       this.replacePieceLoc(playerId,pieceLoc);

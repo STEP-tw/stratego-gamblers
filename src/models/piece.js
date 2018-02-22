@@ -11,12 +11,12 @@ class Piece {
     return position.getNeighbourPos();
   }
   attackedBy(attackingPiece){
-    let killedPieces = {myPiece:true,opponentPiece:true};
+    let killedPieces = {attackingPiece:true,defendingPiece:true};
     if(this.rank<attackingPiece.rank){
-      killedPieces.myPiece = false;
+      killedPieces.attackingPiece = false;
     }
     if(this.rank>attackingPiece.rank){
-      killedPieces.opponentPiece = false;
+      killedPieces.defendingPiece = false;
     }
     return killedPieces;
   }
