@@ -266,7 +266,6 @@ describe('app', () => {
         .set('cookie','sessionId=12345')
         .send('location=0_0')
         .expect(200)
-        .expect('{"potentialMoves":{"freeMoves":["1_0"],"attackMoves":[]}}')
         .end(done);
     });
     it('should response with 406 for in valid player ',(done)=>{
