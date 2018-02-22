@@ -1,4 +1,4 @@
-const Piece=require('./piece.js');
+const Piece = require('./piece.js');
 class Scout extends Piece {
   constructor(){
     super();

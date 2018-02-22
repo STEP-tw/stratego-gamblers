@@ -43,6 +43,33 @@ class Position {
     }
     return this.neighbour;
   }
+  getAllPosRight(){
+    let xPos = this.xPos;
+    let allPosRight = [];
+    while(+xPos < 9){
+      allPosRight.push(`${+xPos+1}_${this.yPos}`);
+      xPos++;
+    }
+    return allPosRight;
+  }
+  getAllPosLeft(){
+    let xPos = this.xPos;
+    let allPosLeft = [];
+    while(+xPos > 0){
+      allPosLeft.push(`${+xPos-1}_${this.yPos}`);
+      xPos--;
+    }
+    return allPosLeft;
+  }
+  getAllPosBack(){
+    let yPos = this.yPos;
+    let allPosBack = [];
+    while(+yPos > 0){
+      allPosBack.push(`${this.xPos}_${+yPos-1}`);
+      yPos--;
+    }
+    return allPosBack;
+  }
   getAllPosAhead(){
     let yPos = this.yPos;
     let allPosAhead = [];
@@ -51,33 +78,6 @@ class Position {
       yPos++;
     }
     return allPosAhead;
-  }
-  getAllPosBack(){
-    let yPos = this.yPos;
-    let allPosBack = [];
-    while(+yPos > 1){
-      allPosBack.push(`${this.xPos}_${+yPos-1}`);
-      yPos--;
-    }
-    return allPosBack;
-  }
-  getAllPosLeft(){
-    let xPos = this.xPos;
-    let allPosLeft = [];
-    while(+xPos > 1){
-      allPosLeft.push(`${+xPos-1}_${this.yPos}`);
-      xPos--;
-    }
-    return allPosLeft;
-  }
-  getAllPosRight(){
-    let xPos = this.xPos;
-    let allPosRight = [];
-    while(+xPos < 9){
-      allPosRight.push(`${+xPos+1}_${this.xPos}`);
-      xPos++;
-    }
-    return allPosRight;
   }
 }
 

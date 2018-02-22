@@ -90,8 +90,8 @@ const updateBattlefield = function(req,res){
   let playerId = game.getPlayerIndexBy(sessionId);
   if(game.isCurrentPlayer(playerId)){
     game.updatePieceLocation(location);
-    let status = game.getStatus();
-    res.send(status);
+    res.status(200);
+    res.end();
     return;
   }
   res.status(406);

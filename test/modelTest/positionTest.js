@@ -26,13 +26,15 @@ describe('Position',()=>{
   describe('#getAllPosBack', () => {
     it('should return all back positions of a piece', () => {
       let position=new Position('5_5');
-      assert.sameMembers(position.getAllPosBack(),['5_4','5_3','5_2','5_1']);
+      let expected = ['5_4','5_3','5_2','5_1','5_0'];
+      assert.sameMembers(position.getAllPosBack(),expected);
     });
   });
   describe('#getAllPosLeft', () => {
     it('should return all left positions of a piece', () => {
       let position=new Position('5_5');
-      assert.sameMembers(position.getAllPosLeft(),['4_5','3_5','2_5','1_5']);
+      let expected = ['4_5','3_5','2_5','1_5','0_5'];
+      assert.sameMembers(position.getAllPosLeft(),expected);
     });
   });
   describe('#getAllPosRight', () => {
