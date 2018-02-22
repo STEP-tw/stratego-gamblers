@@ -10,9 +10,9 @@ class Piece {
   isFreePosition(position, posMap) {
     let myArmy = posMap.myArmy;
     let oppArmy = posMap.opponentArmy;
-    let lakeArea = posMap.lakeArea;
-    let condition = !myArmy.includes(position) && !oppArmy.includes(position);
-    return condition && !lakeArea.includes(position);
+    let lake = posMap.lakeArea;
+    let positions = myArmy.concat(oppArmy).concat(lake);
+    return !positions.includes(position);
   }
 
   isOpponent(position, opponentArmy) {
