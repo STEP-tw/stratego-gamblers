@@ -100,7 +100,7 @@ td {
   margin: -42.2% 0% 0% 0%;
 }
 
-.pieceDescription {
+#pieceDescription {
   margin: 9% 0%;
   width: 80%;
   height: 35%;
@@ -146,11 +146,29 @@ button:focus {
 }
 
 @media only screen and (min-width: 1000px) {
-  .pieceDescription {
+  #pieceDescription {
     width: 80%;
   }
   , .waitMessage {
     width: 80%;
   }
   ,
+}
+
+#pieceTitle {
+  font-size: 30px;
+  color: black;
+}
+
+p {
+  font-size: 20px;
+  color: black;
+}
+
+.piece {
+  display: none;
+  text-transform: uppercase;
+  padding: 1%;
+  text-align: center;
+  background-color: #a78d43;
 }
