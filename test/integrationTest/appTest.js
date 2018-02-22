@@ -255,8 +255,8 @@ describe('app', () => {
       app.game = new Game();
       app.game.addPlayer("player1",12345,'red');
       app.game.addPlayer("player2",123456,'blue');
-      let redArmyPos = {'0_0':'2','0_1':'B'};
-      let blueArmyPos = {'9_2':'2','9_9':'B'};
+      let redArmyPos = {'0_0':'3','0_1':'B'};
+      let blueArmyPos = {'9_2':'3','9_9':'B'};
       app.game.setBattlefieldFor(0,redArmyPos);
       app.game.setBattlefieldFor(1, blueArmyPos);
     });
