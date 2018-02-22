@@ -1,7 +1,7 @@
 const Position=require('./position.js');
 class Piece {
   constructor(){
-    
+
   }
   isMovable(){
     return true;

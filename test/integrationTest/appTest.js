@@ -26,6 +26,8 @@ describe('app', () => {
     beforeEach(
       () =>{
         app.game = new Game();
+        app.game.addPlayer("player1", 12345, 'red');
+        app.game.addPlayer("player2", 123456, 'blue');
       });
     it("should return status with missing piece", done => {
       request(app)

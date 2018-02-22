@@ -26,7 +26,9 @@ describe("Game", () => {
       assert.deepEqual(game.getPlayers(), [{
         name: "ravi",
         id: 0,
-        color: 'red'
+        color: 'red',
+        "deadPieces": [],
+        "livePieces": []
       }]);
     });
   });
@@ -35,7 +37,9 @@ describe("Game", () => {
       let expectedOutput = {
         name: "Ravi",
         id: 0,
-        color: "red"
+        color: "red",
+        "deadPieces": [],
+        "livePieces": []
       };
       let actual = game.addPlayer("Ravi", 0, "red");
       assert.deepEqual(actual, expectedOutput);
@@ -70,6 +74,10 @@ describe("Game", () => {
     });
   });
   describe('setBattlefield', () => {
+    beforeEach(() => {
+      game.addPlayer("ravi", 12345, 'red');
+      game.addPlayer("ankur", 123456, 'blue');
+    });
     it('should set the battlefield for a player', () => {
       game.setBattlefieldFor(0, {'0_0': 'F'});
       game.setBattlefieldFor(1, {'3_7': 'B'});

@@ -11,6 +11,9 @@
 </head>
 
 <body>
+
+  <audio autoplay loop id="bgm"><source src="audio/music.mp3" type="audio/mp3"></audio>
+
   <div class="heading">
     <span id="title">DEPLOY ARMY ON BATTLEFIELD</span>
     <div class="playerDetails">
@@ -35,8 +38,35 @@
       </div>
     </div>
     <div class="rightBlock">
-      <div class="pieceDescription">
-
+      <div id="pieceDescription">
+        <div class="piece bomb">
+          <p id="pieceTitle">Bomb</p>
+          <p>Bombs cannot move and destroy any attacking pieces, except for the Miner.</p>
+        </div>
+        <div class="piece flag">
+          <p id="pieceTitle">Flag</p>
+          <p>The Flag cannot move and can be captured by all moving pieces.When the Flag is captured the game is won.</p>
+        </div>
+        <div class="piece general">
+          <p id="pieceTitle">General</p>
+          <p>The General defeats all lower ranked pieces., but can be captured by the Marshal.</p>
+        </div>
+        <div class="piece marshal">
+          <p id="pieceTitle">Marshal</p>
+          <p>The Marshal captures all other pieces, but can be defeated by the Spy.</p>
+        </div>
+        <div class="piece miner">
+          <p id="pieceTitle">Miner</p>
+          <p>The Miner can defuse bombs, but is captured by all higher-ranked pieces.</p>
+        </div>
+        <div class="piece scout">
+          <p id="pieceTitle">Scout</p>
+          <p>The Scout can move any number of vacant squares forward, backword left or right.</p>
+        </div>
+        <div class="piece spy">
+          <p id="pieceTitle">Spy</p>
+          <p>The Spy can capture the Marshal when attacking, but is captured by all other pieces.</p>
+        </div>
       </div>
       <span id="message">MESSAGE</span>
       <div class="waitMessage">
@@ -45,6 +75,7 @@
       <button id="ready" type="button" name="button">READY</button>
     </div>
   </div>
+
 </body>
 
 </html>

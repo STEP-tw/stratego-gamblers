@@ -24,7 +24,10 @@ class Game {
   }
   setBattlefieldFor(playerId, placedArmyPos) {
     this.createPiecesFor();
+    let player = this.players[playerId];
     this.battlefield.setFieldFor(playerId, this.pieces, placedArmyPos);
+    let pieces = this.battlefield.getPiecesOf(playerId);
+    player.addPieces(pieces);
   }
   getPlayerName(teamColor) {
     let players = this.players;

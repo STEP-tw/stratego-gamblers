@@ -6,9 +6,14 @@ const Miner = require('../../src/models/miner.js');
 const Pieces = require('../../src/models/pieces.js');
 
 describe('Battlefield',()=>{
+  let battlefield={};
+  let pieces = {};
+  beforeEach(() => {
+    battlefield = new Battlefield();
+    pieces = new Pieces();    
+  });
   describe('#addPiece',()=>{
     it('should add piece into battlefield',()=>{
-      let battlefield = new Battlefield();
       let flag = new Flag();
       battlefield.addPiece(flag,'0_0');
       let expected = {'0_0':{id:'F',name:'Flag',rank:0}};
@@ -16,7 +21,6 @@ describe('Battlefield',()=>{
       assert.deepEqual(expected,actual);
     });
     it('should add multiple piece into battlefield',()=>{
-      let battlefield = new Battlefield();
       let flag = new Flag();
       let marshal = new Marshal();
       battlefield.addPiece(flag,'0_0');
@@ -29,8 +33,6 @@ describe('Battlefield',()=>{
   });
   describe('#getAttackMovesFor', () => {
     it('should give attack moves for piece of a particular player',()=>{
-      let battlefield = new Battlefield();
-      let pieces = new Pieces();
       pieces.loadPieces('quickGame');
       let redArmyPos = {'3_2':'S','3_4':'B'};
       let blueArmyPos = {'3_3':'2','3_1':'B','4_9':'S'};
@@ -43,8 +45,6 @@ describe('Battlefield',()=>{
   });
   describe('#getFreeMoves', () => {
     it('should give free moves for a piece',()=>{
-      let battlefield = new Battlefield();
-      let pieces = new Pieces();
       pieces.loadPieces('quickGame');
       let redArmyPos = {'3_2':'S','3_1':'B'};
       let blueArmyPos = {'3_5':'2','4_1':'B','3_3':'S'};
@@ -57,11 +57,15 @@ describe('Battlefield',()=>{
   });
   describe('setFieldFor',()=>{
     it('should set battlefield for player with given location & pieces',()=>{
-      let battlefield = new Battlefield();
-      let pieces = new Pieces();
       pieces.loadPieces();
       battlefield.setFieldFor(0,pieces,{'0_0':'F'});
       assert.deepEqual(battlefield.getArmyPos(0),{'0_0':'F'});
+    });
+    it('should return pieces of given playerId', () => {
+      pieces.loadPieces();
+      let marshal = new Marshal();
+      battlefield.setFieldFor(0, pieces, {'0_0': 'F', '0_1': '10'});
+      assert.deepInclude(battlefield.getPiecesOf(0),marshal);
     });
   });
   describe('#battle',()=>{
