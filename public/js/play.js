@@ -59,7 +59,6 @@ const drawGrid = (containerId, numOfRows, numOfCols, initialID, idGrowth)=>{
   grid.addEventListener('click',getLocation);
 };
 
-
 const setImageAttributes = (img, src, id, height, width) => {
   img.src = src;
   img.id = id;
@@ -87,6 +86,7 @@ const updateEmptyCell=(cell)=>{
     child.remove();
   }
 };
+
 const showBattlefield = (battlefield,imgSrcDirectory) => {
   let locations = Object.keys(battlefield);
   locations.forEach(function(location) {
@@ -106,9 +106,15 @@ const updateBattleField = function(imgSrcDirectory) {
     turnBox.innerText = `${gameData.turnMessage}`;
     showBattlefield(battlefield,imgSrcDirectory);
   };
+  let viewKilledPieces = function(){
+    let killedPieces = JSON.parse(this.responseText);
+  };
   let callBack = function(){
     doXhr('/battlefield', 'GET', reqListener, '', () => {
       console.log("fail");
+    });
+    doXhr('/killedPieces','GET',viewKilledPieces,() => {
+      console.log("failed");
     });
   };
   let interval= setInterval(callBack,1000);

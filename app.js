@@ -23,7 +23,6 @@ const redirectToHome = function(req,res,next){
     next();
   }
 };
-
 const setBattlefield = function(req, res) {
   let game = req.app.game;
   let playerId = req.params.playerId;
@@ -35,12 +34,10 @@ const setBattlefield = function(req, res) {
   }
   res.status(206).send('pieces or location missing!');
 };
-
 const haveBothPlayersJoined = function(req, res) {
   let game = req.app.game;
   res.send(game.haveBothPlayersJoined());
 };
-
 const getBattlefield = function(req, res) {
   let game = req.app.game;
   let playerId = req.cookies.sessionId;
@@ -60,7 +57,6 @@ const setupArmy = function(req, res) {
   setupTemp = setupTemp.replace('{{playerName}}', name);
   res.send(setupTemp);
 };
-
 const sendOpponentStatus = function(req, res) {
   let game = req.app.game;
   if (game.areBothPlayerReady()) {
@@ -69,7 +65,6 @@ const sendOpponentStatus = function(req, res) {
   }
   res.status(202).send('wait..let opponent be ready');
 };
-
 const renderGamePage = function(req, res) {
   let game = req.app.game;
   let battlefield = req.app.fs.readFileSync('./templates/battlefield', 'utf8');
@@ -82,7 +77,6 @@ const renderGamePage = function(req, res) {
   battlefield = battlefield.replace('{{opponent}}',opponent);
   res.send(battlefield);
 };
-
 const updateBattlefield = function(req,res){
   let game = req.app.game;
   let sessionId = req.cookies.sessionId;
@@ -106,6 +100,14 @@ const validatePlayerStatus=function(req,res,next){
     res.redirect('/setupArmy');
   }
 };
+const getKilledPieces = function(req,res){
+  let game = req.app.game;
+  let players = game.getPlayers();
+  let redCapturedArmy = players[0].getKilledPieces();
+  let blueCapturedArmy = players[1].getKilledPieces();
+  let killedPieces = {redArmy:redCapturedArmy,blueArmy:blueCapturedArmy};
+  res.send(killedPieces);
+};
 
 app.use(log());
 app.use(express.urlencoded({
@@ -125,4 +127,5 @@ app.use('/play',validatePlayerStatus);
 app.get('/play', renderGamePage);
 app.get('/battlefield', getBattlefield);
 app.post('/selectedLoc',updateBattlefield);
+app.get('/killedPieces',getKilledPieces);
 module.exports = app;

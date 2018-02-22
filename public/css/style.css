@@ -73,6 +73,32 @@ body {
   height: 630px;
 }
 
+.redArmy {
+  float: left;
+  margin-left: 4%;
+  width: 13%;
+  height: 100%;
+  border: 1px solid #a78d4359;
+}
+
+#capturedRedArmy {
+  width: 100%;
+  height: 100%;
+}
+
+.blueArmy {
+  float: right;
+  margin-right: 4%;
+  width: 13%;
+  height: 100%;
+  border: 1px solid #a78d4359;
+}
+
+#capturedBlueArmy {
+  width: 100%;
+  height: 100%;
+}
+
 .battlefield {
   margin: auto;
   width: 60%;
@@ -82,6 +108,16 @@ body {
 #battlefield {
   margin: auto;
   border-collapse: collapse;
+}
+
+#capturedRed {
+  float: center;
+  background-color: #a78d43;
+}
+
+#capturedBlue {
+  float: center;
+  background-color: #a78d43;
 }
 
 td > #X {
