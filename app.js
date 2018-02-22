@@ -102,10 +102,7 @@ const validatePlayerStatus=function(req,res,next){
 };
 const getKilledPieces = function(req,res){
   let game = req.app.game;
-  let players = game.getPlayers();
-  let redCapturedArmy = players[0].getKilledPieces();
-  let blueCapturedArmy = players[1].getKilledPieces();
-  let killedPieces = {redArmy:redCapturedArmy,blueArmy:blueCapturedArmy};
+  let killedPieces = game.getKilledPieces();
   res.send(killedPieces);
 };
 
