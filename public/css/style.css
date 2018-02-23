@@ -123,9 +123,11 @@ body {
 td > #X {
   width: 63px;
   height: 63px;
+  cursor: not-allowed;
 }
 
 img {
+  cursor: pointer;
   height: 62px;
   width: 62px;
   right: 0;
@@ -133,6 +135,14 @@ img {
   top: 0;
   bottom: 0;
   position: absolute;
+}
+
+img > #X {
+  cursor: not-allowed;
+}
+
+img > #O {
+  cursor: move;
 }
 
 td {

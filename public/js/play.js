@@ -75,7 +75,8 @@ const appendImage = (baseCell, id, imgSrcDirectory) => {
   let width = "50";
   let img = setImageAttributes(image, src, id, height, width);
   if(basePosition.hasChildNodes()){
-    return;
+    basePosition.childNodes[0].remove();
+    // return;
   }
   basePosition.appendChild(img);
 };
@@ -113,7 +114,7 @@ const updateBattleField = function(imgSrcDirectory) {
     doXhr('/battlefield', 'GET', reqListener, '', () => {
       console.log("fail");
     });
-    doXhr('/killedPieces','GET',viewKilledPieces,() => {
+    doXhr('/killedPieces','GET',viewKilledPieces,'',() => {
       console.log("failed");
     });
   };
