@@ -79,8 +79,8 @@ describe("Game", () => {
       game.addPlayer("ankur", 123456, 'blue');
     });
     it('should set the battlefield for a player', () => {
-      game.setBattlefieldFor(0, { '0_0': 'F' });
-      game.setBattlefieldFor(1, { '3_7': 'B' });
+      game.setBattlefieldFor(0, {'0_0': 'F'});
+      game.setBattlefieldFor(1, {'3_7': 'B'});
       let actual = game.getBattlefieldFor(0);
       let expected = {
         '0_0': 'F', '3_7': 'O', '4_2': 'X', '4_3': 'X', '4_6': 'X',
@@ -136,8 +136,8 @@ describe("Game", () => {
       () => {
         game.addPlayer("ravi", 0, 'red');
         game.addPlayer("ankur", 1, 'blue');
-        let redArmyPos = { '3_2': 'S', '3_1': 'B' };
-        let blueArmyPos = { '3_5': '2', '4_1': 'B', '3_3': 'S' };
+        let redArmyPos = {'3_2': 'S', '3_1': 'B'};
+        let blueArmyPos = {'3_5': '2', '4_1': 'B', '3_3': 'S'};
         game.setBattlefieldFor(0, redArmyPos);
         game.setBattlefieldFor(1, blueArmyPos);
       }
@@ -169,8 +169,8 @@ describe("Game", () => {
       game = new Game("gameId");
       game.addPlayer("ravi", 0, 'red');
       game.addPlayer("ankur", 1, 'blue');
-      let redArmyPos = { '3_2': 'S', '3_1': 'B', '9_0': '10' };
-      let blueArmyPos = { '3_5': '2', '4_1': 'B', '3_3': 'S', '9_1': '3' };
+      let redArmyPos = {'3_2': 'S', '3_1': 'B', '9_0': '10'};
+      let blueArmyPos = {'3_5': '2', '4_1': 'B', '3_3': 'S', '9_1': '3'};
       game.setBattlefieldFor(0, redArmyPos);
       game.setBattlefieldFor(1, blueArmyPos);
     });
@@ -215,9 +215,9 @@ describe("Game", () => {
     it('should return all empty positions on battlefield', () => {
       game = new Game();
       game.createBattlefield();
-      let armyPos = { '3_2': 'S', '3_1': 'B', '9_0': '10' };
+      let armyPos = {'3_2': 'S', '3_1': 'B', '9_0': '10'};
       let actual = game.battlefield.getEmptyPositions(armyPos);
-      let expected = { '3_2': 'S', '3_1': 'B', '9_0': '10' };
+      let expected = {'3_2': 'S', '3_1': 'B', '9_0': '10'};
       assert.notDeepEqual(actual, expected);
     });
   });
@@ -225,8 +225,8 @@ describe("Game", () => {
     beforeEach(() => {
       game.addPlayer("ravi", 0, 'red');
       game.addPlayer("ankur", 1, 'blue');
-      let redArmyPos = { '3_2': 'F', '3_1': 'B', '9_0': '10' };
-      let blueArmyPos = { '3_5': '2', '4_1': 'B', '3_3': 'F', '9_1': '3' };
+      let redArmyPos = {'3_2': 'F', '3_1': 'B', '9_0': '10'};
+      let blueArmyPos = {'3_5': '2', '4_1': 'B', '3_3': 'F'};
       game.setBattlefieldFor(0, redArmyPos);
       game.setBattlefieldFor(1, blueArmyPos);
     });
@@ -239,7 +239,16 @@ describe("Game", () => {
         assert.isOk(game.gameOver);
       });
       it('should update name of winner in game when game is over', () => {
-        assert.equal(game.winner, 'ankur')
+        assert.equal(game.winner, 'ankur');
+      });
+    });
+    describe('draw game',()=>{
+      it('should update game draw if no moving piece left on battlefield',()=>{
+        game.players[0].kill(10);
+        game.players[1].kill(2);   
+        game.updateGameStatus();             
+        assert.isOk(game.gameOver); 
+        assert.equal(game.winner, '');
       });
     });
   });

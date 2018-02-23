@@ -100,10 +100,14 @@ const showBattlefield = (battlefield, imgSrcDirectory) => {
 };
 
 const announceWinner = (gameData) => {
+  let gameOverMsg = `${gameData.winner} won the game`;
+  if(!gameData.winner){
+    gameOverMsg = `GAME DRAW`;
+  }
   let playAgain = document.querySelector('#playAgain');
   playAgain.style.visibility = "visible";
   let winMsgBox = document.querySelector("#currentPlayer");
-  winMsgBox.innerText = `${gameData.winner} won the game`;
+  winMsgBox.innerText = gameOverMsg;
   let grid = document.querySelector("#battlefield");
   grid.removeEventListener('click', getLocation);
 };

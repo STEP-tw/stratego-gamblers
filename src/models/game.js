@@ -130,13 +130,24 @@ class Game {
     this.battlefield.clearBattleResult();
   }
   updateGameStatus(){
-    let players = this.players;
-    players[0].hasLost() && this.setGameStatus(players[1]);
-    players[1].hasLost() && this.setGameStatus(players[0]);
+    let lostPlayers = this.players.filter(player=>{
+      return player.hasLost();
+    });
+    if(lostPlayers.length>0){
+      this.gameOver = true;
+      this.setWinner(lostPlayers);
+    }
   }
-  setGameStatus(winner){
-    this.gameOver=true;
-    this.winner=winner.getName();
+  setWinner(lostPlayers){
+    if(this.isGameDrawn(lostPlayers)){
+      return;
+    }
+    let loser = lostPlayers[0];
+    let winner = this.players.find(player=>player!=loser);
+    this.winner = winner.getName();
+  }
+  isGameDrawn(lostPlayers){
+    return lostPlayers.length==2;
   }
   getGameStatus(){
     return {

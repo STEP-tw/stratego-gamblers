@@ -25,7 +25,7 @@ exports.isEquivalent = (obj1, obj2)=>{
   return true;
 };
 
-exports.getSymbolForPos = function(positionsWithId,positionsArray,symbol){
+exports.getSymbolForPos = (positionsWithId,positionsArray,symbol)=>{
   positionsArray.forEach(position=>{
     positionsWithId[position] = symbol;
   });

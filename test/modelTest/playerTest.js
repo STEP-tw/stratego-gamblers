@@ -71,7 +71,7 @@ describe("Player", () => {
       player.kill('F');
       assert.isOk(player.hasLost());
     });
-    it('should return true if player has lost by not having any moving piece', () => {
+    it('should return true if player does not have any moving piece', () => {
       player.addPieces(pieces);
       player.kill('10');
       assert.isOk(player.hasLost());
