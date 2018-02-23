@@ -12,8 +12,6 @@
 
 <body>
 
-  <audio autoplay loop id="bgm"><source src="audio/music.mp3" type="audio/mp3"></audio>
-
   <div class="heading">
     <span id="title">DEPLOY ARMY ON BATTLEFIELD</span>
     <div class="playerDetails">

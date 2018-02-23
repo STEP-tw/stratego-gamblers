@@ -23,6 +23,7 @@ const redirectToHome = function(req,res,next){
     next();
   }
 };
+
 const setBattlefield = function(req, res) {
   let game = req.app.game;
   let playerId = req.params.playerId;
@@ -34,19 +35,22 @@ const setBattlefield = function(req, res) {
   }
   res.status(206).send('pieces or location missing!');
 };
+
 const haveBothPlayersJoined = function(req, res) {
   let game = req.app.game;
   res.send(game.haveBothPlayersJoined());
 };
+
 const getBattlefield = function(req, res) {
   let game = req.app.game;
   let playerId = req.cookies.sessionId;
   let playerIndex = game.getPlayerIndexBy(playerId);
   let battlefieldPos = game.getBattlefieldFor(playerIndex);
-  let turnMessage = game.getTurnMessage(playerIndex);
-  let respond = {'battlefield':battlefieldPos,'turnMessage':turnMessage};
+  let turnMsg = game.getTurnMessage(playerIndex);
+  let respond = {'battlefield':battlefieldPos,'turnMsg':turnMsg};
   res.send(JSON.stringify(respond));
 };
+
 const setupArmy = function(req, res) {
   let setupTemp = req.app.fs.readFileSync('./templates/setupArmy', 'utf8');
   let game = req.app.game;
@@ -57,6 +61,7 @@ const setupArmy = function(req, res) {
   setupTemp = setupTemp.replace('{{playerName}}', name);
   res.send(setupTemp);
 };
+
 const sendOpponentStatus = function(req, res) {
   let game = req.app.game;
   if (game.areBothPlayerReady()) {
@@ -65,6 +70,7 @@ const sendOpponentStatus = function(req, res) {
   }
   res.status(202).send('Waiting for opponent to be ready');
 };
+
 const renderGamePage = function(req, res) {
   let game = req.app.game;
   let battlefield = req.app.fs.readFileSync('./templates/battlefield', 'utf8');
@@ -77,6 +83,7 @@ const renderGamePage = function(req, res) {
   battlefield = battlefield.replace('{{opponent}}',opponent);
   res.send(battlefield);
 };
+
 const updateBattlefield = function(req,res){
   let game = req.app.game;
   let sessionId = req.cookies.sessionId;
@@ -92,6 +99,7 @@ const updateBattlefield = function(req,res){
   res.send('invalid request');
   res.end();
 };
+
 const validatePlayerStatus=function(req,res,next){
   let game = req.app.game;
   if(game.areBothPlayerReady()){
@@ -99,11 +107,6 @@ const validatePlayerStatus=function(req,res,next){
   }else{
     res.redirect('/setupArmy');
   }
-};
-const getKilledPieces = function(req,res){
-  let game = req.app.game;
-  let killedPieces = game.getKilledPieces();
-  res.send(killedPieces);
 };
 
 app.use(log());
@@ -124,5 +127,4 @@ app.use('/play',validatePlayerStatus);
 app.get('/play', renderGamePage);
 app.get('/battlefield', getBattlefield);
 app.post('/selectedLoc',updateBattlefield);
-app.get('/killedPieces',getKilledPieces);
 module.exports = app;
