@@ -1,11 +1,11 @@
-const getTimeInSecond = () => new Date().getTime();
+const getTimeInSecond = require('../lib/utils.js').getTimeInSecond;
 class Sessions {
-  constructor(sessionIdGenerator = getTimeInSecond, sessions) {
-    this.sessionIdGenerator = sessionIdGenerator;
-    this.sessions = sessions || {};
+  constructor(sessionId) {
+    this.sessionId = sessionId;
+    this.sessions = {};
   }
   createSession(playerName) {
-    let sessionId = this.sessionIdGenerator();
+    let sessionId = this.sessionId || getTimeInSecond();
     this.sessions[sessionId] = playerName;
     return sessionId;
   }

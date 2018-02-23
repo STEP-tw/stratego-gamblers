@@ -98,7 +98,7 @@ describe('app', () => {
       request(app)
         .get("/createGame/ravi")
         .expect(200)
-        .expect("1")
+        .expect(/[\d]/)
         .expect("Content-Type", "text/html; charset=utf-8")
         .end(done);
     });
@@ -185,7 +185,7 @@ describe('app', () => {
   });
   describe('GET /play', () => {
     beforeEach(() => {
-      app.game = new Game();
+      app.game = new Game(1);
       app.game.addPlayer("player1", 12345, 'red');
       app.game.addPlayer("player2", 123456, 'blue');
     });
@@ -212,7 +212,7 @@ describe('app', () => {
   });
   describe('GET /isOpponentReady', () => {
     beforeEach(() => {
-      app.game = new Game();
+      app.game = new Game(1);
       app.game.addPlayer("player1");
       app.game.addPlayer("player2");
     });
@@ -235,7 +235,7 @@ describe('app', () => {
   });
   describe('GET /battlefield', () => {
     beforeEach(() => {
-      app.game = new Game();
+      app.game = new Game(1);
       app.game.addPlayer("player1",12345,'red');
       app.game.addPlayer("player2",123456,'blue');
       let redArmyPos = {'3_2':'2','3_9':'B'};
@@ -255,7 +255,7 @@ describe('app', () => {
   });
   describe('#updateBattlefield',()=>{
     beforeEach(() => {
-      app.game = new Game();
+      app.game = new Game(1);
       app.game.addPlayer("player1",12345,'red');
       app.game.addPlayer("player2",123456,'blue');
       let redArmyPos = {'0_0':'3','0_1':'B'};

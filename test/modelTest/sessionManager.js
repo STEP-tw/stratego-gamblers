@@ -2,11 +2,10 @@ let chai = require('chai');
 let assert = chai.assert;
 let Sessions = require('../../src/models/sessions.js');
 
-const idGenerator = () => 12345;
 let sessions;
 describe('Sessions', function () {
   beforeEach(function () {
-    sessions = new Sessions(idGenerator);
+    sessions = new Sessions(12345);
   });
   describe('#createSession', function () {
     it('should create session for Player', function () {
@@ -30,6 +29,13 @@ describe('Sessions', function () {
       assert.ok(sessions.isLoggedin(sessionid));
       sessions.deleteSession(sessionid);
       assert.isNotOk(sessions.isLoggedin(sessionid));
+    });
+  });
+  describe('createSession',()=>{
+    it('should create its own session when not provided',()=>{
+      sessions = new Sessions();
+      let sessionId = sessions.createSession();
+      assert.match(sessionId,/[\d]/);
     });
   });
 });
