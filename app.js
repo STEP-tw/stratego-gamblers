@@ -63,7 +63,7 @@ const sendOpponentStatus = function(req, res) {
     game.createBattlefield();
     return res.redirect('/play');
   }
-  res.status(202).send('wait..let opponent be ready');
+  res.status(202).send('Waiting for opponent to be ready');
 };
 const renderGamePage = function(req, res) {
   let game = req.app.game;

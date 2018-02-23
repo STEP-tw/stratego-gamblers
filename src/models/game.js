@@ -28,7 +28,7 @@ class Game {
     return player;
   }
   setBattlefieldFor(playerId, placedArmyPos) {
-    this.createPiecesFor();
+    this.createPieces();
     let player = this.players[playerId];
     this.battlefield.setFieldFor(playerId, this.pieces, placedArmyPos);
     let pieces = this.battlefield.getPiecesOf(playerId);
@@ -52,7 +52,7 @@ class Game {
     let numberOfPlayers = this.players.length;
     return numberOfPlayers == 2;
   }
-  createPiecesFor() {
+  createPieces() {
     this.pieces.loadPieces(this.gameType);
   }
   areBothPlayerReady() {
@@ -96,6 +96,7 @@ class Game {
       isUpdatedLoc = battlefield.updateLocation(this.currentPlayerId,location);
     }
     if(isUpdatedLoc){
+      this.updatePlayerPieces();
       this.changeCurrentPlayer();
       return ;
     }
@@ -123,6 +124,7 @@ class Game {
       let deadPieceId = result.killedPiece.id;
       this.players[result.playerId].kill(deadPieceId);
     });
+    this.battlefield.clearBattleResult();
   }
 }
 module.exports =Game;

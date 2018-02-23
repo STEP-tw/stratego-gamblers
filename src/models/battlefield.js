@@ -5,7 +5,7 @@ class Battlefield {
     this.lakeArea = ['5_2','5_3','4_2','4_3','5_6','5_7','4_6','4_7'];
     this.battlePositions = {};
     this.selectedPos = '';
-    this.battleResult = [];
+    this.battleResults = [];
   }
   setField(pieces,placedArmyPos){
     let allPos = Object.keys(placedArmyPos);
@@ -96,7 +96,7 @@ class Battlefield {
     let opponentId = 1-playerId;
     let piece = this.getPiece(playerId,this.selectedPos);
     let opponentPiece = this.getPiece(opponentId,pieceLoc);
-    let killedPieces = opponentPiece.attackedBy(piece);
+    let killedPieces = opponentPiece.attackedBy(piece);    
     if(killedPieces.defendingPiece){
       this.setBattleResult(opponentId,opponentPiece);
       delete this.battlePositions[opponentId][pieceLoc];
@@ -127,11 +127,14 @@ class Battlefield {
     return Object.values(battlePositions[playerId]);
   }
   getBattleResults(){
-    return this.battleResult;
+    return this.battleResults;
   }
   setBattleResult(playerId,piece){
     let result = {playerId:playerId,killedPiece:piece};
-    this.battleResult.push(result);
+    this.battleResults.push(result);
+  }
+  clearBattleResult(){
+    this.battleResults = [];
   }
 }
 module.exports = Battlefield;

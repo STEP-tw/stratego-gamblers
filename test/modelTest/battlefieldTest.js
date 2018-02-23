@@ -40,8 +40,9 @@ describe('Battlefield',()=>{
     it('should return pieces of given playerId', () => {
       pieces.loadPieces();
       let marshal = new Marshal();
+      let flag = new Flag();
       battlefield.setFieldFor(0, pieces, {'0_0': 'F', '0_1': '10'});
-      assert.deepInclude(battlefield.getPiecesOf(0),marshal);
+      assert.deepEqual(battlefield.getPiecesOf(0),[flag,marshal]);
     });
   });
   describe('#battle',()=>{
@@ -67,19 +68,13 @@ describe('Battlefield',()=>{
       let actual = battlefield.getPiece(0,'3_2');
       let expected = new Miner();
       assert.deepEqual(actual,expected);
-      actual = battlefield.getPiece(1,'4_2');
-      expected = undefined;
-      assert.deepEqual(actual,expected);
+      assert.isUndefined(battlefield.getPiece(1,'4_2'));
     });
     it('should kill both pieces when both pieces are of same rank',()=>{
       battlefield.addAsLastSelectedLoc(1,'4_2');
       battlefield.battle('1','4_3');
-      let actual = battlefield.getPiece(0,'4_2');
-      let expected = undefined;
-      assert.deepEqual(actual,expected);
-      actual = battlefield.getPiece(1,'4_3');
-      expected = undefined;
-      assert.deepEqual(actual,expected);
+      assert.isUndefined(battlefield.getPiece(0,'4_2'));
+      assert.isUndefined(battlefield.getPiece(1,'4_3'));
     });
   });
 });
