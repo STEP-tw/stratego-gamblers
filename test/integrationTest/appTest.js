@@ -220,7 +220,7 @@ describe('app', () => {
       request(app)
         .get('/isOpponentReady')
         .expect(202)
-        .expect(/wait..let opponent be ready/)
+        .expect(/Waiting for opponent to be ready/)
         .end(done);
     });
     it('should redirect to /play when both player are ready', (done) => {
@@ -242,6 +242,7 @@ describe('app', () => {
       let blueArmyPos = {'9_2':'2','9_9':'B'};
       app.game.setBattlefieldFor(0,redArmyPos);
       app.game.setBattlefieldFor(1, blueArmyPos);
+      app.game.players[0].kill('2');
     });
     it('should respond with battlefield of given player', (done) => {
       request(app)

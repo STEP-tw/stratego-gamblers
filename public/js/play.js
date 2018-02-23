@@ -102,20 +102,15 @@ const showBattlefield = (battlefield,imgSrcDirectory) => {
 const updateBattleField = function(imgSrcDirectory) {
   let reqListener = function() {
     let gameData = JSON.parse(this.responseText);
+    console.log(responseText);
     let battlefield =gameData['battlefield'];
     let turnBox = document.getElementById('currentPlayer');
-    turnBox.innerText = `${gameData.turnMessage}`;
+    turnBox.innerText = `${gameData.turnMsg}`;
     showBattlefield(battlefield,imgSrcDirectory);
-  };
-  let viewKilledPieces = function(){
-    let killedPieces = JSON.parse(this.responseText);
   };
   let callBack = function(){
     doXhr('/battlefield', 'GET', reqListener, '', () => {
       console.log("fail");
-    });
-    doXhr('/killedPieces','GET',viewKilledPieces,'',() => {
-      console.log("failed");
     });
   };
   let interval= setInterval(callBack,1000);

@@ -16,7 +16,7 @@ class Player {
     return this.name;
   }
   getKilledPieces(){
-    return this.deadPieces;
+    return this.deadPieces.map(piece => piece.id);
   }
   addPieces(pieces){
     this.livePieces = pieces;
