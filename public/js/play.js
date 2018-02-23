@@ -99,19 +99,33 @@ const showBattlefield = (battlefield,imgSrcDirectory) => {
   });
 };
 
-const updateBattleField = function(imgSrcDirectory) {
+const announceWinner=(gameData) => {
+  let playAgain = document.querySelector('#playAgain');
+  playAgain.style.visibility = "visible";
+  let winMsgBox = document.querySelector("#currentPlayer");
+  winMsgBox.innerText =`${gameData.winner} won the game`;
+  let grid = document.querySelector("#battlefield");
+  grid.removeEventListener('click',getLocation);
+};
+
+const initiatePolling = function(imgSrcDirectory) {
+  let interval;
   let reqListener = function() {
     let gameData = JSON.parse(this.responseText);
-    console.log(responseText);
+    let status = gameData.status;
     let battlefield =gameData['battlefield'];
     let turnBox = document.getElementById('currentPlayer');
     turnBox.innerText = `${gameData.turnMsg}`;
     showBattlefield(battlefield,imgSrcDirectory);
+    if(status.gameOver){
+      clearInterval(interval);
+      announceWinner(status);
+    }
   };
   let callBack = function(){
     doXhr('/battlefield', 'GET', reqListener, '', () => {
       console.log("fail");
     });
   };
-  let interval= setInterval(callBack,1000);
+  interval= setInterval(callBack,1000);
 };

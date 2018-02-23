@@ -49,10 +49,12 @@ const getBattlefield = function(req, res) {
   let battlefieldPos = game.getBattlefieldFor(playerIndex);
   let turnMsg = game.getTurnMessage(playerIndex);
   let killedPieces = game.getKilledPieces();
+  let status = game.getGameStatus();
   let respond = {
     'battlefield': battlefieldPos,
     'turnMsg': turnMsg,
-    'killedPieces': killedPieces
+    'killedPieces': killedPieces,
+    'status':status
   };
   res.send(JSON.stringify(respond));
 };
@@ -131,6 +133,7 @@ app.get('/isOpponentReady', sendOpponentStatus);
 app.get('/hasOpponentJoined', haveBothPlayersJoined);
 app.use('/play', validatePlayerStatus);
 app.get('/play', renderGamePage);
+// app.use('/battlefield', getGameStatus);
 app.get('/battlefield', getBattlefield);
 app.post('/selectedLoc', updateBattlefield);
 module.exports = app;

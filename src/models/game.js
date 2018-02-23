@@ -10,6 +10,8 @@ class Game {
     this.battlefield = new Battlefield();
     this.pieces = new Pieces();
     this.gameType = 'quickGame';
+    this.gameOver=false;
+    this.winner='';
   }
   getId() {
     return this.id;
@@ -97,6 +99,7 @@ class Game {
     }
     if(isUpdatedLoc){
       this.updatePlayerPieces();
+      this.updateGameStatus();
       this.changeCurrentPlayer();
       return ;
     }
@@ -125,6 +128,21 @@ class Game {
       this.players[result.playerId].kill(deadPieceId);
     });
     this.battlefield.clearBattleResult();
+  }
+  updateGameStatus(){
+    let players = this.players;
+    players[0].hasLost() && this.setGameStatus(players[1]);
+    players[1].hasLost() && this.setGameStatus(players[0]);
+  }
+  setGameStatus(winner){
+    this.gameOver=true;
+    this.winner=winner.getName();
+  }
+  getGameStatus(){
+    return {
+      gameOver:this.gameOver,
+      winner:this.winner
+    };
   }
 }
 module.exports =Game;

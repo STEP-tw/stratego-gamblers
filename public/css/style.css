@@ -152,3 +152,16 @@ td {
   height: 60px;
   border: 1px solid #a78d4359;
 }
+
+
+
+#playAgain {
+  visibility: hidden;
+  cursor: pointer;
+  text-transform: uppercase;
+  display: inline-block;
+  font-size:15px;
+  margin-left: 2%;
+  padding: 2%;
+  background-color: #a78d43;
+}
