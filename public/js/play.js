@@ -101,6 +101,7 @@ const showBattlefield = (battlefield,imgSrcDirectory) => {
 const updateBattleField = function(imgSrcDirectory) {
   let reqListener = function() {
     let gameData = JSON.parse(this.responseText);
+    console.log(responseText);
     let battlefield =gameData['battlefield'];
     let turnBox = document.getElementById('currentPlayer');
     turnBox.innerText = `${gameData.turnMsg}`;
