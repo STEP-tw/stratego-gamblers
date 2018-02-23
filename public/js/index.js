@@ -1,4 +1,4 @@
-let createRequest = function(callback, url, reqBody = null, method = "GET") {
+let createRequest = function(callback, url, reqBody=null, method = "GET") {
   let xhr = new XMLHttpRequest();
   xhr.onload = callback;
   xhr.open(method, url);

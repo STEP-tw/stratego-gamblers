@@ -1,7 +1,7 @@
-const doXhr = function(url, method, reqListener, data, onFailed) {
+const doXhr = function (url, method, reqListener, data, onFailed) {
   let xhr = new XMLHttpRequest();
   xhr.open(method, url);
-  xhr.onreadystatechange = function() {
+  xhr.onreadystatechange = function () {
     if (this.status == 200 && this.readyState == 4) {
       reqListener.call(this);
     } else {
@@ -34,29 +34,29 @@ const generateRow = (initialID, numberOfCols) => {
   return row;
 };
 
-const getLocation = (event)=>{
+const getLocation = (event) => {
   let target = event.target;
-  if(target.tagName=='IMG') {
+  if (target.tagName == 'IMG') {
     target = target.parentNode;
   }
   let postData = `location=${target.id}`;
-  const reqListener = function(){
+  const reqListener = function () {
     console.log(this.responseText);
   };
-  const onFail = function(){
+  const onFail = function () {
     console.log(this.responseText);
   };
-  doXhr('/selectedLoc','POST',reqListener,postData,onFail);
+  doXhr('/selectedLoc', 'POST', reqListener, postData, onFail);
 };
 
-const drawGrid = (containerId, numOfRows, numOfCols, initialID, idGrowth)=>{
+const drawGrid = (containerId, numOfRows, numOfCols, initialID, idGrowth) => {
   let grid = document.getElementById(containerId);
   for (let rows = 0; rows < numOfRows; rows++) {
     let row = generateRow(initialID, numOfCols);
     initialID += idGrowth;
     grid.appendChild(row);
   }
-  grid.addEventListener('click',getLocation);
+  grid.addEventListener('click', getLocation);
 };
 
 const setImageAttributes = (img, src, id, height, width) => {
@@ -74,58 +74,89 @@ const appendImage = (baseCell, id, imgSrcDirectory) => {
   let height = "50";
   let width = "50";
   let img = setImageAttributes(image, src, id, height, width);
-  if(basePosition.hasChildNodes()){
+  if (basePosition.hasChildNodes()) {
     basePosition.childNodes[0].remove();
     // return;
   }
   basePosition.appendChild(img);
 };
 
-const updateEmptyCell=(cell)=>{
-  if(cell.hasChildNodes()){
+const updateEmptyCell = (cell) => {
+  if (cell.hasChildNodes()) {
     let child = cell.childNodes[0];
     child.remove();
   }
 };
 
-const showBattlefield = (battlefield,imgSrcDirectory) => {
+const showBattlefield = (battlefield, imgSrcDirectory) => {
   let locations = Object.keys(battlefield);
-  locations.forEach(function(location) {
+  locations.forEach(function (location) {
     let cell = document.getElementById(location);
-    if(battlefield[location]=="E") {
+    if (battlefield[location] == "E") {
       return updateEmptyCell(cell);
     }
-    appendImage(cell,battlefield[location],imgSrcDirectory);
+    appendImage(cell, battlefield[location], imgSrcDirectory);
   });
 };
 
-const announceWinner=(gameData) => {
+const announceWinner = (gameData) => {
   let playAgain = document.querySelector('#playAgain');
   playAgain.style.visibility = "visible";
   let winMsgBox = document.querySelector("#currentPlayer");
-  winMsgBox.innerText =`${gameData.winner} won the game`;
+  winMsgBox.innerText = `${gameData.winner} won the game`;
   let grid = document.querySelector("#battlefield");
-  grid.removeEventListener('click',getLocation);
+  grid.removeEventListener('click', getLocation);
 };
 
-const initiatePolling = function(imgSrcDirectory) {
+const getFirstCellId = function (team) {
+  let firstRow = document.querySelector(`#${team}`).childNodes[1];
+  return firstRow.childNodes[0].id;
+};
+
+const incrementId = function (id) {
+  let ids = id.split('_');
+  let last = ids.length - 1;
+  +ids[last]++;
+  return ids.join('_');
+};
+
+const showCapturedArmy = function (army, team, cellId) {
+  army.forEach(piece => {
+    let cell = document.getElementById(cellId);
+    appendImage(cell, piece, team);
+    cellId = incrementId(cellId);
+  });
+};
+
+const showKilledPieces = (killedPieces) => {
+  let capturedRedArmy = killedPieces['redArmy'];
+  let capturedBlueArmy = killedPieces['blueArmy'];
+  let firstRedCell = getFirstCellId('redArmyCaptured');
+  let firstBlueCell = getFirstCellId('blueArmyCaptured');
+  showCapturedArmy(capturedRedArmy, 'redArmy', firstRedCell);
+  showCapturedArmy(capturedBlueArmy, 'blueArmy', firstBlueCell);
+};
+
+const initiatePolling = function (imgSrcDirectory) {
   let interval;
-  let reqListener = function() {
+  let reqListener = function () {
     let gameData = JSON.parse(this.responseText);
     let status = gameData.status;
-    let battlefield =gameData['battlefield'];
+    let battlefield = gameData['battlefield'];
     let turnBox = document.getElementById('currentPlayer');
+    let killedPieces = gameData['killedPieces'];
+    showKilledPieces(killedPieces);
     turnBox.innerText = `${gameData.turnMsg}`;
-    showBattlefield(battlefield,imgSrcDirectory);
-    if(status.gameOver){
+    showBattlefield(battlefield, imgSrcDirectory);
+    if (status.gameOver) {
       clearInterval(interval);
       announceWinner(status);
     }
   };
-  let callBack = function(){
+  let callBack = function () {
     doXhr('/battlefield', 'GET', reqListener, '', () => {
       console.log("fail");
     });
   };
-  interval= setInterval(callBack,1000);
+  interval = setInterval(callBack, 1000);
 };
