@@ -187,7 +187,7 @@ describe("Game", () => {
       game.updatePieceLocation('3_2');
       assert.isOk(game.battlefield.hasLastSelectedLoc());
       game.updatePieceLocation('5_2');
-      assert.deepEqual(game.battlefield.getPiece(0,'5_2'));
+      assert.isUndefined(game.battlefield.getPiece(0,'5_2'));
       assert.deepEqual(game.battlefield.getPiece(0,'3_2'),spy);
     });
     it('should not move Bomb',()=>{
@@ -195,7 +195,7 @@ describe("Game", () => {
       game.updatePieceLocation('3_1');
       assert.isNotOk(game.battlefield.hasLastSelectedLoc());
       game.updatePieceLocation('3_1');
-      assert.deepEqual(game.battlefield.getPiece(0,'2_1'));
+      assert.isUndefined(game.battlefield.getPiece(0,'2_1'));
       assert.deepEqual(game.battlefield.getPiece(0,'3_1'),bomb);
     });
     it('should attack on opponent piece and replace its position',()=>{
@@ -204,7 +204,7 @@ describe("Game", () => {
       assert.isOk(game.battlefield.hasLastSelectedLoc());
       game.updatePieceLocation('9_1');
       assert.deepEqual(game.battlefield.getPiece(0,'9_1'),marshal);
-      assert.deepEqual(game.battlefield.getPiece(0,'9_0'));
+      assert.isUndefined(game.battlefield.getPiece(0,'9_0'));
     });
   });
   describe('getEmptyPosition',()=>{

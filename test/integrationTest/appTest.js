@@ -220,7 +220,7 @@ describe('app', () => {
       request(app)
         .get('/isOpponentReady')
         .expect(202)
-        .expect(/wait..let opponent be ready/)
+        .expect(/Waiting for opponent to be ready/)
         .end(done);
     });
     it('should redirect to /play when both player are ready', (done) => {
