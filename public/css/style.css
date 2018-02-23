@@ -76,26 +76,24 @@ body {
 .redArmy {
   float: left;
   margin-left: 4%;
-  width: 13%;
+  width: 10%;
   height: 100%;
-  border: 1px solid #a78d4359;
 }
 
-#capturedRedArmy {
-  width: 100%;
+#redArmyCaptured {
+  width: 60%;
   height: 100%;
 }
 
 .blueArmy {
   float: right;
   margin-right: 4%;
-  width: 13%;
+  width: 10%;
   height: 100%;
-  border: 1px solid #a78d4359;
 }
 
-#capturedBlueArmy {
-  width: 100%;
+#blueArmyCaptured {
+  width: 60%;
   height: 100%;
 }
 
@@ -141,4 +139,9 @@ td {
   width: 60px;
   height: 60px;
   border: 1px solid #a78d4359;
+}
+
+#redArmyCaptured,
+#blueArmyCaptured {
+  border-collapse: collapse;
 }

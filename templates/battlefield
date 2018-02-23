@@ -25,13 +25,11 @@
   </div>
   <div class="container">
     <div class="redArmy">
-      <p id="capturedRed">Captured Red-Army</p>
-      <table id="capturedRedArmy">
+      <table id="redArmyCaptured">
       </table>
     </div>
     <div class="blueArmy">
-      <p id="capturedBlue">Captured Blue-Army</p>
-      <table id="capturedBlueArmy">
+      <table id="blueArmyCaptured">
       </table>
     </div>
     <div class="battlefield">

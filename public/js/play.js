@@ -98,14 +98,44 @@ const showBattlefield = (battlefield,imgSrcDirectory) => {
   });
 };
 
+const getFirstCellId = function(team){
+  let firstRow = document.querySelector(`#${team}`).childNodes[1];
+  return firstRow.childNodes[0].id;
+};
+
+const incrementId = function(id){
+  let ids = id.split('_');
+  let last = ids.length-1;
+  +ids[last]++;
+  return ids.join('_');
+};
+
+const showCapturedArmy = function(army,team,cellId){
+  army.forEach(piece=>{
+    let cell = document.getElementById(cellId);
+    appendImage(cell,piece,team);
+    cellId = incrementId(cellId);
+  });
+};
+
+const showKilledPieces = (killedPieces) =>{
+  let capturedRedArmy = killedPieces['redArmy'];
+  let capturedBlueArmy = killedPieces['blueArmy'];
+  let firstRedCell = getFirstCellId('redArmyCaptured');
+  let firstBlueCell = getFirstCellId('blueArmyCaptured');
+  showCapturedArmy(capturedRedArmy,'redArmy',firstRedCell);
+  showCapturedArmy(capturedBlueArmy,'blueArmy',firstBlueCell);
+};
+
 const updateBattleField = function(imgSrcDirectory) {
   let reqListener = function() {
     let gameData = JSON.parse(this.responseText);
-    console.log(responseText);
-    let battlefield =gameData['battlefield'];
+    let battlefield = gameData['battlefield'];
+    let killedPieces = gameData['killedPieces'];
     let turnBox = document.getElementById('currentPlayer');
     turnBox.innerText = `${gameData.turnMsg}`;
     showBattlefield(battlefield,imgSrcDirectory);
+    showKilledPieces(killedPieces);
   };
   let callBack = function(){
     doXhr('/battlefield', 'GET', reqListener, '', () => {
