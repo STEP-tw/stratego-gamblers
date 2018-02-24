@@ -35,14 +35,7 @@ describe('Battlefield',()=>{
     it('should set battlefield for player with given location & pieces',()=>{
       pieces.loadPieces();
       battlefield.setFieldFor(0,pieces,{'0_0':'F'});
-      assert.deepEqual(battlefield.getArmyPos(0),{'0_0':'F'});
-    });
-    it('should return pieces of given playerId', () => {
-      pieces.loadPieces();
-      let marshal = new Marshal();
-      let flag = new Flag();
-      battlefield.setFieldFor(0, pieces, {'0_0': 'F', '0_1': '10'});
-      assert.deepEqual(battlefield.getPiecesOf(0),[flag,marshal]);
+      assert.deepEqual(battlefield.getArmy(0),{'0_0':'F'});
     });
   });
   describe('#battle',()=>{

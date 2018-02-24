@@ -10,12 +10,17 @@ class Game {
     this.battlefield = new Battlefield();
     this.pieces = new Pieces();
     this.gameType = 'quickGame';
+    this.gameOver=false;
+    this.winner='';
   }
   getId() {
     return this.id;
   }
   getPlayers() {
     return this.players;
+  }
+  loadPieces(){
+    this.pieces.loadPieces();
   }
   getKilledPieces(){
     let redCapturedArmy = this.players[0].getKilledPieces();
@@ -28,11 +33,9 @@ class Game {
     return player;
   }
   setBattlefieldFor(playerId, placedArmyPos) {
-    this.createPieces();
     let player = this.players[playerId];
     this.battlefield.setFieldFor(playerId, this.pieces, placedArmyPos);
-    let pieces = this.battlefield.getPiecesOf(playerId);
-    player.addPieces(pieces);
+    player.addPieces(this.pieces,this.gameType);
   }
   getPlayerName(teamColor) {
     let players = this.players;
@@ -52,14 +55,11 @@ class Game {
     let numberOfPlayers = this.players.length;
     return numberOfPlayers == 2;
   }
-  createPieces() {
-    this.pieces.loadPieces(this.gameType);
-  }
   areBothPlayerReady() {
     return this.battlefield.areBothArmyDeployed();
   }
   getBattlefieldFor(playerId) {
-    let armyPos = this.battlefield.getArmyPos(playerId);
+    let armyPos = this.battlefield.getArmy(playerId);
     let opponentPos = this.battlefield.getOpponentPos(playerId);
     let lakePos = this.battlefield.getLakePos();
     armyPos = getSymbolForPos(armyPos,opponentPos,'O');
@@ -97,6 +97,7 @@ class Game {
     }
     if(isUpdatedLoc){
       this.updatePlayerPieces();
+      this.updateGameStatus();
       this.changeCurrentPlayer();
       return ;
     }
@@ -125,6 +126,40 @@ class Game {
       this.players[result.playerId].kill(deadPieceId);
     });
     this.battlefield.clearBattleResult();
+  }
+  updateGameStatus(){
+    let lostPlayers = this.players.filter(player=>{
+      return player.hasLost();
+    });
+    if(lostPlayers.length>0){
+      this.gameOver = true;
+      this.setWinner(lostPlayers);
+    }
+  }
+  setWinner(lostPlayers){
+    if(this.isGameDrawn(lostPlayers)){
+      return;
+    }
+    let loser = lostPlayers[0];
+    let winner = this.players.find(player=>player!=loser);
+    this.winner = winner.getId();
+  }
+  isGameDrawn(lostPlayers){
+    return lostPlayers.length==2;
+  }
+  getGameStatus(){
+    return {
+      gameOver:this.gameOver,
+      winner:this.winner
+    };
+  }
+  revealBattlefieldFor(playerId){
+    let revealArmy = this.battlefield.revealArmyFor(playerId);
+    let lakePos = this.battlefield.getLakePos();    
+    revealArmy = getSymbolForPos(revealArmy,lakePos,'X');    
+    let emptyPos = this.battlefield.getEmptyPositions(revealArmy);
+    let completeBattlefield = getSymbolForPos(revealArmy,emptyPos,'E');
+    return completeBattlefield;
   }
 }
 module.exports =Game;

@@ -22,15 +22,15 @@
     <button id="bluebutton" onclick="getJoinForm()">Join Game</button>
 
     <div id="create" class="popup-form">
-      <input type="text" placeholder="Enter your name" id="name" name="name" required>
-      <button id="redbutton" onclick="startGame()">Create Game</button>
+        <input pattern="[A-Za-z]+" type="text" placeholder="Enter your name" id="name" name="name" required>
+        <input type="submit" value="Create Game" id="redbutton" onclick="startGame()">
     </div>
 
     <div id="join" class="popup-form">
       <form action="joinGame" method="POST">
         <input pattern="[A-Za-z]+" type="text" id="name" placeholder="Enter Your Name" name="name" required>
         <input type="text" id="gameid" placeholder="Enter sharing key" name="gameid" required>
-        <button id="redbutton">Start Battle</button>
+        <input type="submit" value="Start Battle" id="redbutton">
       </form>
     </div>
 

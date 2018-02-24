@@ -1,4 +1,4 @@
 exports.randomIdGenerator = ()=>{
-  return Math.floor(Math.random()*10000);
+  return 1000+Math.floor(Math.random()*1000);
 };
 exports.getTimeInSecond = () => new Date().getTime();

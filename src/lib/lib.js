@@ -25,9 +25,24 @@ exports.isEquivalent = (obj1, obj2)=>{
   return true;
 };
 
-exports.getSymbolForPos = function(positionsWithId,positionsArray,symbol){
+exports.getSymbolForPos = (positionsWithId,positionsArray,symbol)=>{
   positionsArray.forEach(position=>{
     positionsWithId[position] = symbol;
   });
   return positionsWithId;
+};
+exports.isGameOver = (game,gameStatus)=>{
+  let gameOver = gameStatus=='true';
+  return (game && gameOver) || gameOver;
+};
+
+exports.getStatusMsg = (playerId, status) => {
+  let statusMsg = {
+    true: 'you won the game',
+    false: 'you lost the game'
+  };
+  if (status.winner) {
+    status.winner = statusMsg[playerId == status.winner];
+  }
+  return status;
 };

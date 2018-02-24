@@ -26,14 +26,15 @@
     }],
     "max-depth": 2,
     "max-lines": ["error", {
-      "skipBlankLines": true
+      "skipBlankLines": true,
+      "max":500
     }],
     "no-implicit-globals": 2,
     "camelcase": 2,
     "brace-style": 2,
     "id-length": ["error", {
       "min": 2,
-      "max": 22
+      "max": 25
     }],
     "func-call-spacing": 2,
     "no-lonely-if": 2,

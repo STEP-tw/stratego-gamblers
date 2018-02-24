@@ -236,6 +236,7 @@ describe('app', () => {
   describe('GET /battlefield', () => {
     beforeEach(() => {
       app.game = new Game(1);
+      app.game.loadPieces();
       app.game.addPlayer("player1",12345,'red');
       app.game.addPlayer("player2",123456,'blue');
       let redArmyPos = {'3_2':'2','3_9':'B'};
@@ -250,6 +251,15 @@ describe('app', () => {
         .set('cookie','sessionId=12345')
         .expect(200)
         .expect(/"3_2":"2","3_9":"B","9_2":"O","9_9":"O"/)
+        .end(done);
+    });
+    it('should return revealed army after game is over',(done)=>{
+      app.game.gameOver = true;
+      request(app)
+        .get('/battlefield')
+        .set('cookie','sessionId=12345')
+        .expect(200)
+        .expect(/"3_2":"2","3_9":"B","9_2":"O_2","9_9":"O_B"/)
         .end(done);
     });
   });
@@ -282,12 +292,37 @@ describe('app', () => {
     });
   });
   describe('GET /battlefield', () => {
-    it('should redirect to / if there is no game', (done) => {
+    beforeEach(() => {
       app.game=undefined;
+    });
+    it('should redirect to / if there is no game', (done) => {
       request(app)
         .get('/battlefield')
         .expect(302)
         .expect('Location','/')
+        .end(done);
+    });
+  });
+  describe('restart game GET /playAgain', () => {
+    beforeEach(() => {
+      app.game = new Game();
+    });
+    it('clear cookies and redirect to / if game is over', (done) => {
+      request(app)
+        .get('/playAgain')
+        .set('cookie', 'sessionId=123456')
+        .set('cookie', 'gameStatus=true')
+        .expect('Location','/')
+        .expect(302)
+        .end(done);
+    });
+    it('should redirect to previous url if game is not over', (done) => {
+      request(app)
+        .get('/playAgain')
+        .set('cookie', 'sessionId=123456')
+        .set('cookie', 'previousUrl=/play')
+        .expect('Location', '/play')
+        .expect(302)
         .end(done);
     });
   });
