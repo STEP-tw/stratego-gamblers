@@ -16,13 +16,16 @@ class BattlefieldHandler {
   }
   getBattlefield(req,res){
     let game = req.app.game;
-    let playerId = req.cookies.sessionId;
-    let playerIndex = game.getPlayerIndexBy(playerId);
-    let battlefieldPos = game.getBattlefieldFor(playerIndex);
-    let turnMsg = game.getTurnMessage(playerIndex);
+    let sessionId = req.cookies.sessionId;
+    let playerId = game.getPlayerIndexBy(sessionId);
+    let battlefieldPos = game.getBattlefieldFor(playerId);
+    let turnMsg = game.getTurnMessage(playerId);
     let killedPieces = game.getKilledPieces();
     let status = game.getGameStatus();
     res.cookie('gameStatus', status.gameOver);
+    if(status.gameOver){
+      battlefieldPos = game.revealBattlefieldFor(playerId);
+    }
     let respond = {
       'battlefield': battlefieldPos,
       'turnMsg': turnMsg,

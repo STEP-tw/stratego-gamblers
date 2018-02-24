@@ -20,8 +20,6 @@ class Player {
     return this.deadPieces.map(piece => piece.id);
   }
   addPieces(pieces,gameType){
-    console.log(pieces);
-    
     let pieceIds = this.getPieceIds(gameType);
     let gamePieces = this.getGamePieces(gameType);
     pieceIds.forEach(pieceId=>{

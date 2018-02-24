@@ -253,6 +253,15 @@ describe('app', () => {
         .expect(/"3_2":"2","3_9":"B","9_2":"O","9_9":"O"/)
         .end(done);
     });
+    it('should return revealed army after game is over',(done)=>{
+      app.game.gameOver = true;
+      request(app)
+        .get('/battlefield')
+        .set('cookie','sessionId=12345')
+        .expect(200)
+        .expect(/"3_2":"2","3_9":"B","9_2":"O_2","9_9":"O_B"/)
+        .end(done);
+    });
   });
   describe('#updateBattlefield',()=>{
     beforeEach(() => {

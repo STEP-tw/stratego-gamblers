@@ -28,7 +28,7 @@ class Battlefield {
   }
   getArmy(playerId){
     let army = {};
-    let allPos = Object.keys(this.battlePositions[playerId]);
+    let allPos = this.getArmyPos(playerId);
     allPos.forEach(pos=>{
       army[pos]=this.battlePositions[playerId][pos].id;
     });
@@ -133,6 +133,15 @@ class Battlefield {
   }
   clearBattleResult(){
     this.battleResults = [];
+  }
+  revealArmyFor(playerId){
+    let allArmy = this.getArmy(playerId);
+    let opponentArmy = this.getArmy(1-playerId);
+    let opponentArmyPos = this.getOpponentPos(playerId);
+    opponentArmyPos.forEach(armyPos=>{
+      allArmy[armyPos] = `O_${opponentArmy[armyPos]}`;
+    });
+    return allArmy;
   }
 }
 module.exports = Battlefield;
