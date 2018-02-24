@@ -5,7 +5,7 @@ class JoinGameHandler {
     let playerName = req.body.name.trim();
     let playerId = req.app.sessions.createSession(playerName);
     let gameId = req.body.gameid;
-    if(!playerName.length){
+    if(!this.isValidName(playerName)){
       res.redirect("/");
       return;
     }
@@ -23,6 +23,9 @@ class JoinGameHandler {
   }
   getRequestHandler() {
     return this.execute.bind(this);
+  }
+  isValidName(playerName){
+    return playerName.match(/^\D\w*$/gi);
   }
 }
 

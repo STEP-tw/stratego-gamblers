@@ -25,6 +25,13 @@ const getJoinForm = function() {
 
 const showGameId = function() {
   let sharingKey = this.responseText;
+  if(!sharingKey){
+    let message = `No special characters allowed (Ex. @,$,&) <br> 
+    Start with a character only (Ex. sayima, Sayima, Sayima123)`;
+    document.getElementById('errorMsg').innerHTML = message;
+    getCreateForm();
+    return;
+  }
   let createForm = document.getElementById("create");
   createForm.style.display = "none";
   let sharingKeyDiv = `<div class="alert" id="waiting-message">

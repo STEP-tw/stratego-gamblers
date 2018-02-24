@@ -10,6 +10,7 @@
   <link rel="stylesheet" href="/css/index.css">
   <link href="https://fonts.googleapis.com/css?family=Alegreya" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=UnifrakturCook:700" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Bellefair" rel="stylesheet">
 </head>
 
 <body oncontextmenu="return false">
@@ -23,6 +24,7 @@
 
     <div id="create" class="popup-form">
         <input pattern="[A-Za-z]+" type="text" placeholder="Enter your name" id="name" name="name" required>
+        <p id ='errorMsg'></p>
         <input type="submit" value="Create Game" id="redbutton" onclick="startGame()">
     </div>
 
@@ -30,6 +32,7 @@
       <form action="joinGame" method="POST">
         <input pattern="[A-Za-z]+" type="text" id="name" placeholder="Enter Your Name" name="name" required>
         <input type="text" id="gameid" placeholder="Enter sharing key" name="gameid" required>
+        <p id ='errorMsg'></p>        
         <input type="submit" value="Start Battle" id="redbutton">
       </form>
     </div>

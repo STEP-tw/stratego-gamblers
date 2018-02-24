@@ -79,3 +79,10 @@ input[type=text] {
 #create {
   display: none;
 }
+
+#errorMsg {
+  color: red;
+  font-size: 20px;
+  text-align: center;
+  font-family: 'Alegreya', serif;
+}

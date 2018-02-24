@@ -8,6 +8,10 @@ class CreateGameHandler {
     let game = new Game(id);
     game.loadPieces();
     let playerName = req.params.name;
+    if(!this.isValidName(playerName)){
+      res.end();
+      return;
+    }
     let playerId = req.app.sessions.createSession(playerName);
     res.cookie('sessionId',playerId);
     game.addPlayer(playerName,playerId,'red');
@@ -16,6 +20,9 @@ class CreateGameHandler {
   }
   getRequestHandler(){
     return this.execute.bind(this);
+  }
+  isValidName(playerName){
+    return playerName.match(/^\D\w*$/gi);
   }
 }
 
