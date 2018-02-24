@@ -1,4 +1,208 @@
 body {
+  font-family: 'Alegreya', serif;
+  text-transform: uppercase;
+  background-image: url("../img/background/background.png");
+}
+
+.player-details {
+  display: flex;
+  margin: 1% 0%;
+  width: 100%;
+  height: 70px;
+}
+
+.game-logo {
+  margin: auto;
+  margin-left: 40%;
+  width: 200px;
+  height: 100%;
+}
+
+#logo {
+  height: 100%;
+  width: 100%;
+}
+
+.me {
+  text-align: center;
+  margin: auto;
+  margin: 1%;
+  width: 400px;
+  height: 100%;
+}
+
+.names {
+  font-size: 20px;
+  padding: 2%;
+  background-color: rgb(156, 131, 69);
+}
+
+.container {
+  display: flex;
+  width: 100%;
+  height: 630px;
+}
+
+.game-container {
+  display: flex;
+  flex-wrap: wrap;
+  width: 65%;
+  height: 100%;
+}
+
+.home {
+  margin: auto;
+  min-width: 90%;
+  height: 60%;
+}
+
+.base {
+  margin: auto;
+  min-width: 90%;
+  height: 35%;
+}
+
+.div-titles {
+  margin: auto;
+  margin-left: 0%;
+  width: 18%;
+  font-size: 20px;
+  text-align: center;
+  background-color: rgb(156, 131, 69);
+}
+
+#grid, #base-army-table {
+  margin: auto;
+  margin-left: 0%;
+  margin-top: 2%;
+  width: 800px;
+  height: 320px;
+  border-collapse: collapse;
+}
+
+#base-army-table {
+  height: 160px;
+}
+
+#base-army-table > img {
+  height: 80px;
+  width: 80px;
+  right: 0;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  position: absolute;
+}
+
+td {
+  position: relative;
+  text-align: center;
+  min-width: 80px;
+  height: 80px;
+  border: 1px solid #a78d4359;
+}
+
+.activity-container {
+  display: flex;
+  flex-wrap: wrap;
+  width: 35%;
+  height: 100%;
+}
+
+.piece-description {
+  margin: auto;
+  margin-top: 1%;
+  width: 90%;
+  height: 40%;
+}
+
+.piece-description-title {
+  width: 50%;
+}
+
+.piece-content {
+  margin-top: 4%;
+  width: 90%;
+  height: 84%;
+  background-color: #a78d43;
+}
+
+#pieceTitle {
+  font-size: 30px;
+  color: black;
+}
+
+.piece > p {
+  font-size: 20px;
+  color: black;
+}
+
+.noPiece {
+  width: 100%;
+  height: 91%;
+  background-color: #a78d43;
+}
+
+.piece {
+  display: none;
+  text-transform: uppercase;
+  width: 100%;
+  padding: 1%;
+  text-align: center;
+  background-color: #a78d43;
+}
+
+.msg {
+  margin: auto;
+  margin-top: -4%;
+  width: 90%;
+  height: 30%;
+}
+
+.msg-title {
+  width: 30%;
+}
+
+.msg-content {
+  text-align: center;
+  padding-top: 25px;
+  font-size: 25px;
+  margin-top: 4%;
+  width: 90%;
+  height: 40%;
+  border: 1px solid #a78d4359;
+}
+
+#msg-content-para {
+  color: #a78d43;
+  text-transform: uppercase;
+}
+
+.ready {
+  margin: auto;
+  margin-top: -10%;
+  width: 80%;
+  height: 10%;
+}
+
+#ready {
+  font-family: 'Alegreya', serif;
+  font-size: 30px;
+  text-transform: uppercase;
+  margin-left: 25%;
+  cursor: pointer;
+  width: 45%;
+  height: 65%;
+  background-color: #a78d43;
+}
+
+
+
+/* html, body {
+  overflow: hidden;
+}
+
+body {
   background-image: url("../img/background/background.png");
   font-family: 'Bellefair', serif;
 }
@@ -165,10 +369,17 @@ p {
   color: black;
 }
 
+.noPiece {
+  width: 100%;
+  height: 91%;
+  background-color: #a78d43;
+}
+
 .piece {
   display: none;
   text-transform: uppercase;
+  width: 100%;
   padding: 1%;
   text-align: center;
   background-color: #a78d43;
-}
+} */

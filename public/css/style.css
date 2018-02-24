@@ -1,4 +1,157 @@
 body {
+  font-family: 'Alegreya', serif;
+  text-transform: uppercase;
+  background-image: url("../img/background/background.png");
+}
+
+.player-details {
+  display: flex;
+  margin: 1% 0%;
+  width: 100%;
+  height: 70px;
+}
+
+.game-title {
+  margin: auto;
+  width: 200px;
+  height: 100%;
+}
+
+#logo {
+  height: 100%;
+  width: 100%;
+}
+
+.me, .opponent {
+  text-align: center;
+  margin: auto;
+  margin-top: 1.5%;
+  width: 400px;
+  height: 100%;
+}
+
+.names {
+  font-size: 20px;
+  padding: 2%;
+  background-color: rgb(156, 131, 69);
+}
+
+.container {
+  display: flex;
+  width: 100%;
+  height: 630px;
+}
+
+.red, .blue {
+  margin: 0% 1%;
+  width: 200px;
+  height: 100%;
+}
+
+.battle {
+  margin: 0% 2%;
+  width: 600px;
+  height: 100%;
+}
+
+.table-titles {
+  margin: auto;
+  margin-left: 20%;
+  font-size: 18px;
+  text-align: center;
+  background-color: rgb(156, 131, 69);
+}
+
+.red-para-title, .blue-para-title {
+  width: 60%;
+}
+
+.turn-msg-title {
+  margin-left: 35%;
+  width: 30%;
+}
+
+#red-army-table, #blue-army-table, #battlefield-table {
+  margin: auto;
+  margin-top: 3%;
+  width: 60px;
+  height: 600px;
+  border-collapse: collapse;
+}
+
+#battlefield-table {
+  margin-top: 1%;
+  width: 600px;
+}
+
+img {
+  height: 60px;
+  width: 60px;
+  right: 0;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  position: relative;
+}
+
+td {
+  position: relative;
+  text-align: center;
+  width: 60px;
+  height: 60px;
+  border: 1px solid #a78d4359;
+}
+
+.activity-log {
+  margin: auto;
+  width: 300px;
+  height: 100%;
+}
+
+.status-para-title {
+  margin: auto;
+}
+
+.game-status {
+  margin: auto;
+  width: 95%;
+  height: 60%;
+  border: 1px solid #a78d4359;
+}
+
+.buttons {
+  display: flex;
+  flex-wrap: wrap;
+  margin: auto;
+  margin-top: 20%;
+  width: 80%;
+  height: 20%;
+}
+
+#surrender, #play-again {
+  font-family: 'Alegreya', serif;
+  font-size: 20px;
+  text-transform: uppercase;
+  margin: auto;
+  cursor: pointer;
+  width: 70%;
+  height: 40%;
+  background-color: rgb(156, 131, 69);
+}
+
+#play-again {
+  display: none;
+}
+
+
+
+
+
+/* html, body {
+  overflow-y: scroll;
+}
+
+body {
   background-image: url("../img/background/background.png");
   font-family: 'Bellefair', serif;
 }
@@ -21,7 +174,7 @@ body {
   float: left;
   margin-left: 10%;
   margin-top: -4%;
-  width: 20%;
+  width: 25%;
   height: 100%;
 }
 
@@ -84,7 +237,7 @@ body {
 }
 
 #redArmyCaptured {
-  width: 60%;
+  width: 60px;
   height: 100%;
 }
 
@@ -96,7 +249,7 @@ body {
 }
 
 #blueArmyCaptured {
-  width: 60%;
+  width: 60px;
   height: 100%;
 }
 
@@ -126,7 +279,24 @@ td > #X {
   height: 63px;
 }
 
-img {
+td {
+  position: relative;
+  text-align: center;
+  width: 60px;
+  height: 60px;
+  border: 1px solid #a78d4359;
+}
+
+#redArmyCaptured,
+#blueArmyCaptured > td {
+  position: relative;
+  text-align: center;
+  width: 63px;
+  height: 63px;
+  border: 1px solid #a78d4359;
+}
+
+#battlefield > img {
   height: 62px;
   width: 62px;
   right: 0;
@@ -136,12 +306,14 @@ img {
   position: absolute;
 }
 
-td {
-  position: relative;
-  text-align: center;
-  width: 60px;
-  height: 60px;
-  border: 1px solid #a78d4359;
+img {
+  height: 62px;
+  width: 62px;
+  right: 0;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  position: absolute;
 }
 
 #redArmyCaptured,
@@ -157,4 +329,4 @@ td {
   font-size: 20px;
   text-align: center;
   background-color: #a78d43;
-}
+} */

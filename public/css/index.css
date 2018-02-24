@@ -1,3 +1,7 @@
+html, body {
+  overflow: hidden;
+}
+
 body {
   background-image: url("../img/background/background.png");
 }

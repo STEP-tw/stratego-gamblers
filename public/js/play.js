@@ -71,8 +71,8 @@ const appendImage = (baseCell, id, imgSrcDirectory) => {
   let basePosition = document.getElementById(baseCell.id);
   let image = document.createElement("img");
   let src = `img/${imgSrcDirectory}/${id}.png`;
-  let height = "50";
-  let width = "50";
+  let height = "60";
+  let width = "60";
   let img = setImageAttributes(image, src, id, height, width);
   if(basePosition.hasChildNodes()){
     return;
@@ -121,8 +121,8 @@ const showCapturedArmy = function(army,team,cellId){
 const showKilledPieces = (killedPieces) =>{
   let capturedRedArmy = killedPieces['redArmy'];
   let capturedBlueArmy = killedPieces['blueArmy'];
-  let firstRedCell = getFirstCellId('redArmyCaptured');
-  let firstBlueCell = getFirstCellId('blueArmyCaptured');
+  let firstRedCell = getFirstCellId('red-army-table');
+  let firstBlueCell = getFirstCellId('blue-army-table');
   showCapturedArmy(capturedRedArmy,'redArmy',firstRedCell);
   showCapturedArmy(capturedBlueArmy,'blueArmy',firstBlueCell);
 };
@@ -132,7 +132,7 @@ const updateBattleField = function(imgSrcDirectory) {
     let gameData = JSON.parse(this.responseText);
     let battlefield = gameData['battlefield'];
     let killedPieces = gameData['killedPieces'];
-    let turnBox = document.getElementById('currentPlayer');
+    let turnBox = document.getElementById('turn-msg');
     turnBox.innerText = `${gameData.turnMsg}`;
     showBattlefield(battlefield,imgSrcDirectory);
     showKilledPieces(killedPieces);

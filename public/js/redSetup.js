@@ -1,5 +1,5 @@
 const drawBaseGrid = () => {
-  drawGrid("baseGrid", 2, 10, 120, -10);
+  drawGrid("base-army-table", 2, 10, 120, -10);
 };
 
 const ready = () => {

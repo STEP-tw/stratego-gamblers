@@ -121,9 +121,11 @@ const setImageAttributes = (img, src, id, height, width) => {
   img.height = height;
   img.width = width;
   img.onmouseover = () => {
+    document.querySelector('.noPiece').style.display = "none";
     document.querySelector(`.${className}`).style.display = "block";
   };
   img.onmouseout = () => {
+    document.querySelector('.noPiece').style.display = "block";
     document.querySelector(`.${className}`).style.display = "none";
   };
   return img;
@@ -136,15 +138,15 @@ const appendImage = (baseCell, index, imgSrcDirectory) => {
   let image = document.createElement("img");
   let src = `img/${imgSrcDirectory}/${playingPieces[index]}`;
   let id = playingPieceId[index];
-  let height = "60";
-  let width = "60";
+  let height = "77";
+  let width = "77";
   let img = setImageAttributes(image, src, id, height, width);
   img = applyDragProperty(img);
   basePosition.appendChild(img);
 };
 
 const appendPiecesToBase = (imgSrcDirectory) => {
-  let baseGrid = document.getElementById("baseGrid");
+  let baseGrid = document.getElementById("base-army-table");
   let firstRow = baseGrid.childNodes[1].childNodes;
   firstRow.forEach((element, index) => {
     appendImage(element, index, imgSrcDirectory);
@@ -152,7 +154,7 @@ const appendPiecesToBase = (imgSrcDirectory) => {
 };
 
 const notifyPlayer = (message) => {
-  document.getElementById("readyStatus").innerText = message;
+  document.getElementById("msg-content-para").innerText = message;
 };
 
 const extractPieceID = (id) => {
