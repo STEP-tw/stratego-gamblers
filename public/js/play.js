@@ -104,9 +104,7 @@ const announceWinner = (gameData) => {
   if(!gameData.winner){
     gameOverMsg = `GAME DRAW`;
   }
-  let surrender = document.querySelector('#surrender');
   let playAgain = document.querySelector('#play-again');
-  surrender.style.display = 'none';
   playAgain.style.display = 'block';
   let winMsgBox = document.querySelector("#turn-msg");
   winMsgBox.innerText = gameOverMsg;

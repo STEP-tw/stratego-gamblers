@@ -13,13 +13,13 @@
 <body oncontextmenu="return false">
   <div class="player-details">
     <div class="opponent">
-      <span class="names">opponent : harshad</span>
+      <span class="names">opponent : {{opponent}}</span>
     </div>
     <div class="game-title">
       <img id="logo" src="img/background/logo.png">
     </div>
     <div class="me">
-      <span class="names">profile : viraj</span>
+      <span class="names">profile : {{myname}}</span>
     </div>
   </div>
   <div class="container">
@@ -33,9 +33,6 @@
       </div>
     </div>
     <div class="battle">
-      <div class="table-titles turn-msg-title">
-        <span id="turn-msg">opponent's turn</span>
-      </div>
       <div class="battlefield">
         <table id="battlefield-table">
         </table>
@@ -51,16 +48,12 @@
       </div>
     </div>
     <div class="activity-log">
-      <div class="game-status">
-        <div class="table-titles status-para-title">
-          <span class="status-para">activity log</span>
-        </div>
-        <div class="content">
-        </div>
+      <div class="turn-msg-title">
+        <span id="turn-msg"></span>
       </div>
       <div class="buttons">
         <button id="surrender" type="button" name="button">surrender</button>
-        <button id="play-again" type="button" name="button">play-again</button>
+        <button id="play-again" onclick="window.location.href='/playAgain'" name="button">play-again</button>
       </div>
     </div>
   </div>
