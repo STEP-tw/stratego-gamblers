@@ -142,7 +142,7 @@ class Game {
     }
     let loser = lostPlayers[0];
     let winner = this.players.find(player=>player!=loser);
-    this.winner = winner.getName();
+    this.winner = winner.getId();
   }
   isGameDrawn(lostPlayers){
     return lostPlayers.length==2;

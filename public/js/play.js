@@ -100,7 +100,7 @@ const showBattlefield = (battlefield, imgSrcDirectory) => {
 };
 
 const announceWinner = (gameData) => {
-  let gameOverMsg = `${gameData.winner} won the game`;
+  let gameOverMsg = gameData.winner;
   if(!gameData.winner){
     gameOverMsg = `GAME DRAW`;
   }

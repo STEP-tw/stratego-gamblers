@@ -35,3 +35,14 @@ exports.isGameOver = (game,gameStatus)=>{
   let gameOver = gameStatus=='true';
   return (game && gameOver) || gameOver;
 };
+
+exports.getStatusMsg = (playerId, status) => {
+  let statusMsg = {
+    true: 'you won the game',
+    false: 'you lost the game'
+  };
+  if (status.winner) {
+    status.winner = statusMsg[playerId == status.winner];
+  }
+  return status;
+};

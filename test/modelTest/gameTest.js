@@ -243,7 +243,7 @@ describe("Game", () => {
         assert.isOk(game.gameOver);
       });
       it('should update name of winner in game when game is over', () => {
-        assert.equal(game.winner, 'ankur');
+        assert.equal(game.winner, 1);
       });
     });
     describe('draw game',()=>{
