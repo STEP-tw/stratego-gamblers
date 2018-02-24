@@ -155,8 +155,8 @@ class Game {
   }
   revealBattlefieldFor(playerId){
     let revealArmy = this.battlefield.revealArmyFor(playerId);
-    let lakePos = this.battlefield.getLakePos();    
-    revealArmy = getSymbolForPos(revealArmy,lakePos,'X');    
+    let lakePos = this.battlefield.getLakePos();
+    revealArmy = getSymbolForPos(revealArmy,lakePos,'X');
     let emptyPos = this.battlefield.getEmptyPositions(revealArmy);
     let completeBattlefield = getSymbolForPos(revealArmy,emptyPos,'E');
     return completeBattlefield;
