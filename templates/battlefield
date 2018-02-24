@@ -33,6 +33,9 @@
       </div>
     </div>
     <div class="battle">
+      <div class="table-titles turn-msg-title">
+        <span id="turn-msg"></span>
+      </div>
       <div class="battlefield">
         <table id="battlefield-table">
         </table>
@@ -48,9 +51,6 @@
       </div>
     </div>
     <div class="activity-log">
-      <div class="turn-msg-title">
-        <span id="turn-msg"></span>
-      </div>
       <div class="buttons">
         <button id="surrender" type="button" name="button">surrender</button>
         <button id="play-again" onclick="window.location.href='/playAgain'" name="button">play-again</button>
