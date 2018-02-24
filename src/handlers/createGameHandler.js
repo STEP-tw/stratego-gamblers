@@ -6,6 +6,7 @@ class CreateGameHandler {
   execute(req, res) {
     let id = randomIdGenerator();
     let game = new Game(id);
+    game.loadPieces();
     let playerName = req.params.name;
     let playerId = req.app.sessions.createSession(playerName);
     res.cookie('sessionId',playerId);

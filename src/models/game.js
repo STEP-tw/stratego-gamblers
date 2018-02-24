@@ -19,6 +19,9 @@ class Game {
   getPlayers() {
     return this.players;
   }
+  loadPieces(){
+    this.pieces.loadPieces();
+  }
   getKilledPieces(){
     let redCapturedArmy = this.players[0].getKilledPieces();
     let blueCapturedArmy = this.players[1].getKilledPieces();
@@ -30,11 +33,9 @@ class Game {
     return player;
   }
   setBattlefieldFor(playerId, placedArmyPos) {
-    this.createPieces();
     let player = this.players[playerId];
     this.battlefield.setFieldFor(playerId, this.pieces, placedArmyPos);
-    let pieces = this.battlefield.getPiecesOf(playerId);
-    player.addPieces(pieces);
+    player.addPieces(this.pieces,this.gameType);
   }
   getPlayerName(teamColor) {
     let players = this.players;
@@ -54,14 +55,11 @@ class Game {
     let numberOfPlayers = this.players.length;
     return numberOfPlayers == 2;
   }
-  createPieces() {
-    this.pieces.loadPieces(this.gameType);
-  }
   areBothPlayerReady() {
     return this.battlefield.areBothArmyDeployed();
   }
   getBattlefieldFor(playerId) {
-    let armyPos = this.battlefield.getArmyPos(playerId);
+    let armyPos = this.battlefield.getArmy(playerId);
     let opponentPos = this.battlefield.getOpponentPos(playerId);
     let lakePos = this.battlefield.getLakePos();
     armyPos = getSymbolForPos(armyPos,opponentPos,'O');

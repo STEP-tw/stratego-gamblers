@@ -26,13 +26,16 @@ class Battlefield {
     this.battlePositions[playerId] = this.placedPositions;
     this.placedPositions = {};
   }
-  getArmyPos(playerId){
-    let armyPos = {};
+  getArmy(playerId){
+    let army = {};
     let allPos = Object.keys(this.battlePositions[playerId]);
     allPos.forEach(pos=>{
-      armyPos[pos]=this.battlePositions[playerId][pos].id;
+      army[pos]=this.battlePositions[playerId][pos].id;
     });
-    return armyPos;
+    return army;
+  }
+  getArmyPos(playerId){
+    return Object.keys(this.battlePositions[playerId]);
   }
   getOpponentPos(playerId){
     return Object.keys(this.battlePositions[1-playerId]);
@@ -49,8 +52,7 @@ class Battlefield {
   }
   getPosMap(playerId){
     let posMap = {};
-    let armyPos = this.getArmyPos(playerId);
-    posMap.myArmy = Object.keys(armyPos);
+    posMap.myArmy = this.getArmyPos(playerId);
     posMap.opponentArmy = this.getOpponentPos(playerId);
     posMap.lakeArea = this.getLakePos();
     return posMap;
@@ -121,10 +123,6 @@ class Battlefield {
   }
   addPosition(pos){
     this.allPositions.push(pos);
-  }
-  getPiecesOf(playerId){
-    let battlePositions = this.battlePositions;
-    return Object.values(battlePositions[playerId]);
   }
   getBattleResults(){
     return this.battleResults;

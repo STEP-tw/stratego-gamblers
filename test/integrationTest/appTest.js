@@ -236,6 +236,7 @@ describe('app', () => {
   describe('GET /battlefield', () => {
     beforeEach(() => {
       app.game = new Game(1);
+      app.game.loadPieces();
       app.game.addPlayer("player1",12345,'red');
       app.game.addPlayer("player2",123456,'blue');
       let redArmyPos = {'3_2':'2','3_9':'B'};

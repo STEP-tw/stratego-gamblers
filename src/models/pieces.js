@@ -10,7 +10,7 @@ class Pieces {
   constructor(){
     this.pieces =[];
   }
-  loadPieces(gameType){
+  loadPieces(){
     this.pieces.push(new Flag());
     this.pieces.push(new Bomb());
     this.pieces.push(new Marshal());

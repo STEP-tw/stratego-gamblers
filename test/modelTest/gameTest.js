@@ -75,6 +75,7 @@ describe("Game", () => {
   });
   describe('setBattlefield', () => {
     beforeEach(() => {
+      game.loadPieces();
       game.addPlayer("ravi", 12345, 'red');
       game.addPlayer("ankur", 123456, 'blue');
     });
@@ -134,6 +135,7 @@ describe("Game", () => {
   describe('Game.getPotentialMoves()', () => {
     beforeEach(
       () => {
+        game.loadPieces();
         game.addPlayer("ravi", 0, 'red');
         game.addPlayer("ankur", 1, 'blue');
         let redArmyPos = {'3_2': 'S', '3_1': 'B'};
@@ -167,6 +169,7 @@ describe("Game", () => {
   describe('updatePieceLocation', () => {
     beforeEach(() => {
       game = new Game("gameId");
+      game.loadPieces();
       game.addPlayer("ravi", 0, 'red');
       game.addPlayer("ankur", 1, 'blue');
       let redArmyPos = {'3_2': 'S', '3_1': 'B', '9_0': '10'};
@@ -223,6 +226,7 @@ describe("Game", () => {
   });
   describe('Game status', () => {
     beforeEach(() => {
+      game.loadPieces();
       game.addPlayer("ravi", 0, 'red');
       game.addPlayer("ankur", 1, 'blue');
       let redArmyPos = {'3_2': 'F', '3_1': 'B', '9_0': '10'};
@@ -244,8 +248,20 @@ describe("Game", () => {
     });
     describe('draw game',()=>{
       it('should update game draw if no moving piece left on battlefield',()=>{
-        game.players[0].kill(10);
-        game.players[1].kill(2);   
+        game.players[0].kill('S');
+        game.players[0].kill('2');
+        game.players[0].kill('2');
+        game.players[0].kill('3');
+        game.players[0].kill('3');
+        game.players[0].kill('9');
+        game.players[0].kill('10');
+        game.players[1].kill('S');
+        game.players[1].kill('2');
+        game.players[1].kill('2');
+        game.players[1].kill('3');
+        game.players[1].kill('3');
+        game.players[1].kill('9');
+        game.players[1].kill('10');   
         game.updateGameStatus();             
         assert.isOk(game.gameOver); 
         assert.equal(game.winner, '');
