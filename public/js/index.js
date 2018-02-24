@@ -43,6 +43,7 @@ const reqGameId = function() {
   name = name.trim();
   if (name) {
     createRequest(showGameId, `/createGame/${name}`, null, "GET");
+    setInterval(getGameStatus,1000);
   }
 };
 
@@ -58,5 +59,4 @@ const getGameStatus=function () {
 
 const startGame = function() {
   reqGameId();
-  setInterval(getGameStatus,1000);
 };
