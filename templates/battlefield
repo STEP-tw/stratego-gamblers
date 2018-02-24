@@ -22,7 +22,7 @@
   </div>
   <div class="turnMessage">
     <span id="currentPlayer"></span>
-    <span onclick="window.location.href='/'" id="playAgain">play Again</span>
+    <span onclick="window.location.href='/playAgain'" id="playAgain">play Again</span>
   </div>
   <div class="container">
     <div class="redArmy">

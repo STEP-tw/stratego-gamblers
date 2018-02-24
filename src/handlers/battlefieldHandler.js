@@ -22,6 +22,7 @@ class BattlefieldHandler {
     let turnMsg = game.getTurnMessage(playerIndex);
     let killedPieces = game.getKilledPieces();
     let status = game.getGameStatus();
+    res.cookie('gameStatus', status.gameOver);
     let respond = {
       'battlefield': battlefieldPos,
       'turnMsg': turnMsg,

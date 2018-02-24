@@ -283,12 +283,37 @@ describe('app', () => {
     });
   });
   describe('GET /battlefield', () => {
-    it('should redirect to / if there is no game', (done) => {
+    beforeEach(() => {
       app.game=undefined;
+    });
+    it('should redirect to / if there is no game', (done) => {
       request(app)
         .get('/battlefield')
         .expect(302)
         .expect('Location','/')
+        .end(done);
+    });
+  });
+  describe('restart game GET /playAgain', () => {
+    beforeEach(() => {
+      app.game = new Game();
+    });
+    it('clear cookies and redirect to / if game is over', (done) => {
+      request(app)
+        .get('/playAgain')
+        .set('cookie', 'sessionId=123456')
+        .set('cookie', 'gameStatus=true')
+        .expect('Location','/')
+        .expect(302)
+        .end(done);
+    });
+    it('should redirect to previous url if game is not over', (done) => {
+      request(app)
+        .get('/playAgain')
+        .set('cookie', 'sessionId=123456')
+        .set('cookie', 'previousUrl=/play')
+        .expect('Location', '/play')
+        .expect(302)
         .end(done);
     });
   });

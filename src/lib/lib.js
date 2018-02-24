@@ -31,3 +31,7 @@ exports.getSymbolForPos = (positionsWithId,positionsArray,symbol)=>{
   });
   return positionsWithId;
 };
+exports.isGameOver = (game,gameStatus)=>{
+  let gameOver = gameStatus=='true';
+  return (game && gameOver) || gameOver;
+};
