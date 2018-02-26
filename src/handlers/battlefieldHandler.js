@@ -19,23 +19,10 @@ class BattlefieldHandler {
   getBattlefield(req,res){
     let game = req.app.game;
     let sessionId = req.cookies.sessionId;
-    let playerId = game.getPlayerIndexBy(sessionId);
-    let battlefieldPos = game.getBattlefieldFor(playerId);
-    let turnMsg = game.getTurnMessage(playerId);
-    let killedPieces = game.getKilledPieces();
-    let status = game.getGameStatus();
-    status = getStatusMsg(sessionId,status);
-    res.cookie('gameStatus', status.gameOver);
-    if(status.gameOver){
-      battlefieldPos = game.revealBattlefieldFor(playerId);
-    }
-    let respond = {
-      'battlefield': battlefieldPos,
-      'turnMsg': turnMsg,
-      'killedPieces': killedPieces,
-      'status':status
-    };
-    res.send(JSON.stringify(respond));
+    let boardInfo = game.getBoardFor(sessionId);
+    boardInfo.status = getStatusMsg(sessionId,boardInfo.status);
+    res.cookie('gameStatus', boardInfo.status.gameOver);
+    res.send(JSON.stringify(boardInfo));
   }
   updateBattlefield(req,res){
     let game = req.app.game;

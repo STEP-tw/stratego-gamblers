@@ -161,5 +161,22 @@ class Game {
     let completeBattlefield = getSymbolForPos(revealArmy,emptyPos,'E');
     return completeBattlefield;
   }
+  getBoardFor(sessionId){
+    let playerId = this.getPlayerIndexBy(sessionId);
+    let battlefieldPos = this.getBattlefieldFor(playerId);
+    let turnMsg = this.getTurnMessage(playerId);
+    let killedPieces = this.getKilledPieces();
+    let status = this.getGameStatus();
+    if (status.gameOver) {
+      battlefieldPos = this.revealBattlefieldFor(playerId);
+    }
+    let boardInfo = {
+      'battlefield': battlefieldPos,
+      'turnMsg': turnMsg,
+      'killedPieces': killedPieces,
+      'status': status
+    };
+    return boardInfo;
+  }
 }
 module.exports =Game;

@@ -159,7 +159,7 @@ const initiatePolling = function (imgSrcDirectory) {
   };
   let callBack = function () {
     doXhr('/battlefield', 'GET', reqListener, '', () => {
-      console.log("fail");
+      return;
     });
   };
   interval = setInterval(callBack, 1000);
