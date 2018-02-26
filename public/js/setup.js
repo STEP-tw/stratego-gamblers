@@ -23,11 +23,16 @@ const drag = (event) => {
 const drop = (event) => {
   event.preventDefault();
   let data = event.dataTransfer.getData("imgId");
+  let imgTodrop = document.getElementById(data);
   let target = event.target;
-  if (target.tagName == "IMG" || target.hasChildNodes()) {
+  if (target.tagName == "IMG") {
+    let parent = target.parentNode;
+    let previousPieceParent = imgTodrop.parentNode;
+    parent.replaceChild(imgTodrop,target);
+    previousPieceParent.appendChild(target);
     return;
   }
-  target.appendChild(document.getElementById(data));
+  target.appendChild(imgTodrop);
 };
 
 const allowDrop = (event) => {
