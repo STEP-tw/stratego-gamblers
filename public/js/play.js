@@ -33,7 +33,14 @@ const getClassFor = (pieceID)=>{
     2: 'scout',
     3: 'miner',
     9: 'general',
-    10: 'marshal'
+    10: 'marshal',
+    'O_B': 'bomb-O',
+    'O_F': 'flag-O',
+    'O_S': 'spy-O',
+    'O_2': 'scout-O',
+    'O_3': 'miner-O',
+    'O_9': 'general-O',
+    'O_10': 'marshal-O'
   };
   return pieces[pieceID];
 };

@@ -40,8 +40,6 @@
   background-image: url("../img/redArmy/F.png");
 }
 
-
-
 .lake{
   cursor: not-allowed;
   background-size: 60px 60px;
@@ -51,4 +49,39 @@
 .opponent{
   background-size: 60px 60px;
   background-image: url("../img/redArmy/O.png");
+}
+
+.marshal-O{
+  background-size: 60px 60px;
+  background-image: url("../img/redArmy/O_10.png");
+}
+
+.general-O{
+  background-size: 60px 60px;
+  background-image: url("../img/redArmy/O_9.png");
+}
+
+.miner-O{
+  background-size: 60px 60px;
+  background-image: url("../img/redArmy/O_3.png");
+}
+
+.scout-O{
+  background-size: 60px 60px;
+  background-image: url("../img/redArmy/O_2.png");
+}
+
+.spy-O{
+  background-size: 60px 60px;
+  background-image: url("../img/redArmy/O_S.png");
+}
+
+.bomb-O{
+  background-size: 60px 60px;
+  background-image: url("../img/redArmy/O_B.png");
+}
+
+.flag-O{
+  background-size: 60px 60px;
+  background-image: url("../img/redArmy/O_F.png");
 }

@@ -42,3 +42,38 @@
   background-size: 60px 60px;
   background-image: url("../img/blueArmy/O.png");
 }
+
+.marshal-O{
+  background-size: 60px 60px;
+  background-image: url("../img/blueArmy/O_10.png");
+}
+
+.general-O{
+  background-size: 60px 60px;
+  background-image: url("../img/blueArmy/O_9.png");
+}
+
+.miner-O{
+  background-size: 60px 60px;
+  background-image: url("../img/blueArmy/O_3.png");
+}
+
+.scout-O{
+  background-size: 60px 60px;
+  background-image: url("../img/blueArmy/O_2.png");
+}
+
+.spy-O{
+  background-size: 60px 60px;
+  background-image: url("../img/blueArmy/O_S.png");
+}
+
+.bomb-O{
+  background-size: 60px 60px;
+  background-image: url("../img/blueArmy/O_B.png");
+}
+
+.flag-O{
+  background-size: 60px 60px;
+  background-image: url("../img/blueArmy/O_F.png");
+}
