@@ -210,8 +210,10 @@ describe("Game", () => {
       game.updatePieceLocation('9_0');
       assert.isOk(game.battlefield.hasLastSelectedLoc());
       game.updatePieceLocation('9_1');
-      assert.deepEqual(game.battlefield.getPiece(0, '9_1'), marshal);
-      assert.isUndefined(game.battlefield.getPiece(0, '9_0'));
+      setTimeout(()=>{
+        assert.deepEqual(game.battlefield.getPiece(0, '9_1'), marshal);
+        assert.isUndefined(game.battlefield.getPiece(0, '9_0'));
+      },2000);
     });
   });
   describe('getEmptyPosition', () => {

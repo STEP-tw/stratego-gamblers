@@ -6,6 +6,7 @@ class Battlefield {
     this.battlePositions = {};
     this.selectedPos = '';
     this.battleResults = [];
+    this.revealPieces ={};
   }
   setField(pieces,placedArmyPos){
     let allPos = Object.keys(placedArmyPos);
@@ -83,8 +84,12 @@ class Battlefield {
       return true;
     }
     if(this.isAttackMove(potentialMoves,pieceLoc)){
-      this.battle(playerId,pieceLoc);
-      this.removeSelectedPos();
+      this.setRevealPieces(playerId,this.selectedPos,pieceLoc);
+      setTimeout(()=>{
+        this.battle(playerId,pieceLoc);
+        this.removeRevealPieces();
+        this.removeSelectedPos();
+      },2000);
       return true;
     }
   }
@@ -142,6 +147,24 @@ class Battlefield {
       allArmy[armyPos] = `O_${opponentArmy[armyPos]}`;
     });
     return allArmy;
+  }
+  setRevealPieces(playerId,selectedPos,battlePos){
+    this.revealPieces[playerId] = selectedPos;
+    this.revealPieces[1-playerId] = battlePos;
+  }
+  getRevealPiece(playerId){
+    let revealPiece = {};
+    let opponentId = 1-playerId;
+    let loc = this.revealPieces[opponentId];
+    let piece = this.getPiece(opponentId,loc);
+    if(piece){
+      revealPiece.loc = loc;
+      revealPiece.pieceId = `O_${piece.id}`;
+    }
+    return revealPiece;
+  }
+  removeRevealPieces(){
+    this.revealPieces = {};
   }
 }
 module.exports = Battlefield;

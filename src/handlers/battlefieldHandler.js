@@ -30,7 +30,9 @@ class BattlefieldHandler {
     let location = req.body.location;
     let playerId = game.getPlayerIndexBy(sessionId);
     if (game.isCurrentPlayer(playerId)) {
+      let potentialMoves = game.getPotentialMoves(location);
       game.updatePieceLocation(location);
+      res.send(potentialMoves);
       res.status(200);
       res.end();
       return;

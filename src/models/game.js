@@ -91,17 +91,20 @@ class Game {
   }
   updatePieceLocation(location){
     let battlefield = this.battlefield;
-    let isUpdatedLoc = false;
+    let playerId = this.currentPlayerId;
+    let isLocationUpdated = false;
     if(battlefield.hasLastSelectedLoc()){
-      isUpdatedLoc = battlefield.updateLocation(this.currentPlayerId,location);
+      isLocationUpdated = battlefield.updateLocation(playerId,location);
     }
-    if(isUpdatedLoc){
-      this.updatePlayerPieces();
-      this.updateGameStatus();
-      this.changeCurrentPlayer();
+    if(isLocationUpdated){
+      setTimeout(()=>{
+        this.updatePlayerPieces();
+        this.updateGameStatus();
+        this.changeCurrentPlayer();
+      },2000);
       return ;
     }
-    battlefield.addAsLastSelectedLoc(this.currentPlayerId,location);
+    battlefield.addAsLastSelectedLoc(playerId,location);
   }
   changeCurrentPlayer(){
     this.currentPlayerId = (1 - this.currentPlayerId);
@@ -165,8 +168,10 @@ class Game {
     let playerId = this.getPlayerIndexBy(sessionId);
     let battlefieldPos = this.getBattlefieldFor(playerId);
     let turnMsg = this.getTurnMessage(playerId);
+    let revealPiece = this.getRevealPiece(playerId);
     let killedPieces = this.getKilledPieces();
     let status = this.getGameStatus();
+    battlefieldPos[revealPiece.loc] = revealPiece.pieceId;
     if (status.gameOver) {
       battlefieldPos = this.revealBattlefieldFor(playerId);
     }
@@ -183,6 +188,9 @@ class Game {
     this.gameOver = true;
     let winningPlayer = this.players.find(player=>player.name==winner);
     this.winner = winningPlayer.getId();
+  }
+  getRevealPiece(playerId){
+    return this.battlefield.getRevealPiece(playerId);
   }
 }
 module.exports =Game;
