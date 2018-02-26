@@ -20,7 +20,7 @@
       <img id="logo" src="img/background/logo.png">
     </div>
     <div class="me">
-      <span class="names">profile : {{myname}}</span>
+      <span class="names">you : {{myname}}</span>
     </div>
   </div>
   <div class="container">

@@ -29,12 +29,12 @@ body {
   margin: 1%;
   width: 400px;
   height: 100%;
+  color: rgb(156, 131, 69);
 }
 
 .names {
-  font-size: 20px;
+  font-size: 25px;
   padding: 2%;
-  background-color: rgb(156, 131, 69);
 }
 
 .container {
@@ -66,9 +66,9 @@ body {
   margin: auto;
   margin-left: 0%;
   width: 18%;
-  font-size: 20px;
+  font-size: 25px;
   text-align: center;
-  background-color: rgb(156, 131, 69);
+  color: rgb(156, 131, 69);
 }
 
 #grid, #base-army-table {
@@ -110,6 +110,7 @@ td {
 }
 
 .piece-description {
+  text-align:justify;
   margin: auto;
   margin-top: 1%;
   width: 90%;
@@ -126,25 +127,26 @@ td {
   margin-top: 7%;
   width: 90%;
   height: 84%;
-  background-color: #a78d43;
+  border: 1px solid #a78d4359;
 }
 
 #pieceTitle {
   font-size: 30px;
+  font-family: 'Alegreya Sans', sans-serif;
   margin-left: 120px;
-  color: black;
+  color: #a78d43;
 }
 
 .piece > p {
   font-size: 20px;
+  font-family: 'Alegreya Sans', sans-serif;
   margin-left: 40px;
-  color: black;
+  color: #a78d43;
 }
 
 .noPiece {
   width: 80%;
   height: 91%;
-  background-color: #a78d43;
 }
 
 .piece {
@@ -193,7 +195,8 @@ td {
   text-transform: uppercase;
   margin-left: 25%;
   cursor: pointer;
-  width: 45%;
+  width: 40%;
   height: 65%;
   background-color: #a78d43;
+  border-radius: 18px;
 }

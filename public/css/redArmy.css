@@ -47,6 +47,7 @@
 }
 
 .opponent{
+  cursor: pointer;
   background-size: 60px 60px;
   background-image: url("../img/redArmy/O.png");
 }
