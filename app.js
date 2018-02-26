@@ -88,6 +88,16 @@ const validatePlayerStatus = function (req, res, next) {
   }
 };
 
+const quitGame = function (req, res, next) {
+  let game = req.app.game;
+  let sessionId = req.cookies.sessionId;
+  let teamColor = game.getPlayerColorBy(sessionId);
+  game.quit(teamColor);
+  res.clearCookie('sessionId');
+  res.clearCookie('gameStatus');
+  res.redirect('/');
+};
+
 const unauthorizedUrls = ['/play', '/setupArmy', '/battlefield',
   'isOpponentReady', '/setup/player/:playerId',
   '/selectedLoc'
@@ -111,5 +121,6 @@ app.use('/play', validatePlayerStatus);
 app.get('/play', renderGamePage);
 app.get('/battlefield', battlefieldHandler.getBattlefieldHandler());
 app.post('/selectedLoc', battlefieldHandler.updateBattlefieldHandler());
+app.get('/leave', quitGame);
 app.get('/playAgain', restartGame);
 module.exports = app;

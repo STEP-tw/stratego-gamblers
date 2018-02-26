@@ -3,7 +3,7 @@ const getStatusMsg = require('../lib/lib.js').getStatusMsg;
 
 class BattlefieldHandler {
   constructor(){
-    
+
   }
   setBattlefield(req,res){
     let game = req.app.game;

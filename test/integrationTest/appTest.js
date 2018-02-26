@@ -102,6 +102,12 @@ describe('app', () => {
         .expect("Content-Type", "text/html; charset=utf-8")
         .end(done);
     });
+    it("should not allow to create game with invalid name", done =>{
+      request(app)
+        .get("/createGame/rav i")
+        .expect(200)
+        .end(done);
+    });
   });
   describe('GET /hasOpponentJoined', () => {
     it("returns true if opponent is ready", done => {
@@ -322,6 +328,27 @@ describe('app', () => {
         .set('cookie', 'sessionId=123456')
         .set('cookie', 'previousUrl=/play')
         .expect('Location', '/play')
+        .expect(302)
+        .end(done);
+    });
+  });
+  describe("GET /leave", () => {
+    it('should redirect player to landing page', (done) => {
+      app.game = new Game(1);
+      app.game.loadPieces();
+      app.game.addPlayer("player1",12345,'red');
+      app.game.addPlayer("player2",123456,'blue');
+      let redArmyPos = {'3_2':'2','3_9':'B'};
+      let blueArmyPos = {'9_2':'2','9_9':'B'};
+      app.game.setBattlefieldFor(0,redArmyPos);
+      app.game.setBattlefieldFor(1, blueArmyPos);
+      app.game.players[0].kill('2');
+
+      request(app)
+        .get('/leave')
+        .set('cookie', 'gameStatus=true')
+        .set('cookie','sessionId=12345')
+        .expect('Location','/')
         .expect(302)
         .end(done);
     });
