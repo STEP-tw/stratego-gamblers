@@ -3,11 +3,11 @@ const fs = require('fs');
 const cookieParser = require('cookie-parser');
 const app = express();
 const log = require("./src/handlers/logger.js").log;
-const isGameOver = require('./src/lib/lib.js').isGameOver;
 const Sessions = require('./src/models/sessions.js');
 const CreateGameHandler = require('./src/handlers/createGameHandler.js');
 const JoinGameHandler = require('./src/handlers/joinGameHandler.js');
 const BattlefieldHandler = require('./src/handlers/battlefieldHandler.js');
+const ExitHandler = require('./src/handlers/exitHandler.js');
 const battlefieldHandler = new BattlefieldHandler();
 
 app.fs = fs;
@@ -61,19 +61,6 @@ const renderGamePage = function (req, res) {
   res.send(battlefield);
 };
 
-const restartGame = function (req, res) {
-  let previousUrl = req.cookies.previousUrl;
-  let game = req.app.game;
-  let gameStatus = req.cookies.gameStatus;
-  if (isGameOver(game,gameStatus)|| gameStatus=='quit') {
-    delete req.app.game;
-    res.clearCookie('sessionId');
-    res.clearCookie('gameStatus');
-    return res.redirect('/');
-  }
-  res.redirect(previousUrl);
-};
-
 const loadPreviousUrl=function(req,res,next){
   res.cookie('previousUrl', req.baseUrl);
   next();
@@ -88,15 +75,6 @@ const validatePlayerStatus = function (req, res, next) {
   }
 };
 
-const quitGame = function (req, res, next) {
-  let game = req.app.game;
-  let sessionId = req.cookies.sessionId;
-  let teamColor = game.getPlayerColorBy(sessionId);
-  game.quit(teamColor);
-  res.clearCookie('sessionId');
-  res.clearCookie('gameStatus');
-  res.redirect('/');
-};
 
 const unauthorizedUrls = ['/play', '/setupArmy', '/battlefield',
   'isOpponentReady', '/setup/player/:playerId',
@@ -121,6 +99,6 @@ app.use('/play', validatePlayerStatus);
 app.get('/play', renderGamePage);
 app.get('/battlefield', battlefieldHandler.getBattlefieldHandler());
 app.post('/selectedLoc', battlefieldHandler.updateBattlefieldHandler());
-app.get('/leave', quitGame);
-app.get('/playAgain', restartGame);
+app.get('/playAgain', new ExitHandler().restartGame);
+app.get('/leave', new ExitHandler().quitGame);
 module.exports = app;
