@@ -18,5 +18,8 @@ class Bomb extends Piece {
     }
     return killedPieces; 
   }
+  getPotentialMoves(){
+    return ;
+  }
 }
 module.exports = Bomb;

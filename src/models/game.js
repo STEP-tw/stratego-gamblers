@@ -177,6 +177,7 @@ class Game {
     }
     let boardInfo = {
       'battlefield': battlefieldPos,
+      'revealLoc':revealPiece.loc,
       'turnMsg': turnMsg,
       'killedPieces': killedPieces,
       'status': status

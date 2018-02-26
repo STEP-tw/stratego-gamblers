@@ -9,5 +9,8 @@ class Flag extends Piece {
   isMovable(){
     return false;
   }
+  getPotentialMoves(){
+    return ;
+  }
 }
 module.exports = Flag;

@@ -61,7 +61,7 @@ class Battlefield {
   getPotentialMoves(playerId, pieceLoc){
     let piece = this.getPiece(playerId,pieceLoc);
     if(!piece){
-      return {};
+      return ;
     }
     let posMap = this.getPosMap(playerId);
     return piece.getPotentialMoves(pieceLoc,posMap);

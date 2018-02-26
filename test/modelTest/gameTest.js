@@ -138,7 +138,7 @@ describe("Game", () => {
         game.loadPieces();
         game.addPlayer("ravi", 0, 'red');
         game.addPlayer("ankur", 1, 'blue');
-        let redArmyPos = {'3_2': 'S', '3_1': 'B'};
+        let redArmyPos = {'3_2': 'S', '3_1': 'B','2_2':'3','0_0':'F'};
         let blueArmyPos = {'3_5': '2', '4_1': 'B', '3_3': 'S'};
         game.setBattlefieldFor(0, redArmyPos);
         game.setBattlefieldFor(1, blueArmyPos);
@@ -147,23 +147,30 @@ describe("Game", () => {
     it('should give potential moves for a piece and remove lake area', () => {
       let actual = game.getPotentialMoves('3_2');
       let expected = {
-        freeMoves: ['2_2'],
+        freeMoves: [],
         attackMoves: ['3_3']
       };
       assert.deepEqual(actual, expected);
     });
     it('should give potential moves for a piece ', () => {
-      let actual = game.getPotentialMoves('3_1');
+      let actual = game.getPotentialMoves('2_2');
       let expected = {
-        freeMoves: ["2_1", '3_0'],
-        attackMoves: ['4_1']
+        freeMoves: ['1_2','2_3','2_1'],
+        attackMoves: []
       };
       assert.deepEqual(actual, expected);
     });
+    it('should not return potential moves for a  Bomb ', () => {
+      let actual = game.getPotentialMoves('3_1');
+      assert.isUndefined(actual);
+    });
+    it('should not return potential moves for a  Flag ', () => {
+      let actual = game.getPotentialMoves('0_0');
+      assert.isUndefined(actual);
+    });
     it('should not return potential moves for location with no piece', () => {
       let actualOutput = game.getPotentialMoves('9_1');
-      let expectedOutput = {};
-      assert.deepEqual(actualOutput, expectedOutput);
+      assert.isUndefined(actualOutput);
     });
   });
   describe('updatePieceLocation', () => {
