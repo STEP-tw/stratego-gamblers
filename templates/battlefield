@@ -55,11 +55,11 @@
       <div class="buttons">
         <button id="play-again" onclick="window.location.href='/playAgain'" name="button"> Play Again</button>
         <button id="leave-battle" onclick="sureToLeave()" name="button">Leave Game</button>
-        <form id="leave" class="popup-form" action="/leave">
+        <div id="leave" class="popup-form">
           <h4>Are you sure you want to leave the game?</h4>
-          <input type="submit" id="yes" value="Yes">
-          <button type="submit" id="no" formaction="/play" onclick="continueGame()">No</button>
-        </form>
+          <button type="submit" id="yes" onclick="window.location.href='/leave'">Yes</button>
+          <button type="submit" id="no" onclick="window.location.href='/play'">No</button>
+        </div>
       </div>
     </div>
   </div>

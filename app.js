@@ -75,7 +75,6 @@ const validatePlayerStatus = function (req, res, next) {
   }
 };
 
-
 const unauthorizedUrls = ['/play', '/setupArmy', '/battlefield',
   'isOpponentReady', '/setup/player/:playerId',
   '/selectedLoc'
@@ -87,7 +86,6 @@ app.use(express.urlencoded({
 }));
 app.use(cookieParser());
 app.use(unauthorizedUrls, redirectToHome);
-
 app.use(express.static('public'));
 app.get("/createGame/:name", new CreateGameHandler().getRequestHandler());
 app.post("/joinGame", new JoinGameHandler().getRequestHandler());

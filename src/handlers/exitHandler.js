@@ -4,7 +4,6 @@ class ExitHandler {
   constructor() {}
 
   restartGame(req, res) {
-    console.log(`I am here at restart game`);
     let previousUrl = req.cookies.previousUrl;
     let game = req.app.game;
     let gameStatus = req.cookies.gameStatus;
@@ -18,7 +17,6 @@ class ExitHandler {
   }
 
   quitGame(req, res) {
-    console.log(`I am here at quit game`);
     let game = req.app.game;
     let sessionId = req.cookies.sessionId;
     let teamColor = game.getPlayerColorBy(sessionId);
