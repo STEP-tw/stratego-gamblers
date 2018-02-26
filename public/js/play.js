@@ -23,6 +23,21 @@ const generateCell = (id) => {
   return cell;
 };
 
+const getClassFor = (pieceID)=>{
+  let pieces = {
+    'B': 'bomb',
+    'F': 'flag',
+    'S': 'spy',
+    'O':'opponent',
+    'X':'lake',
+    2: 'scout',
+    3: 'miner',
+    9: 'general',
+    10: 'marshal'
+  };
+  return pieces[pieceID];
+};
+
 const generateRow = (initialID, numberOfCols) => {
   let row = document.createElement("tr");
   for (let cols = 0; cols < numberOfCols; cols++) {
@@ -67,24 +82,19 @@ const setImageAttributes = (img, src, id, height, width) => {
   return img;
 };
 
+
 const appendImage = (baseCell, id, imgSrcDirectory) => {
   let basePosition = document.getElementById(baseCell.id);
-  let image = document.createElement("img");
-  let src = `img/${imgSrcDirectory}/${id}.png`;
-  let height = "60";
-  let width = "60";
-  let img = setImageAttributes(image, src, id, height, width);
-  if (basePosition.hasChildNodes()) {
-    basePosition.childNodes[0].remove();
-    // return;
+  let classForPieceId = getClassFor(id);
+  if (basePosition.className) {
+    basePosition.className='';
   }
-  basePosition.appendChild(img);
+  basePosition.className = classForPieceId;
 };
 
 const updateEmptyCell = (cell) => {
-  if (cell.hasChildNodes()) {
-    let child = cell.childNodes[0];
-    child.remove();
+  if (cell.className) {
+    cell.className='';
   }
 };
 
@@ -124,10 +134,19 @@ const incrementId = function (id) {
   return ids.join('_');
 };
 
+const updateKilledPiece=(cell,piece,team)=>{
+  let image = document.createElement("img");
+  let src = `img/${team}/${piece}.png`;
+  let height = "60";
+  let width = "60";
+  let img = setImageAttributes(image, src, piece, height, width);
+  cell.appendChild(img);
+};
+
 const showCapturedArmy = function (army, team, cellId) {
   army.forEach(piece => {
     let cell = document.getElementById(cellId);
-    appendImage(cell, piece, team);
+    updateKilledPiece(cell, piece, team);
     cellId = incrementId(cellId);
   });
 };

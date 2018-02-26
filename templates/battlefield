@@ -8,11 +8,12 @@
   <script src="js/{{team}}battlefield.js" charset="utf-8"></script>
   <link href="https://fonts.googleapis.com/css?family=Alegreya" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/{{team}}Army.css">
 </head>
 
 <body oncontextmenu="return false">
   <div class="player-details">
-    <div class="opponent">
+    <div class="opponent-profile">
       <span class="names">opponent : {{opponent}}</span>
     </div>
     <div class="game-title">

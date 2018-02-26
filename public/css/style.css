@@ -23,7 +23,7 @@ body {
   width: 10%;
 }
 
-.me, .opponent {
+.me, .opponent-profile {
   text-align: center;
   margin: auto;
   width: 400px;
@@ -99,12 +99,8 @@ img {
   top: 0;
   bottom: 0;
   position: absolute;
-  cursor: pointer;
 }
 
-img > #O {
-  cursor: move;
-}
 
 td {
   position: relative;
@@ -114,11 +110,6 @@ td {
   border: 1px solid #a78d4359;
 }
 
-td > #X {
-  width: 63px;
-  height: 63px;
-  cursor: not-allowed;
-}
 
 .activity-log {
   margin: auto;

@@ -55,7 +55,7 @@ const renderGamePage = function (req, res) {
   let teamColor = game.getPlayerColorBy(playerId);
   let myName = game.getPlayerName(teamColor);
   let opponent = game.getOpponentName(teamColor);
-  battlefield = battlefield.replace('{{team}}', teamColor);
+  battlefield = battlefield.replace(/{{team}}/g,teamColor);
   battlefield = battlefield.replace('{{myname}}', myName);
   battlefield = battlefield.replace('{{opponent}}', opponent);
   res.send(battlefield);

@@ -10,6 +10,7 @@ morgan.token("body",function getBody(req) {
   return JSON.stringify(req.body);
 });
 const logAndStoreRequest=function (tokens, req, res) {
+  console.log(req.url);
   return [
     tokens.method(req, res),
     tokens.url(req, res),

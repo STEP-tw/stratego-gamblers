@@ -1,0 +1,54 @@
+.marshal{
+  cursor: pointer;
+  background-size: 60px 60px;
+  background-image: url("../img/redArmy/10.png");
+}
+
+.general{
+  cursor: pointer;
+  background-size: 60px 60px;
+  background-image: url("../img/redArmy/9.png");
+}
+
+.miner{
+  cursor: pointer;
+  background-size: 60px 60px;
+  background-image: url("../img/redArmy/3.png");
+}
+
+.scout{
+  cursor: pointer;
+  background-size: 60px 60px;
+  background-image: url("../img/redArmy/2.png");
+}
+
+.spy{
+  cursor: pointer;
+  background-size: 60px 60px;
+  background-image: url("../img/redArmy/S.png");
+}
+
+.bomb{
+  cursor: pointer;
+  background-size: 60px 60px;
+  background-image: url("../img/redArmy/B.png");
+}
+
+.flag{
+  cursor: pointer;
+  background-size: 60px 60px;
+  background-image: url("../img/redArmy/F.png");
+}
+
+
+
+.lake{
+  cursor: not-allowed;
+  background-size: 60px 60px;
+  background-image: url("../img/redArmy/X.png");
+}
+
+.opponent{
+  background-size: 60px 60px;
+  background-image: url("../img/redArmy/O.png");
+}
