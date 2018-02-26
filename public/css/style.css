@@ -130,7 +130,7 @@ td {
   height: 20%;
 }
 
-#surrender, #play-again {
+#leave-battle, #play-again {
   font-family: 'Alegreya', serif;
   font-size: 20px;
   text-transform: uppercase;
@@ -142,10 +142,56 @@ td {
   background-color: rgb(156, 131, 69);
 }
 
-#surrender {
+#play-again {
   display: none;
 }
 
-#play-again {
+.popup-form {
+  animation: animatezoom 0.6s;
+  width: 80%;
+  margin: -13% 0% 0% 30%;
+  overflow: auto;
+}
+
+#leave {
   display: none;
+}
+
+@keyframes animatezoom {
+  from {
+    transform: scale(0)
+  }
+  to {
+    transform: scale(01)
+  }
+}
+
+.popup-form input {
+  outline: 0;
+}
+
+.popup-form button {
+  font-size: 10%;
+}
+
+#leave, #yes, #no {
+  padding-left: 10px;
+  font-size: 20px;
+  font-family: 'Alegreya', serif;
+  width: 100%;
+  margin: 3% -15%;
+  color: #EDC35A;
+  background: darkslategrey;
+  border: none;
+  cursor: pointer;
+}
+
+#yes, #no {
+  padding-left: 100px;
+  border: 1px solid black;
+  background: black;
+}
+
+button:focus {
+  outline: 0;
 }

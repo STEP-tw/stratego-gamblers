@@ -121,6 +121,7 @@ const announceWinner = (gameData) => {
   if(!gameData.winner){
     gameOverMsg = `GAME DRAW`;
   }
+  document.getElementById('leave-battle').style.display = 'none';
   let playAgain = document.querySelector('#play-again');
   playAgain.style.display = 'block';
   let winMsgBox = document.querySelector("#turn-msg");

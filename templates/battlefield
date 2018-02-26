@@ -53,8 +53,13 @@
     </div>
     <div class="activity-log">
       <div class="buttons">
-        <button id="surrender" type="button" name="button">surrender</button>
-        <button id="play-again" onclick="window.location.href='/playAgain'" name="button">play-again</button>
+        <button id="play-again" onclick="window.location.href='/playAgain'" name="button"> Play Again</button>
+        <button id="leave-battle" onclick="sureToLeave()" name="button">Leave Game</button>
+        <form id="leave" class="popup-form" action="/leave">
+          <h4>Are you sure you want to leave the game?</h4>
+          <input type="submit" id="yes" value="Yes">
+          <button type="submit" id="no" formaction="/play" onclick="continueGame()">No</button>
+        </form>
       </div>
     </div>
   </div>
