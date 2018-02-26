@@ -89,7 +89,6 @@ const setImageAttributes = (img, src, id, height, width) => {
   return img;
 };
 
-
 const appendImage = (baseCell, id, imgSrcDirectory) => {
   let basePosition = document.getElementById(baseCell.id);
   let classForPieceId = getClassFor(id);

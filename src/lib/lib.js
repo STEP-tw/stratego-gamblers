@@ -39,10 +39,14 @@ exports.isGameOver = (game,gameStatus)=>{
 exports.getStatusMsg = (playerId, status) => {
   let statusMsg = {
     true: 'you won the game',
-    false: 'you lost the game'
+    false: 'you lost the game',
+    quit: 'opponent has surrendered'
   };
   if (status.winner) {
     status.winner = statusMsg[playerId == status.winner];
+  }
+  if (status.gameOver=='quit') {
+    status.winner = statusMsg['quit'];
   }
   return status;
 };

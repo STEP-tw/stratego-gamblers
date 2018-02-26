@@ -65,7 +65,7 @@ const restartGame = function (req, res) {
   let previousUrl = req.cookies.previousUrl;
   let game = req.app.game;
   let gameStatus = req.cookies.gameStatus;
-  if (isGameOver(game,gameStatus)) {
+  if (isGameOver(game,gameStatus)|| gameStatus=='quit') {
     delete req.app.game;
     res.clearCookie('sessionId');
     res.clearCookie('gameStatus');

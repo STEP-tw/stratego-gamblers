@@ -185,7 +185,7 @@ class Game {
   }
   quit(team){
     let winner = this.getOpponentName(team);
-    this.gameOver = true;
+    this.gameOver = 'quit';
     let winningPlayer = this.players.find(player=>player.name==winner);
     this.winner = winningPlayer.getId();
   }
