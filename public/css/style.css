@@ -196,3 +196,7 @@ td {
 button:focus {
   outline: 0;
 }
+
+.free-move {
+  background-color: #57A44E;
+}

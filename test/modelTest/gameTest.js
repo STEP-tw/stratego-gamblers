@@ -170,7 +170,8 @@ describe("Game", () => {
     });
     it('should not return potential moves for location with no piece', () => {
       let actualOutput = game.getPotentialMoves('9_1');
-      assert.isUndefined(actualOutput);
+      let expectedOutput = '';
+      assert.deepEqual(actualOutput, expectedOutput);
     });
   });
   describe('updatePieceLocation', () => {
@@ -270,9 +271,9 @@ describe("Game", () => {
         game.players[1].kill('3');
         game.players[1].kill('3');
         game.players[1].kill('9');
-        game.players[1].kill('10');   
-        game.updateGameStatus();             
-        assert.isOk(game.gameOver); 
+        game.players[1].kill('10');
+        game.updateGameStatus();
+        assert.isOk(game.gameOver);
         assert.equal(game.winner, '');
       });
     });

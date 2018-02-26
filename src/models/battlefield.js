@@ -61,7 +61,7 @@ class Battlefield {
   getPotentialMoves(playerId, pieceLoc){
     let piece = this.getPiece(playerId,pieceLoc);
     if(!piece){
-      return ;
+      return '';
     }
     let posMap = this.getPosMap(playerId);
     return piece.getPotentialMoves(pieceLoc,posMap);
@@ -94,22 +94,26 @@ class Battlefield {
     }
   }
   isFreeMove(potentialMoves,pieceLoc){
-    return potentialMoves.freeMoves.includes(pieceLoc);
+    if(potentialMoves){
+      return potentialMoves.freeMoves.includes(pieceLoc);
+    }
   }
   isAttackMove(potentialMoves,pieceLoc){
-    return potentialMoves.attackMoves.includes(pieceLoc);
+    if(potentialMoves){
+      return potentialMoves.attackMoves.includes(pieceLoc);
+    }
   }
   battle(playerId,pieceLoc){
     let opponentId = 1-playerId;
     let piece = this.getPiece(playerId,this.selectedPos);
     let opponentPiece = this.getPiece(opponentId,pieceLoc);
-    let killedPieces = opponentPiece.attackedBy(piece);    
+    let killedPieces = opponentPiece.attackedBy(piece);
     if(killedPieces.defendingPiece){
       this.setBattleResult(opponentId,opponentPiece);
       delete this.battlePositions[opponentId][pieceLoc];
     }
     if(killedPieces.attackingPiece){
-      this.setBattleResult(playerId,piece);     
+      this.setBattleResult(playerId,piece);
       delete this.battlePositions[playerId][this.selectedPos];
     } else {
       this.replacePieceLoc(playerId,pieceLoc);

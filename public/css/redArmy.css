@@ -86,3 +86,7 @@
   background-size: 60px 60px;
   background-image: url("../img/redArmy/O_F.png");
 }
+
+.attacking-move {
+  border: 3px solid red;
+}

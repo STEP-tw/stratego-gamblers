@@ -56,6 +56,28 @@ const generateRow = (initialID, numberOfCols) => {
   return row;
 };
 
+const highlightMoves = (potentialMoves)=>{
+  potentialMoves.freeMoves.forEach(function(move){
+    let pos =document.getElementById(move);
+    pos.classList.add('free-move');
+  });
+  potentialMoves.attackMoves.forEach(function(move){
+    let pos =document.getElementById(move);
+    pos.classList.add('attacking-move');
+  });
+};
+
+const removeHighlight = (moves)=>{
+  if(moves){
+    moves = moves.attackMoves.concat(moves.freeMoves);
+    moves.forEach(function(posID){
+      let move = document.getElementById(posID);
+      move.classList.remove('attacking-move');
+      move.classList.remove('free-move');
+    });
+  }
+};
+let potentialMoves;
 const getLocation = (event) => {
   let target = event.target;
   if (target.tagName == 'IMG') {
@@ -63,10 +85,16 @@ const getLocation = (event) => {
   }
   let postData = `location=${target.id}`;
   const reqListener = function () {
-    console.log(this.responseText);
+    if(this.responseText){
+      removeHighlight(potentialMoves);
+      potentialMoves = JSON.parse(this.responseText);
+      return highlightMoves(potentialMoves);
+    }
+    setTimeout(()=>{
+      removeHighlight(potentialMoves);
+    },500);
   };
   const onFail = function () {
-    console.log(this.responseText);
   };
   doXhr('/selectedLoc', 'POST', reqListener, postData, onFail);
 };
@@ -92,14 +120,22 @@ const setImageAttributes = (img, src, id, height, width) => {
 const appendImage = (baseCell, id, imgSrcDirectory) => {
   let basePosition = document.getElementById(baseCell.id);
   let classForPieceId = getClassFor(id);
-  if (basePosition.className) {
+  if (!basePosition.classList.contains('attacking-move')) {
     basePosition.className='';
+  }
+  if(basePosition.classList.contains('attacking-move')){
+    basePosition.classList.add('attacking-move');
+    return basePosition.classList.add(classForPieceId);
   }
   basePosition.className = classForPieceId;
 };
 
 const updateEmptyCell = (cell) => {
   if (cell.className) {
+    if(cell.classList.contains('free-move')){
+      cell.className = 'free-move';
+      return;
+    }
     cell.className='';
   }
 };
