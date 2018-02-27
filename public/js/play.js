@@ -203,16 +203,16 @@ const showCapturedArmy = function(army, team, cellId) {
   });
 };
 
-const showKilledPieces = (killedPieces) => {
-  let capturedRedArmy = killedPieces['redArmy'];
-  let capturedBlueArmy = killedPieces['blueArmy'];
-  let firstRedCell = getFirstCellId('red-army-table');
-  let firstBlueCell = getFirstCellId('blue-army-table');
-  showCapturedArmy(capturedRedArmy, 'redArmy', firstRedCell);
-  showCapturedArmy(capturedBlueArmy, 'blueArmy', firstBlueCell);
+const showKilledPieces = (killedPieces,myArmy,oppArmy) => {
+  let troopsLost = killedPieces[myArmy];
+  let troopsCaptured = killedPieces[oppArmy];
+  let firstRedCell = getFirstCellId('troops-lost');
+  let firstBlueCell = getFirstCellId('troops-captured');
+  showCapturedArmy(troopsLost, myArmy, firstRedCell);
+  showCapturedArmy(troopsCaptured, oppArmy, firstBlueCell);
 };
 
-const initiatePolling = function(imgSrcDirectory) {
+const initiatePolling = function(myArmy,oppArmy) {
   let interval;
   let reqListener = function() {
     let gameData = JSON.parse(this.responseText);
@@ -221,8 +221,8 @@ const initiatePolling = function(imgSrcDirectory) {
     let killedPieces = gameData['killedPieces'];
     let turnBox = document.getElementById('turn-msg');
     turnBox.innerText = `${gameData.turnMsg}`;
-    showBattlefield(battlefield, imgSrcDirectory);
-    showKilledPieces(killedPieces);
+    showBattlefield(battlefield, myArmy);
+    showKilledPieces(killedPieces,myArmy,oppArmy);
     if (status.gameOver) {
       clearInterval(interval);
       announceWinner(status);

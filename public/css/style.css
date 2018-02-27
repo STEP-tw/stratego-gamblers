@@ -48,17 +48,17 @@ body {
   width: 90%;
 }
 
-.red, .blue {
+.lost, .captured {
   margin: auto;
-  width: 200px;
+  width: 250px;
   height: 100%;
 }
 
-.red {
+.lost {
   margin-right: -4%;
 }
 
-.blue {
+.captured {
   margin-left: -4%;
 }
 
@@ -76,11 +76,11 @@ body {
   color: rgb(156, 131, 69);
 }
 
-.red-army-title, .blue-army-title {
+.troops-lost-title, .troops-captured-title {
   color: rgb(156, 131, 69);
 }
 
-#red-army-table, #blue-army-table, #battlefield-table {
+#troops-captured, #troops-lost, #battlefield-table {
   margin: auto;
   margin-top: 5%;
   width: 60px;

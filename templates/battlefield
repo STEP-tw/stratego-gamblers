@@ -25,12 +25,12 @@
   </div>
   <div class="container">
     <div class="game-container">
-      <div class="red">
-        <div class="table-titles red-army-title">
-          <span class="red-para">opponent army</span>
+      <div class="lost">
+        <div class="table-titles troops-lost-title">
+          <span class="red-para">Troops Lost</span>
         </div>
         <div class="red-army">
-          <table id="red-army-table">
+          <table id="troops-lost">
           </table>
         </div>
       </div>
@@ -43,12 +43,12 @@
           </table>
         </div>
       </div>
-      <div class="blue">
-        <div class="table-titles blue-army-title">
-          <span class="blue-para">my army</span>
+      <div class="captured">
+        <div class="table-titles troops-captured-title">
+          <span class="blue-para">Troops Captured</span>
         </div>
         <div class="blue-army">
-          <table id="blue-army-table">
+          <table id="troops-captured">
           </table>
         </div>
       </div>
