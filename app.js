@@ -78,7 +78,7 @@ const validatePlayerStatus = function (req, res, next) {
 const help = function(req,res) {
   let helpPage = req.app.fs.readFileSync('./public/help.html', 'utf8');
   res.send(helpPage);
-}
+};
 
 const unauthorizedUrls = ['/play', '/setupArmy', '/battlefield',
   'isOpponentReady', '/setup/player/:playerId',
