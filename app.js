@@ -95,7 +95,7 @@ app.get('/isOpponentReady', sendOpponentStatus);
 app.get('/hasOpponentJoined', haveBothPlayersJoined);
 app.use('/play', validatePlayerStatus);
 app.get('/play', renderGamePage);
-app.get('/battlefield', battlefieldHandler.getBattlefieldHandler());
+app.post('/battlefield', battlefieldHandler.getBattlefieldHandler());
 app.post('/selectedLoc', battlefieldHandler.updateBattlefieldHandler());
 app.get('/playAgain', new ExitHandler().restartGame);
 app.get('/leave', new ExitHandler().quitGame);

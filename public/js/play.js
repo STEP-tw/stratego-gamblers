@@ -212,9 +212,14 @@ const showKilledPieces = (killedPieces,myArmy,oppArmy) => {
   showCapturedArmy(troopsCaptured, oppArmy, firstBlueCell);
 };
 
+let timeStamp=1000;
 const initiatePolling = function(myArmy,oppArmy) {
   let interval;
   let reqListener = function() {
+    if(!this.responseText){
+      return;
+    }
+    timeStamp = new Date().getTime();
     let gameData = JSON.parse(this.responseText);
     let status = gameData.status;
     let battlefield = gameData['battlefield'];
@@ -229,7 +234,8 @@ const initiatePolling = function(myArmy,oppArmy) {
     }
   };
   let callBack = function() {
-    doXhr('/battlefield', 'GET', reqListener, '', () => {
+    let data = `timeStamp=${timeStamp}`;
+    doXhr('/battlefield', 'POST', reqListener, data, () => {
       return;
     });
   };

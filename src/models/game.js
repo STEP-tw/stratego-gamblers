@@ -12,6 +12,7 @@ class Game {
     this.gameType = 'quickGame';
     this.gameOver=false;
     this.winner='';
+    this.timeStamp =new Date().getTime();
   }
   getId() {
     return this.id;
@@ -97,10 +98,11 @@ class Game {
       isLocationUpdated = battlefield.updateLocation(playerId,location);
     }
     if(isLocationUpdated){
+      this.changeCurrentPlayer();
+      this.updateTimeStamp();
       setTimeout(()=>{
         this.updatePlayerPieces();
         this.updateGameStatus();
-        this.changeCurrentPlayer();
       },2000);
       return ;
     }
@@ -169,6 +171,7 @@ class Game {
     let battlefieldPos = this.getBattlefieldFor(playerId);
     let turnMsg = this.getTurnMessage(playerId);
     let revealPiece = this.getRevealPiece(playerId);
+    let updatedLocs = this.battlefield.getUpdatedLocations();
     let killedPieces = this.getKilledPieces();
     let status = this.getGameStatus();
     battlefieldPos[revealPiece.loc] = revealPiece.pieceId;
@@ -177,7 +180,7 @@ class Game {
     }
     let boardInfo = {
       'battlefield': battlefieldPos,
-      'revealLoc':revealPiece.loc,
+      'updatedLocs':updatedLocs,
       'turnMsg': turnMsg,
       'killedPieces': killedPieces,
       'status': status
@@ -192,6 +195,12 @@ class Game {
   }
   getRevealPiece(playerId){
     return this.battlefield.getRevealPiece(playerId);
+  }
+  updateTimeStamp(){
+    this.timeStamp = new Date().getTime();
+  }
+  isBoardUpdated(timeStamp){
+    return this.timeStamp > timeStamp || timeStamp==1000;
   }
 }
 module.exports =Game;

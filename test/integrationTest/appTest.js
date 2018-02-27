@@ -253,16 +253,50 @@ describe('app', () => {
     });
     it('should respond with battlefield of given player', (done) => {
       request(app)
-        .get('/battlefield')
+        .post('/battlefield')
+        .send('timeStamp=1000')
         .set('cookie','sessionId=12345')
         .expect(200)
         .expect(/"3_2":"2","3_9":"B","9_2":"O","9_9":"O"/)
         .end(done);
     });
+    it('should respond with winning message if game ends', (done) => {
+      app.game.gameOver = true;
+      app.game.winner = 123456;
+      request(app)
+        .post('/battlefield')
+        .send('timeStamp=1000')
+        .set('cookie','sessionId=12345')
+        .expect(200)
+        .expect(/you lost the game/)
+        .end(done);
+    });
+    it('should respond with winning message if game ends', (done) => {
+      app.game.gameOver = 'quit';
+      app.game.winner = 123456;
+      request(app)
+        .post('/battlefield')
+        .send('timeStamp=1000')
+        .set('cookie','sessionId=12345')
+        .expect(200)
+        .expect(/opponent has surrendered/)
+        .end(done);
+    });
+    it('should respond nothing if board is not updated', (done) => {
+      app.game.timeStamp = 5000;
+      request(app)
+        .post('/battlefield')
+        .send('timeStamp=7000')
+        .set('cookie','sessionId=12345')
+        .expect(200)
+        .expect((res)=>assert.isObject(res.body))
+        .end(done);
+    });
     it('should return revealed army after game is over',(done)=>{
       app.game.gameOver = true;
       request(app)
-        .get('/battlefield')
+        .post('/battlefield')
+        .send('timeStamp=1000')        
         .set('cookie','sessionId=12345')
         .expect(200)
         .expect(/"3_2":"2","3_9":"B","9_2":"O_2","9_9":"O_B"/)

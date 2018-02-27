@@ -18,6 +18,11 @@ class BattlefieldHandler {
   }
   getBattlefield(req,res){
     let game = req.app.game;
+    let timeStamp = req.body.timeStamp;
+    if(!game.isBoardUpdated(timeStamp)){
+      res.end();
+      return;
+    }
     let sessionId = req.cookies.sessionId;
     let boardInfo = game.getBoardFor(sessionId);
     boardInfo.status = getStatusMsg(sessionId,boardInfo.status);
