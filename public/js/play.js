@@ -195,6 +195,55 @@ const updateKilledPiece = (cell, piece, team) => {
   cell.appendChild(img);
 };
 
+const getHoriPath = function(initial, last) {
+  let path = [];
+  let prevPos = initial.yCor;
+  let currentPos = last.yCor;
+  while (currentPos != prevPos) {
+    if (prevPos < currentPos) {
+      prevPos = prevPos + 1;
+    } else {
+      prevPos = prevPos - 1;
+    }
+    path.push(`${initial.xCor}_${prevPos}`);
+  }
+  return path;
+};
+
+const getVertPath = function(initial, last) {
+  let path = [];
+  let prevPos = initial.xCor;
+  let currentPos = last.xCor;
+  while (currentPos != prevPos) {
+    if (prevPos < currentPos) {
+      prevPos = prevPos + 1;
+    } else {
+      prevPos = prevPos - 1;
+    }
+    path.push(`${prevPos}_${initial.yCor}`);
+  }
+  return path;
+};
+
+let getCoordinate = function(id){
+  return {xCor:+id[0],yCor:+id[2]};
+};
+
+let isSameRow = function(first,second) {
+  return first.xCor == second.xCor;
+};
+
+const getPath = function(positions) {
+  let initial = positions[0];
+  let last = positions[1];
+  let prev = getCoordinate(initial);
+  let current = getCoordinate(last);
+  if (isSameRow(prev,current)) {
+    return getHoriPath(prev, current);
+  }
+  return getVertPath(prev, current);
+};
+
 const showCapturedArmy = function(army, team, cellId) {
   army.forEach(piece => {
     let cell = document.getElementById(cellId);
@@ -213,16 +262,25 @@ const showKilledPieces = (killedPieces, myArmy, oppArmy) => {
 };
 
 const highlightFreeMoves=(updatedLocs)=>{
-  document.getElementById(updatedLocs[0]).classList.add('start-move');
-  document.getElementById(updatedLocs[1]).classList.add('last-move');
+  let startPos = updatedLocs[0];
+  document.getElementById(startPos).classList.add('start-move');
+  let path = getPath(updatedLocs);
+  path.forEach((pos)=>{
+    document.getElementById(pos).classList.add('start-move');
+  });
 };
 
 let freeMoves=[];
 
 const deEmphasizeFreeMoves=()=>{
   if(freeMoves.length>0){
-    document.getElementById(freeMoves[0]).classList.remove('start-move');
-    document.getElementById(freeMoves[1]).classList.remove('last-move');
+    let startPos = freeMoves[0];
+    document.getElementById(startPos).classList.remove('start-move');
+    let path = getPath(freeMoves);
+
+    path.forEach((pos)=>{
+      document.getElementById(pos).classList.remove('last-move');
+    });
   }
 };
 
@@ -231,7 +289,6 @@ const updateBattlefield = (gameData,myArmy,oppArmy) => {
   let status = gameData.status;
   let battlefield = gameData['battlefield'];
   let killedPieces = gameData['killedPieces'];
-  console.log(gameData.updatedLocs);
   let turnBox = document.getElementById('turn-msg');
   turnBox.innerText = `${gameData.turnMsg}`;
   showBattlefield(battlefield, myArmy);
