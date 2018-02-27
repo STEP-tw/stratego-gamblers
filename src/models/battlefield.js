@@ -179,5 +179,9 @@ class Battlefield {
   getUpdatedLocations(){
     return this.updatedLocations;
   }
+  hasRevealedPiece(){
+    let revealPieces = Object.keys(this.revealPieces);
+    return revealPieces.length>0;
+  }
 }
 module.exports = Battlefield;

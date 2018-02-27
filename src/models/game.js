@@ -198,6 +198,9 @@ class Game {
   }
   updateTimeStamp(){
     this.timeStamp = new Date().getTime();
+    if(this.battlefield.hasRevealedPiece()){
+      this.timeStamp+=2000;
+    }
   }
   isBoardUpdated(timeStamp){
     return this.timeStamp > timeStamp || timeStamp==1000;
