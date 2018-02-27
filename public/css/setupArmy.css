@@ -12,67 +12,65 @@ body {
 }
 
 .game-logo {
-  margin: auto;
-  margin-left: 40%;
+  margin-left: 43.5%;
   width: 200px;
   height: 100%;
 }
 
 #logo {
-  height: 100%;
-  width: 100%;
+  margin: 1% 0% 0% 45%;
+  height: 8%;
+  width: 10%;
 }
 
 .me {
   text-align: center;
-  margin: auto;
+  flex: auto;
   margin: 1%;
-  width: 400px;
   height: 100%;
   color: rgb(156, 131, 69);
 }
 
 .names {
   font-size: 25px;
-  padding: 2%;
 }
 
 .container {
   display: flex;
   width: 100%;
-  height: 630px;
+  height: 750px;
 }
 
 .game-container {
   display: flex;
   flex-wrap: wrap;
-  width: 65%;
+  width: 62%;
   height: 100%;
 }
 
 .home {
   margin: auto;
-  min-width: 90%;
+  width: 90%;
   height: 60%;
 }
 
 .base {
   margin: auto;
-  min-width: 90%;
+  width: 90%;
   height: 35%;
 }
 
 .div-titles {
-  margin: auto;
-  margin-left: 0%;
-  width: 18%;
   font-size: 25px;
-  text-align: center;
+  margin-left: 5%;
   color: rgb(156, 131, 69);
 }
 
+.home-land, .base-army {
+  margin-left: 5%;
+}
+
 #grid, #base-army-table {
-  margin: auto;
   margin-left: 0%;
   margin-top: 2%;
   width: 800px;
@@ -84,20 +82,25 @@ body {
   height: 160px;
 }
 
-#base-army-table > img {
-  height: 80px;
-  width: 80px;
+img {
+  height: 78px;
+  width: 78px;
   right: 0;
   left: 0;
   top: 0;
   bottom: 0;
+  border: 2.5px solid #d5d822;
   position: absolute;
+}
+
+#logo {
+  border: none;
 }
 
 td {
   position: relative;
   text-align: center;
-  min-width: 80px;
+  width: 80px;
   height: 80px;
   border: 1px solid #a78d4359;
 }
@@ -109,44 +112,25 @@ td {
   height: 100%;
 }
 
-.piece-description {
-  text-align:justify;
+.piece-description, .msg, .ready {
   margin: auto;
-  margin-top: 1%;
-  width: 90%;
+  width: 85%;
   height: 40%;
 }
 
-.piece-description-title {
-  width: 50%;
+.msg {
+  height: 30%;
+}
+
+.ready {
+  height: 20%;
 }
 
 .piece-content {
-  padding-top: 5px;
-  padding-left: 10px;
-  margin-top: 7%;
+  margin: 3% 5%;
   width: 90%;
-  height: 84%;
+  height: 70%;
   border: 1px solid #a78d4359;
-}
-
-#pieceTitle {
-  font-size: 30px;
-  font-family: 'Alegreya Sans', sans-serif;
-  margin-left: 120px;
-  color: #a78d43;
-}
-
-.piece > p {
-  font-size: 20px;
-  font-family: 'Alegreya Sans', sans-serif;
-  margin-left: 40px;
-  color: #a78d43;
-}
-
-.noPiece {
-  width: 80%;
-  height: 91%;
 }
 
 .piece {
@@ -156,47 +140,49 @@ td {
   width: 80%;
 }
 
-.msg {
-  margin: auto;
-  margin-top: -4%;
-  width: 90%;
-  height: 30%;
-}
-
-.msg-title {
-  width: 30%;
-}
-
 .msg-content {
   text-align: center;
-  padding-top: 25px;
-  font-size: 25px;
-  margin-top: 4%;
+  padding-top: 7%;
+  margin: 3% 5%;
   width: 90%;
-  height: 40%;
+  height: 30%;
   border: 1px solid #a78d4359;
 }
 
-#msg-content-para {
+#piece-title {
+  text-align: center;
+  font-size: 25px;
+  margin-left: 20%;
+  font-family: 'Alegreya Sans', sans-serif;
   color: #a78d43;
-  text-transform: uppercase;
 }
 
-.ready {
-  margin: auto;
-  margin-top: -10%;
-  width: 80%;
-  height: 10%;
+#piece-desc {
+  text-align: center;
+  font-size: 22px;
+  margin-left: 15%;
+  font-family: 'Alegreya Sans', sans-serif;
+  color: #a78d43;
+}
+
+#msg-content-para {
+  font-size: 22px;
+  color: #a78d43;
 }
 
 #ready {
   font-family: 'Alegreya', serif;
-  font-size: 30px;
+  font-size: 40px;
   text-transform: uppercase;
-  margin-left: 25%;
-  cursor: pointer;
+  margin-left: 30%;
   width: 40%;
-  height: 65%;
-  background-color: #a78d43;
+  height: 40%;
+  background-color: rgb(156, 131, 69);
   border-radius: 18px;
+  border: none;
+  cursor: pointer;
+}
+
+button:focus {
+  outline: 0;
 }

@@ -16,7 +16,7 @@
     <div class="opponent-profile">
       <span class="names">opponent : {{opponent}}</span>
     </div>
-    <div class="game-title">
+    <div class="game-logo">
       <img id="logo" src="img/background/logo.png">
     </div>
     <div class="me">
@@ -24,42 +24,47 @@
     </div>
   </div>
   <div class="container">
-    <div class="red">
-      <div class="table-titles red-para-title">
-        <span class="red-para">red army</span>
-      </div>
-      <div class="red-army">
-        <table id="red-army-table">
-        </table>
-      </div>
-    </div>
-    <div class="battle">
-      <div class="table-titles turn-msg-title">
-        <span id="turn-msg"></span>
-      </div>
-      <div class="battlefield">
-        <table id="battlefield-table">
-        </table>
-      </div>
-    </div>
-    <div class="blue">
-      <div class="table-titles blue-para-title">
-        <span class="blue-para">blue army</span>
-      </div>
-      <div class="blue-army">
-        <table id="blue-army-table">
-        </table>
-      </div>
-    </div>
-    <div class="activity-log">
-      <div class="buttons">
-        <button id="play-again" onclick="window.location.href='/playAgain'" name="button"> Play Again</button>
-        <button id="leave-battle" onclick="sureToLeave()" name="button">Leave Game</button>
-        <div id="leave" class="popup-form">
-          <h4>Are you sure you want to leave the game?</h4>
-          <button type="submit" id="yes" onclick="window.location.href='/leave'">Yes</button>
-          <button type="submit" id="no" onclick="window.location.href='/play'">No</button>
+    <div class="game-container">
+      <div class="red">
+        <div class="table-titles red-army-title">
+          <span class="red-para">opponent army</span>
         </div>
+        <div class="red-army">
+          <table id="red-army-table">
+          </table>
+        </div>
+      </div>
+      <div class="battle">
+        <div class="table-titles turn-msg-title">
+          <span id="turn-msg"></span>
+        </div>
+        <div class="battlefield">
+          <table id="battlefield-table">
+          </table>
+        </div>
+      </div>
+      <div class="blue">
+        <div class="table-titles blue-army-title">
+          <span class="blue-para">my army</span>
+        </div>
+        <div class="blue-army">
+          <table id="blue-army-table">
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="buttons">
+      <button id="play-again" onclick="window.location.href='/playAgain'" name="button"> Play Again</button>
+      <button id="leave-battle" onclick="sureToLeave()" name="button">Leave Game</button>
+    </div>
+  </div>
+
+  <div id="leave" class="overflow-model">
+    <div class="popupContent animateZoom" style="padding:32px">
+      <h4>Are you sure you want to leave the game?</h4>
+      <div class="popup-buttons">
+        <button type="submit" id="yes" onclick="window.location.href='/leave'">Yes</button>
+        <button type="submit" id="no" onclick="hidePopup()">No</button>
       </div>
     </div>
   </div>

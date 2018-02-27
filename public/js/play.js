@@ -1,7 +1,7 @@
-const doXhr = function (url, method, reqListener, data, onFailed) {
+const doXhr = function(url, method, reqListener, data, onFailed) {
   let xhr = new XMLHttpRequest();
   xhr.open(method, url);
-  xhr.onreadystatechange = function () {
+  xhr.onreadystatechange = function() {
     if (this.status == 200 && this.readyState == 4) {
       reqListener.call(this);
     } else {
@@ -23,13 +23,13 @@ const generateCell = (id) => {
   return cell;
 };
 
-const getClassFor = (pieceID)=>{
+const getClassFor = (pieceID) => {
   let pieces = {
     'B': 'bomb',
     'F': 'flag',
     'S': 'spy',
-    'O':'opponent',
-    'X':'lake',
+    'O': 'opponent',
+    'X': 'lake',
     2: 'scout',
     3: 'miner',
     9: 'general',
@@ -56,46 +56,47 @@ const generateRow = (initialID, numberOfCols) => {
   return row;
 };
 
-const highlightMoves = (potentialMoves)=>{
-  potentialMoves.freeMoves.forEach(function(move){
-    let pos =document.getElementById(move);
+const highlightMoves = (potentialMoves) => {
+  potentialMoves.freeMoves.forEach(function(move) {
+    let pos = document.getElementById(move);
     pos.classList.add('free-move');
   });
-  potentialMoves.attackMoves.forEach(function(move){
-    let pos =document.getElementById(move);
+  potentialMoves.attackMoves.forEach(function(move) {
+    let pos = document.getElementById(move);
     pos.classList.add('attacking-move');
   });
 };
 
-const removeHighlight = (moves)=>{
-  if(moves){
+const removeHighlight = (moves) => {
+  if (moves) {
     moves = moves.attackMoves.concat(moves.freeMoves);
-    moves.forEach(function(posID){
+    moves.forEach(function(posID) {
       let move = document.getElementById(posID);
       move.classList.remove('attacking-move');
       move.classList.remove('free-move');
     });
   }
 };
+
 let potentialMoves;
+
 const getLocation = (event) => {
   let target = event.target;
   if (target.tagName == 'IMG') {
     target = target.parentNode;
   }
   let postData = `location=${target.id}`;
-  const reqListener = function () {
-    if(this.responseText){
+  const reqListener = function() {
+    if (this.responseText) {
       removeHighlight(potentialMoves);
       potentialMoves = JSON.parse(this.responseText);
       return highlightMoves(potentialMoves);
     }
-    setTimeout(()=>{
+    setTimeout(() => {
       removeHighlight(potentialMoves);
-    },500);
+    }, 500);
   };
-  const onFail = function () {
-  };
+  const onFail = function() {};
   doXhr('/selectedLoc', 'POST', reqListener, postData, onFail);
 };
 
@@ -121,9 +122,9 @@ const appendImage = (baseCell, id, imgSrcDirectory) => {
   let basePosition = document.getElementById(baseCell.id);
   let classForPieceId = getClassFor(id);
   if (!basePosition.classList.contains('attacking-move')) {
-    basePosition.className='';
+    basePosition.className = '';
   }
-  if(basePosition.classList.contains('attacking-move')){
+  if (basePosition.classList.contains('attacking-move')) {
     basePosition.classList.add('attacking-move');
     return basePosition.classList.add(classForPieceId);
   }
@@ -132,17 +133,17 @@ const appendImage = (baseCell, id, imgSrcDirectory) => {
 
 const updateEmptyCell = (cell) => {
   if (cell.className) {
-    if(cell.classList.contains('free-move')){
+    if (cell.classList.contains('free-move')) {
       cell.className = 'free-move';
       return;
     }
-    cell.className='';
+    cell.className = '';
   }
 };
 
 const showBattlefield = (battlefield, imgSrcDirectory) => {
   let locations = Object.keys(battlefield);
-  locations.forEach(function (location) {
+  locations.forEach(function(location) {
     let cell = document.getElementById(location);
     if (battlefield[location] == "E") {
       return updateEmptyCell(cell);
@@ -151,9 +152,17 @@ const showBattlefield = (battlefield, imgSrcDirectory) => {
   });
 };
 
+const sureToLeave = () => {
+  document.getElementById('leave').style.display = 'block';
+};
+
+const hidePopup = () => {
+  document.getElementById('leave').style.display = 'none';
+};
+
 const announceWinner = (gameData) => {
   let gameOverMsg = gameData.winner;
-  if(!gameData.winner){
+  if (!gameData.winner) {
     gameOverMsg = `GAME DRAW`;
   }
   document.getElementById('leave-battle').style.display = 'none';
@@ -165,19 +174,19 @@ const announceWinner = (gameData) => {
   grid.removeEventListener('click', getLocation);
 };
 
-const getFirstCellId = function (team) {
+const getFirstCellId = function(team) {
   let firstRow = document.querySelector(`#${team}`).childNodes[1];
   return firstRow.childNodes[0].id;
 };
 
-const incrementId = function (id) {
+const incrementId = function(id) {
   let ids = id.split('_');
-  let last = ids.length - 1;
-  +ids[last]++;
+  let last = ids.length - 1; +
+  ids[last]++;
   return ids.join('_');
 };
 
-const updateKilledPiece=(cell,piece,team)=>{
+const updateKilledPiece = (cell, piece, team) => {
   let image = document.createElement("img");
   let src = `img/${team}/${piece}.png`;
   let height = "60";
@@ -186,7 +195,7 @@ const updateKilledPiece=(cell,piece,team)=>{
   cell.appendChild(img);
 };
 
-const showCapturedArmy = function (army, team, cellId) {
+const showCapturedArmy = function(army, team, cellId) {
   army.forEach(piece => {
     let cell = document.getElementById(cellId);
     updateKilledPiece(cell, piece, team);
@@ -199,27 +208,27 @@ const showKilledPieces = (killedPieces) => {
   let capturedBlueArmy = killedPieces['blueArmy'];
   let firstRedCell = getFirstCellId('red-army-table');
   let firstBlueCell = getFirstCellId('blue-army-table');
-  showCapturedArmy(capturedRedArmy,'redArmy',firstRedCell);
-  showCapturedArmy(capturedBlueArmy,'blueArmy',firstBlueCell);
+  showCapturedArmy(capturedRedArmy, 'redArmy', firstRedCell);
+  showCapturedArmy(capturedBlueArmy, 'blueArmy', firstBlueCell);
 };
 
-const initiatePolling = function (imgSrcDirectory) {
+const initiatePolling = function(imgSrcDirectory) {
   let interval;
-  let reqListener = function () {
+  let reqListener = function() {
     let gameData = JSON.parse(this.responseText);
     let status = gameData.status;
     let battlefield = gameData['battlefield'];
     let killedPieces = gameData['killedPieces'];
     let turnBox = document.getElementById('turn-msg');
     turnBox.innerText = `${gameData.turnMsg}`;
-    showBattlefield(battlefield,imgSrcDirectory);
+    showBattlefield(battlefield, imgSrcDirectory);
     showKilledPieces(killedPieces);
     if (status.gameOver) {
       clearInterval(interval);
       announceWinner(status);
     }
   };
-  let callBack = function () {
+  let callBack = function() {
     doXhr('/battlefield', 'GET', reqListener, '', () => {
       return;
     });

@@ -126,11 +126,9 @@ const setImageAttributes = (img, src, id, height, width) => {
   img.height = height;
   img.width = width;
   img.onmouseover = () => {
-    document.querySelector('.noPiece').style.display = "none";
     document.querySelector(`.${className}`).style.display = "block";
   };
   img.onmouseout = () => {
-    document.querySelector('.noPiece').style.display = "block";
     document.querySelector(`.${className}`).style.display = "none";
   };
   return img;

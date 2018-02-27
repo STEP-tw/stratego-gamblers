@@ -1,88 +1,88 @@
-.marshal{
+.marshal {
   cursor: pointer;
   background-size: 60px 60px;
   background-image: url("../img/redArmy/10.png");
 }
 
-.general{
+.general {
   cursor: pointer;
   background-size: 60px 60px;
   background-image: url("../img/redArmy/9.png");
 }
 
-.miner{
+.miner {
   cursor: pointer;
   background-size: 60px 60px;
   background-image: url("../img/redArmy/3.png");
 }
 
-.scout{
+.scout {
   cursor: pointer;
   background-size: 60px 60px;
   background-image: url("../img/redArmy/2.png");
 }
 
-.spy{
+.spy {
   cursor: pointer;
   background-size: 60px 60px;
   background-image: url("../img/redArmy/S.png");
 }
 
-.bomb{
+.bomb {
   cursor: pointer;
   background-size: 60px 60px;
   background-image: url("../img/redArmy/B.png");
 }
 
-.flag{
+.flag {
   cursor: pointer;
   background-size: 60px 60px;
   background-image: url("../img/redArmy/F.png");
 }
 
-.lake{
+.lake {
   cursor: not-allowed;
   background-size: 60px 60px;
   background-image: url("../img/redArmy/X.png");
 }
 
-.opponent{
+.opponent {
   cursor: pointer;
   background-size: 60px 60px;
   background-image: url("../img/redArmy/O.png");
 }
 
-.marshal-O{
+.marshal-O {
   background-size: 60px 60px;
   background-image: url("../img/redArmy/O_10.png");
 }
 
-.general-O{
+.general-O {
   background-size: 60px 60px;
   background-image: url("../img/redArmy/O_9.png");
 }
 
-.miner-O{
+.miner-O {
   background-size: 60px 60px;
   background-image: url("../img/redArmy/O_3.png");
 }
 
-.scout-O{
+.scout-O {
   background-size: 60px 60px;
   background-image: url("../img/redArmy/O_2.png");
 }
 
-.spy-O{
+.spy-O {
   background-size: 60px 60px;
   background-image: url("../img/redArmy/O_S.png");
 }
 
-.bomb-O{
+.bomb-O {
   background-size: 60px 60px;
   background-image: url("../img/redArmy/O_B.png");
 }
 
-.flag-O{
+.flag-O {
   background-size: 60px 60px;
   background-image: url("../img/redArmy/O_F.png");
 }

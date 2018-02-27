@@ -8,7 +8,6 @@
   <script src="js/setup.js" charset="utf-8"></script>
   <script src="js/{{team}}Setup.js" charset="utf-8"></script>
   <link href="https://fonts.googleapis.com/css?family=Alegreya" rel="stylesheet">
-  <!-- <link href="https://fonts.googleapis.com/css?family=Cinzel|Julius+Sans+One" rel="stylesheet"> -->
   <link href="https://fonts.googleapis.com/css?family=Alegreya+Sans" rel="stylesheet">
 </head>
 
@@ -45,44 +44,42 @@
     </div>
     <div class="activity-container">
       <div class="piece-description">
-        <div class="div-titles piece-description-title">
+        <div class="div-titles">
           <span class="piece-description-para">piece description</span>
         </div>
         <div class="piece-content">
-          <div class="noPiece">
-          </div>
           <div class="piece bomb">
-            <p id="pieceTitle">Bomb</p>
-            <p>Bombs cannot move and destroy any attacking pieces, except for the Miner.</p>
+            <p id="piece-title">Bomb</p>
+            <p id="piece-desc">Bombs cannot move and destroy any attacking pieces, except for the Miner.</p>
           </div>
           <div class="piece flag">
-            <p id="pieceTitle">Flag</p>
-            <p>The Flag cannot move and can be captured by all moving pieces.When the Flag is captured the game is won.</p>
+            <p id="piece-title">Flag</p>
+            <p id="piece-desc">The Flag cannot move and can be captured by all moving pieces.When the Flag is captured the game is won.</p>
           </div>
           <div class="piece general">
-            <p id="pieceTitle">General</p>
-            <p>The General defeats all lower ranked pieces., but can be captured by the Marshal.</p>
+            <p id="piece-title">General</p>
+            <p id="piece-desc">The General defeats all lower ranked pieces., but can be captured by the Marshal.</p>
           </div>
           <div class="piece marshal">
-            <p id="pieceTitle">Marshal</p>
-            <p>The Marshal captures all other pieces, but can be defeated by the Spy.</p>
+            <p id="piece-title">Marshal</p>
+            <p id="piece-desc">The Marshal captures all other pieces, but can be defeated by the Spy.</p>
           </div>
           <div class="piece miner">
-            <p id="pieceTitle">Miner</p>
-            <p>The Miner can defuse bombs, but is captured by all higher-ranked pieces.</p>
+            <p id="piece-title">Miner</p>
+            <p id="piece-desc">The Miner can defuse bombs, but is captured by all higher-ranked pieces.</p>
           </div>
           <div class="piece scout">
-            <p id="pieceTitle">Scout</p>
-            <p>The Scout can move any number of vacant squares forward, backword left or right.</p>
+            <p id="piece-title">Scout</p>
+            <p id="piece-desc">The Scout can move any number of vacant squares forward, backword left or right.</p>
           </div>
           <div class="piece spy">
-            <p id="pieceTitle">Spy</p>
-            <p>The Spy can capture the Marshal when attacking, but is captured by all other pieces.</p>
+            <p id="piece-title">Spy</p>
+            <p id="piece-desc">The Spy can capture the Marshal when attacking, but is captured by all other pieces.</p>
           </div>
         </div>
       </div>
       <div class="msg">
-        <div class="div-titles msg-title">
+        <div class="div-titles">
           <span class="msg-para">message</span>
         </div>
         <div class="msg-content">
@@ -98,89 +95,3 @@
 </body>
 
 </html>
-
-
-
-
-
-<!-- <!DOCTYPE html>
-<html>
-
-<head>
-  <meta charset="utf-8">
-  <title>Setup Army</title>
-  <link rel="stylesheet" href="css/setupArmy.css">
-  <script src="js/setup.js" charset="utf-8"></script>
-  <script src="js/{{team}}Setup.js" charset="utf-8"></script>
-  <link href="https://fonts.googleapis.com/css?family=Bellefair" rel="stylesheet">
-</head>
-
-<body oncontextmenu="return false">
-
-  <div class="heading">
-    <span id="title">DEPLOY ARMY ON BATTLEFIELD</span>
-    <div class="playerDetails">
-      PROFILE : {{playerName}}
-    </div>
-  </div>
-  <div class="main">
-    <div class="leftBlock">
-      <div class="battlefieldGrid">
-        <span id="battlefield">
-          BATTLEFIELD
-        </span>
-        <table id="grid" cellspacing="0" cellpadding="0">
-        </table>
-      </div>
-      <div class="armyBaseGrid">
-        <span id="armyBase">
-          ARMY BASE
-        </span>
-        <table id="baseGrid" cellspacing="0" cellpadding="0">
-        </table>
-      </div>
-    </div>
-    <div class="rightBlock">
-      <div id="pieceDescription">
-        <div class="noPiece">
-        </div>
-        <div class="piece bomb">
-          <p id="pieceTitle">Bomb</p>
-          <p>Bombs cannot move and destroy any attacking pieces, except for the Miner.</p>
-        </div>
-        <div class="piece flag">
-          <p id="pieceTitle">Flag</p>
-          <p>The Flag cannot move and can be captured by all moving pieces.When the Flag is captured the game is won.</p>
-        </div>
-        <div class="piece general">
-          <p id="pieceTitle">General</p>
-          <p>The General defeats all lower ranked pieces., but can be captured by the Marshal.</p>
-        </div>
-        <div class="piece marshal">
-          <p id="pieceTitle">Marshal</p>
-          <p>The Marshal captures all other pieces, but can be defeated by the Spy.</p>
-        </div>
-        <div class="piece miner">
-          <p id="pieceTitle">Miner</p>
-          <p>The Miner can defuse bombs, but is captured by all higher-ranked pieces.</p>
-        </div>
-        <div class="piece scout">
-          <p id="pieceTitle">Scout</p>
-          <p>The Scout can move any number of vacant squares forward, backword left or right.</p>
-        </div>
-        <div class="piece spy">
-          <p id="pieceTitle">Spy</p>
-          <p>The Spy can capture the Marshal when attacking, but is captured by all other pieces.</p>
-        </div>
-      </div>
-      <span id="message">MESSAGE</span>
-      <div class="waitMessage">
-        <p id="readyStatus"></p>
-      </div>
-      <button id="ready" type="button" name="button">READY</button>
-    </div>
-  </div>
-
-</body>
-
-</html> -->
