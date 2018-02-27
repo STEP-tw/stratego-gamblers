@@ -11,7 +11,7 @@
   <link rel="stylesheet" href="css/{{team}}Army.css">
 </head>
 
-<body oncontextmenu="return false">
+<body>
   <div class="player-details">
     <div class="opponent-profile">
       <span class="names">opponent : {{opponent}}</span>

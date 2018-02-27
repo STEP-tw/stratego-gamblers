@@ -203,7 +203,7 @@ const showCapturedArmy = function(army, team, cellId) {
   });
 };
 
-const showKilledPieces = (killedPieces,myArmy,oppArmy) => {
+const showKilledPieces = (killedPieces, myArmy, oppArmy) => {
   let troopsLost = killedPieces[myArmy];
   let troopsCaptured = killedPieces[oppArmy];
   let firstRedCell = getFirstCellId('troops-lost');
@@ -212,26 +212,63 @@ const showKilledPieces = (killedPieces,myArmy,oppArmy) => {
   showCapturedArmy(troopsCaptured, oppArmy, firstBlueCell);
 };
 
-let timeStamp=1000;
-const initiatePolling = function(myArmy,oppArmy) {
-  let interval;
+const highlightFreeMoves=(updatedLocs)=>{
+  document.getElementById(updatedLocs[0]).classList.add('start-move');
+  document.getElementById(updatedLocs[1]).classList.add('last-move');
+};
+
+let freeMoves=[];
+
+const deEmphasizeFreeMoves=()=>{
+  if(freeMoves.length>0){
+    document.getElementById(freeMoves[0]).classList.remove('start-move');
+    document.getElementById(freeMoves[1]).classList.remove('last-move');
+  }
+};
+
+
+const updateBattlefield = (gameData,myArmy,oppArmy) => {
+  let status = gameData.status;
+  let battlefield = gameData['battlefield'];
+  let killedPieces = gameData['killedPieces'];
+  console.log(gameData.updatedLocs);
+  let turnBox = document.getElementById('turn-msg');
+  turnBox.innerText = `${gameData.turnMsg}`;
+  showBattlefield(battlefield, myArmy);
+  if(gameData.updatedLocs.length>0){
+    deEmphasizeFreeMoves();
+    freeMoves = gameData.updatedLocs;
+    highlightFreeMoves(freeMoves);
+  }
+  showKilledPieces(killedPieces, myArmy, oppArmy);
+  if (status.gameOver) {
+    clearInterval(interval);
+    announceWinner(status);
+  }
+};
+
+let timeStamp = 1000;
+let interval;
+
+const initiatePolling = function(myArmy, oppArmy) {
   let reqListener = function() {
-    if(!this.responseText){
+    if (!this.responseText) {
       return;
     }
     timeStamp = new Date().getTime();
     let gameData = JSON.parse(this.responseText);
-    let status = gameData.status;
-    let battlefield = gameData['battlefield'];
-    let killedPieces = gameData['killedPieces'];
-    let turnBox = document.getElementById('turn-msg');
-    turnBox.innerText = `${gameData.turnMsg}`;
-    showBattlefield(battlefield, myArmy);
-    showKilledPieces(killedPieces,myArmy,oppArmy);
-    if (status.gameOver) {
-      clearInterval(interval);
-      announceWinner(status);
-    }
+    updateBattlefield(gameData,myArmy,oppArmy);
+    // let status = gameData.status;
+    // let battlefield = gameData['battlefield'];
+    // let killedPieces = gameData['killedPieces'];
+    // let turnBox = document.getElementById('turn-msg');
+    // turnBox.innerText = `${gameData.turnMsg}`;
+    // showBattlefield(battlefield, myArmy);
+    // showKilledPieces(killedPieces, myArmy, oppArmy);
+    // if (status.gameOver) {
+    //   clearInterval(interval);
+    //   announceWinner(status);
+    // }
   };
   let callBack = function() {
     let data = `timeStamp=${timeStamp}`;

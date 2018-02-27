@@ -87,7 +87,7 @@ class Battlefield {
     }
     if(this.isAttackMove(potentialMoves,pieceLoc)){
       this.setRevealPieces(playerId,this.selectedPos,pieceLoc);
-      this.setUpdatedLocations(this.selectedPos,pieceLoc);      
+      this.setUpdatedLocations(this.selectedPos,pieceLoc);
       setTimeout(()=>{
         this.battle(playerId,pieceLoc);
         this.removeRevealPieces();
