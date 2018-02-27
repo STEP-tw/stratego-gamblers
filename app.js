@@ -28,6 +28,16 @@ const haveBothPlayersJoined = function(req, res) {
   res.send(game.haveBothPlayersJoined());
 };
 
+const checkIfAlreadySetup = function(req,res,next){
+  let game = req.app.game;
+  let previousUrl = req.cookies.previousUrl;
+  if(game.areBothPlayerReady()){
+    res.redirect(previousUrl);
+    return;
+  }
+  next();
+};
+
 const setupArmy = function(req, res) {
   let setupTemp = req.app.fs.readFileSync('./templates/setupArmy', 'utf8');
   let game = req.app.game;
@@ -95,6 +105,7 @@ app.use(express.static('public'));
 app.get("/createGame/:name", new CreateGameHandler().getRequestHandler());
 app.post("/joinGame", new JoinGameHandler().getRequestHandler());
 app.post('/setup/player/:playerId', battlefieldHandler.setBattlefieldHandler());
+app.use('/setupArmy',checkIfAlreadySetup);
 app.get('/setupArmy', setupArmy);
 app.get('/isOpponentReady', sendOpponentStatus);
 app.get('/hasOpponentJoined', haveBothPlayersJoined);

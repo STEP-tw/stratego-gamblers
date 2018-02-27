@@ -92,6 +92,20 @@ describe('app', () => {
           .end(done);
       });
     });
+    describe('Use /setupArmy',()=>{
+      it("should return last URL if both players are already setup", done => {
+        let redArmyPos = {'3_2': '2', '3_9': 'B'};
+        let blueArmyPos = {'9_2': '2', '9_9': 'B'};
+        app.game.setBattlefieldFor(0, redArmyPos);
+        app.game.setBattlefieldFor(1, blueArmyPos);
+        request(app)
+          .get("/setupArmy")
+          .set('cookie', ['sessionId=123456','previousUrl=/play'])
+          .expect(302)
+          .expect('location','/play')
+          .end(done);
+      });
+    });
   });
   describe("GET /createGame/:name", () => {
     it("responds with sharing key", done => {
