@@ -198,12 +198,15 @@ class Game {
   }
   updateTimeStamp(){
     this.timeStamp = new Date().getTime();
-    if(this.battlefield.hasRevealedPiece()){
+    if(this.isBattleHappening()){
       this.timeStamp+=2000;
     }
   }
   isBoardUpdated(timeStamp){
     return this.timeStamp > timeStamp || timeStamp==1000;
+  }
+  isBattleHappening(){
+    return this.battlefield.hasRevealedPiece();
   }
 }
 module.exports =Game;

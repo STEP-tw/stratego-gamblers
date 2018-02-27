@@ -344,6 +344,15 @@ describe('app', () => {
         .expect(/invalid request/)
         .end(done);
     });
+    it('should return revealed army after game is over',(done)=>{
+      app.game.battlefield.revealPieces = {'2_2':'4'};
+      request(app)
+        .post('/selectedLoc')      
+        .set('cookie','sessionId=12345')
+        .expect(200)
+        .expect('')
+        .end(done);
+    });
   });
   describe('GET /battlefield', () => {
     beforeEach(() => {

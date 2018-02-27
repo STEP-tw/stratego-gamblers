@@ -31,6 +31,10 @@ class BattlefieldHandler {
   }
   updateBattlefield(req,res){
     let game = req.app.game;
+    if(game.isBattleHappening()){
+      res.end();
+      return;
+    }
     let sessionId = req.cookies.sessionId;
     let location = req.body.location;
     let playerId = game.getPlayerIndexBy(sessionId);

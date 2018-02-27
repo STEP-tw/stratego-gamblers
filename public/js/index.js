@@ -68,3 +68,7 @@ const getGameStatus=function () {
 const startGame = function() {
   reqGameId();
 };
+
+const showHelp = function(){
+  window.location.href='/help.html';
+};
