@@ -9,6 +9,7 @@ let createRequest = function(callback, url, reqBody=null, method = "GET") {
 const hideElements = function() {
   document.getElementById('redbutton').style.visibility = 'hidden';
   document.getElementById('bluebutton').style.visibility = 'hidden';
+  document.getElementById('helpButton').style.visibility = 'hidden';
 };
 
 const getCreateForm = function() {
@@ -26,7 +27,7 @@ const getJoinForm = function() {
 const showGameId = function() {
   let sharingKey = this.responseText;
   if(!sharingKey){
-    let message = `No special characters allowed (Ex. @,$,&) <br> 
+    let message = `No special characters allowed (Ex. @,$,&) <br>
     Start with a character only (Ex. sayima, Sayima, Sayima123)`;
     document.getElementById('errorMsg').innerHTML = message;
     getCreateForm();

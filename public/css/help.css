@@ -1,0 +1,62 @@
+body {
+  font-family: 'Alegreya Sans', sans-serif;
+  color: #EDC35A;
+  background-image: url("../img/background/background.png");
+}
+
+.topic {
+  width: 80%;
+  margin-left: 10%;
+  text-align: left;
+  margin-top: 0px;
+}
+
+#logo {
+  margin-left: 37%;
+  height: 25%;
+  width: 25%;
+}
+
+#preparations, #outline, #moving, #attacking {
+  font-size: 35px;
+}
+
+#help-logo {
+  margin-left: 10%;
+  width: 80%;
+  height: 100%;
+}
+
+#top {
+  font-size: 30px;
+  margin-top: 3%;
+  float: right;
+  margin-right: 7%;
+  height: 50px;
+  border-radius: 7px;
+  border-color: #8d6e1c;
+  background-color: rgb(156, 131, 69);
+}
+
+#bottomButton {
+  font-size: 30px;
+  margin-left: 45%;
+  height: 50px;
+  border-radius: 7px;
+  border-color: #8d6e1c;
+  background-color: rgb(156, 131, 69);
+}
+
+.subtitle{
+  font-size: 50px;
+  margin-bottom: 0px;
+}
+
+.helpImg {
+  margin-left: 180px;
+}
+
+li,p {
+  margin-left: 10px;
+  font-size: 30px;
+}

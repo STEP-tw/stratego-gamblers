@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Help</title>
+    <link rel="stylesheet" href="css/help.css">
+    <script type="text/javascript" src="/js/index.js" charset="utf-8"></script>
+    <link href="https://fonts.googleapis.com/css?family=Alegreya+Sans" rel="stylesheet">
+  </head>
+  <body>
+      <img id="logo" src="../img/background/logo.png">
+      <button id="top" onclick="window.location.href='/'">Play Game</button>
+      <img id="help-logo" src="../img/help/frontImg.jpg">
+    <div class="topic introduction">
+      <p class="subtitle">Introduction</p>
+      <ul><li>
+      On a lonely battlefield you meet your opponent for a battle that will decide the fate of your army.</li>
+      <li>You are the comander-in-chief of a real army - your army to be precise. You deploy your troops. You alone devise how to wield your strike power, without neglecting your defences.</li>
+      <li>Planning an attack from the right, but is your left plank not vulnerable as a result? Is your flag properly protected?</li>
+      <li>And above all, do you know what your opponent is upto?</li>
+      <li>You must plan the battle, advance your men, attack and capture the enemy flag.</li>
+    </div>
+
+    <div class="topic pieces">
+      <p class="subtitle">Pieces</p>
+      <p>Both players need the following 10 pieces:</p>
+      <div class="piece">
+        <p>
+            <img src="../img/redArmy/F.png">
+            <img src="../img/redArmy/B.png">
+            <img src="../img/redArmy/10.png">
+            <img src="../img/redArmy/9.png">
+            <img src="../img/redArmy/3.png">
+            <img src="../img/redArmy/2.png">
+            <img src="../img/redArmy/S.png">
+        </p>
+        <ul>
+          <li>Flag x 1</li>
+          <li>Bomb x 2</li>
+          <li>Marshal x 1</li>
+          <li>General x 1</li>
+          <li>Miner x 2</li>
+          <li>Scout x 2</li>
+          <li>Spy x 1</li>
+        </ul>
+      </div>
+    </div>
+    <div class="topic">
+      <p class="subtitle">Description</p>
+      <div class="piece-strength">
+        <p>Your Marshal is your strongest man but vulnerable if not protected from the spy. Your Scouts are weak but mobile and effective in discovering your enemies manpower. You need the skills of Miners to disarm enemy Bombs, so don't lose them all early in the battle. Plant your Bombs skillfully. They will protect the most precious piece on the gameboard, your Flag.</p>
+      </div>
+    </div>
+    <div class="topic">
+      <p class="subtitle">General Rules</p>
+      <p id="preparations">Preparations : </p>
+      <p>
+        <ul>
+          <li>Drag and drop your playing pieces from army base onto the battlefield.</li>
+          <li>While hovering you can see your playing piece description on the right hand side of the screen.</li>
+          <li>Remember! A piece with higher rank always kills a piece with a lower rank but not in case of spy attacking marshal. So, plan your strategy accordingly.</li>
+          <li>And finally, don't forget to click on Ready!</li>
+        </ul>
+      </p>
+      <p id="outline">Outline of the game : </p>
+      <p>
+        <ul>
+          <li>Both players have an army of 10 pieces, including a Flag.</li>
+          <li>You must try to capture opponent's flag while protecting your own.</li>
+          <li>The pieces have a specific sequence: the higher the number, the higher the rank</li>
+          <li>If a piece with a higher rank takes a piece with a lower rank the higher rank wins and the piece with the lower rank is taken off the board.</li>
+          <li>The flag can be conquered by any of the enemy's pieces that can be moved</li>
+        </ul>
+      </p>
+      <p id="moving">Moving : </p>
+      <p>
+        <img src="../img/help/moveAPiece.png" alt="moveAPiece" class="helpImg">
+        <img src="../img/help/cannotJump.png" alt="cannotJump" class="helpImg">
+        <img src="../img/help/notJumpLake.png" alt="notJumpLake" class="helpImg">
+      </p>
+      <p>
+        <ul>
+          <li>You can move a piece one place to the left or right, or one place forwards or backwards.</li>
+          <li>The pieces cannot jump over each other and they may not be moved diagonally.</li>
+          <li>The playing pieces cannot move over or jump over the two lakes in the center of the battlefield.</li>
+          <li>'Scout' is an exception to the above rules of movement. It can jump over an unlimited number of empty fields but not over lake or any of the other moving pieces. They can also not move diagonally. Scouts are the only pieces that can launch an attack from a sizeable distance.</li>
+        </ul>
+      </p>
+      <p id="attacking">Attacking : </p>
+      <p>
+        <img src="../img/help/troopsLost.png" alt="troopsLost" class="helpImg">
+        <img src="../img/help/troopsCaptured.png" alt="troopsCaptured" class="helpImg">
+      </p>
+      <ul>
+        <li>If one on your pieces is immediately in front of, next to or behind of your opponent's piece, you can attack that piece.</li>
+        <li>The piece with the lower rank is removed from the board, placed on troops captured field and the attacking piece takes the place of the defending piece.</li>
+        <li>If the defending piece wins it stays where it is and the attacking piece is removed form the battlefield and placed on troops lost field.</li>
+        <li>A piece with higher rank always wins whether while attacking or defending.</li>
+        <li>The only exception to the above rule is 'Spy' attacking 'Marshal'. Here, Spy is of rank 1 and Marshal of rank 10 but she is the only one who can kill Marshal, but only while attacking. If Marshal attacks the Spy, Spy will get killed.</li>
+        <li>Flag and Bomb cannot be moved.</li>
+        <li>Any piece that attacks on a bomb is killed except Miner(Rank 3).
+        Only Miner can diffuse the Bomb and the Bomb is removed from the battlefield.</li>
+      </ul>
+    </div>
+    <button id="bottomButton" type="button" onclick="window.location.href='/'">Play Game</button>
+  </body>
+</html>

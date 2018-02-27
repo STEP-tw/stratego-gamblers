@@ -21,6 +21,7 @@
 
     <button id="redbutton" onclick="getCreateForm()">Create Game</button>
     <button id="bluebutton" onclick="getJoinForm()">Join Game</button>
+    <button id="helpButton" onclick="window.location.href='/help'">Help</button>
 
     <div id="create" class="popup-form">
         <input pattern="[A-Za-z]+" type="text" placeholder="Enter your name" id="name" name="name" required>
@@ -32,11 +33,16 @@
       <form action="joinGame" method="POST">
         <input pattern="[A-Za-z]+" type="text" id="name" placeholder="Enter Your Name" name="name" required>
         <input type="text" id="gameid" placeholder="Enter sharing key" name="gameid" required>
-        <p id ='errorMsg'></p>        
+        <p id ='errorMsg'></p>
         <input type="submit" value="Start Battle" id="redbutton">
       </form>
     </div>
 
+  </div>
+
+  <div id="help">
+    <object id="help-popup" type="" data="help.html">
+    </object>
   </div>
 
 </body>
