@@ -138,7 +138,13 @@ td {
   height: 80%;
   cursor: pointer;
   border-radius: 18px;
+  border: none;
   background-color: rgb(156, 131, 69);
+}
+
+#leave-battle:hover, #play-again:hover {
+  background-color: #BC8B2D;
+  box-shadow: 0px 0px 10px 0px #BC8B2D;
 }
 
 #play-again {

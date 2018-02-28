@@ -183,6 +183,12 @@ td {
   cursor: pointer;
 }
 
+
+#ready:hover {
+  background-color: #BC8B2D;
+  box-shadow: 0px 0px 10px 0px #BC8B2D;
+}
+
 button:focus {
   outline: 0;
 }

@@ -23,6 +23,10 @@ body {
   cursor: pointer;
 }
 
+#redbutton:hover, #bluebutton:hover, #helpButton:hover {
+  color: #BC8B2D;
+}
+
 #create-red-button {
   font-size: 250%;
   font-family: 'Alegreya', serif;
@@ -37,6 +41,11 @@ body {
 
 button:focus {
   outline: 0;
+}
+
+#create-red-button:hover {
+  background-color: #BC8B2D;
+  box-shadow: 0px 0px 10px 0px #BC8B2D;
 }
 
 .column-middle .alert {

@@ -30,14 +30,19 @@ body {
 #top {
   font-family: 'Alegreya', serif;
   font-size: 30px;
-  margin-top: 1%;
-  margin-left: 1.5%;
+  margin-top: 0.5%;
+  margin-left: 1%;
   float: left;
-  height: 40px;
+  height: 45px;
   border-radius: 7px;
   border-color: #8d6e1c;
   background-color: rgb(156, 131, 69);
   cursor: pointer;
+}
+
+#top:hover, #bottomButton:hover {
+  background-color: #BC8B2D;
+  box-shadow: 0px 0px 10px 0px #BC8B2D;
 }
 
 #bottomButton {
