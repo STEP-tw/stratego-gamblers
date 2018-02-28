@@ -23,6 +23,18 @@ body {
   cursor: pointer;
 }
 
+#create-red-button {
+  font-size: 250%;
+  font-family: 'Alegreya', serif;
+  width: 50%;
+  margin: 1% 24%;
+  color: #210402;
+  background: #EDC35A;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+}
+
 button:focus {
   outline: 0;
 }
@@ -41,8 +53,11 @@ button:focus {
 .popup-form {
   animation: animatezoom 0.6s;
   width: 40%;
-  margin: -13% 0% 0% 30%;
+  padding: 1% 0% 2% 0;
+  margin: -17% 0% 0% 29%;
   overflow: auto;
+  border: 0.5px solid #EDC35A;
+  border-radius: 5px;
 }
 
 @keyframes animatezoom {
@@ -64,9 +79,9 @@ button:focus {
 
 input[type=text] {
   font-size: larger;
-  width: 100%;
+  width: 70%;
   padding: 3% 10%;
-  margin: 2% 0%;
+  margin: 2% 14.5%;
   border: none;
   border-radius: 12px;
   box-sizing: border-box;
@@ -101,4 +116,15 @@ input[type=text] {
 #help-popup {
   width: 100%;
   height: 100%;
+}
+
+.close {
+  width: auto;
+  height: auto;
+  margin-left: 95%;
+}
+
+#close-popup-button {
+  font-size: 25px;
+  color: #EDC35A;
 }

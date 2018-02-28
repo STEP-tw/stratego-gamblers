@@ -28,6 +28,7 @@ body {
 }
 
 #top {
+  font-family: 'Alegreya', serif;
   font-size: 30px;
   margin-top: 1%;
   margin-left: 1.5%;
@@ -36,15 +37,18 @@ body {
   border-radius: 7px;
   border-color: #8d6e1c;
   background-color: rgb(156, 131, 69);
+  cursor: pointer;
 }
 
 #bottomButton {
+  font-family: 'Alegreya', serif;
   font-size: 30px;
   margin-left: 45%;
   height: 50px;
   border-radius: 7px;
   border-color: #8d6e1c;
   background-color: rgb(156, 131, 69);
+  cursor: pointer;
 }
 
 .subtitle{
@@ -59,4 +63,8 @@ body {
 li,p {
   margin-left: 10px;
   font-size: 30px;
+}
+
+button:focus {
+  outline: 0;
 }

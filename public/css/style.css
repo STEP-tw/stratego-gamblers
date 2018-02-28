@@ -80,6 +80,11 @@ body {
   color: rgb(156, 131, 69);
 }
 
+.turn-msg-title {
+  margin-top: -4.5%;
+  padding: 2%;
+}
+
 #troops-captured, #troops-lost, #battlefield-table {
   margin: auto;
   margin-top: 5%;
@@ -207,17 +212,35 @@ button:focus {
 }
 
 .free-move {
-  background-color: hsla(118, 75%, 61%, 0.429);
+  opacity: 0.6;
+  background: rgba(210, 255, 82, 1);
+  background: -moz-radial-gradient(center, ellipse cover, rgba(210, 255, 82, 1) 0%, rgba(153, 235, 76, 1) 91%, rgba(153, 235, 76, 1) 100%);
+  background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%, rgba(210, 255, 82, 1)), color-stop(91%, rgba(153, 235, 76, 1)), color-stop(100%, rgba(153, 235, 76, 1)));
+  background: -webkit-radial-gradient(center, ellipse cover, rgba(210, 255, 82, 1) 0%, rgba(153, 235, 76, 1) 91%, rgba(153, 235, 76, 1) 100%);
+  background: -o-radial-gradient(center, ellipse cover, rgba(210, 255, 82, 1) 0%, rgba(153, 235, 76, 1) 91%, rgba(153, 235, 76, 1) 100%);
+  background: -ms-radial-gradient(center, ellipse cover, rgba(210, 255, 82, 1) 0%, rgba(153, 235, 76, 1) 91%, rgba(153, 235, 76, 1) 100%);
+  background: radial-gradient(ellipse at center, rgba(210, 255, 82, 1) 0%, rgba(153, 235, 76, 1) 91%, rgba(153, 235, 76, 1) 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#d2ff52', endColorstr='#99eb4c', GradientType=1);
 }
-.start-move{
-  /* border: solid 3px rgb(196, 153, 44); */
-  -webkit-box-shadow: inset 0px 0px 12px 1px rgba(247,142,13,1);
--moz-box-shadow: inset 0px 0px 12px 1px rgba(247,142,13,1);
-box-shadow: inset 0px 0px 12px 1px rgba(247,142,13,1);
+
+.start-move {
+  -webkit-box-shadow: inset 0px 0px 12px 1px rgba(247, 142, 13, 1);
+  -moz-box-shadow: inset 0px 0px 12px 1px rgba(247, 142, 13, 1);
+  box-shadow: inset 0px 0px 12px 1px rgba(247, 142, 13, 1);
 }
-.last-move{
-  /* border: solid 3px #ecd330; */
-  -webkit-box-shadow: 0px 0px 12px 1px rgba(247,142,13,1);
--moz-box-shadow: 0px 0px 12px 1px rgba(247,142,13,1);
-box-shadow: 0px 0px 12px 1px rgba(247,142,13,1);
+
+.last-move {
+  -webkit-box-shadow: 0px 0px 12px 1px rgba(247, 142, 13, 1);
+  -moz-box-shadow: 0px 0px 12px 1px rgba(247, 142, 13, 1);
+  box-shadow: 0px 0px 12px 1px rgba(247, 142, 13, 1);
+}
+
+.your-turn {
+  padding: 1%;
+  border: 1px solid rgb(156, 131, 69);
+}
+
+.win-lose {
+  background-color: rgb(156, 131, 69);
+  color: #210402;
 }

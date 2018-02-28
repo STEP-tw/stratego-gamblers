@@ -169,6 +169,7 @@ const announceWinner = (gameData) => {
   let playAgain = document.querySelector('#play-again');
   playAgain.style.display = 'block';
   let winMsgBox = document.querySelector("#turn-msg");
+  winMsgBox.classList.add('win-lose');
   winMsgBox.innerText = gameOverMsg;
   let grid = document.querySelector("#battlefield-table");
   grid.removeEventListener('click', getLocation);
@@ -225,11 +226,14 @@ const getVertPath = function(initial, last) {
   return path;
 };
 
-let getCoordinate = function(id){
-  return {xCor:+id[0],yCor:+id[2]};
+let getCoordinate = function(id) {
+  return {
+    xCor: +id[0],
+    yCor: +id[2]
+  };
 };
 
-let isSameRow = function(first,second) {
+let isSameRow = function(first, second) {
   return first.xCor == second.xCor;
 };
 
@@ -238,7 +242,7 @@ const getPath = function(positions) {
   let last = positions[1];
   let prev = getCoordinate(initial);
   let current = getCoordinate(last);
-  if (isSameRow(prev,current)) {
+  if (isSameRow(prev, current)) {
     return getHoriPath(prev, current);
   }
   return getVertPath(prev, current);
@@ -261,38 +265,43 @@ const showKilledPieces = (killedPieces, myArmy, oppArmy) => {
   showCapturedArmy(troopsCaptured, oppArmy, firstBlueCell);
 };
 
-const highlightFreeMoves=(updatedLocs)=>{
+const highlightFreeMoves = (updatedLocs) => {
   let startPos = updatedLocs[0];
   document.getElementById(startPos).classList.add('start-move');
   let path = getPath(updatedLocs);
-  path.forEach((pos)=>{
+  path.forEach((pos) => {
     document.getElementById(pos).classList.add('start-move');
   });
 };
 
-let freeMoves=[];
+let freeMoves = [];
 
-const deEmphasizeFreeMoves=()=>{
-  if(freeMoves.length>0){
+const deEmphasizeFreeMoves = () => {
+  if (freeMoves.length > 0) {
     let startPos = freeMoves[0];
     document.getElementById(startPos).classList.remove('start-move');
     let path = getPath(freeMoves);
 
-    path.forEach((pos)=>{
+    path.forEach((pos) => {
       document.getElementById(pos).classList.remove('last-move');
     });
   }
 };
 
 
-const updateBattlefield = (gameData,myArmy,oppArmy) => {
+const updateBattlefield = (gameData, myArmy, oppArmy) => {
   let status = gameData.status;
   let battlefield = gameData['battlefield'];
   let killedPieces = gameData['killedPieces'];
   let turnBox = document.getElementById('turn-msg');
+  if(gameData.turnMsg.includes('You')){
+    turnBox.classList.add('your-turn');
+  }else {
+    turnBox.classList.remove('your-turn');
+  }
   turnBox.innerText = `${gameData.turnMsg}`;
   showBattlefield(battlefield, myArmy);
-  if(gameData.updatedLocs.length>0){
+  if (gameData.updatedLocs.length > 0) {
     deEmphasizeFreeMoves();
     freeMoves = gameData.updatedLocs;
     highlightFreeMoves(freeMoves);
@@ -314,18 +323,7 @@ const initiatePolling = function(myArmy, oppArmy) {
     }
     timeStamp = new Date().getTime();
     let gameData = JSON.parse(this.responseText);
-    updateBattlefield(gameData,myArmy,oppArmy);
-    // let status = gameData.status;
-    // let battlefield = gameData['battlefield'];
-    // let killedPieces = gameData['killedPieces'];
-    // let turnBox = document.getElementById('turn-msg');
-    // turnBox.innerText = `${gameData.turnMsg}`;
-    // showBattlefield(battlefield, myArmy);
-    // showKilledPieces(killedPieces, myArmy, oppArmy);
-    // if (status.gameOver) {
-    //   clearInterval(interval);
-    //   announceWinner(status);
-    // }
+    updateBattlefield(gameData, myArmy, oppArmy);
   };
   let callBack = function() {
     let data = `timeStamp=${timeStamp}`;

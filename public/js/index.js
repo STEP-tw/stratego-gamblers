@@ -72,3 +72,10 @@ const startGame = function() {
 const showHelp = function(){
   window.location.href='/help.html';
 };
+
+const closePopup = function(){
+  document.getElementById('create').style.display = 'none';
+  document.getElementById('redbutton').style.visibility = 'visible';
+  document.getElementById('bluebutton').style.visibility = 'visible';
+  document.getElementById('helpButton').style.visibility = 'visible';
+};

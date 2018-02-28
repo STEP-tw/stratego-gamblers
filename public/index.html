@@ -11,6 +11,7 @@
   <link href="https://fonts.googleapis.com/css?family=Alegreya" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=UnifrakturCook:700" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Bellefair" rel="stylesheet">
+  <script defer src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
 </head>
 
 <body oncontextmenu="return false">
@@ -24,17 +25,23 @@
     <button id="helpButton" onclick="showHelp()">Help</button>
 
     <div id="create" class="popup-form">
+      <div class="close">
+        <a id="close-popup-button" href="index.html"><i class="fa fa-times"></i></a>
+      </div>
         <input pattern="[A-Za-z]+" type="text" placeholder="Enter your name" id="name" name="name" required>
         <p id ='errorMsg'></p>
-        <input type="submit" value="Create Game" id="redbutton" onclick="startGame()">
+        <button type="submit" value="Create Game" id="create-red-button" onclick="startGame()">Create Game</button>
     </div>
 
     <div id="join" class="popup-form">
+      <div class="close">
+        <a id="close-popup-button" href="index.html"><i class="fa fa-times"></i></a>
+      </div>
       <form action="joinGame" method="POST">
         <input pattern="[A-Za-z]+" type="text" id="name" placeholder="Enter Your Name" name="name" required>
         <input type="text" id="gameid" placeholder="Enter sharing key" name="gameid" required>
         <p id ='errorMsg'></p>
-        <input type="submit" value="Start Battle" id="redbutton">
+        <button type="submit" value="Start Battle" id="create-red-button">Start Battle</button>
       </form>
     </div>
 

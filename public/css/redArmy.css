@@ -43,7 +43,8 @@
 .lake {
   cursor: not-allowed;
   background-size: 60px 60px;
-  background-image: url("../img/redArmy/X.png");
+  background-color: rgb(34, 160, 160);
+  border: none;
 }
 
 .opponent {
