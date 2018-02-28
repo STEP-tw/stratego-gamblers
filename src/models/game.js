@@ -192,6 +192,7 @@ class Game {
     this.gameOver = 'quit';
     let winningPlayer = this.players.find(player=>player.name==winner);
     this.winner = winningPlayer.getId();
+    this.updateTimeStamp();
   }
   getRevealPiece(playerId){
     return this.battlefield.getRevealPiece(playerId);
