@@ -12,7 +12,7 @@ body {
 }
 
 #logo {
-  margin-left: 37%;
+  margin-left: 33%;
   height: 25%;
   width: 25%;
 }
@@ -29,10 +29,10 @@ body {
 
 #top {
   font-size: 30px;
-  margin-top: 3%;
-  float: right;
-  margin-right: 7%;
-  height: 50px;
+  margin-top: 1%;
+  margin-left: 1.5%;
+  float: left;
+  height: 40px;
   border-radius: 7px;
   border-color: #8d6e1c;
   background-color: rgb(156, 131, 69);
