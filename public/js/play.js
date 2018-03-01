@@ -160,25 +160,21 @@ const hidePopup = () => {
   document.getElementById('leave').style.display = 'none';
 };
 
-const announceWinner = (gameData) => {
-  let gameOverMsg = gameData.winner;
-  if (!gameData.winner) {
-    gameOverMsg = `GAME DRAW`;
-  }
+const rematch = () => {
   document.getElementById('leave-battle').style.display = 'none';
   let playAgain = document.querySelector('#play-again');
   playAgain.style.display = 'block';
   document.getElementById("turn-msg").style.display = 'none';
-  if(gameOverMsg.match(/win/)){
-    document.getElementById('victory').style.display = 'block';
-  } else if(gameOverMsg.match(/surrendered/)){
-    document.getElementById('victory').style.display = 'block';
-    document.getElementById('surrender').style.display = 'block';
-  } else {
-    document.getElementById('defeat').style.display = 'block';
-  }
   let grid = document.querySelector("#battlefield-table");
   grid.removeEventListener('click', getLocation);
+}
+
+const announceWinner = (gameData) => {
+  if(!gameData.winner){
+    document.querySelector('.draw').style.display = 'block';
+  }else{
+    document.querySelector(`.${gameData.winner}`).style.display = 'block';
+  }
 };
 
 const getFirstCellId = function(team) {
@@ -282,12 +278,11 @@ const highlightFreeMoves = (updatedLocs) => {
 
 let freeMoves = [];
 
-const deEmphasizeFreeMoves = () => {
+const deemphasizeFreeMoves = () => {
   if (freeMoves.length > 0) {
     let startPos = freeMoves[0];
     document.getElementById(startPos).classList.remove('start-move');
     let path = getPath(freeMoves);
-
     path.forEach((pos) => {
       document.getElementById(pos).classList.remove('last-move');
     });
@@ -308,7 +303,7 @@ const updateBattlefield = (gameData, myArmy, oppArmy) => {
   turnBox.innerText = `${gameData.turnMsg}`;
   showBattlefield(battlefield, myArmy);
   if (gameData.updatedLocs.length > 0) {
-    deEmphasizeFreeMoves();
+    deemphasizeFreeMoves();
     freeMoves = gameData.updatedLocs;
     highlightFreeMoves(freeMoves);
   }
@@ -316,6 +311,7 @@ const updateBattlefield = (gameData, myArmy, oppArmy) => {
   if (status.gameOver) {
     clearInterval(interval);
     announceWinner(status);
+    rematch();
   }
 };
 

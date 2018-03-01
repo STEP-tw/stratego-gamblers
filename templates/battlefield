@@ -69,9 +69,20 @@
     </div>
   </div>
 
-  <div class="victory-defeat">
-    <img id="victory" src="img/end/victory.png" alt="">
-    <img id="defeat" src="img/end/defeat.png" alt="">
+  <div class="win">
+    <img id="win" src="img/end/victory.png" alt="">
+  </div>
+  <div class="lose">
+    <img id="lose" src="img/end/defeat.png" alt="">
+  </div>
+  <div class="draw">
+    <img id="tie" src="img/end/draw.png" alt="">
+    <div id="draw">
+      game drawn!
+    </div>
+  </div>
+  <div class="surrender">
+    <img id="win" src="img/end/victory.png" alt="">
     <div id="surrender">
       opponent has surrendered!
     </div>

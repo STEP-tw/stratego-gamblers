@@ -246,15 +246,22 @@ button:focus {
   border: 1px solid rgb(156, 131, 69);
 }
 
-#victory, #defeat {
+#win, #lose {
   margin: auto;
   margin-left: 24%;
   width: 700px;
   height: 250px;
-  display: none;
 }
 
-#surrender {
+#tie {
+  margin: auto;
+  margin-left: 33%;
+  margin-top: 18%;
+  width: 400px;
+  height: 250px;
+}
+
+#surrender, #draw {
   position: relative;
   margin: auto;
   margin-top: -16.1%;
@@ -265,5 +272,12 @@ button:focus {
   width: 34%;
   background-color: rgb(156, 131, 69);
   padding: 1%;
+}
+
+#draw {
+  margin-top: -18%;
+}
+
+.win, .lose, .draw, .surrender {
   display: none;
 }

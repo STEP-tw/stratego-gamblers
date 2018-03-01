@@ -40,7 +40,7 @@ exports.getStatusMsg = (playerId, status) => {
   let statusMsg = {
     true: 'win',
     false: 'lose',
-    quit: 'opponent has surrendered'
+    quit: 'surrender'
   };
   if (status.winner) {
     status.winner = statusMsg[playerId == status.winner];
