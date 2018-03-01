@@ -2,6 +2,7 @@ const Battlefield = require('./battlefield.js');
 const Player = require('./player.js');
 const Pieces = require('./pieces.js');
 const getSymbolForPos=require('../lib/lib.js').getSymbolForPos;
+const getAllPieces = require('../lib/validate.js').getAllPieces;
 class Game {
   constructor(id) {
     this.id = id;
@@ -208,6 +209,9 @@ class Game {
   }
   isBattleHappening(){
     return this.battlefield.hasRevealedPiece();
+  }
+  getArmy(){
+    return getAllPieces(this.gameType);
   }
 }
 module.exports =Game;

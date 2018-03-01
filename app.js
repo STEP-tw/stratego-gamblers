@@ -94,7 +94,8 @@ const validatePlayerStatus = function (req, res, next) {
 };
 
 const sendArmyDetails = function(req,res){
-  res.json({'F':1,'B':2,'2':2,'3':2,'S':1,'10':1,'9':1});
+  let game = req.app.game;
+  res.json(game.getArmy());
 };
 
 const unauthorizedUrls = ['/play', '/setupArmy', '/battlefield',

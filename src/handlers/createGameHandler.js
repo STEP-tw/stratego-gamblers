@@ -9,6 +9,7 @@ class CreateGameHandler {
     game.loadPieces();
     let playerName = req.params.name;
     let type = req.params.type;
+    game.gameType = `${type}Game`;
     if(!this.isValidName(playerName)){
       res.end();
       return;

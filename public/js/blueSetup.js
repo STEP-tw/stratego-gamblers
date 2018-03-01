@@ -7,15 +7,12 @@ const ready = () => {
   let reqListener = () => {
     removeDraggable();
     getOpponentStatus();
+    removeEventListener(ready, "click", "ready");
   };
   const onFail = () => {
-    return;
-  };
-  if (notDeployedFullArmy(postData)) {
     return notifyPlayer("setup full army");
-  }
+  };
   doXhr('/setup/player/1', 'POST', reqListener, postData, onFail);
-  removeEventListener(ready, "click", "ready");
 };
 
 const generateBaseGrid = function(){

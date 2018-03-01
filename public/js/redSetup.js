@@ -1,5 +1,5 @@
 const drawBaseGrid = (row) => {
-  drawGrid("base-army-table", row, 10, 120, -10);
+  drawGrid("base-army-table", row, 10, 120, 10);
 };
 
 const ready = () => {
@@ -7,15 +7,12 @@ const ready = () => {
   let reqListener = () => {
     removeDraggable();
     getOpponentStatus();
+    removeEventListener(ready, "click", "ready");
   };
   const onFail = () => {
-    return;
-  };
-  if (notDeployedFullArmy(postData)) {
     return notifyPlayer("setup full army");
-  }
+  };
   doXhr('/setup/player/0', 'POST', reqListener, postData, onFail);
-  removeEventListener(ready, "click", "ready");
 };
 
 const isQuickMode = function (army) {

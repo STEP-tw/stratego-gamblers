@@ -47,10 +47,13 @@ const applyDragProperty = (img) => {
 };
 
 const removeDraggable = () => {
-  let playingPieceId = getPlayingPieceId();
-  playingPieceId.forEach(id => {
-    let element = document.getElementById(id);
-    element.removeEventListener('dragstart', drag, false);
+  let battleField = document.getElementById("grid");
+  grid.childNodes.forEach(function(row) {
+    row.childNodes.forEach(function(cell) {
+      if(cell.hasChildNodes()){
+        cell.childNodes[0].removeEventListener('dragstart', drag, false);
+      }
+    });
   });
 };
 
@@ -90,22 +93,6 @@ const drawGrid = (containerId, numOfRows, numOfCols, initialID, idGrowth) => {
   }
 };
 
-const getPlayingPiece = () => {
-  let playingPieces = [
-    "F.png", "S.png", "2.png", "2.png", "3.png", "3.png",
-    "10.png", "9.png",
-    "B.png", "B.png",
-  ];
-  return playingPieces;
-};
-
-const getPlayingPieceId = () => {
-  let playingPieceId = [
-    "F", "S", "2", "2", "3", "3", "10", "9", "B", "B"
-  ];
-  return playingPieceId;
-};
-
 const getNameForRank = (rank) => {
   let pieces = {
     'B': 'bomb',
@@ -134,10 +121,22 @@ const setImageAttributes = (img, src, id, height, width) => {
   return img;
 };
 
+const incrementId = function(id) {
+  let next = +(id.split('_').join(''))+1;
+  return next.toString().split('').join('_');
+};
+
+const getBaseGridIds = function(initialId,armyLength) {
+  let ids = [initialId];
+  for (let index = 1; index < armyLength; index++) {
+    initialId = incrementId(initialId);
+    ids.push(initialId);
+  }
+  return ids;
+};
+
 const appendImage = (baseCell, id, imgSrcDirectory) => {
-  // let playingPieces = getPlayingPiece();
-  // let playingPieceId = getPlayingPieceId();
-  let basePosition = document.getElementById(baseCell.id);
+  let basePosition = document.getElementById(baseCell);
   let image = document.createElement("img");
   let src = `img/${imgSrcDirectory}/${id}.png`;
   let height = "77";
@@ -148,10 +147,10 @@ const appendImage = (baseCell, id, imgSrcDirectory) => {
 };
 
 const appendPiecesToBase = (army,imgSrcDirectory) => {
-  console.log(army);
   let baseGrid = document.getElementById("base-army-table");
-  let firstRow = baseGrid.childNodes[1].childNodes;
-  firstRow.forEach((element, index) => {
+  let initialId = baseGrid.childNodes[1].childNodes[0].id;
+  let baseCells = getBaseGridIds(initialId,army.length);
+  baseCells.forEach((element, index) => {
     appendImage(element, army[index], imgSrcDirectory);
   });
 };
@@ -178,11 +177,6 @@ const fetchBattleField = () => {
     });
   });
   return fetchedDetails;
-};
-
-const notDeployedFullArmy = (pieceAndLocation) => {
-  let numberOfPlayingPiece = pieceAndLocation.split('&').length - 1;
-  return numberOfPlayingPiece != 10;
 };
 
 const addEventListener = (listner, type, elementID) => {

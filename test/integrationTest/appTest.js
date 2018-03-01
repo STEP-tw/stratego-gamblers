@@ -218,7 +218,8 @@ describe('app', () => {
     it('should provide army strength details', (done) => {
       request(app)
         .get('/army')
-        .expect({'F':1,'B':2,'2':2,'3':2,'S':1,'10':1,'9':1})
+        .set('cookie','gameId=1')
+        .expect({'2': 2, '3': 2, '9': 1, '10': 1, 'F': 1, 'B': 2, 'S': 1} )
         .expect(200)
         .end(done);
     });

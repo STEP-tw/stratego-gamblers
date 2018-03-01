@@ -183,10 +183,8 @@ const getFirstCellId = function(team) {
 };
 
 const incrementId = function(id) {
-  let ids = id.split('_');
-  let last = ids.length - 1; +
-  ids[last]++;
-  return ids.join('_');
+  let next = +(id.split('_').join(''))+1;
+  return next.toString().split('').join('_');
 };
 
 const updateKilledPiece = (cell, piece, team) => {
@@ -288,7 +286,6 @@ const deemphasizeFreeMoves = () => {
     });
   }
 };
-
 
 const updateBattlefield = (gameData, myArmy, oppArmy) => {
   let status = gameData.status;
