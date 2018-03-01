@@ -1,6 +1,6 @@
 {
   "name": "stratego-gamblers",
-  "version": "0.0.1",
+  "version1": "1.0.0",
   "description": "a strategy game",
   "main": "server.js",
   "scripts": {
