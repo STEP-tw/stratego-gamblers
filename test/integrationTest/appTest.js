@@ -110,7 +110,7 @@ describe('app', () => {
   describe("GET /createGame/:name", () => {
     it("responds with sharing key", done => {
       request(app)
-        .get("/createGame/ravi")
+        .get("/createGame/ravi/quick")
         .expect(200)
         .expect(/[\d]/)
         .expect("Content-Type", "text/html; charset=utf-8")
@@ -118,7 +118,7 @@ describe('app', () => {
     });
     it("should not allow to create game with invalid name", done =>{
       request(app)
-        .get("/createGame/rav i")
+        .get("/createGame/rav i/quick")
         .expect(200)
         .end(done);
     });
@@ -310,7 +310,7 @@ describe('app', () => {
       app.game.gameOver = true;
       request(app)
         .post('/battlefield')
-        .send('timeStamp=1000')        
+        .send('timeStamp=1000')
         .set('cookie','sessionId=12345')
         .expect(200)
         .expect(/"3_2":"2","3_9":"B","9_2":"O_2","9_9":"O_B"/)
@@ -347,7 +347,7 @@ describe('app', () => {
     it('should return revealed army after game is over',(done)=>{
       app.game.battlefield.revealPieces = {'2_2':'4'};
       request(app)
-        .post('/selectedLoc')      
+        .post('/selectedLoc')
         .set('cookie','sessionId=12345')
         .expect(200)
         .expect('')

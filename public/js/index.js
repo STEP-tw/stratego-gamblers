@@ -48,9 +48,10 @@ const showGameId = function() {
 
 const reqGameId = function() {
   let name = document.getElementsByName("name")[0].value;
+  let mode = document.querySelector('input[name="gameMode"]:checked').value;
   name = name.trim();
   if (name) {
-    createRequest(showGameId, `/createGame/${name}`, null, "GET");
+    createRequest(showGameId, `/createGame/${name}/${mode}`, null, "GET");
     setInterval(getGameStatus,1000);
   }
 };

@@ -137,3 +137,14 @@ input[type=text] {
   font-size: 25px;
   color: #EDC35A;
 }
+
+input[type=radio] {
+font-size: larger;
+  margin-left: 10%;
+  height: 25px;
+  width: 30px;
+}
+.mode{
+  font-size: 30px;
+  color: #EDC35A;
+}
