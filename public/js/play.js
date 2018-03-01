@@ -168,9 +168,15 @@ const announceWinner = (gameData) => {
   document.getElementById('leave-battle').style.display = 'none';
   let playAgain = document.querySelector('#play-again');
   playAgain.style.display = 'block';
-  let winMsgBox = document.querySelector("#turn-msg");
-  winMsgBox.classList.add('win-lose');
-  winMsgBox.innerText = gameOverMsg;
+  document.getElementById("turn-msg").style.display = 'none';
+  if(gameOverMsg.match(/win/)){
+    document.getElementById('victory').style.display = 'block';
+  } else if(gameOverMsg.match(/surrendered/)){
+    document.getElementById('victory').style.display = 'block';
+    document.getElementById('surrender').style.display = 'block';
+  } else {
+    document.getElementById('defeat').style.display = 'block';
+  }
   let grid = document.querySelector("#battlefield-table");
   grid.removeEventListener('click', getLocation);
 };

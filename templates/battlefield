@@ -68,6 +68,14 @@
       </div>
     </div>
   </div>
+
+  <div class="victory-defeat">
+    <img id="victory" src="img/end/victory.png" alt="">
+    <img id="defeat" src="img/end/defeat.png" alt="">
+    <div id="surrender">
+      opponent has surrendered!
+    </div>
+  </div>
 </body>
 
 </html>

@@ -246,7 +246,24 @@ button:focus {
   border: 1px solid rgb(156, 131, 69);
 }
 
-.win-lose {
-  background-color: rgb(156, 131, 69);
+#victory, #defeat {
+  margin: auto;
+  margin-left: 24%;
+  width: 700px;
+  height: 250px;
+  display: none;
+}
+
+#surrender {
+  position: relative;
+  margin: auto;
+  margin-top: -16.1%;
+  margin-left: 27%;
+  text-align: center;
+  font-size: 35px;
   color: #210402;
+  width: 34%;
+  background-color: rgb(156, 131, 69);
+  padding: 1%;
+  display: none;
 }
