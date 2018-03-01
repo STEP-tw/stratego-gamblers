@@ -18,6 +18,9 @@ class Game {
   addGameType(type){
     this.gameType = `${type}Game`;
   }
+  getGameType(){
+    return this.gameType;
+  }
   getId() {
     return this.id;
   }

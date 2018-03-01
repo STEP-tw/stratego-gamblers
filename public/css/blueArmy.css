@@ -46,6 +46,36 @@
   background-color: rgb(34, 160, 160);
   border: none;
 }
+.sergeant {
+  cursor: pointer;
+  background-size: 60px 60px;
+  background-image: url("../img/blueArmy/4.png");
+}
+
+.lieutenant {
+  cursor: pointer;
+  background-size: 60px 60px;
+  background-image: url("../img/blueArmy/5.png");
+}
+
+.captain {
+  cursor: pointer;
+  background-size: 60px 60px;
+  background-image: url("../img/blueArmy/6.png");
+}
+
+.major {
+  cursor: pointer;
+  background-size: 60px 60px;
+  background-image: url("../img/blueArmy/7.png");
+}
+
+.colonel {
+  cursor: pointer;
+  background-size: 60px 60px;
+  background-image: url("../img/blueArmy/8.png");
+}
+
 
 .opponent{
   cursor: pointer;
@@ -86,6 +116,31 @@
 .flag-O{
   background-size: 60px 60px;
   background-image: url("../img/blueArmy/O_F.png");
+}
+
+.sergeant-O {
+  background-size: 60px 60px;
+  background-image: url("../img/blueArmy/O_4.png");
+}
+
+.lieutenant-O {
+  background-size: 60px 60px;
+  background-image: url("../img/blueArmy/O_5.png");
+}
+
+.captain-O {
+  background-size: 60px 60px;
+  background-image: url("../img/blueArmy/O_6.png");
+}
+
+.major-O {
+  background-size: 60px 60px;
+  background-image: url("../img/blueArmy/O_7.png");
+}
+
+.colonel-O {
+  background-size: 60px 60px;
+  background-image: url("../img/blueArmy/O_8.png");
 }
 
 .attacking-move {

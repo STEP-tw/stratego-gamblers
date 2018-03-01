@@ -1,4 +1,4 @@
-const validator = require('../lib/validate.js');
+const isValidData = require('../lib/validate.js').isValidData;
 const getStatusMsg = require('../lib/lib.js').getStatusMsg;
 
 class BattlefieldHandler {
@@ -9,7 +9,8 @@ class BattlefieldHandler {
     let game = req.app.game;
     let playerId = req.params.playerId;
     let placedPos = req.body;
-    if (validator.isValidData(playerId, placedPos)) {
+    let gameType = game.getGameType();
+    if (isValidData(playerId, placedPos,gameType)) {
       game.setBattlefieldFor(playerId, placedPos);
       res.end();
       return;

@@ -1,7 +1,7 @@
 const getFrequency = require('./lib.js').getFrequency;
 const isEquivalent=require('./lib.js').isEquivalent;
 
-const isValidData = function(playerId,placedPos,gameType='quickGame'){
+const isValidData = function(playerId,placedPos,gameType){
   let placedPieces = getPlacedPieces(placedPos);
   return isValidPlayerId(playerId) &&
     hasAllPlayingPiece(gameType,placedPos) &&

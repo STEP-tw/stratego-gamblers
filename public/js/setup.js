@@ -112,12 +112,12 @@ const setImageAttributes = (img, src, id, height, width) => {
   img.id = id;
   img.height = height;
   img.width = width;
-  img.onmouseover = () => {
-    document.querySelector(`.${className}`).style.display = "block";
-  };
-  img.onmouseout = () => {
-    document.querySelector(`.${className}`).style.display = "none";
-  };
+  // img.onmouseover = () => {
+  //   document.querySelector(`.${className}`).style.display = "block";
+  // };
+  // img.onmouseout = () => {
+  //   document.querySelector(`.${className}`).style.display = "none";
+  // };
   return img;
 };
 

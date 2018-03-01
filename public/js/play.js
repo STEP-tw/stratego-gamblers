@@ -32,6 +32,11 @@ const getClassFor = (pieceID) => {
     'X': 'lake',
     2: 'scout',
     3: 'miner',
+    '4':'sergeant',
+    '5':'lieutenant',
+    '6':'captain',
+    '7':'major',
+    '8':'colonel',
     9: 'general',
     10: 'marshal',
     'O_B': 'bomb-O',
@@ -39,6 +44,11 @@ const getClassFor = (pieceID) => {
     'O_S': 'spy-O',
     'O_2': 'scout-O',
     'O_3': 'miner-O',
+    'O_4':'sergeant-O',
+    'O_5':'lieutenant-O',
+    'O_6':'captain-O',
+    'O_7':'major-O',
+    'O_8':'colonel-O',
     'O_9': 'general-O',
     'O_10': 'marshal-O'
   };
@@ -251,6 +261,9 @@ const getPath = function(positions) {
 const showCapturedArmy = function(army, team, cellId) {
   army.forEach(piece => {
     let cell = document.getElementById(cellId);
+    if(!cell){
+      return;
+    }
     updateKilledPiece(cell, piece, team);
     cellId = incrementId(cellId);
   });
@@ -297,8 +310,10 @@ const updateBattlefield = (gameData, myArmy, oppArmy) => {
   }else {
     turnBox.classList.remove('your-turn');
   }
+  
   turnBox.innerText = `${gameData.turnMsg}`;
   showBattlefield(battlefield, myArmy);
+  
   if (gameData.updatedLocs.length > 0) {
     deemphasizeFreeMoves();
     freeMoves = gameData.updatedLocs;
@@ -306,8 +321,8 @@ const updateBattlefield = (gameData, myArmy, oppArmy) => {
   }
   showKilledPieces(killedPieces, myArmy, oppArmy);
   if (status.gameOver) {
-    clearInterval(interval);
     announceWinner(status);
+    clearInterval(interval);
     rematch();
   }
 };

@@ -47,6 +47,44 @@
   border: none;
 }
 
+/* 
+'O_4':'sergeant-O',
+    'O_5':'lieutenant-O',
+    'O_6':'captain-O',
+    'O_7':'major-O',
+    'O_8':'colonel-O', */
+.sergeant {
+  cursor: pointer;
+  background-size: 60px 60px;
+  background-image: url("../img/redArmy/4.png");
+}
+
+.lieutenant {
+  cursor: pointer;
+  background-size: 60px 60px;
+  background-image: url("../img/redArmy/5.png");
+}
+
+.captain {
+  cursor: pointer;
+  background-size: 60px 60px;
+  background-image: url("../img/redArmy/6.png");
+}
+
+.major {
+  cursor: pointer;
+  background-size: 60px 60px;
+  background-image: url("../img/redArmy/7.png");
+}
+
+.colonel {
+  cursor: pointer;
+  background-size: 60px 60px;
+  background-image: url("../img/redArmy/8.png");
+}
+
+
+
 .opponent {
   cursor: pointer;
   background-size: 60px 60px;
@@ -86,6 +124,31 @@
 .flag-O {
   background-size: 60px 60px;
   background-image: url("../img/redArmy/O_F.png");
+}
+
+.sergeant-O {
+  background-size: 60px 60px;
+  background-image: url("../img/redArmy/O_4.png");
+}
+
+.lieutenant-O {
+  background-size: 60px 60px;
+  background-image: url("../img/redArmy/O_5.png");
+}
+
+.captain-O {
+  background-size: 60px 60px;
+  background-image: url("../img/redArmy/O_6.png");
+}
+
+.major-O {
+  background-size: 60px 60px;
+  background-image: url("../img/redArmy/O_7.png");
+}
+
+.colonel-O {
+  background-size: 60px 60px;
+  background-image: url("../img/redArmy/O_8.png");
 }
 
 .attacking-move {
