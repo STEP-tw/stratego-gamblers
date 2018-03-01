@@ -1,5 +1,5 @@
-const drawBaseGrid = () => {
-  drawGrid("base-army-table", 2, 10, 120, -10);
+const drawBaseGrid = (row) => {
+  drawGrid("base-army-table", row, 10, 120, -10);
 };
 
 const ready = () => {
@@ -18,9 +18,24 @@ const ready = () => {
   removeEventListener(ready, "click", "ready");
 };
 
+const isQuickMode = function (army) {
+  return army.length==10;
+};
+
+const generateBaseGrid = function(){
+  let armyDetails = JSON.parse(this.responseText);
+  let army = getPiecesList(armyDetails);
+  let rows = army.length/10;
+  drawBaseGrid(rows);
+  appendPiecesToBase(army,"redArmy");
+};
+
+const getArmy = () => {
+  doXhr('/army','GET',generateBaseGrid,'',()=>console.log('failed'));
+};
+
 window.onload = () => {
   drawGrid("grid", 4, 10, 30, -10);
-  drawBaseGrid();
-  appendPiecesToBase("redArmy");
+  getArmy();
   addEventListener(ready, "click", "ready");
 };

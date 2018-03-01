@@ -93,6 +93,10 @@ const validatePlayerStatus = function (req, res, next) {
   }
 };
 
+const sendArmyDetails = function(req,res){
+  res.json({'F':1,'B':2,'2':2,'3':2,'S':1,'10':1,'9':1});
+};
+
 const unauthorizedUrls = ['/play', '/setupArmy', '/battlefield',
   'isOpponentReady', '/setup/player/:playerId',
   '/selectedLoc'
@@ -119,4 +123,5 @@ app.post('/battlefield', battlefieldHandler.getBattlefieldHandler());
 app.post('/selectedLoc', battlefieldHandler.updateBattlefieldHandler());
 app.get('/playAgain', new ExitHandler().restartGameHandler());
 app.get('/leave', new ExitHandler().quitGameHandler());
+app.get('/army',sendArmyDetails);
 module.exports = app;

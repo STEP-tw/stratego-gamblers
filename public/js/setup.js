@@ -2,7 +2,7 @@ const doXhr = function(url, method, reqListener, data, onFailed) {
   let xhr = new XMLHttpRequest();
   xhr.open(method, url);
   xhr.onreadystatechange = function() {
-    if (this.status == 200) {
+    if (this.status == 200 && this.readyState==4) {
       reqListener.call(this);
     } else {
       onFailed();
@@ -17,13 +17,14 @@ const doXhr = function(url, method, reqListener, data, onFailed) {
 const getElement = (id) => document.querySelector(id);
 
 const drag = (event) => {
-  event.dataTransfer.setData("imgId", event.target.id);
+  event.dataTransfer.setData("parent", event.target.parentNode.id);
 };
 
 const drop = (event) => {
   event.preventDefault();
-  let data = event.dataTransfer.getData("imgId");
-  let imgTodrop = document.getElementById(data);
+  let parentId = event.dataTransfer.getData("parent");
+  let parent = document.getElementById(parentId);
+  let imgTodrop = parent.childNodes[0];
   let target = event.target;
   if (target.tagName == "IMG") {
     let parent = target.parentNode;
@@ -100,7 +101,7 @@ const getPlayingPiece = () => {
 
 const getPlayingPieceId = () => {
   let playingPieceId = [
-    "F", "S", "2", "2a", "3", "3a", "10", "9", "B", "Ba"
+    "F", "S", "2", "2", "3", "3", "10", "9", "B", "B"
   ];
   return playingPieceId;
 };
@@ -115,7 +116,6 @@ const getNameForRank = (rank) => {
     9: 'general',
     10: 'marshal'
   };
-  rank = extractPieceID(rank);
   return pieces[rank];
 };
 
@@ -134,13 +134,12 @@ const setImageAttributes = (img, src, id, height, width) => {
   return img;
 };
 
-const appendImage = (baseCell, index, imgSrcDirectory) => {
-  let playingPieces = getPlayingPiece();
-  let playingPieceId = getPlayingPieceId();
+const appendImage = (baseCell, id, imgSrcDirectory) => {
+  // let playingPieces = getPlayingPiece();
+  // let playingPieceId = getPlayingPieceId();
   let basePosition = document.getElementById(baseCell.id);
   let image = document.createElement("img");
-  let src = `img/${imgSrcDirectory}/${playingPieces[index]}`;
-  let id = playingPieceId[index];
+  let src = `img/${imgSrcDirectory}/${id}.png`;
   let height = "77";
   let width = "77";
   let img = setImageAttributes(image, src, id, height, width);
@@ -148,11 +147,12 @@ const appendImage = (baseCell, index, imgSrcDirectory) => {
   basePosition.appendChild(img);
 };
 
-const appendPiecesToBase = (imgSrcDirectory) => {
+const appendPiecesToBase = (army,imgSrcDirectory) => {
+  console.log(army);
   let baseGrid = document.getElementById("base-army-table");
   let firstRow = baseGrid.childNodes[1].childNodes;
   firstRow.forEach((element, index) => {
-    appendImage(element, index, imgSrcDirectory);
+    appendImage(element, army[index], imgSrcDirectory);
   });
 };
 
@@ -160,16 +160,12 @@ const notifyPlayer = (message) => {
   document.getElementById("msg-content-para").innerText = message;
 };
 
-const extractPieceID = (id) => {
-  return id == '10' ? id : id[0];
-};
-
 const fetchCellId = (cell) => {
   if (!cell.hasChildNodes()) {
     return "";
   }
   let piece = cell.childNodes[0];
-  let pieceID = extractPieceID(piece.id);
+  let pieceID = piece.id;
   return `${cell.id}=${pieceID}&`;
 };
 
@@ -219,4 +215,13 @@ const getOpponentStatus = function() {
     doXhr('/isOpponentReady', 'GET', reqListener, '', onFail);
   };
   let interval = setInterval(callBack, 1000);
+};
+
+const getPiecesList = function(piecesWithQty){
+  let army = [];
+  for (let rank in piecesWithQty) {
+    let quantity = piecesWithQty[rank];
+    army = army.concat(new Array(quantity).fill(rank));
+  }
+  return army;
 };
