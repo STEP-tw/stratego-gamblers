@@ -4,12 +4,17 @@ const Sessions = require("../../src/models/sessions.js");
 const app = require("../../app.js");
 app.sessions = new Sessions(()=>1234);
 const Game = require("../../src/models/game");
+const GamesHandler = require('../../src/handlers/gamesHandler.js');
+
 describe('app', () => {
   beforeEach(() => {
     redArmyPos = ['3_2=2','3_9=B','2_3=2','2_6=B','1_1=S',
       '1_4=9','1_6=3','1_8=3','0_0=F','0_1=10'].join('&');
     blueArmyPos = ['9_2=2','9_9=B','8_3=2','8_6=B','7_1=S',
       '7_4=9','7_6=3','7_8=3','6_0=F','6_1=10'].join('&');
+    let game = new Game(1);
+    app.gamesHandler.createNewGame(1,game);
+    app.game = app.gamesHandler.getGame(1);
   });
   describe("GET /index.html", () => {
     it("responds with home page", done => {
@@ -22,95 +27,11 @@ describe('app', () => {
         .end(done);
     });
   });
-  describe("POST /setup/player/0", () => {
-    beforeEach(
-      () =>{
-        app.game = new Game();
-        app.game.addPlayer("player1", 12345, 'red');
-        app.game.addPlayer("player2", 123456, 'blue');
-      });
-    it("should return status with missing piece", done => {
-      request(app)
-        .post("/setup/player/0")
-        .send("0_0=4")
-        .expect(206)
-        .expect(/pieces or location missing!/)
-        .end(done);
-    });
-    it("should not set army for wrong number of pieces", done => {
-      let armyPos = ['3_2=2','3_9=B','2_3=2','2_6=B','1_1=S',
-        '1_4=9','1_6=3','1_8=3','0_0=F','0_1=10','0_6=10'].join('&');
-      request(app)
-        .post('/setup/player/0')
-        .send(armyPos)
-        .expect(206)
-        .expect(/pieces or location missing!/)
-        .end(done);
-    });
-    it("should set army for given player and return status with OK", done => {
-      request(app)
-        .post("/setup/player/0")
-        .send(redArmyPos)
-        .expect(200)
-        .end(done);
-    });
-  });
-  describe('POST /setup/player/1', () => {
-    it("should set army for another player and responds with OK", done => {
-      request(app)
-        .post("/setup/player/1")
-        .send(blueArmyPos)
-        .expect(200)
-        .end(done);
-    });
-  });
-  describe("SetupPage", () => {
-    beforeEach(() => {
-      app.game = new Game();
-      app.game.addPlayer("player1",12345,'red');
-      app.game.addPlayer("player2",123456,'blue');
-    });
-    describe("GET /setupArmy", () => {
-      it("should render setup page for player1", done => {
-        request(app)
-          .get("/setupArmy")
-          .set('cookie', 'sessionId=12345')
-          .expect(200)
-          .expect(/redSetup.js/)
-          .expect(/player1/)
-          .end(done);
-      });
-    });
-    describe("GET /setupArmy", () => {
-      it("should render setup page for player2", done => {
-        request(app)
-          .get("/setupArmy")
-          .set('cookie', 'sessionId=123456')
-          .expect(200)
-          .expect(/blueSetup.js/)
-          .expect(/player2/)
-          .end(done);
-      });
-    });
-    describe('Use /setupArmy',()=>{
-      it("should return last URL if both players are already setup", done => {
-        let redArmyPos = {'3_2': '2', '3_9': 'B'};
-        let blueArmyPos = {'9_2': '2', '9_9': 'B'};
-        app.game.setBattlefieldFor(0, redArmyPos);
-        app.game.setBattlefieldFor(1, blueArmyPos);
-        request(app)
-          .get("/setupArmy")
-          .set('cookie', ['sessionId=123456','previousUrl=/play'])
-          .expect(302)
-          .expect('location','/play')
-          .end(done);
-      });
-    });
-  });
   describe("GET /createGame/:name", () => {
     it("responds with sharing key", done => {
       request(app)
         .get("/createGame/ravi/quick")
+        .set('cookie','gameId=1')
         .expect(200)
         .expect(/[\d]/)
         .expect("Content-Type", "text/html; charset=utf-8")
@@ -119,6 +40,7 @@ describe('app', () => {
     it("should not allow to create game with invalid name", done =>{
       request(app)
         .get("/createGame/rav i/quick")
+        .set('cookie','gameId=1')        
         .expect(200)
         .end(done);
     });
@@ -127,6 +49,7 @@ describe('app', () => {
     it("returns true if opponent is ready", done => {
       request(app)
         .get('/hasOpponentJoined')
+        .set('cookie','gameId=1')        
         .expect(200)
         .expect("false")
         .end(done);
@@ -134,16 +57,17 @@ describe('app', () => {
   });
   describe("POST /joinGame", () => {
     it("redirect joining player to home if game is not created ", done => {
-      app.game = undefined;
       request(app)
         .post("/joinGame")
-        .send("name=ankur&gameid=1")
+        .send("name=ankur&gameid=10")
         .expect(302)
         .expect("Location","/")
         .end(done);
     });
     beforeEach(() => {
-      app.game = new Game(1);
+      let game = new Game(1);
+      app.gamesHandler.createNewGame(1,game);
+      app.game = app.gamesHandler.getGame(1);
       app.game.addPlayer("player1");
     });
     it("redirect valid joining player to battlefield", done => {
@@ -181,23 +105,20 @@ describe('app', () => {
     });
   });
   describe('GET /hasOpponentJoined', () => {
-    beforeEach(
-      () => {
-        app.game = new Game(1);
-        app.game.addPlayer("player1");
-      }
-    );
     it("returns false if opponent is not ready", done => {
       request(app)
         .get('/hasOpponentJoined')
+        .set('cookie','gameId=1')
         .expect(200)
         .expect("false")
         .end(done);
     });
     it("returns true if opponent is ready", done => {
+      app.game.addPlayer("player1");      
       app.game.addPlayer("player2");
       request(app)
         .get('/hasOpponentJoined')
+        .set('cookie','gameId=1')        
         .expect(200)
         .expect("true")
         .end(done);
@@ -205,7 +126,9 @@ describe('app', () => {
   });
   describe('GET /play', () => {
     beforeEach(() => {
-      app.game = new Game(1);
+      let game = new Game(1);
+      app.gamesHandler.createNewGame(1,game);
+      app.game = app.gamesHandler.getGame(1);
       app.game.addPlayer("player1", 12345, 'red');
       app.game.addPlayer("player2", 123456, 'blue');
     });
@@ -216,7 +139,7 @@ describe('app', () => {
       app.game.setBattlefieldFor(1, blueArmyPos);
       request(app)
         .get('/play')
-        .set('cookie','sessionId=12345')
+        .set('cookie',['sessionId=12345','gameId=1'])
         .expect(200)
         .expect(/battlefield/)
         .end(done);
@@ -224,7 +147,7 @@ describe('app', () => {
     it('should redirect to /setupArmy if both army not deployed', (done) => {
       request(app)
         .get('/play')
-        .set('cookie', 'sessionId=12345')
+        .set('cookie', ['sessionId=12345','gameId=1'])
         .expect(302)
         .expect('Location','/setupArmy')
         .end(done);
@@ -232,13 +155,13 @@ describe('app', () => {
   });
   describe('GET /isOpponentReady', () => {
     beforeEach(() => {
-      app.game = new Game(1);
       app.game.addPlayer("player1");
       app.game.addPlayer("player2");
     });
     it('should redirect with 202 when any of player is not ready', (done) => {
       request(app)
         .get('/isOpponentReady')
+        .set('cookie','gameId=1')
         .expect(202)
         .expect(/Waiting for opponent to be ready/)
         .end(done);
@@ -248,128 +171,13 @@ describe('app', () => {
       app.game.setBattlefieldFor(0, redArmyPos);
       request(app)
         .get('/isOpponentReady')
+        .set('cookie','gameId=1')        
         .expect(302)
         .expect('Location','/play')
         .end(done);
     });
   });
-  describe('GET /battlefield', () => {
-    beforeEach(() => {
-      app.game = new Game(1);
-      app.game.loadPieces();
-      app.game.addPlayer("player1",12345,'red');
-      app.game.addPlayer("player2",123456,'blue');
-      let redArmyPos = {'3_2':'2','3_9':'B'};
-      let blueArmyPos = {'9_2':'2','9_9':'B'};
-      app.game.setBattlefieldFor(0,redArmyPos);
-      app.game.setBattlefieldFor(1, blueArmyPos);
-      app.game.players[0].kill('2');
-    });
-    it('should respond with battlefield of given player', (done) => {
-      request(app)
-        .post('/battlefield')
-        .send('timeStamp=1000')
-        .set('cookie','sessionId=12345')
-        .expect(200)
-        .expect(/"3_2":"2","3_9":"B","9_2":"O","9_9":"O"/)
-        .end(done);
-    });
-    it('should respond with winning message if game ends', (done) => {
-      app.game.gameOver = true;
-      app.game.winner = 123456;
-      request(app)
-        .post('/battlefield')
-        .send('timeStamp=1000')
-        .set('cookie','sessionId=12345')
-        .expect(200)
-        .expect(/you lost the game/)
-        .end(done);
-    });
-    it('should respond with winning message if game ends', (done) => {
-      app.game.gameOver = 'quit';
-      app.game.winner = 123456;
-      request(app)
-        .post('/battlefield')
-        .send('timeStamp=1000')
-        .set('cookie','sessionId=12345')
-        .expect(200)
-        .expect(/opponent has surrendered/)
-        .end(done);
-    });
-    it('should respond nothing if board is not updated', (done) => {
-      app.game.timeStamp = 5000;
-      request(app)
-        .post('/battlefield')
-        .send('timeStamp=7000')
-        .set('cookie','sessionId=12345')
-        .expect(200)
-        .expect((res)=>assert.isObject(res.body))
-        .end(done);
-    });
-    it('should return revealed army after game is over',(done)=>{
-      app.game.gameOver = true;
-      request(app)
-        .post('/battlefield')
-        .send('timeStamp=1000')
-        .set('cookie','sessionId=12345')
-        .expect(200)
-        .expect(/"3_2":"2","3_9":"B","9_2":"O_2","9_9":"O_B"/)
-        .end(done);
-    });
-  });
-  describe('#updateBattlefield',()=>{
-    beforeEach(() => {
-      app.game = new Game(1);
-      app.game.addPlayer("player1",12345,'red');
-      app.game.addPlayer("player2",123456,'blue');
-      let redArmyPos = {'0_0':'3','0_1':'B'};
-      let blueArmyPos = {'9_2':'3','9_9':'B'};
-      app.game.setBattlefieldFor(0,redArmyPos);
-      app.game.setBattlefieldFor(1, blueArmyPos);
-    });
-    it('should response potential moves with game status',(done)=>{
-      request(app)
-        .post('/selectedLoc')
-        .set('cookie','sessionId=12345')
-        .send('location=0_0')
-        .expect(200)
-        .end(done);
-    });
-    it('should response with 406 for in valid player ',(done)=>{
-      request(app)
-        .post('/selectedLoc')
-        .set('cookie','sessionId=123456')
-        .send('location=3_2')
-        .expect(406)
-        .expect(/invalid request/)
-        .end(done);
-    });
-    it('should return revealed army after game is over',(done)=>{
-      app.game.battlefield.revealPieces = {'2_2':'4'};
-      request(app)
-        .post('/selectedLoc')
-        .set('cookie','sessionId=12345')
-        .expect(200)
-        .expect('')
-        .end(done);
-    });
-  });
-  describe('GET /battlefield', () => {
-    beforeEach(() => {
-      app.game=undefined;
-    });
-    it('should redirect to / if there is no game', (done) => {
-      request(app)
-        .get('/battlefield')
-        .expect(302)
-        .expect('Location','/')
-        .end(done);
-    });
-  });
   describe('restart game GET /playAgain', () => {
-    beforeEach(() => {
-      app.game = new Game();
-    });
     it('clear cookies and redirect to / if game is over', (done) => {
       request(app)
         .get('/playAgain')
@@ -390,22 +198,18 @@ describe('app', () => {
     });
   });
   describe("GET /leave", () => {
+    beforeEach(()=>{
+      let game = new Game(1);
+      app.gamesHandler.createNewGame(1,game);
+      app.game = app.gamesHandler.getGame(1);
+      app.game.addPlayer("player1", 12345, 'red');
+      app.game.addPlayer("player2", 123456, 'blue');
+    });
     it('should redirect player to landing page', (done) => {
-      app.game = new Game(1);
-      app.game.loadPieces();
-      app.game.addPlayer("player1",12345,'red');
-      app.game.addPlayer("player2",123456,'blue');
-      let redArmyPos = {'3_2':'2','3_9':'B'};
-      let blueArmyPos = {'9_2':'2','9_9':'B'};
-      app.game.setBattlefieldFor(0,redArmyPos);
-      app.game.setBattlefieldFor(1, blueArmyPos);
-      app.game.players[0].kill('2');
-
       request(app)
         .get('/leave')
-        .set('cookie', 'gameStatus=true')
-        .set('cookie','sessionId=12345')
-        .expect('Location','/')
+        .set('cookie',['gameStatus=true','sessionId=12345','gameId=1'])
+        .expect('location','/')
         .expect(302)
         .end(done);
     });

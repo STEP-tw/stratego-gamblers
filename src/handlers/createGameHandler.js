@@ -4,8 +4,8 @@ class CreateGameHandler {
   constructor() {
   }
   execute(req, res) {
-    let id = randomIdGenerator();
-    let game = new Game(id);
+    let gameId = randomIdGenerator();
+    let game = new Game(gameId);
     game.loadPieces();
     let playerName = req.params.name;
     let type = req.params.type;
@@ -16,9 +16,10 @@ class CreateGameHandler {
     }
     let playerId = req.app.sessions.createSession(playerName);
     res.cookie('sessionId',playerId);
+    res.cookie('gameId',gameId);    
     game.addPlayer(playerName,playerId,'red');
-    req.app.game = game;
-    res.send(`${id}`);
+    req.app.gamesHandler.createNewGame(gameId,game);
+    res.send(`${gameId}`);
   }
   getRequestHandler(){
     return this.execute.bind(this);

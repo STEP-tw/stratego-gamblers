@@ -9,9 +9,17 @@ const JoinGameHandler = require('./src/handlers/joinGameHandler.js');
 const BattlefieldHandler = require('./src/handlers/battlefieldHandler.js');
 const ExitHandler = require('./src/handlers/exitHandler.js');
 const battlefieldHandler = new BattlefieldHandler();
-
+const GamesHandler = require('./src/handlers/gamesHandler.js');
 app.fs = fs;
 app.sessions = new Sessions();
+app.gamesHandler = new GamesHandler();
+
+const loadGame = function(req,res,next){
+  let gamesHandler = req.app.gamesHandler;
+  let gameId = req.cookies.gameId;
+  req.app.game = gamesHandler.getGame(gameId);
+  next();
+};
 
 const redirectToHome = function (req, res, next) {
   let game = req.app.game;
@@ -95,6 +103,7 @@ app.use(express.urlencoded({
   extended: false
 }));
 app.use(cookieParser());
+app.use(loadGame);
 app.use(unauthorizedUrls, redirectToHome);
 app.use(express.static('public'));
 app.get("/createGame/:name/:type", new CreateGameHandler().getRequestHandler());
@@ -108,6 +117,6 @@ app.use('/play', validatePlayerStatus);
 app.get('/play', renderGamePage);
 app.post('/battlefield', battlefieldHandler.getBattlefieldHandler());
 app.post('/selectedLoc', battlefieldHandler.updateBattlefieldHandler());
-app.get('/playAgain', new ExitHandler().restartGame);
-app.get('/leave', new ExitHandler().quitGame);
+app.get('/playAgain', new ExitHandler().restartGameHandler());
+app.get('/leave', new ExitHandler().quitGameHandler());
 module.exports = app;

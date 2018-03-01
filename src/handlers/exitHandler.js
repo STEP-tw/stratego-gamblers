@@ -8,9 +8,9 @@ class ExitHandler {
     let game = req.app.game;
     let gameStatus = req.cookies.gameStatus;
     if (isGameOver(game,gameStatus)|| gameStatus=='quit') {
-      delete req.app.game;
-      res.clearCookie('sessionId');
-      res.clearCookie('gameStatus');
+      let gameId = req.cookies.gameId;
+      req.app.gamesHandler.deleteGame(gameId);
+      this.clearCookies(req,res);
       return res.redirect('/');
     }
     res.redirect(previousUrl);
@@ -21,9 +21,19 @@ class ExitHandler {
     let sessionId = req.cookies.sessionId;
     let teamColor = game.getPlayerColorBy(sessionId);
     game.quit(teamColor);
+    this.clearCookies(req,res);
+    res.redirect('/');
+  }
+  clearCookies(req,res){
     res.clearCookie('sessionId');
     res.clearCookie('gameStatus');
-    res.redirect('/');
+    res.clearCookie('gameId'); 
+  }
+  restartGameHandler(){
+    return this.restartGame.bind(this);
+  }
+  quitGameHandler(){
+    return this.quitGame.bind(this);
   }
 }
 
