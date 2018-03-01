@@ -15,6 +15,9 @@ class Game {
     this.winner='';
     this.timeStamp =new Date().getTime();
   }
+  addGameType(type){
+    this.gameType = `${type}Game`;
+  }
   getId() {
     return this.id;
   }

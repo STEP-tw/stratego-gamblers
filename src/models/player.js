@@ -53,13 +53,16 @@ class Player {
   }
   getPieceIds(gameType){
     let piecesIds = {
-      quickGame:['F','B','S','2','3','9','10']
+      quickGame:['F','B','S','2','3','9','10'],
+      fullGame:['F','B','S','10','9','8','7','6','5','4','3','2']
     };
     return piecesIds[gameType];
   }
   getGamePieces(gameType){
     let gamePieces = {
-      quickGame:{'F':1,'B':2,'2':2,'3':2,'S':1,'10':1,'9':1}
+      quickGame:{'F':1,'B':2,'2':2,'3':2,'S':1,'10':1,'9':1},
+      fullGame:{'F':1,'B':6,'S':1,'10':1,'9':1,'8':2,'7':3,
+        '6':4,'5':4,'4':4,'3':5,'2':8}
     };
     return gamePieces[gameType];
   }

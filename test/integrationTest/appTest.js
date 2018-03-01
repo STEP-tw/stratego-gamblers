@@ -65,9 +65,6 @@ describe('app', () => {
         .end(done);
     });
     beforeEach(() => {
-      let game = new Game(1);
-      app.gamesHandler.createNewGame(1,game);
-      app.game = app.gamesHandler.getGame(1);
       app.game.addPlayer("player1");
     });
     it("redirect valid joining player to battlefield", done => {
@@ -126,9 +123,6 @@ describe('app', () => {
   });
   describe('GET /play', () => {
     beforeEach(() => {
-      let game = new Game(1);
-      app.gamesHandler.createNewGame(1,game);
-      app.game = app.gamesHandler.getGame(1);
       app.game.addPlayer("player1", 12345, 'red');
       app.game.addPlayer("player2", 123456, 'blue');
     });
@@ -199,9 +193,6 @@ describe('app', () => {
   });
   describe("GET /leave", () => {
     beforeEach(()=>{
-      let game = new Game(1);
-      app.gamesHandler.createNewGame(1,game);
-      app.game = app.gamesHandler.getGame(1);
       app.game.addPlayer("player1", 12345, 'red');
       app.game.addPlayer("player2", 123456, 'blue');
     });

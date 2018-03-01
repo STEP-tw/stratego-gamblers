@@ -9,7 +9,6 @@ class CreateGameHandler {
     game.loadPieces();
     let playerName = req.params.name;
     let type = req.params.type;
-    game.gameType = `${type}Game`;
     if(!this.isValidName(playerName)){
       res.end();
       return;
@@ -19,6 +18,7 @@ class CreateGameHandler {
     res.cookie('gameId',gameId);
     game.addPlayer(playerName,playerId,'red');
     req.app.gamesHandler.createNewGame(gameId,game);
+    game.addGameType(type);
     res.send(`${gameId}`);
   }
   getRequestHandler(){
