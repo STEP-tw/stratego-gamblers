@@ -167,7 +167,7 @@ const rematch = () => {
   document.getElementById("turn-msg").style.display = 'none';
   let grid = document.querySelector("#battlefield-table");
   grid.removeEventListener('click', getLocation);
-}
+};
 
 const announceWinner = (gameData) => {
   if(!gameData.winner){

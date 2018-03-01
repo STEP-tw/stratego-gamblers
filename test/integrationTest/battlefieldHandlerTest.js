@@ -46,7 +46,7 @@ describe('BattleFieldHandler', () => {
         .send('timeStamp=1000')
         .set('cookie',['sessionId=12345','gameId=1'])
         .expect(200)
-        .expect(/opponent has surrendered/)
+        .expect(/surrender/)
         .end(done);
     });
     it('should respond nothing if board is not updated', (done) => {
