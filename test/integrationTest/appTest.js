@@ -40,7 +40,7 @@ describe('app', () => {
     it("should not allow to create game with invalid name", done =>{
       request(app)
         .get("/createGame/rav i/quick")
-        .set('cookie','gameId=1')        
+        .set('cookie','gameId=1')
         .expect(200)
         .end(done);
     });
@@ -49,7 +49,7 @@ describe('app', () => {
     it("returns true if opponent is ready", done => {
       request(app)
         .get('/hasOpponentJoined')
-        .set('cookie','gameId=1')        
+        .set('cookie','gameId=1')
         .expect(200)
         .expect("false")
         .end(done);
@@ -114,11 +114,11 @@ describe('app', () => {
         .end(done);
     });
     it("returns true if opponent is ready", done => {
-      app.game.addPlayer("player1");      
+      app.game.addPlayer("player1");
       app.game.addPlayer("player2");
       request(app)
         .get('/hasOpponentJoined')
-        .set('cookie','gameId=1')        
+        .set('cookie','gameId=1')
         .expect(200)
         .expect("true")
         .end(done);
@@ -171,7 +171,7 @@ describe('app', () => {
       app.game.setBattlefieldFor(0, redArmyPos);
       request(app)
         .get('/isOpponentReady')
-        .set('cookie','gameId=1')        
+        .set('cookie','gameId=1')
         .expect(302)
         .expect('Location','/play')
         .end(done);

@@ -33,9 +33,9 @@ describe('BattleFieldHandler', () => {
       request(app)
         .post('/battlefield')
         .send('timeStamp=1000')
-        .set('cookie',['sessionId=12345','gameId=1'])        
+        .set('cookie',['sessionId=12345','gameId=1'])
         .expect(200)
-        .expect(/you lost the game/)
+        .expect(/lose/)
         .end(done);
     });
     it('should respond with winning message if game ends', (done) => {
@@ -44,7 +44,7 @@ describe('BattleFieldHandler', () => {
       request(app)
         .post('/battlefield')
         .send('timeStamp=1000')
-        .set('cookie',['sessionId=12345','gameId=1'])        
+        .set('cookie',['sessionId=12345','gameId=1'])
         .expect(200)
         .expect(/opponent has surrendered/)
         .end(done);
@@ -54,7 +54,7 @@ describe('BattleFieldHandler', () => {
       request(app)
         .post('/battlefield')
         .send('timeStamp=7000')
-        .set('cookie',['sessionId=12345','gameId=1'])        
+        .set('cookie',['sessionId=12345','gameId=1'])
         .expect(200)
         .expect((res)=>assert.isObject(res.body))
         .end(done);
@@ -63,19 +63,19 @@ describe('BattleFieldHandler', () => {
       app.game.gameOver = true;
       request(app)
         .post('/battlefield')
-        .send('timeStamp=1000')        
-        .set('cookie',['sessionId=12345','gameId=1'])        
+        .send('timeStamp=1000')
+        .set('cookie',['sessionId=12345','gameId=1'])
         .expect(200)
         .expect(/"3_2":"2","3_9":"B","9_2":"O_2","9_9":"O_B"/)
         .end(done);
     });
   });
   describe('#updateBattlefield',()=>{
-    
+
     it('should response potential moves with game status',(done)=>{
       request(app)
         .post('/selectedLoc')
-        .set('cookie',['sessionId=12345','gameId=1'])        
+        .set('cookie',['sessionId=12345','gameId=1'])
         .send('location=0_0')
         .expect(200)
         .end(done);
@@ -83,7 +83,7 @@ describe('BattleFieldHandler', () => {
     it('should response with 406 for player without his own turn',(done)=>{
       request(app)
         .post('/selectedLoc')
-        .set('cookie',['sessionId=123456','gameId=1'])        
+        .set('cookie',['sessionId=123456','gameId=1'])
         .send('location=3_2')
         .expect(406)
         .expect(/invalid request/)
@@ -92,8 +92,8 @@ describe('BattleFieldHandler', () => {
     it('should return revealed army after game is over',(done)=>{
       app.game.battlefield.revealPieces = {'2_2':'4'};
       request(app)
-        .post('/selectedLoc')      
-        .set('cookie',['sessionId=12345','gameId=1'])        
+        .post('/selectedLoc')
+        .set('cookie',['sessionId=12345','gameId=1'])
         .expect(200)
         .expect('')
         .end(done);
