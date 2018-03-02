@@ -104,7 +104,7 @@ input[type=text] {
   display: none;
 }
 
-#errorMsg {
+.errorMsg {
   color: red;
   font-size: 20px;
   text-align: center;

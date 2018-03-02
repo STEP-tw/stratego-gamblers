@@ -27,11 +27,12 @@ describe('app', () => {
         .end(done);
     });
   });
-  describe("GET /createGame/:name", () => {
+  describe("GET /createGame", () => {
     it("responds with sharing key", done => {
       request(app)
-        .get("/createGame/ravi/quick")
-        .set('cookie','gameId=1')
+        .post("/createGame")
+        .set('cookie','gameId=1')        
+        .send('name=ravi&type=quick')
         .expect(200)
         .expect(/[\d]/)
         .expect("Content-Type", "text/html; charset=utf-8")
@@ -39,7 +40,8 @@ describe('app', () => {
     });
     it("should not allow to create game with invalid name", done =>{
       request(app)
-        .get("/createGame/rav i/quick")
+        .post("/createGame")
+        .send('name=ravi&type=quick')        
         .set('cookie','gameId=1')
         .expect(200)
         .end(done);
@@ -59,9 +61,9 @@ describe('app', () => {
     it("redirect joining player to home if game is not created ", done => {
       request(app)
         .post("/joinGame")
-        .send("name=ankur&gameid=10")
-        .expect(302)
-        .expect("Location","/")
+        .send("name=ankur&gameId=10")
+        .expect(400)
+        .expect('Inavlid Player Name or Game Id')
         .end(done);
     });
     beforeEach(() => {
@@ -70,7 +72,7 @@ describe('app', () => {
     it("redirect valid joining player to battlefield", done => {
       request(app)
         .post("/joinGame")
-        .send("name=ankur&gameid=1")
+        .send("name=ankur&gameId=1")
         .expect(302)
         .expect("Location", "/setupArmy")
         .end(done);
@@ -78,16 +80,16 @@ describe('app', () => {
     it("redirect invalid joining player to home", done => {
       request(app)
         .post("/joinGame")
-        .send("name=ankur&gameid=2")
-        .expect(302)
-        .expect("Location", "/")
+        .send("name=ankur&gameId=2")
+        .expect(400)
+        .expect('Inavlid Player Name or Game Id')        
         .end(done);
     });
     it("redirect third joining player to home", done => {
       app.game.addPlayer("player2");
       request(app)
         .post("/joinGame")
-        .send("name=ankur&gameid=1")
+        .send("name=ankur&gameId=1")
         .expect(302)
         .expect("Location","/")
         .end(done);
@@ -95,9 +97,9 @@ describe('app', () => {
     it("redirect joining player with white spaces as name to home", done => {
       request(app)
         .post("/joinGame")
-        .send("name=  &gameid=1")
-        .expect(302)
-        .expect("Location","/")
+        .send("name=  &gameId=1")
+        .expect(400)
+        .expect('Inavlid Player Name or Game Id')        
         .end(done);
     });
   });

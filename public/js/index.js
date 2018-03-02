@@ -25,11 +25,10 @@ const getJoinForm = function() {
 };
 
 const showGameId = function() {
-  let sharingKey = this.responseText;
-  if(!sharingKey){
+  if(this.status != 200){
     let message = `No special characters allowed (Ex. @,$,&) <br>
     Start with a character only (Ex. sayima, Sayima, Sayima123)`;
-    document.getElementById('errorMsg').innerHTML = message;
+    document.getElementById('creationError').innerHTML = message;
     getCreateForm();
     return;
   }
@@ -41,18 +40,41 @@ const showGameId = function() {
       <p>Please wait for the opponent to join</p>
     </div>
   </div>`;
-  sharingKeyDiv = sharingKeyDiv.replace("{sharing-key}", sharingKey);
+  sharingKeyDiv = sharingKeyDiv.replace("{sharing-key}", this.responseText);
   let container = document.getElementsByClassName("column-middle")[0];
   container.innerHTML = sharingKeyDiv;
+  setInterval(getGameStatus,1000);
 };
 
-const reqGameId = function() {
+const startGame = function() {
   let name = document.getElementsByName("name")[0].value;
-  let mode = document.querySelector('input[name="gameMode"]:checked').value;
+  let type = document.querySelector('input[name="gameMode"]:checked').value;
   name = name.trim();
+  let postData = `name=${name}&type=${type}`;
   if (name) {
-    createRequest(showGameId, `/createGame/${name}/${mode}`, null, "GET");
-    setInterval(getGameStatus,1000);
+    createRequest(showGameId, `/createGame`, postData, "POST");
+  }
+};
+
+const showError = function(){
+  if(this.status != 200){
+    let message = ` ${this.responseText}<br>
+    No special characters allowed (Ex. @,$,&) <br>
+    Start with a character only (Ex. sayima, Sayima, Sayima123)`;
+    document.getElementById('joiningError').innerHTML = message;
+    getJoinForm();
+    return;
+  }
+  setInterval(getGameStatus,1000);  
+};
+
+const joinGame = function(){
+  let name = document.getElementsByName("name")[1].value;
+  let gameId = document.getElementsByName("gameid")[0].value;
+  name = name.trim();
+  let postData = `name=${name}&gameId=${gameId}`;
+  if (name) {
+    createRequest(showError, `/joinGame`, postData, "POST");
   }
 };
 
@@ -64,10 +86,6 @@ const redirectToSetupPage = function () {
 
 const getGameStatus=function () {
   createRequest(redirectToSetupPage,"/hasOpponentJoined");
-};
-
-const startGame = function() {
-  reqGameId();
 };
 
 const showHelp = function(){

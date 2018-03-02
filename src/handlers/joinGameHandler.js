@@ -2,14 +2,14 @@ class JoinGameHandler {
   constructor() {}
   execute(req, res) {
     let gamesHandler = req.app.gamesHandler;
-    let gameId = req.body.gameid;
+    let gameId = req.body.gameId;
     let playerName = req.body.name;
-    if(!this.isValidName(playerName)){
-      res.redirect("/");
+    if(!gameId || !playerName){
+      res.status(404).end();      
       return;
     }
-    if(!gamesHandler.doesGameExists(gameId)){
-      res.redirect('/');
+    if(!this.isValidName(playerName) || !gamesHandler.doesGameExists(gameId)){
+      res.status(400).send('Inavlid Player Name or Game Id');
       return;
     }
     let game = gamesHandler.getGame(gameId);
@@ -21,13 +21,13 @@ class JoinGameHandler {
       res.redirect('/setupArmy');
       return;
     }
-    res.redirect("/");
+    res.redirect('/');
   }
   getRequestHandler() {
     return this.execute.bind(this);
   }
   isValidName(playerName){
-    return playerName.match(/^\D\w*$/gi);
+    return playerName.match(/(^[a-z])\w*$/gi);
   }
 }
 

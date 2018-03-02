@@ -111,7 +111,7 @@ app.use(cookieParser());
 app.use(loadGame);
 app.use(unauthorizedUrls, redirectToHome);
 app.use(express.static('public'));
-app.get("/createGame/:name/:type", new CreateGameHandler().getRequestHandler());
+app.post("/createGame", new CreateGameHandler().getRequestHandler());
 app.post("/joinGame", new JoinGameHandler().getRequestHandler());
 app.post('/setup/player/:playerId', battlefieldHandler.setBattlefieldHandler());
 app.use('/setupArmy',checkIfAlreadySetup);
