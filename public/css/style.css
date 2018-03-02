@@ -88,8 +88,8 @@ body {
 #troops-captured, #troops-lost, #battlefield-table {
   margin: auto;
   margin-top: 5%;
-  width: 60px;
-  height: 600px;
+  width: 130px;
+  height: 370px;
   border-collapse: collapse;
 }
 
@@ -280,4 +280,17 @@ button:focus {
 
 .win, .lose, .draw, .surrender {
   display: none;
+}
+
+.count{
+  position: relative;
+  margin-left: 42px;
+  color: #07070c;
+  font-size: 40px;
+  width: 50px;
+  height: 30px;
+  background: #fff;
+  border: 1px solid #030202;
+  text-align: center;
+  font: 25px Arial, sans-serif;
 }

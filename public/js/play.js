@@ -197,13 +197,20 @@ const incrementId = function(id) {
   return next.toString().split('').join('_');
 };
 
-const updateKilledPiece = (cell, piece, team) => {
+const updateKilledPiece = (cell, piece, team,count) => {
   let image = document.createElement("img");
   let src = `img/${team}/${piece}.png`;
   let height = "60";
   let width = "60";
   let img = setImageAttributes(image, src, piece, height, width);
-  cell.appendChild(img);
+  let div = document.createElement('div');
+  let span = document.createElement('span');
+  span.innerHTML = count;
+  span.className = "count";
+  div.appendChild(img);
+  div.appendChild(span);
+  cell.innerHTML = '';
+  cell.appendChild(div);
 };
 
 const getHoriPath = function(initial, last) {
@@ -259,12 +266,11 @@ const getPath = function(positions) {
 };
 
 const showCapturedArmy = function(army, team, cellId) {
-  army.forEach(piece => {
+  let killedPieces = Object.keys(army);
+  killedPieces.forEach(piece => {
     let cell = document.getElementById(cellId);
-    if(!cell){
-      return;
-    }
-    updateKilledPiece(cell, piece, team);
+    let count = army[piece];
+    updateKilledPiece(cell, piece, team,count);
     cellId = incrementId(cellId);
   });
 };

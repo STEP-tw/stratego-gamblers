@@ -1,4 +1,5 @@
 const Pieces=require('./pieces');
+const getFrequency=require('../lib/lib.js').getFrequency;
 class Player {
   constructor(name,id,color) {
     this.name=name;
@@ -17,7 +18,8 @@ class Player {
     return this.name;
   }
   getKilledPieces(){
-    return this.deadPieces.map(piece => piece.id);
+    let killedPieces = this.deadPieces.map(piece => piece.id);
+    return getFrequency(killedPieces);
   }
   addPieces(pieces,gameType){
     let pieceIds = this.getPieceIds(gameType);
