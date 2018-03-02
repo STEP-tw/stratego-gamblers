@@ -123,7 +123,8 @@ const setImageAttributes = (img, src, id, height, width) => {
 
 const incrementId = function(id) {
   let next = +(id.split('_').join(''))+1;
-  return next.toString().split('').join('_');
+  next = next<10 ? `0${next}` : next.toString();
+  return next.split('').join('_');
 };
 
 const getBaseGridIds = function(initialId,armyLength) {
@@ -153,6 +154,48 @@ const appendPiecesToBase = (army,imgSrcDirectory) => {
   baseCells.forEach((element, index) => {
     appendImage(element, army[index], imgSrcDirectory);
   });
+};
+
+const getInitChildId = (army)=>{
+  let ids = {
+    redArmy: document.getElementById('grid').lastChild.firstChild.id,
+    blueArmy: document.getElementById('grid').childNodes[1].firstChild.id
+  };
+  return ids[army];
+};
+
+const removePiecesFromBase = (army) =>{
+  let armyBaseIds = getBaseGridIds('1_2_0',army.length);
+  armyBaseIds.forEach(id=>{
+    document.getElementById(id).firstChild.remove();
+  });
+};
+
+const fetchArmyFromBase = function(){
+  let army = [];
+  let baseArmy = [...document.getElementById('base-army-table').childNodes];
+  baseArmy.shift();
+  baseArmy.forEach(row=>{
+    row.childNodes.forEach(td=>{
+      army.push(td.firstChild.id);
+    });
+  });
+  return army;
+};
+
+const appendPiecesToHome = (imgSrcDirectory) => {
+  let initialId = getInitChildId(imgSrcDirectory);
+  let army = fetchArmyFromBase();
+  let baseCells = getBaseGridIds(initialId,40);
+  let randomNumber,position;
+  army.forEach((piece, index) => {
+    randomNumber = Math.floor(Math.random()*(40-index));
+    position=baseCells[randomNumber];
+    appendImage(position, piece, imgSrcDirectory);
+    baseCells.splice(randomNumber,1);
+  });
+  removePiecesFromBase(army);
+  document.getElementById('random').style.display = 'none';
 };
 
 const notifyPlayer = (message) => {

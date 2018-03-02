@@ -51,7 +51,7 @@ const setupArmy = function(req, res) {
   let game = req.app.game;
   let playerId = req.cookies.sessionId;
   let teamColor = game.getPlayerColorBy(playerId);
-  setupTemp = setupTemp.replace('{{team}}', teamColor);
+  setupTemp = setupTemp.replace(/{{team}}/g,teamColor);
   let name = game.getPlayerName(teamColor);
   setupTemp = setupTemp.replace('{{playerName}}', name);
   res.send(setupTemp);

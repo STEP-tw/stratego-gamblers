@@ -187,8 +187,22 @@ td {
   cursor: pointer;
 }
 
+#random {
+  font-family: 'Alegreya', serif;
+  font-size: 25px;
+  text-transform: uppercase;
+  margin-left: 27%;
+  margin-bottom: 10px;
+  width: 45%;
+  height: 35%;
+  background-color: rgb(156, 131, 69);
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+}
 
-#ready:hover {
+
+#ready:hover,#random:hover {
   background-color: #BC8B2D;
   box-shadow: 0px 0px 10px 0px #BC8B2D;
 }
