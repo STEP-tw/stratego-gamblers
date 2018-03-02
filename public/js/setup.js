@@ -262,3 +262,10 @@ const getPiecesList = function(piecesWithQty){
   }
   return army;
 };
+
+const notDeployedFullArmy = (pieceAndLocation) => {
+  let base = document.getElementById('base-army-table');
+  let armyStrength = (base.childNodes.length-1)*10;
+  let numberOfPlayingPiece = pieceAndLocation.split('&').length - 1;
+  return numberOfPlayingPiece != armyStrength;
+};

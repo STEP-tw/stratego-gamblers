@@ -4,13 +4,15 @@ const drawBaseGrid = (row) => {
 
 const ready = () => {
   let postData = fetchBattleField();
+  if(notDeployedFullArmy(postData)){
+    return notifyPlayer("setup full army");
+  }
   let reqListener = () => {
     removeDraggable();
     getOpponentStatus();
     removeEventListener(ready, "click", "ready");
   };
   const onFail = () => {
-    return notifyPlayer("setup full army");
   };
   doXhr('/setup/player/0', 'POST', reqListener, postData, onFail);
 };
