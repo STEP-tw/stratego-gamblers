@@ -104,13 +104,17 @@ class Game {
     if(battlefield.hasLastSelectedLoc()){
       isLocationUpdated = battlefield.updateLocation(playerId,location);
     }
+    let time = 0;
+    if(this.isBattleHappening()){
+      time = 3000;
+    }
     if(isLocationUpdated){
-      this.changeCurrentPlayer();
       this.updateTimeStamp();
       setTimeout(()=>{
+        this.changeCurrentPlayer();
         this.updatePlayerPieces();
         this.updateGameStatus();
-      },2000);
+      },time);
       return ;
     }
     battlefield.addAsLastSelectedLoc(playerId,location);
@@ -207,7 +211,7 @@ class Game {
   updateTimeStamp(){
     this.timeStamp = new Date().getTime();
     if(this.isBattleHappening()){
-      this.timeStamp+=2000;
+      this.timeStamp+=3000;
     }
   }
   isBoardUpdated(timeStamp){

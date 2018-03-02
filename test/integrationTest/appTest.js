@@ -30,8 +30,7 @@ describe('app', () => {
   describe("GET /createGame", () => {
     it("responds with sharing key", done => {
       request(app)
-        .post("/createGame")
-        .set('cookie','gameId=1')        
+        .post("/createGame")        
         .send('name=ravi&type=quick')
         .expect(200)
         .expect(/[\d]/)
