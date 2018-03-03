@@ -104,17 +104,12 @@ class Game {
     if(battlefield.hasLastSelectedLoc()){
       isLocationUpdated = battlefield.updateLocation(playerId,location);
     }
-    let time = 0;
-    if(this.isBattleHappening()){
-      time = 3000;
-    }
     if(isLocationUpdated){
       this.updateTimeStamp();
-      setTimeout(()=>{
-        this.changeCurrentPlayer();
-        this.updatePlayerPieces();
-        this.updateGameStatus();
-      },time);
+      this.changeCurrentPlayer();
+      this.updatePlayerPieces();
+      this.updateGameStatus();
+      battlefield.removeSelectedPos();
       return ;
     }
     battlefield.addAsLastSelectedLoc(playerId,location);
@@ -180,23 +175,32 @@ class Game {
   getBoardFor(sessionId){
     let playerId = this.getPlayerIndexBy(sessionId);
     let battlefieldPos = this.getBattlefieldFor(playerId);
-    let turnMsg = this.getTurnMessage(playerId);
-    let revealPiece = this.getRevealPiece(playerId);
-    let updatedLocs = this.battlefield.getUpdatedLocations();
+    let revealPiece = this.battlefield.getRevealPiece(playerId);
     let killedPieces = this.getKilledPieces();
-    let status = this.getGameStatus();
-    battlefieldPos[revealPiece.loc] = revealPiece.pieceId;
-    if (status.gameOver) {
-      battlefieldPos = this.revealBattlefieldFor(playerId);
-    }
     let boardInfo = {
       'battlefield': battlefieldPos,
+      'killedPieces': killedPieces
+    };
+    return boardInfo;
+  }
+  getChanges(sessionId){
+    let playerId = this.getPlayerIndexBy(sessionId);
+    let status = this.getGameStatus();    
+    let turnMsg = this.getTurnMessage(playerId); 
+    let revealPiece = this.battlefield.getRevealPiece(playerId);
+    let killedPieces = this.battlefield.getKilledPieces();
+    this.battlefield.removeKilledPieces();
+    let updatedLocs = this.battlefield.getUpdatedLocations();  
+    let moveType = this.battlefield.getMoveType();         
+    let gameChanges ={
       'updatedLocs':updatedLocs,
       'turnMsg': turnMsg,
       'killedPieces': killedPieces,
-      'status': status
+      'revealPiece':revealPiece,
+      'moveType':moveType,
+      'status': status      
     };
-    return boardInfo;
+    return gameChanges;
   }
   quit(team){
     let winner = this.getOpponentName(team);
@@ -205,20 +209,11 @@ class Game {
     this.winner = winningPlayer.getId();
     this.updateTimeStamp();
   }
-  getRevealPiece(playerId){
-    return this.battlefield.getRevealPiece(playerId);
-  }
   updateTimeStamp(){
     this.timeStamp = new Date().getTime();
-    if(this.isBattleHappening()){
-      this.timeStamp+=3000;
-    }
   }
   isBoardUpdated(timeStamp){
-    return this.timeStamp > timeStamp || timeStamp==1000;
-  }
-  isBattleHappening(){
-    return this.battlefield.hasRevealedPiece();
+    return this.timeStamp > timeStamp;
   }
   getArmy(){
     return getAllPieces(this.gameType);

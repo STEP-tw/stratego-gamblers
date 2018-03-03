@@ -21,57 +21,13 @@ describe('BattleFieldHandler', () => {
     it('should respond with battlefield of given player', (done) => {
       request(app)
         .post('/battlefield')
-        .send('timeStamp=1000')
         .set('cookie',['sessionId=12345','gameId=1'])
         .expect(200)
         .expect(/"3_2":"2","3_9":"B","9_2":"O","9_9":"O"/)
         .end(done);
     });
-    it('should respond with winning message if game ends', (done) => {
-      app.game.gameOver = true;
-      app.game.winner = 123456;
-      request(app)
-        .post('/battlefield')
-        .send('timeStamp=1000')
-        .set('cookie',['sessionId=12345','gameId=1'])
-        .expect(200)
-        .expect(/lose/)
-        .end(done);
-    });
-    it('should respond with winning message if game ends', (done) => {
-      app.game.gameOver = 'quit';
-      app.game.winner = 123456;
-      request(app)
-        .post('/battlefield')
-        .send('timeStamp=1000')
-        .set('cookie',['sessionId=12345','gameId=1'])
-        .expect(200)
-        .expect(/surrender/)
-        .end(done);
-    });
-    it('should respond nothing if board is not updated', (done) => {
-      app.game.timeStamp = 5000;
-      request(app)
-        .post('/battlefield')
-        .send('timeStamp=7000')
-        .set('cookie',['sessionId=12345','gameId=1'])
-        .expect(200)
-        .expect((res)=>assert.isObject(res.body))
-        .end(done);
-    });
-    it('should return revealed army after game is over',(done)=>{
-      app.game.gameOver = true;
-      request(app)
-        .post('/battlefield')
-        .send('timeStamp=1000')
-        .set('cookie',['sessionId=12345','gameId=1'])
-        .expect(200)
-        .expect(/"3_2":"2","3_9":"B","9_2":"O_2","9_9":"O_B"/)
-        .end(done);
-    });
   });
   describe('#updateBattlefield',()=>{
-
     it('should response potential moves with game status',(done)=>{
       request(app)
         .post('/selectedLoc')
@@ -96,6 +52,29 @@ describe('BattleFieldHandler', () => {
         .set('cookie',['sessionId=12345','gameId=1'])
         .expect(200)
         .expect('')
+        .end(done);
+    });
+  });
+  describe('/battlefieldChanges',()=>{
+    it('should reponse with changes which are currently made', (done) => {
+      app.game.timeStamp = 5000;      
+      request(app)
+        .post('/battlefieldChanges')
+        .send('timeStamp=4000')     
+        .set('cookie',['sessionId=12345','gameId=1'])
+        .expect(200)
+        .expect(/updatedLocs/)
+        .expect(/turnMsg/)
+        .end(done);
+    });
+    it('should respond nothing if board is not updated', (done) => {
+      app.game.timeStamp = 5000;
+      request(app)
+        .post('/battlefieldChanges')
+        .send('timeStamp=7000')
+        .set('cookie',['sessionId=12345','gameId=1'])
+        .expect(200)
+        .expect((res)=>assert.isObject(res.body))
         .end(done);
     });
   });

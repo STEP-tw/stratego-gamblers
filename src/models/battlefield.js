@@ -8,6 +8,8 @@ class Battlefield {
     this.battleResults = [];
     this.revealPieces ={};
     this.updatedLocations = [];
+    this.killedPieceLocations = [];
+    this.moveType = 'freeMove';
   }
   setField(pieces,placedArmyPos){
     let allPos = Object.keys(placedArmyPos);
@@ -80,19 +82,17 @@ class Battlefield {
   updateLocation(playerId,pieceLoc){
     let potentialMoves = this.getPotentialMoves(playerId,this.selectedPos);
     if(this.isFreeMove(potentialMoves,pieceLoc)){
+      this.moveType = 'freeMove';
       this.replacePieceLoc(playerId,pieceLoc);
       this.setUpdatedLocations(this.selectedPos,pieceLoc);
       this.removeSelectedPos();
       return true;
     }
     if(this.isAttackMove(potentialMoves,pieceLoc)){
+      this.moveType = 'battle';
       this.setRevealPieces(playerId,this.selectedPos,pieceLoc);
       this.setUpdatedLocations(this.selectedPos,pieceLoc);
-      setTimeout(()=>{
-        this.battle(playerId,pieceLoc);
-        this.removeRevealPieces();
-        this.removeSelectedPos();
-      },2000);
+      this.battle(playerId,pieceLoc);
       return true;
     }
   }
@@ -112,11 +112,11 @@ class Battlefield {
     let opponentPiece = this.getPiece(opponentId,pieceLoc);
     let killedPieces = opponentPiece.attackedBy(piece);
     if(killedPieces.defendingPiece){
-      this.setBattleResult(opponentId,opponentPiece);
+      this.setBattleResult(opponentId,opponentPiece,pieceLoc);
       delete this.battlePositions[opponentId][pieceLoc];
     }
     if(killedPieces.attackingPiece){
-      this.setBattleResult(playerId,piece);
+      this.setBattleResult(playerId,piece,this.selectedPos);
       delete this.battlePositions[playerId][this.selectedPos];
     } else {
       this.replacePieceLoc(playerId,pieceLoc);
@@ -139,9 +139,10 @@ class Battlefield {
   getBattleResults(){
     return this.battleResults;
   }
-  setBattleResult(playerId,piece){
+  setBattleResult(playerId,piece,pieceLoc){
     let result = {playerId:playerId,killedPiece:piece};
     this.battleResults.push(result);
+    this.killedPieceLocations.push(pieceLoc);
   }
   clearBattleResult(){
     this.battleResults = [];
@@ -156,18 +157,20 @@ class Battlefield {
     return allArmy;
   }
   setRevealPieces(playerId,selectedPos,battlePos){
-    this.revealPieces[playerId] = selectedPos;
-    this.revealPieces[1-playerId] = battlePos;
+    let opponentId =1-playerId;
+    let attackingPieceId = this.getPiece(playerId,selectedPos).id;
+    let defendingPieceId = this.getPiece(opponentId,battlePos).id;
+    this.revealPieces[playerId] = {pos:selectedPos,pieceId:attackingPieceId};
+    this.revealPieces[opponentId] = {pos:battlePos,pieceId:defendingPieceId};
   }
   getRevealPiece(playerId){
     let revealPiece = {};
     let opponentId = 1-playerId;
-    let loc = this.revealPieces[opponentId];
-    let piece = this.getPiece(opponentId,loc);
-    if(piece){
-      revealPiece.loc = loc;
-      revealPiece.pieceId = `O_${piece.id}`;
+    if(!this.revealPieces[playerId]){
+      return revealPiece;
     }
+    revealPiece.loc = this.revealPieces[opponentId].pos;
+    revealPiece.pieceId = `O_${this.revealPieces[opponentId].pieceId}`;
     return revealPiece;
   }
   removeRevealPieces(){
@@ -179,9 +182,16 @@ class Battlefield {
   getUpdatedLocations(){
     return this.updatedLocations;
   }
-  hasRevealedPiece(){
-    let revealPieces = Object.keys(this.revealPieces);
-    return revealPieces.length>0;
+  getMoveType(){
+    return this.moveType;
+  }
+  getKilledPieces(){
+    return this.killedPieceLocations;
+  }
+  removeKilledPieces(){
+    setTimeout(()=>{
+      this.killedPieceLocations = [];
+    },2000);
   }
 }
 module.exports = Battlefield;

@@ -93,6 +93,18 @@ const validatePlayerStatus = function (req, res, next) {
   }
 };
 
+const sendBattlefieldChanges = function(req,res){
+  let timeStamp = req.body.timeStamp;
+  let sessionId = req.cookies.sessionId;
+  let game = req.app.game;
+  if(!game.isBoardUpdated(timeStamp)){
+    res.end();
+    return;
+  }
+  let changes = game.getChanges(sessionId);
+  res.send(changes);
+};
+
 const sendArmyDetails = function(req,res){
   let game = req.app.game;
   res.json(game.getArmy());
@@ -121,6 +133,7 @@ app.get('/hasOpponentJoined', haveBothPlayersJoined);
 app.use('/play', validatePlayerStatus);
 app.get('/play', renderGamePage);
 app.post('/battlefield', battlefieldHandler.getBattlefieldHandler());
+app.post('/battlefieldChanges',sendBattlefieldChanges);
 app.post('/selectedLoc', battlefieldHandler.updateBattlefieldHandler());
 app.get('/playAgain', new ExitHandler().restartGameHandler());
 app.get('/leave', new ExitHandler().quitGameHandler());

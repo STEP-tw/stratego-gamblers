@@ -1,5 +1,4 @@
 const isValidData = require('../lib/validate.js').isValidData;
-const getStatusMsg = require('../lib/lib.js').getStatusMsg;
 
 class BattlefieldHandler {
   constructor(){
@@ -19,23 +18,12 @@ class BattlefieldHandler {
   }
   getBattlefield(req,res){
     let game = req.app.game;
-    let timeStamp = req.body.timeStamp;
-    if(!game.isBoardUpdated(timeStamp)){
-      res.end();
-      return;
-    }
     let sessionId = req.cookies.sessionId;
     let boardInfo = game.getBoardFor(sessionId);
-    boardInfo.status = getStatusMsg(sessionId,boardInfo.status);
-    res.cookie('gameStatus', boardInfo.status.gameOver);
     res.send(JSON.stringify(boardInfo));
   }
   updateBattlefield(req,res){
     let game = req.app.game;
-    if(game.isBattleHappening()){
-      res.end();
-      return;
-    }
     let sessionId = req.cookies.sessionId;
     let location = req.body.location;
     let playerId = game.getPlayerIndexBy(sessionId);
