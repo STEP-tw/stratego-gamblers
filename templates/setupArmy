@@ -6,6 +6,7 @@
   <title>Setup Army</title>
   <link rel="stylesheet" href="css/setupArmy.css">
   <script src="js/setup.js" charset="utf-8"></script>
+  <script src="js/lib.js" charset="utf-8"></script>
   <script src="js/{{team}}Setup.js" charset="utf-8"></script>
   <link href="https://fonts.googleapis.com/css?family=Alegreya" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Alegreya+Sans" rel="stylesheet">
