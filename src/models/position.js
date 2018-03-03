@@ -1,3 +1,6 @@
+const getNeighbour = require('../lib/lib.js').getNeighbour;
+const getPath = require('../lib/lib.js').getPath;
+
 class Position {
   constructor(pos){
     this.xPos = pos.split('_')[0];
@@ -5,79 +8,55 @@ class Position {
     this.neighbour = [];
   }
   getRightPos(){
-    if(this.xPos!=9){
-      return `${+this.xPos+1}_${this.yPos}`;
-    }
+    return getNeighbour(+this.xPos,+this.yPos,9,1);
   }
   getLeftPos(){
-    if(this.xPos!=0){
-      return `${+this.xPos-1}_${this.yPos}`;
-    }
+    return getNeighbour(+this.xPos,+this.yPos,0,-1);
   }
   getFacePos(){
-    if(this.yPos!=9){
-      return `${this.xPos}_${+this.yPos+1}`;
+    let frontPos = [];
+    let pos = getNeighbour(+this.yPos,+this.xPos,9,1)[0];
+    if(pos) {
+      frontPos.push(`${pos[2]}_${pos[0]}`);
     }
+    return frontPos;
   }
   getBackPos(){
-    if(this.yPos!=0){
-      return `${this.xPos}_${+this.yPos-1}`;
+    let backPos = [];
+    let pos = getNeighbour(+this.yPos,+this.xPos,0,-1)[0];
+    if(pos) {
+      backPos.push(`${pos[2]}_${pos[0]}`);
     }
+    return backPos;
   }
   getNeighbourPos(){
     let rightPos = this.getRightPos();
     let leftPos = this.getLeftPos();
     let facePos = this.getFacePos();
     let backPos = this.getBackPos();
-    if(rightPos){
-      this.neighbour.push(rightPos);
-    }
-    if(leftPos){
-      this.neighbour.push(leftPos);
-    }
-    if(facePos){
-      this.neighbour.push(facePos);
-    }
-    if(backPos){
-      this.neighbour.push(backPos);
-    }
-    return this.neighbour;
+    return [...rightPos,...leftPos,...facePos,...backPos];
+  }
+
+  getHorizontalPath(destination,factor){
+    return getPath(+this.xPos,+this.yPos,destination,factor);
+  }
+  getVerticalPath(destination,factor){
+    let path = getPath(+this.yPos,+this.xPos,destination,factor);
+    return path.map(loc=>{
+      return `${loc[2]}_${loc[0]}`;
+    }) || [];
   }
   getAllPosRight(){
-    let xPos = this.xPos;
-    let allPosRight = [];
-    while(+xPos < 9){
-      allPosRight.push(`${+xPos+1}_${this.yPos}`);
-      xPos++;
-    }
-    return allPosRight;
+    return this.getHorizontalPath(9,1);
   }
   getAllPosLeft(){
-    let xPos = this.xPos;
-    let allPosLeft = [];
-    while(+xPos > 0){
-      allPosLeft.push(`${+xPos-1}_${this.yPos}`);
-      xPos--;
-    }
-    return allPosLeft;
+    return this.getHorizontalPath(0,-1);
   }
   getAllPosBack(){
-    let yPos = this.yPos;
-    let allPosBack = [];
-    while(+yPos > 0){
-      allPosBack.push(`${this.xPos}_${+yPos-1}`);
-      yPos--;
-    }
-    return allPosBack;
+    return this.getVerticalPath(0,-1);
   }
   getAllPosAhead(){
-    let yPos = this.yPos;
-    let allPosAhead = [];
-    while(+yPos < 9){
-      allPosAhead.push(`${this.xPos}_${+yPos+1}`);
-      yPos++;
-    }
-    return allPosAhead;
+    return this.getVerticalPath(9,1);
   }
 }
 

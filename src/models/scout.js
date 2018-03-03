@@ -7,18 +7,6 @@ class Scout extends Piece {
     this.name = 'Scout';
     this.rank = 2;
   }
-  isFreePosition(position, posMap) {
-    let myArmy = posMap.myArmy;
-    let oppArmy = posMap.opponentArmy;
-    let lake = posMap.lakeArea;
-    let positions = myArmy.concat(oppArmy).concat(lake);
-    return !positions.includes(position);
-  }
-
-  isOpponent(position, opponentArmyPos) {
-    let opponentArmy = opponentArmyPos;
-    return opponentArmy.includes(position);
-  }
 
   getPosTowards(pos, direction) {
     let position = new Position(pos);

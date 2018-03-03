@@ -50,3 +50,20 @@ exports.getStatusMsg = (playerId, status) => {
   }
   return status;
 };
+
+exports.getNeighbour = (initial,stable,final,factor)=>{
+  let neighbour = [];
+  if(initial!=final){
+    neighbour.push(`${initial+factor}_${stable}`);
+  }
+  return neighbour;
+};
+
+exports.getPath = (init,stat,final,factor)=>{
+  let allPos=[];
+  while(init!=final){
+    init+=factor;
+    allPos.push(`${init}_${stat}`);
+  }
+  return allPos;
+};
