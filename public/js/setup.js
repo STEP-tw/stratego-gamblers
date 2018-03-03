@@ -137,37 +137,45 @@ const getInitChildId = (army)=>{
   return ids[army];
 };
 
-const removePiecesFromBase = (army) =>{
-  let armyBaseIds = getBaseGridIds('1_2_0',army.length);
-  armyBaseIds.forEach(id=>{
-    document.getElementById(id).firstChild.remove();
-  });
-};
-
 const fetchArmyFromBase = function(){
   let army = [];
   let baseArmy = [...document.getElementById('base-army-table').childNodes];
   baseArmy.shift();
   baseArmy.forEach(row=>{
     row.childNodes.forEach(td=>{
-      army.push(td.firstChild.id);
+      if(td.hasChildNodes()){
+        army.push(td.firstChild.id);
+        td.firstChild.remove();
+      }
     });
   });
   return army;
 };
 
-const appendPiecesToHome = (imgSrcDirectory) => {
-  let initialId = getInitChildId(imgSrcDirectory);
-  let army = fetchArmyFromBase();
-  let baseCells = getBaseGridIds(initialId,40);
-  let randomNumber,position;
-  army.forEach((piece, index) => {
-    randomNumber = Math.floor(Math.random()*(40-index));
-    position=baseCells[randomNumber];
-    appendImage(position, piece, imgSrcDirectory);
-    baseCells.splice(randomNumber,1);
+const getFreeHomeLand = ()=>{
+  let grid = [...document.getElementById('grid').childNodes];
+  let homeLand = [];
+  grid.shift();
+  grid.forEach(row=>{
+    row.childNodes.forEach(td=>{
+      if(!td.hasChildNodes()){
+        homeLand.push(td.id);
+      }
+    });
   });
-  removePiecesFromBase(army);
+  return homeLand;
+};
+
+const appendPiecesToHome = (imgSrcDirectory) => {
+  let army = fetchArmyFromBase();
+  let freeLand = getFreeHomeLand();
+  let randomNumber,position;
+  army.forEach((piece) => {
+    randomNumber = Math.floor(Math.random()*(freeLand.length-1));
+    position=freeLand[randomNumber];
+    appendImage(position, piece, imgSrcDirectory);
+    freeLand.splice(randomNumber,1);
+  });
   document.getElementById('random').style.display = 'none';
 };
 
