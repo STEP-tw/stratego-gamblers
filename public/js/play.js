@@ -40,13 +40,11 @@ const getClassFor = (pieceID) => {
 };
 
 const highlightMoves = (potentialMoves) => {
-  potentialMoves.freeMoves.forEach(function(move) {
-    let pos = document.getElementById(move);
-    pos.classList.add('free-move');
+  potentialMoves.freeMoves.forEach(pos=>{
+    add(pos,'free-move');
   });
-  potentialMoves.attackMoves.forEach(function(move) {
-    let pos = document.getElementById(move);
-    pos.classList.add('attacking-move');
+  potentialMoves.attackMoves.forEach(pos=>{
+    add(pos,'attacking-move');
   });
 };
 
@@ -83,13 +81,9 @@ const getLocation = (event) => {
   doXhr('/selectedLoc', 'POST', reqListener, postData, onFail);
 };
 
-const drawGrid = (containerId, numOfRows, numOfCols, initialID, idGrowth) => {
+const drawBattlefield = (containerId,numOfRows,numOfCols,initialID,idGrowth)=>{
+  drawGrid(containerId, numOfRows, numOfCols, initialID, idGrowth);
   let grid = document.getElementById(containerId);
-  for (let rows = 0; rows < numOfRows; rows++) {
-    let row = generateRow(initialID, numOfCols);
-    initialID += idGrowth;
-    grid.appendChild(row);
-  }
   grid.addEventListener('click', getLocation);
 };
 
@@ -167,7 +161,7 @@ const getHoriPath = function(initial, last) {
   let prevPos = initial.yCor;
   let currentPos = last.yCor;
   do {
-    path.push(`${initial.xCor}_${prevPos}`);    
+    path.push(`${initial.xCor}_${prevPos}`);
     if (prevPos < currentPos) {
       prevPos++;
     } else {
@@ -182,7 +176,7 @@ const getVertPath = function(initial, last) {
   let prevPos = initial.xCor;
   let currentPos = last.xCor;
   do {
-    path.push(`${prevPos}_${initial.yCor}`);    
+    path.push(`${prevPos}_${initial.yCor}`);
     if (prevPos < currentPos) {
       prevPos++;
     } else {
@@ -239,23 +233,31 @@ const showKilledPieces = (killedPieces, myArmy, oppArmy) => {
   showCapturedArmy(troopsCaptured, 'O_', firstBlueCell);
 };
 
-const highlightFreeMoves = (updatedLocs) => {
-  let path = getPath(updatedLocs);
+let add = (pos,className) =>{
+  document.getElementById(pos).classList.add(className);
+};
+
+let remove = (pos,className) =>{
+  document.getElementById(pos).classList.remove(className);
+};
+
+const updateClass = (positions,action)=>{
+  let path = getPath(positions);
   path.forEach((pos) => {
-    document.getElementById(pos).classList.add('start-move');
+    action(pos,'start-move');
   });
-  document.getElementById(updatedLocs[1]).classList.add('last-move');
+  action(positions[1],'last-move');
+};
+
+const highlightFreeMoves = (updatedLocs) => {
+  updateClass(updatedLocs,add);
 };
 
 let freeMoves = [];
 
 const deemphasizeFreeMoves = () => {
   if (freeMoves.length > 0) {
-    let path = getPath(freeMoves);
-    path.forEach((pos) => {
-      document.getElementById(pos).classList.remove('start-move');
-    });
-    document.getElementById(freeMoves[1]).classList.remove('last-move');
+    updateClass(freeMoves,remove);
   }
 };
 
@@ -279,7 +281,7 @@ const changePosition = function(positions){
 };
 
 const getFirstEmptyCell = function(table){
-  let firstCellId = table.querySelector('tr td:first-child').id;  
+  let firstCellId = table.querySelector('tr td:first-child').id;
   let firstEmptyCell;
   do {
     firstEmptyCell = table.querySelector(`tr [id="${firstCellId}"]`);
@@ -309,7 +311,7 @@ const updateKilledPieceCount = function(killedPieces){
     if(pieceClass.endsWith('-O')){
       updateTroops(pieceClass,capturedTroops);
       return;
-    }  
+    }
     updateTroops(pieceClass,lostTroop);
   });
 };
@@ -320,10 +322,10 @@ const updateBattlePosition = function(killedPiecesPos,movePositions){
     document.getElementById(killedPiecesPos[1]).removeAttribute('class');
     return;
   }
-  let killPiecePos = movePositions.find(pos=>pos==killedPiecesPos[0]);  
+  let killPiecePos = movePositions.find(pos=>pos==killedPiecesPos[0]);
   document.getElementById(killPiecePos).removeAttribute('class');
   if(killPiecePos == movePositions[1]){
-    let pieceClass = document.getElementById(movePositions[0]).className; 
+    let pieceClass = document.getElementById(movePositions[0]).className;
     document.getElementById(killPiecePos).classList.add(pieceClass);
     document.getElementById(killPiecePos).classList.remove('start-move');
     document.getElementById(movePositions[0]).removeAttribute('class');
@@ -346,7 +348,7 @@ const hideBattlePiece = function(revealedPieces){
     if(pieceClass.endsWith('-O')){
       piece.removeAttribute('class');
       piece.className ='opponent';
-    } 
+    }
   });
 };
 
@@ -399,8 +401,8 @@ const initiatePolling = function(myArmy,oppArmy){
   const applyChanges = function(){
     if(this.responseText){
       timeStamp = new Date().getTime();
-      let gameData = JSON.parse(this.responseText); 
-      updateChanges(gameData,myArmy,oppArmy);  
+      let gameData = JSON.parse(this.responseText);
+      updateChanges(gameData,myArmy,oppArmy);
     }
   };
   let callBack =() => {

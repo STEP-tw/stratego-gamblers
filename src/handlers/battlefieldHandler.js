@@ -1,5 +1,12 @@
 const isValidData = require('../lib/validate.js').isValidData;
 const getStatusMsg = require('../lib/lib.js').getStatusMsg;
+const sendData = (game,sessionId,action)=>{
+  let perform = {
+    'getBoard' : game.getBoardFor(sessionId),
+    'reveal' : game.revealBattlefieldFor(sessionId)
+  };
+  return perform[action];
+};
 class BattlefieldHandler {
   constructor(){
 
@@ -17,10 +24,8 @@ class BattlefieldHandler {
     res.status(206).send('pieces or location missing!');
   }
   getBattlefield(req,res){
-    let game = req.app.game;
-    let sessionId = req.cookies.sessionId;
-    let boardInfo = game.getBoardFor(sessionId);
-    res.send(JSON.stringify(boardInfo));
+    let boardInfo = sendData(req.app.game,req.cookies.sessionId,'getBoard');
+    res.json(boardInfo);
   }
   updateBattlefield(req,res){
     let game = req.app.game;
@@ -53,10 +58,8 @@ class BattlefieldHandler {
     res.send(gameChanges);
   }
   sendRevealedBattlefield(req,res){
-    let game = req.app.game;
-    let sessionId = req.cookies.sessionId;
-    let battlefield = game.revealBattlefieldFor(sessionId);
-    res.send(JSON.stringify(battlefield));
+    let battlefield = sendData(req.app.game,req.cookies.sessionId,'reveal');
+    res.json(battlefield);
   }
 }
 module.exports = BattlefieldHandler;

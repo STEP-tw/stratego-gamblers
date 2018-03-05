@@ -12,16 +12,9 @@ const hideElements = function() {
   document.getElementById('helpButton').style.visibility = 'hidden';
 };
 
-const getCreateForm = function() {
+const getForm = function(formType) {
   hideElements();
-  document.getElementById("bluebutton").disabled = true;
-  document.getElementById('create').style.display = 'block';
-};
-
-const getJoinForm = function() {
-  hideElements();
-  document.getElementById("bluebutton").disabled = true;
-  document.getElementById('join').style.display = 'block';
+  document.getElementById(formType).style.display = 'block';
 };
 
 const showGameId = function() {
@@ -65,7 +58,7 @@ const showError = function(){
     getJoinForm();
     return;
   }
-  setInterval(getGameStatus,1000);  
+  setInterval(getGameStatus,1000);
 };
 
 const joinGame = function(){

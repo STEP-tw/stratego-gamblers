@@ -67,3 +67,12 @@ const generateRedBaseGrid = function() {
 const generateBlueBaseGrid = function() {
   generateBaseGrid("blueArmy", this.responseText);
 };
+
+const drawGrid = (containerId, numOfRows, numOfCols, initialID, idGrowth) => {
+  let grid = document.getElementById(containerId);
+  for (let rows = 0; rows < numOfRows; rows++) {
+    let row = generateRow(initialID, numOfCols);
+    initialID += idGrowth;
+    grid.appendChild(row);
+  }
+};

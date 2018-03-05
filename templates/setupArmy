@@ -77,6 +77,26 @@
             <p id="piece-title">Spy</p>
             <p id="piece-desc">The Spy can capture the Marshal when attacking, but is captured by all other pieces.</p>
           </div>
+          <div class="piece sergeant">
+            <p id="piece-title">Sergeant</p>
+            <p id="piece-desc">The Sergeant defeats all lower ranked pieces., but can be captured by all higher ranked pieces.</p>
+          </div>
+          <div class="piece lieutenant">
+            <p id="piece-title">Lieutenant</p>
+            <p id="piece-desc">The Lieutenant defeats all lower ranked pieces., but can be captured by all higher ranked pieces.</p>
+          </div>
+          <div class="piece captain">
+            <p id="piece-title">Captain</p>
+            <p id="piece-desc">The Captain defeats all lower ranked pieces., but can be captured by all higher ranked pieces.</p>
+          </div>
+          <div class="piece major">
+            <p id="piece-title">Major</p>
+            <p id="piece-desc">The Major defeats all lower ranked pieces., but can be captured by all higher ranked pieces.</p>
+          </div>
+          <div class="piece colonel">
+            <p id="piece-title">Colonel</p>
+            <p id="piece-desc">The Colonel defeats all lower ranked pieces., but can be captured by all higher ranked pieces.</p>
+          </div>
         </div>
       </div>
       <div class="msg">

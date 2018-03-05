@@ -45,19 +45,20 @@ class Game {
     this.battlefield.setFieldFor(playerId, this.pieces, placedArmyPos);
     player.addPieces(this.pieces,this.gameType);
   }
-  getPlayerName(teamColor) {
+  getPlayer(teamColor,player) {
     let players = this.players;
-    if (teamColor == "red") {
-      return players[0].getName();
-    }
-    return players[1].getName();
+    let teams = {
+      'red' : 0,
+      'blue' : 1
+    };
+    let playerLoc = (teams[teamColor]+player)%2;
+    return players[playerLoc].getName();
+  }
+  getPlayerName(teamColor) {
+    return this.getPlayer(teamColor,0);
   }
   getOpponentName(teamColor){
-    let players = this.players;
-    if (teamColor == "blue") {
-      return players[0].getName();
-    }
-    return players[1].getName();
+    return this.getPlayer(teamColor,1);
   }
   haveBothPlayersJoined() {
     let numberOfPlayers = this.players.length;
@@ -165,7 +166,7 @@ class Game {
     };
   }
   revealBattlefieldFor(sessionId){
-    let playerId = this.getPlayerIndexBy(sessionId);    
+    let playerId = this.getPlayerIndexBy(sessionId);
     let revealArmy = this.battlefield.revealArmyFor(playerId);
     let lakePos = this.battlefield.getLakePos();
     revealArmy = getSymbolForPos(revealArmy,lakePos,'X');
@@ -189,20 +190,20 @@ class Game {
   }
   getChanges(sessionId){
     let playerId = this.getPlayerIndexBy(sessionId);
-    let status = this.getGameStatus();    
-    let turnMsg = this.getTurnMessage(playerId); 
+    let status = this.getGameStatus();
+    let turnMsg = this.getTurnMessage(playerId);
     let revealPiece = this.battlefield.getRevealPiece(playerId);
     let killedPieces = this.battlefield.getKilledPieces();
     this.battlefield.resetKilledPieces();
-    let updatedLocs = this.battlefield.getUpdatedLocations();  
-    let moveType = this.battlefield.getMoveType();         
+    let updatedLocs = this.battlefield.getUpdatedLocations();
+    let moveType = this.battlefield.getMoveType();
     let gameChanges ={
       'updatedLocs':updatedLocs,
       'turnMsg': turnMsg,
       'killedPieces': killedPieces,
       'revealPiece':revealPiece,
       'moveType':moveType,
-      'status': status      
+      'status': status
     };
     return gameChanges;
   }

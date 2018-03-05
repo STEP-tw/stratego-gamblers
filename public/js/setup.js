@@ -57,15 +57,6 @@ const generateCell = (id) => {
   return cell;
 };
 
-const drawGrid = (containerId, numOfRows, numOfCols, initialID, idGrowth) => {
-  let grid = document.getElementById(containerId);
-  for (let rows = 0; rows < numOfRows; rows++) {
-    let row = generateRow(initialID, numOfCols);
-    initialID += idGrowth;
-    grid.appendChild(row);
-  }
-};
-
 const getNameForRank = (rank) => {
   let pieces = {
     'B': 'bomb',
@@ -73,6 +64,11 @@ const getNameForRank = (rank) => {
     'S': 'spy',
     2: 'scout',
     3: 'miner',
+    4: 'sergeant',
+    5: 'lieutenant',
+    6: 'captain',
+    7: 'major',
+    8: 'colonel',
     9: 'general',
     10: 'marshal'
   };
