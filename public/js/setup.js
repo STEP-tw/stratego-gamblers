@@ -34,6 +34,7 @@ const removeDraggable = () => {
   let battleField = document.getElementById("grid");
   grid.childNodes.forEach(function(row) {
     row.childNodes.forEach(function(cell) {
+      cell.removeEventListener('drop',drop,false);
       if(cell.hasChildNodes()){
         cell.childNodes[0].removeEventListener('dragstart', drag, false);
       }
