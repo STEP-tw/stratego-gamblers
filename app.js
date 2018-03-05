@@ -41,6 +41,11 @@ const haveBothPlayersJoined = function(req, res) {
   res.end();
 };
 
+const sendArmyDetails = function(req,res){
+  let game = req.app.game;
+  res.json(game.getArmy());
+};
+
 const checkIfAlreadySetup = function(req,res,next){
   let game = req.app.game;
   let previousUrl = req.cookies.previousUrl;
@@ -98,10 +103,6 @@ const validatePlayerStatus = function (req, res, next) {
   }
 };
 
-const sendArmyDetails = function(req,res){
-  let game = req.app.game;
-  res.json(game.getArmy());
-};
 
 const unauthorizedUrls = ['/play', '/setupArmy', '/battlefield',
   'isOpponentReady', '/setup/player/:playerId',

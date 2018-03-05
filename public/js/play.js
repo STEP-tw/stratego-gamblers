@@ -41,10 +41,10 @@ const getClassFor = (pieceID) => {
 
 const highlightMoves = (potentialMoves) => {
   potentialMoves.freeMoves.forEach(pos=>{
-    add(pos,'free-move');
+    addToClassList(pos,'free-move');
   });
   potentialMoves.attackMoves.forEach(pos=>{
-    add(pos,'attacking-move');
+    addToClassList(pos,'attacking-move');
   });
 };
 
@@ -52,9 +52,8 @@ const removeHighlight = (moves) => {
   if (moves) {
     moves = moves.attackMoves.concat(moves.freeMoves);
     moves.forEach(function(posID) {
-      let move = document.getElementById(posID);
-      move.classList.remove('attacking-move');
-      move.classList.remove('free-move');
+      removeFromClassList(posID,'attacking-move');
+      removeFromClassList(posID,'free-move');
     });
   }
 };
@@ -186,14 +185,14 @@ const getVertPath = function(initial, last) {
   return path;
 };
 
-let getCoordinate = function(id) {
+const getCoordinate = function(id) {
   return {
     xCor: +id[0],
     yCor: +id[2]
   };
 };
 
-let isSameRow = function(first, second) {
+const isSameRow = function(first, second) {
   return first.xCor == second.xCor;
 };
 
@@ -211,8 +210,8 @@ const getPath = function(positions) {
 const updateKilledPieces = function(cellId,pieceId,count,team){
   let pieceClass = getClassFor(team+pieceId);
   document.getElementById(cellId).className = pieceClass;
-  document.getElementById(cellId).classList.add('count');
-  document.getElementById(cellId).innerText = count;
+  addToClassList(cellId,'count');
+  setText(cellId,count);
 };
 
 const showCapturedArmy = function(army, team, cellId) {
@@ -233,14 +232,6 @@ const showKilledPieces = (killedPieces, myArmy, oppArmy) => {
   showCapturedArmy(troopsCaptured, 'O_', firstBlueCell);
 };
 
-let add = (pos,className) =>{
-  document.getElementById(pos).classList.add(className);
-};
-
-let remove = (pos,className) =>{
-  document.getElementById(pos).classList.remove(className);
-};
-
 const updateClass = (positions,action)=>{
   let path = getPath(positions);
   path.forEach((pos) => {
@@ -250,14 +241,14 @@ const updateClass = (positions,action)=>{
 };
 
 const highlightFreeMoves = (updatedLocs) => {
-  updateClass(updatedLocs,add);
+  updateClass(updatedLocs,addToClassList);
 };
 
 let freeMoves = [];
 
 const deemphasizeFreeMoves = () => {
   if (freeMoves.length > 0) {
-    updateClass(freeMoves,remove);
+    updateClass(freeMoves,removeFromClassList);
   }
 };
 
@@ -326,8 +317,8 @@ const updateBattlePosition = function(killedPiecesPos,movePositions){
   document.getElementById(killPiecePos).removeAttribute('class');
   if(killPiecePos == movePositions[1]){
     let pieceClass = document.getElementById(movePositions[0]).className;
-    document.getElementById(killPiecePos).classList.add(pieceClass);
-    document.getElementById(killPiecePos).classList.remove('start-move');
+    addToClassList(killPiecePos,pieceClass);
+    removeFromClassList(killPiecePos,'start-move');
     document.getElementById(movePositions[0]).removeAttribute('class');
   }
 };
@@ -360,38 +351,61 @@ const showRevealedBattlefield = function(myArmy,oppArmy){
   doXhr('/revealedBattlefield', 'POST', reqListener, null, () => {});
 };
 
+const showTurn = (turnMsg) => {
+  if(turnMsg.includes('You')){
+    addToClassList('turn-msg','your-turn');
+  }else {
+    removeFromClassList('turn-msg','your-turn');
+  }
+  setText('turn-msg',turnMsg);
+};
+
+const isFreeMove = (gameData) => {
+  return gameData.moveType=='freeMove' && gameData.updatedLocs.length>0;
+};
+
+const updateFreeMoves = (freeMoves) => {
+  changePosition(freeMoves);
+  highlightFreeMoves(freeMoves);
+};
+
+const isBattleMove = (gameData) => {
+  return gameData.moveType=='battle' && gameData['killedPieces'].length>0;
+};
+
+const updateBattleMoves = (gameData) => {
+  revealBattlePiece(gameData['revealPiece']);
+  setTimeout(()=>{
+    updateKilledPieceCount(gameData['killedPieces']);
+    updateBattlePosition(gameData['killedPieces'],gameData.updatedLocs);
+    hideBattlePiece(gameData.updatedLocs);
+  },1000);
+};
+
+const isGameOver = (status) => {
+  return status.gameOver;
+};
+
+const announceResult = (status,myArmy,oppArmy) => {
+  setTimeout(()=>{
+    showRevealedBattlefield(myArmy,oppArmy);
+    announceWinner(status);
+  },1000);
+  clearInterval(interval);
+  rematch();
+};
+
 const updateChanges = (gameData, myArmy, oppArmy) => {
   let status = gameData.status;
-  let killedPieces = gameData['killedPieces'];
-  let revealPiece = gameData['revealPiece'];
-  let turnBox = document.getElementById('turn-msg');
-  if(gameData.turnMsg.includes('You')){
-    turnBox.classList.add('your-turn');
-  }else {
-    turnBox.classList.remove('your-turn');
-  }
-  turnBox.innerText = `${gameData.turnMsg}`;
+  showTurn(gameData.turnMsg);
   deemphasizeFreeMoves();
-  if (gameData.moveType=='freeMove' && gameData.updatedLocs.length>0) {
-    freeMoves = gameData.updatedLocs;
-    changePosition(freeMoves);
-    highlightFreeMoves(freeMoves);
+  if (isFreeMove(gameData)) {
+    updateFreeMoves(gameData.updatedLocs);
+  }else if(isBattleMove(gameData)){
+    updateBattleMoves(gameData);
   }
-  if(gameData.moveType=='battle' && killedPieces.length>0){
-    revealBattlePiece(revealPiece);
-    setTimeout(()=>{
-      updateKilledPieceCount(killedPieces);
-      updateBattlePosition(killedPieces,gameData.updatedLocs);
-      hideBattlePiece(gameData.updatedLocs);
-    },1000);
-  }
-  if (status.gameOver) {
-    setTimeout(()=>{
-      showRevealedBattlefield(myArmy,oppArmy);
-      announceWinner(status);
-    },1000);
-    clearInterval(interval);
-    rematch();
+  if (isGameOver(status)) {
+    announceResult(status,myArmy,oppArmy);
   }
 };
 

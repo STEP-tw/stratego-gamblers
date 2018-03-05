@@ -1,5 +1,3 @@
-const getElement = (id) => document.querySelector(id);
-
 const drag = (event) => {
   event.dataTransfer.setData("parent", event.target.parentNode.id);
 };
@@ -7,7 +5,7 @@ const drag = (event) => {
 const drop = (event) => {
   event.preventDefault();
   let parentId = event.dataTransfer.getData("parent");
-  let parent = document.getElementById(parentId);
+  let parent = getElement(parentId);
   let imgTodrop = parent.childNodes[0];
   let target = event.target;
   if (target.tagName == "IMG") {
@@ -31,7 +29,7 @@ const applyDragProperty = (img) => {
 };
 
 const removeDraggable = () => {
-  let battleField = document.getElementById("grid");
+  let battleField = getElement("grid");
   grid.childNodes.forEach(function(row) {
     row.childNodes.forEach(function(cell) {
       cell.removeEventListener('drop',drop,false);
@@ -101,7 +99,7 @@ const getBaseGridIds = function(initialId,armyLength) {
 };
 
 const appendImage = (baseCell, id, imgSrcDirectory) => {
-  let basePosition = document.getElementById(baseCell);
+  let basePosition = getElement(baseCell);
   let image = document.createElement("img");
   let src = `img/${imgSrcDirectory}/${id}.png`;
   let height = "77";
@@ -112,7 +110,7 @@ const appendImage = (baseCell, id, imgSrcDirectory) => {
 };
 
 const appendPiecesToBase = (army,imgSrcDirectory) => {
-  let baseGrid = document.getElementById("base-army-table");
+  let baseGrid = getElement("base-army-table");
   let initialId = baseGrid.childNodes[1].childNodes[0].id;
   let baseCells = getBaseGridIds(initialId,army.length);
   baseCells.forEach((element, index) => {
@@ -122,15 +120,15 @@ const appendPiecesToBase = (army,imgSrcDirectory) => {
 
 const getInitChildId = (army)=>{
   let ids = {
-    redArmy: document.getElementById('grid').lastChild.firstChild.id,
-    blueArmy: document.getElementById('grid').childNodes[1].firstChild.id
+    redArmy: getElement('grid').lastChild.firstChild.id,
+    blueArmy: getElement('grid').childNodes[1].firstChild.id
   };
   return ids[army];
 };
 
 const fetchArmyFromBase = function(){
   let army = [];
-  let baseArmy = [...document.getElementById('base-army-table').childNodes];
+  let baseArmy = [...getElement('base-army-table').childNodes];
   baseArmy.shift();
   baseArmy.forEach(row=>{
     row.childNodes.forEach(td=>{
@@ -144,7 +142,7 @@ const fetchArmyFromBase = function(){
 };
 
 const getFreeHomeLand = ()=>{
-  let grid = [...document.getElementById('grid').childNodes];
+  let grid = [...getElement('grid').childNodes];
   let homeLand = [];
   grid.shift();
   grid.forEach(row=>{
@@ -167,11 +165,11 @@ const appendPiecesToHome = (imgSrcDirectory) => {
     appendImage(position, piece, imgSrcDirectory);
     freeLand.splice(randomNumber,1);
   });
-  document.getElementById('random').style.display = 'none';
+  getElement('random').style.display = 'none';
 };
 
 const notifyPlayer = (message) => {
-  document.getElementById("msg-content-para").innerText = message;
+  getElement("msg-content-para").innerText = message;
 };
 
 const fetchCellId = (cell) => {
@@ -185,7 +183,7 @@ const fetchCellId = (cell) => {
 
 const fetchBattleField = () => {
   let fetchedDetails = "";
-  let battleField = document.getElementById("grid");
+  let battleField = getElement("grid");
   grid.childNodes.forEach(function(row) {
     row.childNodes.forEach(function(cell) {
       fetchedDetails += fetchCellId(cell);
@@ -195,21 +193,17 @@ const fetchBattleField = () => {
 };
 
 const addEventListener = (listner, type, elementID) => {
-  let element = document.getElementById(elementID);
+  let element = getElement(elementID);
   if (element) {
     return element.addEventListener(type, listner);
   }
 };
 
 const removeEventListener = (listner, type, elementID) => {
-  let element = document.getElementById(elementID);
+  let element = getElement(elementID);
   if (element) {
     return element.removeEventListener(type, listner);
   }
-};
-
-const setText = (id, text) => {
-  getElement(id).innerText = text;
 };
 
 const getOpponentStatus = function() {
@@ -236,7 +230,7 @@ const getPiecesList = function(piecesWithQty){
 };
 
 const notDeployedFullArmy = (pieceAndLocation) => {
-  let base = document.getElementById('base-army-table');
+  let base = getElement('base-army-table');
   let armyStrength = (base.childNodes.length-1)*10;
   let numberOfPlayingPiece = pieceAndLocation.split('&').length - 1;
   return numberOfPlayingPiece != armyStrength;

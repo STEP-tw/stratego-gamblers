@@ -1,3 +1,18 @@
+const getElement = (id) => document.getElementById(id);
+
+const setText = (id, text) => {
+  getElement(id).innerText = text;
+};
+
+const addToClassList = (id,className) =>{
+  document.getElementById(id).classList.add(className);
+};
+
+const removeFromClassList = (id,className) =>{
+  document.getElementById(id).classList.remove(className);
+};
+
+
 const doXhr = function(url, method, reqListener, data, onFailed) {
   let xhr = new XMLHttpRequest();
   xhr.open(method, url);
