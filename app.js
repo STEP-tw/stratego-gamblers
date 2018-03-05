@@ -10,6 +10,7 @@ const BattlefieldHandler = require('./src/handlers/battlefieldHandler.js');
 const ExitHandler = require('./src/handlers/exitHandler.js');
 const battlefieldHandler = new BattlefieldHandler();
 const GamesHandler = require('./src/handlers/gamesHandler.js');
+
 app.fs = fs;
 app.sessions = new Sessions();
 app.gamesHandler = new GamesHandler();
@@ -93,18 +94,6 @@ const validatePlayerStatus = function (req, res, next) {
   }
 };
 
-const sendBattlefieldChanges = function(req,res){
-  let timeStamp = req.body.timeStamp;
-  let sessionId = req.cookies.sessionId;
-  let game = req.app.game;
-  if(!game.isBoardUpdated(timeStamp)){
-    res.end();
-    return;
-  }
-  let changes = game.getChanges(sessionId);
-  res.send(changes);
-};
-
 const sendArmyDetails = function(req,res){
   let game = req.app.game;
   res.json(game.getArmy());
@@ -125,16 +114,17 @@ app.use(unauthorizedUrls, redirectToHome);
 app.use(express.static('public'));
 app.post("/createGame", new CreateGameHandler().getRequestHandler());
 app.post("/joinGame", new JoinGameHandler().getRequestHandler());
-app.post('/setup/player/:playerId', battlefieldHandler.setBattlefieldHandler());
+app.post('/setup/player/:playerId', battlefieldHandler.setBattlefield);
 app.use('/setupArmy',checkIfAlreadySetup);
 app.get('/setupArmy', setupArmy);
 app.get('/isOpponentReady', sendOpponentStatus);
 app.get('/hasOpponentJoined', haveBothPlayersJoined);
 app.use('/play', validatePlayerStatus);
 app.get('/play', renderGamePage);
-app.post('/battlefield', battlefieldHandler.getBattlefieldHandler());
-app.post('/battlefieldChanges',sendBattlefieldChanges);
-app.post('/selectedLoc', battlefieldHandler.updateBattlefieldHandler());
+app.post('/battlefield', battlefieldHandler.getBattlefield);
+app.post('/battlefieldChanges',battlefieldHandler.sendBattlefieldChanges);
+app.post('/revealedBattlefield',battlefieldHandler.sendRevealedBattlefield);
+app.post('/selectedLoc', battlefieldHandler.updateBattlefield);
 app.get('/playAgain', new ExitHandler().restartGameHandler());
 app.get('/leave', new ExitHandler().quitGameHandler());
 app.get('/army',sendArmyDetails);

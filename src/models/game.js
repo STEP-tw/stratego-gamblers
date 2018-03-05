@@ -164,13 +164,17 @@ class Game {
       winner:this.winner
     };
   }
-  revealBattlefieldFor(playerId){
+  revealBattlefieldFor(sessionId){
+    let playerId = this.getPlayerIndexBy(sessionId);    
     let revealArmy = this.battlefield.revealArmyFor(playerId);
     let lakePos = this.battlefield.getLakePos();
     revealArmy = getSymbolForPos(revealArmy,lakePos,'X');
     let emptyPos = this.battlefield.getEmptyPositions(revealArmy);
     let completeBattlefield = getSymbolForPos(revealArmy,emptyPos,'E');
-    return completeBattlefield;
+    let boardInfo = {
+      'battlefield': completeBattlefield
+    };
+    return boardInfo;
   }
   getBoardFor(sessionId){
     let playerId = this.getPlayerIndexBy(sessionId);
@@ -189,7 +193,7 @@ class Game {
     let turnMsg = this.getTurnMessage(playerId); 
     let revealPiece = this.battlefield.getRevealPiece(playerId);
     let killedPieces = this.battlefield.getKilledPieces();
-    this.battlefield.removeKilledPieces();
+    this.battlefield.resetKilledPieces();
     let updatedLocs = this.battlefield.getUpdatedLocations();  
     let moveType = this.battlefield.getMoveType();         
     let gameChanges ={

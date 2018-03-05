@@ -56,25 +56,84 @@ describe('BattleFieldHandler', () => {
     });
   });
   describe('/battlefieldChanges',()=>{
-    it('should reponse with changes which are currently made', (done) => {
-      app.game.timeStamp = 5000;      
-      request(app)
-        .post('/battlefieldChanges')
-        .send('timeStamp=4000')     
-        .set('cookie',['sessionId=12345','gameId=1'])
-        .expect(200)
-        .expect(/updatedLocs/)
-        .expect(/turnMsg/)
-        .end(done);
+    describe('game in play',()=>{
+      it('should reponse with changes which are currently made', (done) => {
+        app.game.timeStamp = 5000;      
+        request(app)
+          .post('/battlefieldChanges')
+          .send('timeStamp=4000')     
+          .set('cookie',['sessionId=12345','gameId=1'])
+          .expect(200)
+          .expect(/updatedLocs/)
+          .expect(/turnMsg/)
+          .end(done);
+      });
+      it('should respond nothing if board is not updated', (done) => {
+        app.game.timeStamp = 5000;
+        request(app)
+          .post('/battlefieldChanges')
+          .send('timeStamp=7000')
+          .set('cookie',['sessionId=12345','gameId=1'])
+          .expect(200)
+          .expect((res)=>assert.isObject(res.body))
+          .end(done);
+      });
+      it('should respond with revealed piece', (done) => {
+        app.game.timeStamp = 10000;
+        app.game.battlefield.revealPieces = 
+        {0:{pos:'3_2',pieceId:'2'},1:{pos:'9_2',pieceId:'2'}};
+        request(app)
+          .post('/battlefieldChanges')
+          .send('timeStamp=7000')
+          .set('cookie',['sessionId=12345','gameId=1'])
+          .expect(200)
+          .expect(/"loc":"9_2","pieceId":"O_2"/)
+          .end(done);
+      });
     });
-    it('should respond nothing if board is not updated', (done) => {
-      app.game.timeStamp = 5000;
+    describe('game over',()=>{
+      beforeEach(()=>{
+        app.game.timeStamp = 10000;
+        app.game.gameOver = true;
+        app.game.winner = 12345;
+      });
+      it('should respond with win status when game is over', (done) => {
+        request(app)
+          .post('/battlefieldChanges')
+          .send('timeStamp=7000')
+          .set('cookie',['sessionId=12345','gameId=1'])
+          .expect(200)
+          .expect(/"gameOver":true,"winner":"win"/)
+          .end(done);
+      });
+      it('should respond with lost status when game is over', (done) => {
+        request(app)
+          .post('/battlefieldChanges')
+          .send('timeStamp=7000')
+          .set('cookie',['sessionId=123456','gameId=1'])
+          .expect(200)
+          .expect(/"gameOver":true,"winner":"lose"/)
+          .end(done);
+      });
+      it('should respond with surrender when a player leave the game',(done)=>{
+        app.game.gameOver = 'quit';       
+        request(app)
+          .post('/battlefieldChanges')
+          .send('timeStamp=7000')
+          .set('cookie',['sessionId=123456','gameId=1'])
+          .expect(200)
+          .expect(/"gameOver":"quit","winner":"surrender"/)
+          .end(done);
+      });
+    });
+  });
+  describe('revealedBattlefield', () => {
+    it('should return complete revealed battlefield',(done)=>{
       request(app)
-        .post('/battlefieldChanges')
-        .send('timeStamp=7000')
+        .post('/revealedBattlefield')
         .set('cookie',['sessionId=12345','gameId=1'])
         .expect(200)
-        .expect((res)=>assert.isObject(res.body))
+        .expect(/"3_2":"2","3_9":"B","9_2":"O_2","9_9":"O_B"/)
         .end(done);
     });
   });

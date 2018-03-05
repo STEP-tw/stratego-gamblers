@@ -14,15 +14,15 @@ const getClassFor = (pieceID) => {
     'S': 'spy',
     'O': 'opponent',
     'X': 'lake',
-    2: 'scout',
-    3: 'miner',
+    '2': 'scout',
+    '3': 'miner',
     '4':'sergeant',
     '5':'lieutenant',
     '6':'captain',
     '7':'major',
     '8':'colonel',
-    9: 'general',
-    10: 'marshal',
+    '9': 'general',
+    '10': 'marshal',
     'O_B': 'bomb-O',
     'O_F': 'flag-O',
     'O_S': 'spy-O',
@@ -91,14 +91,6 @@ const drawGrid = (containerId, numOfRows, numOfCols, initialID, idGrowth) => {
     grid.appendChild(row);
   }
   grid.addEventListener('click', getLocation);
-};
-
-const setImageAttributes = (img, src, id, height, width) => {
-  img.src = src;
-  img.id = id;
-  img.height = height;
-  img.width = width;
-  return img;
 };
 
 const appendImage = (baseCell, id, imgSrcDirectory) => {
@@ -174,14 +166,14 @@ const getHoriPath = function(initial, last) {
   let path = [];
   let prevPos = initial.yCor;
   let currentPos = last.yCor;
-  while (currentPos != prevPos) {
+  do {
+    path.push(`${initial.xCor}_${prevPos}`);    
     if (prevPos < currentPos) {
-      prevPos = prevPos + 1;
+      prevPos++;
     } else {
-      prevPos = prevPos - 1;
+      prevPos--;
     }
-    path.push(`${initial.xCor}_${prevPos}`);
-  }
+  } while (currentPos != prevPos);
   return path;
 };
 
@@ -189,14 +181,14 @@ const getVertPath = function(initial, last) {
   let path = [];
   let prevPos = initial.xCor;
   let currentPos = last.xCor;
-  while (currentPos != prevPos) {
+  do {
+    path.push(`${prevPos}_${initial.yCor}`);    
     if (prevPos < currentPos) {
-      prevPos = prevPos + 1;
+      prevPos++;
     } else {
-      prevPos = prevPos - 1;
+      prevPos--;
     }
-    path.push(`${prevPos}_${initial.yCor}`);
-  }
+  } while (currentPos != prevPos);
   return path;
 };
 
@@ -225,6 +217,7 @@ const getPath = function(positions) {
 const updateKilledPieces = function(cellId,pieceId,count,team){
   let pieceClass = getClassFor(team+pieceId);
   document.getElementById(cellId).className = pieceClass;
+  document.getElementById(cellId).classList.add('count');
   document.getElementById(cellId).innerText = count;
 };
 
@@ -247,24 +240,22 @@ const showKilledPieces = (killedPieces, myArmy, oppArmy) => {
 };
 
 const highlightFreeMoves = (updatedLocs) => {
-  let startPos = updatedLocs[0];
-  document.getElementById(startPos).classList.add('start-move');
   let path = getPath(updatedLocs);
   path.forEach((pos) => {
     document.getElementById(pos).classList.add('start-move');
   });
+  document.getElementById(updatedLocs[1]).classList.add('last-move');
 };
 
 let freeMoves = [];
 
 const deemphasizeFreeMoves = () => {
   if (freeMoves.length > 0) {
-    let startPos = freeMoves[0];
-    document.getElementById(startPos).classList.remove('start-move');
     let path = getPath(freeMoves);
     path.forEach((pos) => {
-      document.getElementById(pos).classList.remove('last-move');
+      document.getElementById(pos).classList.remove('start-move');
     });
+    document.getElementById(freeMoves[1]).classList.remove('last-move');
   }
 };
 
@@ -272,7 +263,7 @@ const updateBattlefield = (gameData, myArmy, oppArmy) => {
   let battlefield = gameData['battlefield'];
   let killedPieces = gameData['killedPieces'];
   showBattlefield(battlefield, myArmy);
-  showKilledPieces(killedPieces, myArmy, oppArmy);
+  killedPieces && showKilledPieces(killedPieces, myArmy, oppArmy);
 };
 
 const changePosition = function(positions){
@@ -282,7 +273,7 @@ const changePosition = function(positions){
   let secondPos = positions[1];
   let newLoc = document.getElementById(secondPos);
   newLoc.className = pieceClass;
-  piece.className = '';
+  piece.removeAttribute('class');
 };
 
 const getFirstEmptyCell = function(table){
@@ -303,6 +294,7 @@ const updateTroops = function(pieceClass,capturedTroops){
   }
   let firstEmptyCell = getFirstEmptyCell(capturedTroops);
   firstEmptyCell.className = pieceClass;
+  firstEmptyCell.classList.add('count');
   firstEmptyCell.innerText=1;
 };
 
@@ -342,6 +334,28 @@ const revealBattlePiece = function(revealPiece){
   document.getElementById(revealPos).className = pieceClass;
 };
 
+const hideBattlePiece = function(revealedPieces){
+  revealedPieces.forEach(revealPiece=>{
+    let piece = document.getElementById(revealPiece);
+    if(!piece){
+      return;
+    }
+    let pieceClass = piece.className;
+    if(pieceClass.endsWith('-O')){
+      piece.removeAttribute('class');
+      piece.className ='opponent';
+    } 
+  });
+};
+
+const showRevealedBattlefield = function(myArmy,oppArmy){
+  let reqListener = function() {
+    let gameData = JSON.parse(this.responseText);
+    updateBattlefield(gameData, myArmy, oppArmy);
+  };
+  doXhr('/revealedBattlefield', 'POST', reqListener, null, () => {});
+};
+
 const updateChanges = (gameData, myArmy, oppArmy) => {
   let status = gameData.status;
   let killedPieces = gameData['killedPieces'];
@@ -353,8 +367,8 @@ const updateChanges = (gameData, myArmy, oppArmy) => {
     turnBox.classList.remove('your-turn');
   }
   turnBox.innerText = `${gameData.turnMsg}`;
+  deemphasizeFreeMoves();
   if (gameData.moveType=='freeMove' && gameData.updatedLocs.length>0) {
-    deemphasizeFreeMoves();
     freeMoves = gameData.updatedLocs;
     changePosition(freeMoves);
     highlightFreeMoves(freeMoves);
@@ -364,10 +378,14 @@ const updateChanges = (gameData, myArmy, oppArmy) => {
     setTimeout(()=>{
       updateKilledPieceCount(killedPieces);
       updateBattlePosition(killedPieces,gameData.updatedLocs);
+      hideBattlePiece(gameData.updatedLocs);
     },1000);
   }
   if (status.gameOver) {
-    announceWinner(status);
+    setTimeout(()=>{
+      showRevealedBattlefield(myArmy,oppArmy);
+      announceWinner(status);
+    },1000);
     clearInterval(interval);
     rematch();
   }
@@ -379,7 +397,7 @@ const initiatePolling = function(myArmy,oppArmy){
   const applyChanges = function(){
     if(this.responseText){
       timeStamp = new Date().getTime();
-      let gameData = JSON.parse(this.responseText);
+      let gameData = JSON.parse(this.responseText); 
       updateChanges(gameData,myArmy,oppArmy);  
     }
   };

@@ -283,14 +283,7 @@ button:focus {
 }
 
 .count{
-  position: relative;
-  margin-left: 42px;
-  color: #07070c;
-  font-size: 40px;
-  width: 50px;
-  height: 30px;
-  background: #fff;
-  border: 1px solid #030202;
-  text-align: center;
-  font: 25px Arial, sans-serif;
+  color: #f5ee6c;
+  text-align: right;
+  font: 35px Arial, sans-serif;
 }

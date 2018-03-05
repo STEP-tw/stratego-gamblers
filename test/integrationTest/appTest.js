@@ -40,9 +40,15 @@ describe('app', () => {
     it("should not allow to create game with invalid name", done =>{
       request(app)
         .post("/createGame")
-        .send('name=ravi&type=quick')        
-        .set('cookie','gameId=1')
-        .expect(200)
+        .send('name=ra$%^vi&type=quick')        
+        .expect(400)
+        .end(done);
+    });
+    it("should not allow to create game without name and game type", done =>{
+      request(app)
+        .post("/createGame")
+        .send('name=ravi')
+        .expect(404)
         .end(done);
     });
   });
@@ -63,6 +69,13 @@ describe('app', () => {
         .send("name=ankur&gameId=10")
         .expect(400)
         .expect('Inavlid Player Name or Game Id')
+        .end(done);
+    });
+    it("should not allow to join game without name and game id", done =>{
+      request(app)
+        .post("/joinGame")
+        .send('name=ravi')
+        .expect(404)
         .end(done);
     });
     beforeEach(() => {

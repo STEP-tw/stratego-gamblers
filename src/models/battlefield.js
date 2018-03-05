@@ -173,9 +173,6 @@ class Battlefield {
     revealPiece.pieceId = `O_${this.revealPieces[opponentId].pieceId}`;
     return revealPiece;
   }
-  removeRevealPieces(){
-    this.revealPieces = {};
-  }
   setUpdatedLocations(selectedLoc,currentLoc){
     this.updatedLocations = [selectedLoc,currentLoc];
   }
@@ -188,10 +185,11 @@ class Battlefield {
   getKilledPieces(){
     return this.killedPieceLocations;
   }
-  removeKilledPieces(){
+  resetKilledPieces(){
     setTimeout(()=>{
       this.killedPieceLocations = [];
-    },2000);
+      this.revealPieces = {};
+    },1000);
   }
 }
 module.exports = Battlefield;

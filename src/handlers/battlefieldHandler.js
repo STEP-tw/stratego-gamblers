@@ -1,5 +1,5 @@
 const isValidData = require('../lib/validate.js').isValidData;
-
+const getStatusMsg = require('../lib/lib.js').getStatusMsg;
 class BattlefieldHandler {
   constructor(){
 
@@ -39,14 +39,24 @@ class BattlefieldHandler {
     res.send('invalid request');
     res.end();
   }
-  getBattlefieldHandler(){
-    return this.getBattlefield.bind(this);
+  sendBattlefieldChanges(req,res){
+    let timeStamp = req.body.timeStamp;
+    let sessionId = req.cookies.sessionId;
+    let game = req.app.game;
+    if(!game.isBoardUpdated(timeStamp)){
+      res.end();
+      return;
+    }
+    let gameChanges = game.getChanges(sessionId);
+    gameChanges.status = getStatusMsg(sessionId,gameChanges.status);
+    res.cookie('gameStatus', gameChanges.status.gameOver);
+    res.send(gameChanges);
   }
-  setBattlefieldHandler(){
-    return this.setBattlefield.bind(this);
-  }
-  updateBattlefieldHandler (){
-    return this.updateBattlefield.bind(this);
+  sendRevealedBattlefield(req,res){
+    let game = req.app.game;
+    let sessionId = req.cookies.sessionId;
+    let battlefield = game.revealBattlefieldFor(sessionId);
+    res.send(JSON.stringify(battlefield));
   }
 }
 module.exports = BattlefieldHandler;

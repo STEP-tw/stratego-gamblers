@@ -6,7 +6,6 @@ const Marshal = require('../../src/models/marshal.js');
 const Miner = require('../../src/models/miner.js');
 
 describe("Game", () => {
-  let game = {};
   beforeEach(
     () => {
       game = new Game("gameId");
@@ -209,7 +208,7 @@ describe("Game", () => {
       let bomb = new Bomb();
       game.updatePieceLocation('3_1');
       assert.isNotOk(game.battlefield.hasLastSelectedLoc());
-      game.updatePieceLocation('3_1');
+      game.updatePieceLocation('2_1');
       assert.isUndefined(game.battlefield.getPiece(0, '2_1'));
       assert.deepEqual(game.battlefield.getPiece(0, '3_1'), bomb);
     });
@@ -218,10 +217,17 @@ describe("Game", () => {
       game.updatePieceLocation('9_0');
       assert.isOk(game.battlefield.hasLastSelectedLoc());
       game.updatePieceLocation('9_1');
-      setTimeout(()=>{
-        assert.deepEqual(game.battlefield.getPiece(0, '9_1'), marshal);
-        assert.isUndefined(game.battlefield.getPiece(0, '9_0'));
-      },2000);
+      assert.deepEqual(game.battlefield.getPiece(0, '9_1'), marshal);
+      assert.isUndefined(game.battlefield.getPiece(0, '9_0'));
+    });
+    it('should not move a piece which has no empty adjacent position', () => {
+      redArmyPos = {'0_0': '10', '0_1': 'B', '1_0': '3'};
+      game.setBattlefieldFor(0, redArmyPos);      
+      let marshal = new Marshal();
+      game.updatePieceLocation('0_0');
+      assert.isOk(game.battlefield.hasLastSelectedLoc());
+      game.updatePieceLocation('0_1');
+      assert.deepEqual(game.battlefield.getPiece(0, '0_0'), marshal);
     });
   });
   describe('getEmptyPosition', () => {
@@ -258,20 +264,13 @@ describe("Game", () => {
     });
     describe('draw game',()=>{
       it('should update game draw if no moving piece left on battlefield',()=>{
-        game.players[0].kill('S');
-        game.players[0].kill('2');
-        game.players[0].kill('2');
-        game.players[0].kill('3');
-        game.players[0].kill('3');
-        game.players[0].kill('9');
-        game.players[0].kill('10');
-        game.players[1].kill('S');
-        game.players[1].kill('2');
-        game.players[1].kill('2');
-        game.players[1].kill('3');
-        game.players[1].kill('3');
-        game.players[1].kill('9');
-        game.players[1].kill('10');
+        let piecesId = ['s',2,2,3,3,9,10];
+        piecesId.forEach(pieceId=>{
+          game.players[0].kill(pieceId);
+        });
+        piecesId.forEach(pieceId=>{
+          game.players[1].kill(pieceId);
+        });
         game.updateGameStatus();
         assert.isOk(game.gameOver);
         assert.equal(game.winner, '');

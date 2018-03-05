@@ -26,6 +26,14 @@ describe("Player", () => {
       assert.equal(player.getName(), "Ravi");
     });
   });
+  describe('getKilledPieces',()=>{
+    it('should return killed pieces of a player', () => {
+      player.deadPieces.push(new Marshal());
+      let expected = {'10': 1};
+      let actual = player.getKilledPieces();
+      assert.deepEqual(actual,expected);
+    });
+  });
   describe('#player.pieces', () => {
     beforeEach(()=>{
       pieces = new Pieces();
