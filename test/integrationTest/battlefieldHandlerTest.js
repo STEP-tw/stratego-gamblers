@@ -58,10 +58,9 @@ describe('BattleFieldHandler', () => {
   describe('/battlefieldChanges',()=>{
     describe('game in play',()=>{
       it('should reponse with changes which are currently made', (done) => {
-        app.game.timeStamp = 5000;      
+        app.game.timeStamp = new Date().getTime()+1000;      
         request(app)
-          .post('/battlefieldChanges')
-          .send('timeStamp=4000')     
+          .post('/battlefieldChanges')   
           .set('cookie',['sessionId=12345','gameId=1'])
           .expect(200)
           .expect(/updatedLocs/)
@@ -69,22 +68,20 @@ describe('BattleFieldHandler', () => {
           .end(done);
       });
       it('should respond nothing if board is not updated', (done) => {
-        app.game.timeStamp = 5000;
+        app.game.timeStamp = new Date().getTime()-1000;
         request(app)
           .post('/battlefieldChanges')
-          .send('timeStamp=7000')
           .set('cookie',['sessionId=12345','gameId=1'])
           .expect(200)
-          .expect((res)=>assert.isObject(res.body))
+          .expect('')
           .end(done);
       });
       it('should respond with revealed piece', (done) => {
-        app.game.timeStamp = 10000;
+        app.game.timeStamp = new Date().getTime()+1000;
         app.game.battlefield.revealPieces = 
         {0:{pos:'3_2',pieceId:'2'},1:{pos:'9_2',pieceId:'2'}};
         request(app)
           .post('/battlefieldChanges')
-          .send('timeStamp=7000')
           .set('cookie',['sessionId=12345','gameId=1'])
           .expect(200)
           .expect(/"loc":"9_2","pieceId":"O_2"/)
@@ -93,14 +90,13 @@ describe('BattleFieldHandler', () => {
     });
     describe('game over',()=>{
       beforeEach(()=>{
-        app.game.timeStamp = 10000;
+        app.game.timeStamp = new Date().getTime()+10000;
         app.game.gameOver = true;
         app.game.winner = 12345;
       });
       it('should respond with win status when game is over', (done) => {
         request(app)
           .post('/battlefieldChanges')
-          .send('timeStamp=7000')
           .set('cookie',['sessionId=12345','gameId=1'])
           .expect(200)
           .expect(/"gameOver":true,"winner":"win"/)
@@ -109,7 +105,6 @@ describe('BattleFieldHandler', () => {
       it('should respond with lost status when game is over', (done) => {
         request(app)
           .post('/battlefieldChanges')
-          .send('timeStamp=7000')
           .set('cookie',['sessionId=123456','gameId=1'])
           .expect(200)
           .expect(/"gameOver":true,"winner":"lose"/)
@@ -119,7 +114,6 @@ describe('BattleFieldHandler', () => {
         app.game.gameOver = 'quit';       
         request(app)
           .post('/battlefieldChanges')
-          .send('timeStamp=7000')
           .set('cookie',['sessionId=123456','gameId=1'])
           .expect(200)
           .expect(/"gameOver":"quit","winner":"surrender"/)

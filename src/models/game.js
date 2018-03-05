@@ -181,9 +181,11 @@ class Game {
     let playerId = this.getPlayerIndexBy(sessionId);
     let battlefieldPos = this.getBattlefieldFor(playerId);
     let revealPiece = this.battlefield.getRevealPiece(playerId);
+    let turnMsg = this.getTurnMessage(playerId);    
     let killedPieces = this.getKilledPieces();
     let boardInfo = {
       'battlefield': battlefieldPos,
+      'turnMsg': turnMsg,      
       'killedPieces': killedPieces
     };
     return boardInfo;
@@ -215,9 +217,10 @@ class Game {
     this.updateTimeStamp();
   }
   updateTimeStamp(){
-    this.timeStamp = new Date().getTime();
+    this.timeStamp = new Date().getTime()+1000;
   }
-  isBoardUpdated(timeStamp){
+  isBoardUpdated(){
+    let timeStamp = new Date().getTime();
     return this.timeStamp > timeStamp;
   }
   getArmy(){

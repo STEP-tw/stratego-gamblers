@@ -45,10 +45,10 @@ class BattlefieldHandler {
     res.end();
   }
   sendBattlefieldChanges(req,res){
-    let timeStamp = req.body.timeStamp;
     let sessionId = req.cookies.sessionId;
     let game = req.app.game;
-    if(!game.isBoardUpdated(timeStamp)){
+    if(!game.isBoardUpdated()){
+      
       res.end();
       return;
     }

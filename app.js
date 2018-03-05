@@ -106,7 +106,7 @@ const validatePlayerStatus = function (req, res, next) {
 
 const unauthorizedUrls = ['/play', '/setupArmy', '/battlefield',
   'isOpponentReady', '/setup/player/:playerId',
-  '/selectedLoc','/leave','/revealedBattlefield','battlefieldChanges',
+  '/selectedLoc','/leave','/revealedBattlefield','/battlefieldChanges',
   '/army','/selectedLoc'
 ];
 app.use(['/setupArmy','/play'],loadPreviousUrl);

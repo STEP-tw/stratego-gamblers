@@ -257,6 +257,7 @@ const updateBattlefield = (gameData, myArmy, oppArmy) => {
   let killedPieces = gameData['killedPieces'];
   showBattlefield(battlefield, myArmy);
   killedPieces && showKilledPieces(killedPieces, myArmy, oppArmy);
+  showTurn(gameData.turnMsg);
 };
 
 const changePosition = function(positions){
@@ -414,18 +415,15 @@ const updateChanges = (gameData, myArmy, oppArmy) => {
 };
 
 let interval;
-let timeStamp =1000;
 const initiatePolling = function(myArmy,oppArmy){
   const applyChanges = function(){
     if(this.responseText){
-      timeStamp = new Date().getTime();
       let gameData = JSON.parse(this.responseText);
       updateChanges(gameData,myArmy,oppArmy);
     }
   };
   let callBack =() => {
-    let data = `timeStamp=${timeStamp}`;
-    doXhr('/battlefieldChanges', 'POST', applyChanges, data, () => {});
+    doXhr('/battlefieldChanges', 'POST', applyChanges, null, () => {});
   };
   interval = setInterval(callBack, 1000);
 };
