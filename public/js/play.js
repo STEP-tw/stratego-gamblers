@@ -97,7 +97,7 @@ const appendImage = (baseCell, id, imgSrcDirectory) => {
   let basePosition = document.getElementById(baseCell.id);
   let classForPieceId = getClassFor(id);
   if (!basePosition.classList.contains('attacking-move')) {
-    basePosition.className = '';
+    basePosition.removeAttribute('class');
   }
   if (basePosition.classList.contains('attacking-move')) {
     basePosition.classList.add('attacking-move');
@@ -112,7 +112,7 @@ const updateEmptyCell = (cell) => {
       cell.className = 'free-move';
       return;
     }
-    cell.className = '';
+    cell.removeAttribute('class');
   }
 };
 
@@ -270,10 +270,12 @@ const changePosition = function(positions){
   let startPos = positions[0];
   let piece = document.getElementById(startPos);
   let pieceClass = piece.className;
-  let secondPos = positions[1];
-  let newLoc = document.getElementById(secondPos);
-  newLoc.className = pieceClass;
-  piece.removeAttribute('class');
+  if(pieceClass){
+    let secondPos = positions[1];
+    let newLoc = document.getElementById(secondPos);
+    newLoc.className = pieceClass;
+    piece.removeAttribute('class');
+  }
 };
 
 const getFirstEmptyCell = function(table){
@@ -321,8 +323,8 @@ const updateBattlePosition = function(killedPiecesPos,movePositions){
   let killPiecePos = movePositions.find(pos=>pos==killedPiecesPos[0]);  
   document.getElementById(killPiecePos).removeAttribute('class');
   if(killPiecePos == movePositions[1]){
-    let pieceClass = document.getElementById(movePositions[0]).className;
-    document.getElementById(killPiecePos).className = pieceClass;
+    let pieceClass = document.getElementById(movePositions[0]).className; 
+    document.getElementById(killPiecePos).classList.add(pieceClass);
     document.getElementById(killPiecePos).classList.remove('start-move');
     document.getElementById(movePositions[0]).removeAttribute('class');
   }
