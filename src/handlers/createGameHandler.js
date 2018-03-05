@@ -15,13 +15,17 @@ class CreateGameHandler {
       return;
     }
     let gameId = randomIdGenerator();
+    let gamesHandler = req.app.gamesHandler;
+    while(gamesHandler.doesGameExists(gameId)){
+      gameId = randomIdGenerator();
+    }
     let game = new Game(gameId);
     game.loadPieces();
     let playerId = req.app.sessions.createSession(playerName);
     res.cookie('sessionId',playerId);
     res.cookie('gameId',gameId);
     game.addPlayer(playerName,playerId,'red');
-    req.app.gamesHandler.createNewGame(gameId,game);
+    gamesHandler.createNewGame(gameId,game);
     game.addGameType(type);
     res.status(200).send(`${gameId}`);
   }

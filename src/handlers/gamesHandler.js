@@ -3,7 +3,7 @@ class GamesHandler {
     this.games={};
   }
   createNewGame(gameId,game){
-    this.games[gameId] = game;
+    this.games[gameId] = game; 
   }
   doesGameExists(gameId){
     return gameId in this.games;

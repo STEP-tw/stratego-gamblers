@@ -246,11 +246,20 @@ button:focus {
   border: 1px solid rgb(156, 131, 69);
 }
 
-#win, #lose {
+#win {
   margin: auto;
-  margin-left: 24%;
+  margin-top: 14%;
+  margin-left: 20.5%;
   width: 700px;
-  height: 250px;
+  height: 575px;
+}
+
+#lose {
+  margin: auto;
+  margin-top: 17.5%;
+  margin-left: 32.7%;
+  width: 350px;
+  height: 400px;  
 }
 
 #tie {
@@ -264,10 +273,10 @@ button:focus {
 #surrender, #draw {
   position: relative;
   margin: auto;
-  margin-top: -16.1%;
+  margin-top: -6%;
   margin-left: 27%;
   text-align: center;
-  font-size: 35px;
+  font-size: 30px;
   color: #210402;
   width: 34%;
   background-color: rgb(156, 131, 69);

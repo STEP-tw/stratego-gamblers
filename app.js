@@ -34,7 +34,11 @@ const redirectToHome = function (req, res, next) {
 
 const haveBothPlayersJoined = function(req, res) {
   let game = req.app.game;
-  res.send(game.haveBothPlayersJoined());
+  if(game){
+    res.send(game.haveBothPlayersJoined());
+    return;
+  }
+  res.end();
 };
 
 const checkIfAlreadySetup = function(req,res,next){
@@ -101,7 +105,8 @@ const sendArmyDetails = function(req,res){
 
 const unauthorizedUrls = ['/play', '/setupArmy', '/battlefield',
   'isOpponentReady', '/setup/player/:playerId',
-  '/selectedLoc'
+  '/selectedLoc','/leave','/revealedBattlefield','battlefieldChanges',
+  '/army','/selectedLoc'
 ];
 app.use(['/setupArmy','/play'],loadPreviousUrl);
 app.use(log());

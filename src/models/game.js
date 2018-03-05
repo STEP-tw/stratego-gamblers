@@ -106,11 +106,11 @@ class Game {
       isLocationUpdated = battlefield.updateLocation(playerId,location);
     }
     if(isLocationUpdated){
-      this.updateTimeStamp();
       this.changeCurrentPlayer();
       this.updatePlayerPieces();
       this.updateGameStatus();
       battlefield.removeSelectedPos();
+      this.updateTimeStamp();
       return ;
     }
     battlefield.addAsLastSelectedLoc(playerId,location);

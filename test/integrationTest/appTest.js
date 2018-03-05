@@ -61,6 +61,13 @@ describe('app', () => {
         .expect("false")
         .end(done);
     });
+    it("should return without response if game is not available", done => {
+      request(app)
+        .get('/hasOpponentJoined')
+        .expect(200)
+        .expect("")
+        .end(done);
+    });
   });
   describe("POST /joinGame", () => {
     it("redirect joining player to home if game is not created ", done => {
@@ -220,6 +227,10 @@ describe('app', () => {
     });
   });
   describe('GET /army', () => {
+    beforeEach(()=>{
+      app.game.addPlayer("player1", 12345, 'red');
+      app.game.addPlayer("player2", 123456, 'blue');
+    });
     it('should provide army strength details', (done) => {
       request(app)
         .get('/army')
