@@ -373,12 +373,12 @@ const isBattleMove = (gameData) => {
   return gameData.moveType=='battle' && gameData['killedPieces'].length>0;
 };
 
-const updateBattleMoves = (gameData) => {
-  revealBattlePiece(gameData['revealPiece']);
+const updateBattleMoves = (revealPiece,killedPieces,updatedLocs) => {
+  revealBattlePiece(revealPiece);
   setTimeout(()=>{
-    updateKilledPieceCount(gameData['killedPieces']);
-    updateBattlePosition(gameData['killedPieces'],gameData.updatedLocs);
-    hideBattlePiece(gameData.updatedLocs);
+    updateKilledPieceCount(killedPieces);
+    updateBattlePosition(killedPieces,updatedLocs);
+    hideBattlePiece(updatedLocs);
   },1000);
 };
 
@@ -398,11 +398,15 @@ const announceResult = (status,myArmy,oppArmy) => {
 const updateChanges = (gameData, myArmy, oppArmy) => {
   let status = gameData.status;
   showTurn(gameData.turnMsg);
-  deemphasizeFreeMoves();
+  deemphasizeFreeMoves(gameData.updatedLocs);
   if (isFreeMove(gameData)) {
-    updateFreeMoves(gameData.updatedLocs);
+    freeMoves = gameData.updatedLocs;
+    updateFreeMoves(freeMoves);
   }else if(isBattleMove(gameData)){
-    updateBattleMoves(gameData);
+    let revealPiece = gameData.revealPiece;
+    let killedPieces = gameData.killedPieces;
+    let updatedLocs = gameData.updatedLocs;
+    updateBattleMoves(revealPiece,killedPieces,updatedLocs);
   }
   if (isGameOver(status)) {
     announceResult(status,myArmy,oppArmy);
