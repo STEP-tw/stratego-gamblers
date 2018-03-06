@@ -1,13 +1,10 @@
-const isGameOver = require('../lib/lib.js').isGameOver;
-
 class ExitHandler {
   constructor() {}
 
   restartGame(req, res) {
     let previousUrl = req.cookies.previousUrl;
     let game = req.app.game;
-    let gameStatus = req.cookies.gameStatus;
-    if (isGameOver(game,gameStatus)|| gameStatus=='quit') {
+    if (game.isOver()) {
       let gameId = req.cookies.gameId;
       req.app.gamesHandler.deleteGame(gameId);
       this.clearCookies(req,res);
@@ -19,14 +16,14 @@ class ExitHandler {
   quitGame(req, res) {
     let game = req.app.game;
     let sessionId = req.cookies.sessionId;
-    let teamColor = game.getPlayerColorBy(sessionId);
+    let playerId = game.getPlayerIndexBy(sessionId);
+    let teamColor = game.getPlayerColorBy(playerId);
     game.quit(teamColor);
     this.clearCookies(req,res);
     res.redirect('/');
   }
   clearCookies(req,res){
     res.clearCookie('sessionId');
-    res.clearCookie('gameStatus');
     res.clearCookie('gameId'); 
   }
   restartGameHandler(){

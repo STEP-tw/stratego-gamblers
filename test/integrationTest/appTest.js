@@ -70,7 +70,7 @@ describe('app', () => {
     });
   });
   describe("POST /joinGame", () => {
-    it("redirect joining player to home if game is not created ", done => {
+    it("redirect joining player to home if gameId is incorrect ", done => {
       request(app)
         .post("/joinGame")
         .send("name=ankur&gameId=10")
@@ -85,8 +85,8 @@ describe('app', () => {
         .expect(404)
         .end(done);
     });
-    beforeEach(() => {
-      app.game.addPlayer("player1");
+    beforeEach(() => {    
+      app.game.addPlayer("player2" ,'1234','blue');
     });
     it("redirect valid joining player to battlefield", done => {
       request(app)
@@ -105,7 +105,7 @@ describe('app', () => {
         .end(done);
     });
     it("redirect third joining player to home", done => {
-      app.game.addPlayer("player2");
+      app.game.addPlayer("player3",'123','blue');
       request(app)
         .post("/joinGame")
         .send("name=ankur&gameId=1")
@@ -193,23 +193,36 @@ describe('app', () => {
     });
   });
   describe('restart game GET /playAgain', () => {
-    it('clear cookies and redirect to / if game is over', (done) => {
+    it('redirect to / if game is not created', (done) => {
       request(app)
         .get('/playAgain')
-        .set('cookie', 'sessionId=123456')
-        .set('cookie', 'gameStatus=true')
+        .set('cookie', ['sessionId=123456','gameId=1'])
         .expect('Location','/')
         .expect(302)
         .end(done);
     });
-    it('should redirect to previous url if game is not over', (done) => {
-      request(app)
-        .get('/playAgain')
-        .set('cookie', 'sessionId=123456')
-        .set('cookie', 'previousUrl=/play')
-        .expect('Location', '/play')
-        .expect(302)
-        .end(done);
+    describe('playing phase',()=>{
+      beforeEach(() => {
+        app.game.addPlayer("player1", 12345, 'red');
+        app.game.addPlayer("player2", 123456, 'blue');
+      });
+      it('should redirect to previous url if game is not over', (done) => {
+        request(app)
+          .get('/playAgain')
+          .set('cookie', ['gameId=1','sessionId=12345','previousUrl=/play'])
+          .expect('Location', '/play')
+          .expect(302)
+          .end(done);
+      });
+      it('clear cookies and redirect to / if game is over', (done) => {
+        app.game.gameOver = true;
+        request(app)
+          .get('/playAgain')
+          .set('cookie', ['sessionId=123456','gameId=1'])
+          .expect('Location','/')
+          .expect(302)
+          .end(done);
+      });
     });
   });
   describe("GET /leave", () => {

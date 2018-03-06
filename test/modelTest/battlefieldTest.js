@@ -17,7 +17,7 @@ describe('Battlefield',()=>{
       let flag = new Flag();
       battlefield.addPiece(flag,'0_0');
       let expected = {'0_0':{id:'F',name:'Flag',rank:0}};
-      let actual=battlefield.getPlacedPositions();
+      let actual=battlefield.placedPositions;
       assert.deepEqual(expected,actual);
     });
     it('should add multiple piece into battlefield',()=>{
@@ -27,7 +27,7 @@ describe('Battlefield',()=>{
       battlefield.addPiece(marshal,'0_4');
       let expected = {'0_0':{id:'F',name:'Flag',rank:0},
         '0_4':{id:'10',name:'Marshal',rank:10}};
-      let actual=battlefield.getPlacedPositions();
+      let actual=battlefield.placedPositions;
       assert.deepEqual(expected,actual);
     });
   });

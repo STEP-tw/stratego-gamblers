@@ -3,7 +3,7 @@ const getStatusMsg = require('../lib/lib.js').getStatusMsg;
 const sendData = (game,sessionId,action)=>{
   let perform = {
     'getBoard' : game.getBoardFor(sessionId),
-    'reveal' : game.revealBattlefieldFor(sessionId)
+    'reveal' : game.getRevealedBattlefield(sessionId)
   };
   return perform[action];
 };
@@ -24,7 +24,9 @@ class BattlefieldHandler {
     res.status(206).send('pieces or location missing!');
   }
   getBattlefield(req,res){
+    let sessionId = req.cookies.sessionId;    
     let boardInfo = sendData(req.app.game,req.cookies.sessionId,'getBoard');
+    boardInfo.status = getStatusMsg(sessionId,boardInfo.status);    
     res.json(boardInfo);
   }
   updateBattlefield(req,res){
@@ -54,7 +56,6 @@ class BattlefieldHandler {
     }
     let gameChanges = game.getChanges(sessionId);
     gameChanges.status = getStatusMsg(sessionId,gameChanges.status);
-    res.cookie('gameStatus', gameChanges.status.gameOver);
     res.send(gameChanges);
   }
   sendRevealedBattlefield(req,res){

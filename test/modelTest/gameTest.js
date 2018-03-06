@@ -11,65 +11,24 @@ describe("Game", () => {
       game = new Game("gameId");
     }
   );
-  describe("Game.getPlayers()", () => {
+  describe("Game id", () => {
     it("Game.getId() should return game id", () => {
       assert.equal(game.getId(), "gameId");
     });
   });
-  describe("Game.getPlayers()", () => {
+  describe("Game Players", () => {
     it("should return empty array when game has no players", () => {
-      assert.deepEqual(game.getPlayers(), []);
+      assert.deepEqual(game.players, {players: []});
     });
     it("should return players array when game has players", () => {
       game.addPlayer("ravi", 0, 'red');
-      assert.deepEqual(game.getPlayers(), [{
+      assert.deepEqual(game.players, {players: [{
         name: "ravi",
         id: 0,
         color: 'red',
         "deadPieces": [],
         "livePieces": []
-      }]);
-    });
-  });
-  describe("Game.addPlayer()", () => {
-    it("Game.addPlayer() should return game id", () => {
-      let expectedOutput = {
-        name: "Ravi",
-        id: 0,
-        color: "red",
-        "deadPieces": [],
-        "livePieces": []
-      };
-      let actual = game.addPlayer("Ravi", 0, "red");
-      assert.deepEqual(actual, expectedOutput);
-    });
-  });
-  describe('Game.getPlayerName()', () => {
-    beforeEach(
-      () => {
-        game.addPlayer("ravi", 12345, 'red');
-        game.addPlayer("ankur", 123456, 'blue');
-      }
-    );
-    it('should return first player name for red color team', () => {
-      assert.equal(game.getPlayerName("red"), "ravi");
-    });
-    it('should return first player name for blue color team', () => {
-      assert.equal(game.getPlayerName("blue"), "ankur");
-    });
-  });
-  describe('Game.getOpponentName()', () => {
-    beforeEach(
-      () => {
-        game.addPlayer("ravi", 12345, 'red');
-        game.addPlayer("ankur", 123456, 'blue');
-      }
-    );
-    it('should return opponent name for red color team', () => {
-      assert.equal(game.getOpponentName("red"), "ankur");
-    });
-    it('should return opponent name for blue color team', () => {
-      assert.equal(game.getOpponentName("blue"), "ravi");
+      }]});
     });
   });
   describe('setBattlefield', () => {
@@ -81,13 +40,13 @@ describe("Game", () => {
     it('should set the battlefield for a player', () => {
       game.setBattlefieldFor(0, {'0_0': 'F'});
       game.setBattlefieldFor(1, {'3_7': 'B'});
-      let actual = game.getBattlefieldFor(0);
+      let actual = game.battlefield.getBattlefieldFor(0);
       let expected = {
         '0_0': 'F', '3_7': 'O', '4_2': 'X', '4_3': 'X', '4_6': 'X',
         '4_7': 'X', '5_2': 'X', '5_3': 'X', '5_6': 'X', '5_7': 'X'
       };
       assert.deepEqual(actual, expected);
-      actual = game.getBattlefieldFor(1);
+      actual = game.battlefield.getBattlefieldFor(1);
       expected = {
         '0_0': 'O', '3_7': 'B', '4_2': 'X', '4_3': 'X', '4_6': 'X',
         '4_7': 'X', '5_2': 'X', '5_3': 'X', '5_6': 'X', '5_7': 'X'
@@ -95,23 +54,7 @@ describe("Game", () => {
       assert.deepEqual(actual, expected);
     });
   });
-  describe('Game.getPlayerColorBy()', () => {
-    beforeEach(
-      () => {
-        game.addPlayer("ravi", 12345, 'red');
-        game.addPlayer("ankur", 123456, 'blue');
-      }
-    );
-    it('should return team color of given playerId', () => {
-      assert.equal(game.getPlayerColorBy(12345), "red");
-    });
-    it('should return team color of given playerId', () => {
-      assert.equal(game.getPlayerColorBy(123456), "blue");
-    });
-    it('should give current players name', () => {
-      assert.equal(game.getCurrentPlayer(), 'ravi');
-    });
-  });
+  
   describe('Game.getPlayerIndexBy()', () => {
     beforeEach(
       () => {
@@ -252,7 +195,8 @@ describe("Game", () => {
     });
     describe('# updateGameStatus', () => {
       beforeEach(() => {
-        game.players[0].kill('F');
+        let player = game.players.getPlayer(0);
+        player.kill('F');
         game.updateGameStatus();
       });
       it('should update game status as over if any of player has lost', () => {
@@ -265,11 +209,13 @@ describe("Game", () => {
     describe('draw game',()=>{
       it('should update game draw if no moving piece left on battlefield',()=>{
         let piecesId = ['s',2,2,3,3,9,10];
+        let player1 = game.players.getPlayer(0);
+        let player2 = game.players.getPlayer(1);
         piecesId.forEach(pieceId=>{
-          game.players[0].kill(pieceId);
+          player1.kill(pieceId);
         });
         piecesId.forEach(pieceId=>{
-          game.players[1].kill(pieceId);
+          player2.kill(pieceId);
         });
         game.updateGameStatus();
         assert.isOk(game.gameOver);

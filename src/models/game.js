@@ -1,12 +1,12 @@
 const Battlefield = require('./battlefield.js');
-const Player = require('./player.js');
+const Players = require('./players.js');
 const Pieces = require('./pieces.js');
 const getSymbolForPos=require('../lib/lib.js').getSymbolForPos;
 const getAllPieces = require('../lib/validate.js').getAllPieces;
 class Game {
   constructor(id) {
     this.id = id;
-    this.players = [];
+    this.players = new Players();
     this.currentPlayerId = 0;
     this.battlefield = new Battlefield();
     this.pieces = new Pieces();
@@ -24,86 +24,47 @@ class Game {
   getId() {
     return this.id;
   }
-  getPlayers() {
-    return this.players;
-  }
   loadPieces(){
     this.pieces.loadPieces();
   }
-  getKilledPieces(){
-    let redCapturedArmy = this.players[0].getKilledPieces();
-    let blueCapturedArmy = this.players[1].getKilledPieces();
-    return {redArmy:redCapturedArmy,blueArmy:blueCapturedArmy};
-  }
   addPlayer(playerName, id, color) {
-    let player = new Player(playerName, id, color);
-    this.players.push(player);
-    return player;
+    this.players.addPlayer(playerName, id, color);
   }
   setBattlefieldFor(playerId, placedArmyPos) {
-    let player = this.players[playerId];
     this.battlefield.setFieldFor(playerId, this.pieces, placedArmyPos);
-    player.addPieces(this.pieces,this.gameType);
-  }
-  getPlayer(teamColor,player) {
-    let players = this.players;
-    let teams = {
-      'red' : 0,
-      'blue' : 1
-    };
-    let playerLoc = (teams[teamColor]+player)%2;
-    return players[playerLoc].getName();
+    this.players.addPieces(playerId,this.pieces,this.gameType);
   }
   getPlayerName(teamColor) {
-    return this.getPlayer(teamColor,0);
+    return this.players.getPlayerNameBy(teamColor);
   }
   getOpponentName(teamColor){
-    return this.getPlayer(teamColor,1);
+    return this.players.getOpponentNameBy(teamColor);
   }
   haveBothPlayersJoined() {
-    let numberOfPlayers = this.players.length;
-    return numberOfPlayers == 2;
+    return this.players.hasTwoPlayers();
   }
   areBothPlayerReady() {
     return this.battlefield.areBothArmyDeployed();
-  }
-  getBattlefieldFor(playerId) {
-    let armyPos = this.battlefield.getArmy(playerId);
-    let opponentPos = this.battlefield.getOpponentPos(playerId);
-    let lakePos = this.battlefield.getLakePos();
-    armyPos = getSymbolForPos(armyPos,opponentPos,'O');
-    armyPos = getSymbolForPos(armyPos,lakePos,'X');
-    let emptyPos = this.battlefield.getEmptyPositions(armyPos);
-    armyPos = getSymbolForPos(armyPos,emptyPos,'E');
-    return armyPos;
   }
   getPotentialMoves(pieceLoc) {
     let battlefield = this.battlefield;
     return battlefield.getPotentialMoves(this.currentPlayerId, pieceLoc);
   }
   getPlayerColorBy(playerId) {
-    let players = this.getPlayers();
-    let player = players.find(player => player.id == playerId);
-    return player.getColor();
+    return this.players.getColor(playerId);
   }
   getPlayerIndexBy(playerId) {
-    let players = this.getPlayers();
-    return players.findIndex(player => player.id == playerId);
+    return this.players.getPlayerIndex(playerId);
   }
   isCurrentPlayer(playerId){
     return this.currentPlayerId==playerId;
-  }
-  getCurrentPlayer(){
-    let currentPlayerId = this.currentPlayerId;
-    let player = this.players[currentPlayerId];
-    return player.getName();
   }
   updatePieceLocation(location){
     let battlefield = this.battlefield;
     let playerId = this.currentPlayerId;
     let isLocationUpdated = false;
     if(battlefield.hasLastSelectedLoc()){
-      isLocationUpdated = battlefield.updateLocation(playerId,location);
+      isLocationUpdated = battlefield.updateBattlefield(playerId,location);
     }
     if(isLocationUpdated){
       this.changeCurrentPlayer();
@@ -133,16 +94,11 @@ class Game {
   }
   updatePlayerPieces(){
     let battleResults = this.battlefield.getBattleResults();
-    battleResults.forEach(result=>{
-      let deadPieceId = result.killedPiece.id;
-      this.players[result.playerId].kill(deadPieceId);
-    });
+    this.players.addKilledPieces(battleResults);
     this.battlefield.clearBattleResult();
   }
   updateGameStatus(){
-    let lostPlayers = this.players.filter(player=>{
-      return player.hasLost();
-    });
+    let lostPlayers = this.players.getLostPlayers();
     if(lostPlayers.length>0){
       this.gameOver = true;
       this.setWinner(lostPlayers);
@@ -152,9 +108,7 @@ class Game {
     if(this.isGameDrawn(lostPlayers)){
       return;
     }
-    let loser = lostPlayers[0];
-    let winner = this.players.find(player=>player!=loser);
-    this.winner = winner.getId();
+    this.winner = this.players.getWinner();
   }
   isGameDrawn(lostPlayers){
     return lostPlayers.length==2;
@@ -165,28 +119,22 @@ class Game {
       winner:this.winner
     };
   }
-  revealBattlefieldFor(sessionId){
+  getRevealedBattlefield(sessionId){
     let playerId = this.getPlayerIndexBy(sessionId);
-    let revealArmy = this.battlefield.revealArmyFor(playerId);
-    let lakePos = this.battlefield.getLakePos();
-    revealArmy = getSymbolForPos(revealArmy,lakePos,'X');
-    let emptyPos = this.battlefield.getEmptyPositions(revealArmy);
-    let completeBattlefield = getSymbolForPos(revealArmy,emptyPos,'E');
-    let boardInfo = {
-      'battlefield': completeBattlefield
-    };
-    return boardInfo;
+    return this.battlefield.revealBattlefieldFor(playerId);
   }
   getBoardFor(sessionId){
     let playerId = this.getPlayerIndexBy(sessionId);
-    let battlefieldPos = this.getBattlefieldFor(playerId);
+    let battlefieldPos = this.battlefield.getBattlefieldFor(playerId);
     let revealPiece = this.battlefield.getRevealPiece(playerId);
-    let turnMsg = this.getTurnMessage(playerId);    
-    let killedPieces = this.getKilledPieces();
+    let turnMsg = this.getTurnMessage(playerId);
+    let status = this.getGameStatus();      
+    let killedPieces = this.players.getKilledPieces();
     let boardInfo = {
       'battlefield': battlefieldPos,
       'turnMsg': turnMsg,      
-      'killedPieces': killedPieces
+      'killedPieces': killedPieces,
+      'status': status      
     };
     return boardInfo;
   }
@@ -195,14 +143,13 @@ class Game {
     let status = this.getGameStatus();
     let turnMsg = this.getTurnMessage(playerId);
     let revealPiece = this.battlefield.getRevealPiece(playerId);
-    let killedPieces = this.battlefield.getKilledPieces();
-    this.battlefield.resetKilledPieces();
+    let killedPiecesLocs = this.battlefield.getKilledPiecesLocs();
     let updatedLocs = this.battlefield.getUpdatedLocations();
     let moveType = this.battlefield.getMoveType();
     let gameChanges ={
       'updatedLocs':updatedLocs,
       'turnMsg': turnMsg,
-      'killedPieces': killedPieces,
+      'killedPieces': killedPiecesLocs,
       'revealPiece':revealPiece,
       'moveType':moveType,
       'status': status
@@ -212,7 +159,7 @@ class Game {
   quit(team){
     let winner = this.getOpponentName(team);
     this.gameOver = 'quit';
-    let winningPlayer = this.players.find(player=>player.name==winner);
+    let winningPlayer = this.players.getPlayerByName(winner);
     this.winner = winningPlayer.getId();
     this.updateTimeStamp();
   }
@@ -225,6 +172,9 @@ class Game {
   }
   getArmy(){
     return getAllPieces(this.gameType);
+  }
+  isOver(){
+    return this.gameOver;
   }
 }
 module.exports =Game;

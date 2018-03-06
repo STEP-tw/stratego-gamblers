@@ -59,7 +59,8 @@ const checkIfAlreadySetup = function(req,res,next){
 const setupArmy = function(req, res) {
   let setupTemp = req.app.fs.readFileSync('./templates/setupArmy', 'utf8');
   let game = req.app.game;
-  let playerId = req.cookies.sessionId;
+  let sessionId = req.cookies.sessionId;
+  let playerId = game.getPlayerIndexBy(sessionId);  
   let teamColor = game.getPlayerColorBy(playerId);
   setupTemp = setupTemp.replace(/{{team}}/g,teamColor);
   let name = game.getPlayerName(teamColor);
@@ -79,7 +80,8 @@ const sendOpponentStatus = function (req, res) {
 const renderGamePage = function (req, res) {
   let game = req.app.game;
   let battlefield = req.app.fs.readFileSync('./templates/battlefield', 'utf8');
-  let playerId = req.cookies.sessionId;
+  let sessionId = req.cookies.sessionId;
+  let playerId = game.getPlayerIndexBy(sessionId);
   let teamColor = game.getPlayerColorBy(playerId);
   let myName = game.getPlayerName(teamColor);
   let opponent = game.getOpponentName(teamColor);
@@ -107,7 +109,7 @@ const validatePlayerStatus = function (req, res, next) {
 const unauthorizedUrls = ['/play', '/setupArmy', '/battlefield',
   'isOpponentReady', '/setup/player/:playerId',
   '/selectedLoc','/leave','/revealedBattlefield','/battlefieldChanges',
-  '/army','/selectedLoc'
+  '/army','/selectedLoc','/playAgain'
 ];
 app.use(['/setupArmy','/play'],loadPreviousUrl);
 app.use(log());

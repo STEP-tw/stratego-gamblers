@@ -1,3 +1,5 @@
+const getSymbolForPos=require('../lib/lib.js').getSymbolForPos;
+
 class Battlefield {
   constructor(){
     this.allPositions = [];
@@ -22,9 +24,6 @@ class Battlefield {
   addPiece(piece,pos){
     this.placedPositions[pos] = piece;
   }
-  getPlacedPositions(){
-    return this.placedPositions;
-  }
   setFieldFor(playerId,pieces,placedArmyPos){
     this.setField(pieces,placedArmyPos);
     this.battlePositions[playerId] = this.placedPositions;
@@ -42,7 +41,7 @@ class Battlefield {
     return Object.keys(this.battlePositions[playerId]);
   }
   getOpponentPos(playerId){
-    return Object.keys(this.battlePositions[1-playerId]);
+    return this.getArmyPos([1-playerId]);
   }
   areBothArmyDeployed(){
     let battlePositions = this.battlePositions;
@@ -79,7 +78,7 @@ class Battlefield {
       return true;
     }
   }
-  updateLocation(playerId,pieceLoc){
+  updateBattlefield(playerId,pieceLoc){
     let potentialMoves = this.getPotentialMoves(playerId,this.selectedPos);
     if(this.isFreeMove(potentialMoves,pieceLoc)){
       this.moveType = 'freeMove';
@@ -121,6 +120,7 @@ class Battlefield {
     } else {
       this.replacePieceLoc(playerId,pieceLoc);
     }
+    this.resetKilledPieces();
   }
   replacePieceLoc(playerId,pieceLoc){
     let piece = this.getPiece(playerId,this.selectedPos);
@@ -182,7 +182,7 @@ class Battlefield {
   getMoveType(){
     return this.moveType;
   }
-  getKilledPieces(){
+  getKilledPiecesLocs(){
     return this.killedPieceLocations;
   }
   resetKilledPieces(){
@@ -190,6 +190,27 @@ class Battlefield {
       this.killedPieceLocations = [];
       this.revealPieces = {};
     },1000);
+  }
+  getBattlefieldFor(playerId) {
+    let armyPos = this.getArmy(playerId);
+    let opponentPos = this.getOpponentPos(playerId);
+    let lakePos = this.getLakePos();
+    armyPos = getSymbolForPos(armyPos,opponentPos,'O');
+    armyPos = getSymbolForPos(armyPos,lakePos,'X');
+    let emptyPos = this.getEmptyPositions(armyPos);
+    armyPos = getSymbolForPos(armyPos,emptyPos,'E');
+    return armyPos;
+  }
+  revealBattlefieldFor(playerId){
+    let revealArmy = this.revealArmyFor(playerId);
+    let lakePos = this.getLakePos();
+    revealArmy = getSymbolForPos(revealArmy,lakePos,'X');
+    let emptyPos = this.getEmptyPositions(revealArmy);
+    let completeBattlefield = getSymbolForPos(revealArmy,emptyPos,'E');
+    let boardInfo = {
+      'battlefield': completeBattlefield
+    };
+    return boardInfo;
   }
 }
 module.exports = Battlefield;

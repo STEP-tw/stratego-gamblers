@@ -253,10 +253,18 @@ const deemphasizeFreeMoves = () => {
 };
 
 const updateBattlefield = (gameData, myArmy, oppArmy) => {
-  let battlefield = gameData['battlefield'];
-  let killedPieces = gameData['killedPieces'];
+  let status = gameData.status;
+  let battlefield = gameData.battlefield;
   showBattlefield(battlefield, myArmy);
-  killedPieces && showKilledPieces(killedPieces, myArmy, oppArmy);
+  if(!status){
+    return;
+  }
+  let killedPieces = gameData.killedPieces;
+  showKilledPieces(killedPieces, myArmy, oppArmy);
+  if (isGameOver(status)) {
+    announceResult(status,myArmy,oppArmy);
+    return;
+  }
   showTurn(gameData.turnMsg);
 };
 
@@ -432,7 +440,7 @@ const setBattlefield = function(myArmy, oppArmy) {
   let reqListener = function() {
     let gameData = JSON.parse(this.responseText);
     updateBattlefield(gameData, myArmy, oppArmy);
+    initiatePolling(myArmy,oppArmy);
   };
   doXhr('/battlefield', 'POST', reqListener, null, () => {});
-  initiatePolling(myArmy,oppArmy);
 };
