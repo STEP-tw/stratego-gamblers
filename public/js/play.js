@@ -302,7 +302,7 @@ const updateBattlePosition = function(killedPiecesPos,movePositions){
   let killPiecePos = movePositions.find(pos=>pos==killedPiecesPos[0]);
   document.getElementById(killPiecePos).removeAttribute('class');
   if(killPiecePos == movePositions[1]){
-    let pieceClass = document.getElementById(movePositions[0]).className;
+    let pieceClass = document.getElementById(movePositions[0]).classList[0];
     addToClassList(killPiecePos,pieceClass);
     removeFromClassList(killPiecePos,'start-move');
     document.getElementById(movePositions[0]).removeAttribute('class');
@@ -370,12 +370,12 @@ const animateBattle = function(killedPieces, updatedLocs) {
 
 const updateBattleMoves = (revealPiece,killedPieces,updatedLocs) => {
   revealBattlePiece(revealPiece);
-  animateBattle(killedPieces,updatedLocs);
+  animateBattle(killedPieces, updatedLocs);
   setTimeout(()=>{
     updateKilledPieceCount(killedPieces);
     updateBattlePosition(killedPieces,updatedLocs);
     hideBattlePiece(updatedLocs);
-  },1000);
+  },2000);
 };
 
 const isGameOver = (status) => {
@@ -399,6 +399,8 @@ const updateChanges = (gameData, myArmy, oppArmy) => {
     freeMoves = gameData.updatedLocs;
     updateFreeMoves(freeMoves);
   }else if(isBattleMove(gameData)){
+    freeMoves = gameData.updatedLocs;
+    highlightFreeMoves(freeMoves);
     let revealPiece = gameData.revealPiece;
     let killedPieces = gameData.killedPieces;
     let updatedLocs = gameData.updatedLocs;

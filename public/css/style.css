@@ -325,6 +325,7 @@ button:focus {
   font: 35px Arial, sans-serif;
 }
 
+
 .animation-fade-out {
   animation: fadeOut 2s;
 }
