@@ -297,6 +297,7 @@ const updateBattlePosition = function(killedPiecesPos,movePositions){
   if(killedPiecesPos.length==2){
     document.getElementById(killedPiecesPos[0]).removeAttribute('class');
     document.getElementById(killedPiecesPos[1]).removeAttribute('class');
+    deemphasizeFreeMoves();
     return;
   }
   let killPiecePos = movePositions.find(pos=>pos==killedPiecesPos[0]);
@@ -359,7 +360,21 @@ const isBattleMove = (gameData) => {
   return gameData.moveType=='battle' && gameData['killedPieces'].length>0;
 };
 
-const animateBattle = function(killedPieces, updatedLocs) {
+const showSwordIn = function(killedPieces){
+  let img = `<img src="../img/sword.png">`;
+  killedPieces.forEach(killedPiece=>{
+    document.getElementById(killedPiece).innerHTML = img;
+  });
+};
+
+const removeSword = function(killedPieces){
+  killedPieces.forEach(killedPiece=>{
+    document.getElementById(killedPiece).innerHTML = '';
+  });
+};
+
+const animateBattle = function(killedPieces) {
+  showSwordIn(killedPieces);
   if(killedPieces.length==2){
     addToClassList(killedPieces[0],"animation-fade-out");
     addToClassList(killedPieces[1],"animation-fade-out");
@@ -375,6 +390,7 @@ const updateBattleMoves = (revealPiece,killedPieces,updatedLocs) => {
     updateKilledPieceCount(killedPieces);
     updateBattlePosition(killedPieces,updatedLocs);
     hideBattlePiece(updatedLocs);
+    removeSword(killedPieces);
   },2000);
 };
 

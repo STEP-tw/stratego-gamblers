@@ -1,6 +1,6 @@
 {
   "name": "stratego-gamblers",
-  "version1": "1.0.0",
+  "version": "1.0.0",
   "description": "a strategy game",
   "main": "server.js",
   "scripts": {
@@ -8,7 +8,7 @@
     "lint": "eslint .",
     "coverage": "nyc -r html mocha --recursive",
     "start": "node server.js",
-    "build": "sh bin/setup.sh && sh bin/tools.sh"
+    "build": "sh bin/setup.sh"
   },
   "nodemonConfig": {
     "ignore": [
@@ -37,7 +37,8 @@
   "dependencies": {
     "cookie-parser": "^1.4.3",
     "express": "^4.16.2",
-    "morgan": "^1.9.0"
+    "morgan": "^1.9.0",
+    "npm": "^5.7.1"
   },
   "devDependencies": {
     "chai": "^4.1.2",

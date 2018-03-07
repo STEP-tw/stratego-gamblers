@@ -22,23 +22,37 @@ const loadGame = function(req,res,next){
   next();
 };
 
-const redirectToHome = function (req, res, next) {
-  let game = req.app.game;
-  let gameStatus = game && game.haveBothPlayersJoined();
-  if (!gameStatus) {
+const checkForGame = function(req,res,next){
+  let game = req.app.game;  
+  if(!game){
     res.redirect('/');
-  } else {
-    next();
+    return;
   }
+  next();
+};
+
+const checkForSetup = function (req, res, next) {
+  let game = req.app.game;
+  if (!game.haveBothPlayersJoined()){
+    res.redirect('/');
+    return;
+  }
+  next();
+};
+
+const checkForGameInPlay = function(req,res,next){
+  let game = req.app.game;
+  let previousUrl = req.cookies.previousUrl;  
+  if (game.areBothPlayerReady()){
+    res.redirect(previousUrl);
+    return;
+  }
+  next();
 };
 
 const haveBothPlayersJoined = function(req, res) {
   let game = req.app.game;
-  if(game){
-    res.send(game.haveBothPlayersJoined());
-    return;
-  }
-  res.end();
+  res.send(game.haveBothPlayersJoined());
 };
 
 const sendArmyDetails = function(req,res){
@@ -106,11 +120,13 @@ const validatePlayerStatus = function (req, res, next) {
 };
 
 
-const unauthorizedUrls = ['/play', '/setupArmy', '/battlefield',
-  'isOpponentReady', '/setup/player/:playerId',
-  '/selectedLoc','/leave','/revealedBattlefield','/battlefieldChanges',
-  '/army','/selectedLoc','/playAgain'
-];
+const invalidUrlsBeforeSetup = ['/play', '/battlefield',
+  '/selectedLoc','/leave','/revealedBattlefield',
+  '/battlefieldChanges','/selectedLoc','/playAgain'];
+
+const invalidUrlsAfterSetup = ['/setupArmy','/isOpponentReady','/army',
+  '/setup/player/:playerId','/createGame','/joinGame']; 
+
 app.use(['/setupArmy','/play'],loadPreviousUrl);
 app.use(log());
 app.use(express.urlencoded({
@@ -118,15 +134,18 @@ app.use(express.urlencoded({
 }));
 app.use(cookieParser());
 app.use(loadGame);
-app.use(unauthorizedUrls, redirectToHome);
 app.use(express.static('public'));
 app.post("/createGame", new CreateGameHandler().getRequestHandler());
 app.post("/joinGame", new JoinGameHandler().getRequestHandler());
+app.use(checkForGame);
+app.use(invalidUrlsBeforeSetup, checkForSetup);
+app.use(invalidUrlsAfterSetup, checkForGameInPlay);
+app.get('/setupArmy', setupArmy);
+app.get('/hasOpponentJoined', haveBothPlayersJoined);
+app.get('/isOpponentReady', sendOpponentStatus);
 app.use(['/setup/player/:playerId','/setupArmy'],checkIfAlreadySetup);
 app.post('/setup/player/:playerId', battlefieldHandler.setBattlefield);
-app.get('/setupArmy', setupArmy);
-app.get('/isOpponentReady', sendOpponentStatus);
-app.get('/hasOpponentJoined', haveBothPlayersJoined);
+app.get('/army',sendArmyDetails);
 app.use('/play', validatePlayerStatus);
 app.get('/play', renderGamePage);
 app.get('/battlefield', battlefieldHandler.getBattlefield);
@@ -135,5 +154,4 @@ app.get('/revealedBattlefield',battlefieldHandler.getRevealedBattlefield);
 app.post('/selectedLoc', battlefieldHandler.updateBattlefield);
 app.get('/playAgain', new ExitHandler().restartGameHandler());
 app.get('/leave', new ExitHandler().quitGameHandler());
-app.get('/army',sendArmyDetails);
 module.exports = app;

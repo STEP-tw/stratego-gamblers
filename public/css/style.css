@@ -250,7 +250,7 @@ button:focus {
 #win {
   margin: auto;
   margin-top: 12%;
-  margin-left: 26.8%;
+  margin-left: 32%;
   width: 700px;
   height: 575px;
 }
@@ -258,7 +258,7 @@ button:focus {
 #lose {
   margin: auto;
   margin-top: 14.5%;
-  margin-left: 35.9%;
+  margin-left: 41.15%;
   width: 350px;
   height: 400px;  
 }
@@ -327,7 +327,7 @@ button:focus {
 
 
 .animation-fade-out {
-  animation: fadeOut 2s;
+  animation: fadeOut 3s;
 }
 
 @keyframes fadeOut {

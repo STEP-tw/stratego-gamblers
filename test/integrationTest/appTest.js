@@ -64,8 +64,9 @@ describe('app', () => {
     it("should return without response if game is not available", done => {
       request(app)
         .get('/hasOpponentJoined')
-        .expect(200)
-        .expect("")
+        .set('cookie','gameId=10')        
+        .expect(302)
+        .expect('location','/')
         .end(done);
     });
   });
@@ -186,7 +187,7 @@ describe('app', () => {
       app.game.setBattlefieldFor(0, redArmyPos);
       request(app)
         .get('/isOpponentReady')
-        .set('cookie','gameId=1')
+        .set('cookie',['gameId=1','previousUrl=/play'])
         .expect(302)
         .expect('Location','/play')
         .end(done);
