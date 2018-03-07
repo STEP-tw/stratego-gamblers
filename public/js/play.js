@@ -359,8 +359,18 @@ const isBattleMove = (gameData) => {
   return gameData.moveType=='battle' && gameData['killedPieces'].length>0;
 };
 
+const animateBattle = function(killedPieces, updatedLocs) {
+  if(killedPieces.length==2){
+    addToClassList(killedPieces[0],"animation-fade-out");
+    addToClassList(killedPieces[1],"animation-fade-out");
+    return;
+  }
+  addToClassList(killedPieces[0],"animation-fade-out");
+};
+
 const updateBattleMoves = (revealPiece,killedPieces,updatedLocs) => {
   revealBattlePiece(revealPiece);
+  animateBattle(killedPieces,updatedLocs);
   setTimeout(()=>{
     updateKilledPieceCount(killedPieces);
     updateBattlePosition(killedPieces,updatedLocs);
