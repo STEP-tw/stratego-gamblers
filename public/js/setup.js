@@ -208,14 +208,15 @@ const removeEventListener = (listner, type, elementID) => {
 
 const getOpponentStatus = function() {
   let reqListener = function() {
+    if(this.status==202){
+      notifyPlayer("Waiting for opponent to be ready");
+      return;
+    }
     window.location.href = this.responseURL;
     clearInterval(interval);
   };
-  let onFail = () => {
-    notifyPlayer("Waiting for opponent to be ready");
-  };
   let callBack = () => {
-    doXhr('/isOpponentReady', 'GET', reqListener, '', onFail);
+    doXhr('/isOpponentReady', 'GET', reqListener, null);
   };
   let interval = setInterval(callBack, 1000);
 };

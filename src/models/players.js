@@ -47,12 +47,15 @@ class Players {
   getPlayerIndex(playerId){
     return this.players.findIndex(player => player.id == playerId);
   }
-  getLostPlayers(){
-    return this.players.filter(player=>player.hasLost());
-  }
   getWinner(){
     let player = this.players.find(player=>!player.hasLost());
     return player.getId();
+  }
+  areBothPlayersLost(){
+    return this.players.every(player=>player.hasLost());
+  }
+  hasAnyPlayerLost(){
+    return this.players.some(player=>player.hasLost());
   }
 }
 module.exports = Players;

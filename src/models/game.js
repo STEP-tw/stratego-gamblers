@@ -1,8 +1,8 @@
 const Battlefield = require('./battlefield.js');
 const Players = require('./players.js');
 const Pieces = require('./pieces.js');
-const getSymbolForPos=require('../lib/lib.js').getSymbolForPos;
 const getAllPieces = require('../lib/validate.js').getAllPieces;
+
 class Game {
   constructor(id) {
     this.id = id;
@@ -98,20 +98,19 @@ class Game {
     this.battlefield.clearBattleResult();
   }
   updateGameStatus(){
-    let lostPlayers = this.players.getLostPlayers();
-    if(lostPlayers.length>0){
+    if(this.players.hasAnyPlayerLost()){
       this.gameOver = true;
-      this.setWinner(lostPlayers);
+      this.setWinner();
     }
   }
-  setWinner(lostPlayers){
-    if(this.isGameDrawn(lostPlayers)){
+  setWinner(){
+    if(this.isGameDrawn()){
       return;
     }
     this.winner = this.players.getWinner();
   }
-  isGameDrawn(lostPlayers){
-    return lostPlayers.length==2;
+  isGameDrawn(){
+    return this.players.areBothPlayersLost();
   }
   getGameStatus(){
     return {

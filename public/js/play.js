@@ -8,34 +8,12 @@ const generateCell = (id) => {
 };
 
 const getClassFor = (pieceID) => {
-  let pieces = {
-    'B': 'bomb',
-    'F': 'flag',
-    'S': 'spy',
-    'O': 'opponent',
-    'X': 'lake',
-    '2': 'scout',
-    '3': 'miner',
-    '4':'sergeant',
-    '5':'lieutenant',
-    '6':'captain',
-    '7':'major',
-    '8':'colonel',
-    '9': 'general',
-    '10': 'marshal',
-    'O_B': 'bomb-O',
-    'O_F': 'flag-O',
-    'O_S': 'spy-O',
-    'O_2': 'scout-O',
-    'O_3': 'miner-O',
-    'O_4':'sergeant-O',
-    'O_5':'lieutenant-O',
-    'O_6':'captain-O',
-    'O_7':'major-O',
-    'O_8':'colonel-O',
-    'O_9': 'general-O',
-    'O_10': 'marshal-O'
-  };
+  let pieces = {'B':'bomb','F':'flag','S':'spy','O':'opponent',
+    'X':'lake','2':'scout','3':'miner','4':'sergeant','5':'lieutenant',
+    '6':'captain','7':'major','8':'colonel','9':'general','10': 'marshal',
+    'O_B':'bomb-O','O_F':'flag-O','O_S':'spy-O','O_2':'scout-O',
+    'O_3':'miner-O','O_4':'sergeant-O','O_5':'lieutenant-O','O_6':'captain-O',
+    'O_7':'major-O','O_8':'colonel-O','O_9': 'general-O','O_10': 'marshal-O'};
   return pieces[pieceID];
 };
 
@@ -67,7 +45,7 @@ const getLocation = (event) => {
   }
   let postData = `location=${target.id}`;
   const reqListener = function() {
-    if (this.responseText) {
+    if (this.responseText&&this.status==200) {
       removeHighlight(potentialMoves);
       potentialMoves = JSON.parse(this.responseText);
       return highlightMoves(potentialMoves);
@@ -76,8 +54,7 @@ const getLocation = (event) => {
       removeHighlight(potentialMoves);
     }, 500);
   };
-  const onFail = function() {};
-  doXhr('/selectedLoc', 'POST', reqListener, postData, onFail);
+  doXhr('/selectedLoc', 'POST', reqListener, postData);
 };
 
 const drawBattlefield = (containerId,numOfRows,numOfCols,initialID,idGrowth)=>{
@@ -357,7 +334,7 @@ const showRevealedBattlefield = function(myArmy,oppArmy){
     let gameData = JSON.parse(this.responseText);
     updateBattlefield(gameData, myArmy, oppArmy);
   };
-  doXhr('/revealedBattlefield', 'POST', reqListener, null, () => {});
+  doXhr('/revealedBattlefield', 'GET', reqListener, null);
 };
 
 const showTurn = (turnMsg) => {
@@ -426,12 +403,12 @@ let interval;
 const initiatePolling = function(myArmy,oppArmy){
   const applyChanges = function(){
     if(this.responseText){
-      let gameData = JSON.parse(this.responseText);
+      let gameData = JSON.parse(this.responseText); 
       updateChanges(gameData,myArmy,oppArmy);
     }
   };
   let callBack =() => {
-    doXhr('/battlefieldChanges', 'POST', applyChanges, null, () => {});
+    doXhr('/battlefieldChanges', 'GET', applyChanges, null);
   };
   interval = setInterval(callBack, 1000);
 };
@@ -442,5 +419,5 @@ const setBattlefield = function(myArmy, oppArmy) {
     updateBattlefield(gameData, myArmy, oppArmy);
     initiatePolling(myArmy,oppArmy);
   };
-  doXhr('/battlefield', 'POST', reqListener, null, () => {});
+  doXhr('/battlefield', 'GET', reqListener, null);
 };

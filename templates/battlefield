@@ -70,15 +70,15 @@
     </div>
   </div>
 
-  <div class="win">
-    <img id="win" src="img/end/victory.png" alt="">
+  <div class='win'>
+    <img id="win" class="stamp" src="img/end/victory.png" alt="">
   </div>
   <div class="lose">
-    <img id="lose" src="img/end/defeat.png" alt="">
+    <img id="lose" class="stamp" src="img/end/defeat.png" alt="">
   </div>
   <div class="draw">
-    <img id="tie" src="img/end/draw.png" alt="">
-    <div id="draw">
+    <img id="tie" class="stamp" src="img/end/draw.png" alt="">
+    <div id="draw" class="stamp">
       game drawn!
     </div>
   </div>

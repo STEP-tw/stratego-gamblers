@@ -46,11 +46,10 @@ class BattlefieldHandler {
     res.send('invalid request');
     res.end();
   }
-  sendBattlefieldChanges(req,res){
+  getBattlefieldChanges(req,res){
     let sessionId = req.cookies.sessionId;
     let game = req.app.game;
-    if(!game.isBoardUpdated()){
-      
+    if(!game.isBoardUpdated()){  
       res.end();
       return;
     }
@@ -58,7 +57,7 @@ class BattlefieldHandler {
     gameChanges.status = getStatusMsg(sessionId,gameChanges.status);
     res.send(gameChanges);
   }
-  sendRevealedBattlefield(req,res){
+  getRevealedBattlefield(req,res){
     let battlefield = sendData(req.app.game,req.cookies.sessionId,'reveal');
     res.json(battlefield);
   }

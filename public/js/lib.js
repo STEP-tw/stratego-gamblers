@@ -13,15 +13,11 @@ const removeFromClassList = (id,className) =>{
 };
 
 
-const doXhr = function(url, method, reqListener, data, onFailed) {
+const doXhr = function(url, method, reqListener, data) {
   let xhr = new XMLHttpRequest();
   xhr.open(method, url);
-  xhr.onreadystatechange = function() {
-    if (this.status == 200 && this.readyState == 4) {
-      reqListener.call(this);
-    } else {
-      onFailed();
-    }
+  xhr.onload = function() {
+    reqListener.call(this);
   };
   if (method == 'POST') {
     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
@@ -49,14 +45,16 @@ const ready = (url) => {
   if(notDeployedFullArmy(postData)){
     return notifyPlayer("setup full army");
   }
-  let reqListener = () => {
-    removeDraggable();
-    getOpponentStatus();
-    removeEventListener(ready, "click", "ready");
+  let reqListener = function() {
+    if(this.status==200){
+      removeDraggable();
+      getOpponentStatus();
+      removeEventListener(ready, "click", "ready");
+      return;
+    }
+    notifyPlayer("setup full army");
   };
-  const onFail = () => {
-  };
-  doXhr(url, 'POST', reqListener, postData, onFail);
+  doXhr(url, 'POST', reqListener, postData);
 };
 
 const readyForBlue = () =>{
