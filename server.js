@@ -1,7 +1,11 @@
 const http = require('http');
+const getReqestHandler = require('./src/routing');
 const PORT = process.env.PORT || 8230;
-const app = require('./app.js');
-
-let server = http.createServer(app);
+const pg = require('pg');
+let connectionString = process.env.DATABASE_URL;
+const client = new pg.Client(connectionString);
+client.connect();
+const requestHandler = getReqestHandler(client);
+let server = http.createServer(requestHandler);
 server.listen(PORT);
 console.log(`listening at ${PORT}`);

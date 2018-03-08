@@ -1,5 +1,4 @@
-let dbManager = {};
-dbManager = {
+let dbManager = {
   makeInsertQuery: function (tableName, attributes, values) {
     return `insert into ${tableName} (${attributes.join(",")}) values ('${values.join("','")}');`;
   },
