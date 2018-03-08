@@ -189,7 +189,7 @@ class Battlefield {
     setTimeout(()=>{
       this.killedPieceLocations = [];
       this.revealPieces = {};
-    },1000);
+    },2000);
   }
   getBattlefieldFor(playerId) {
     let armyPos = this.getArmy(playerId);

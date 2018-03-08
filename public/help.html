@@ -26,22 +26,46 @@
       <p class="subtitle">Pieces</p>
       <p>Both players need the following 10 pieces:</p>
       <div class="piece">
-        <p>
-            <img src="../img/redArmy/F.png">
-            <img src="../img/redArmy/B.png">
-            <img src="../img/redArmy/10.png">
-            <img src="../img/redArmy/9.png">
-            <img src="../img/redArmy/3.png">
-            <img src="../img/redArmy/2.png">
-            <img src="../img/redArmy/S.png">
-        </p>
+        <div>
+          <ul><li>Red team's army</li></ul>
+            <img src="../img/redArmy/F.png"  class="playing-pieces">
+            <img src="../img/redArmy/B.png" class="playing-pieces">
+            <img src="../img/redArmy/10.png" class="playing-pieces">
+            <img src="../img/redArmy/9.png" class="playing-pieces">
+            <img src="../img/redArmy/8.png" class="playing-pieces">
+            <img src="../img/redArmy/7.png" class="playing-pieces">
+            <img src="../img/redArmy/6.png" class="playing-pieces">
+            <img src="../img/redArmy/5.png" class="playing-pieces">
+            <img src="../img/redArmy/4.png" class="playing-pieces">
+            <img src="../img/redArmy/3.png" class="playing-pieces">
+            <img src="../img/redArmy/2.png" class="playing-pieces">
+            <img src="../img/redArmy/S.png" class="playing-pieces">
+            <ul><li>Blues team's army</li></ul>
+            <img src="../img/blueArmy/F.png"  class="playing-pieces">
+            <img src="../img/blueArmy/B.png" class="playing-pieces">
+            <img src="../img/blueArmy/10.png" class="playing-pieces">
+            <img src="../img/blueArmy/9.png" class="playing-pieces">
+            <img src="../img/blueArmy/8.png" class="playing-pieces">
+            <img src="../img/blueArmy/7.png" class="playing-pieces">
+            <img src="../img/blueArmy/6.png" class="playing-pieces">
+            <img src="../img/blueArmy/5.png" class="playing-pieces">
+            <img src="../img/blueArmy/4.png" class="playing-pieces">
+            <img src="../img/blueArmy/3.png" class="playing-pieces">
+            <img src="../img/blueArmy/2.png" class="playing-pieces">
+            <img src="../img/blueArmy/S.png" class="playing-pieces">
+        </div>
         <ul>
           <li>Flag x 1</li>
-          <li>Bomb x 2</li>
+          <li>Bomb x 6</li>
           <li>Marshal x 1</li>
           <li>General x 1</li>
-          <li>Miner x 2</li>
-          <li>Scout x 2</li>
+          <li>Colonel x 2</li>
+          <li>Major x 3</li>
+          <li>Captain x 4</li>
+          <li>Lieutenant x 4</li>
+          <li>Sergeant x 4</li>
+          <li>Miner x 5</li>
+          <li>Scout x 8</li>
           <li>Spy x 1</li>
         </ul>
       </div>
@@ -73,22 +97,47 @@
           <li>The flag can be conquered by any of the enemy's pieces that can be moved</li>
         </ul>
       </p>
+      <p id="game-type">Types of game : </p>
+      <p>
+        <ul>
+          <li>Stratego can be played in two different formats.</li>
+          <li>One of them will be played by using only ten pieces.</li>
+          <li>Which are
+            <ul>
+              <li>Flag x 1</li>
+              <li>Bomb x 6</li>
+              <li>Marshal x 1</li>
+              <li>General x 1</li>
+              <li>Miner x 2</li>
+              <li>Scout x 2</li>
+              <li>Spy x 1</li>
+            </ul>
+            <img src="../img/help/tenPieceGame.png" alt="tenPieceGame" class="gameType">
+          </li>
+          <li>Another game is played using all the forty pieces.</li>
+          <img src="../img/help/fullPieceGame.png" alt="fullPieceGame" class="gameType">
+
+        </ul>
+      </p>
       <p id="moving">Moving : </p>
       <p>
         <img src="../img/help/moveAPiece.png" alt="moveAPiece" class="helpImg">
         <img src="../img/help/cannotJump.png" alt="cannotJump" class="helpImg">
         <img src="../img/help/notJumpLake.png" alt="notJumpLake" class="helpImg">
+        <img src="../img/help/attackMove.png" alt="attackMove" class="helpImg">
       </p>
       <p>
         <ul>
           <li>You can move a piece one place to the left or right, or one place forwards or backwards.</li>
           <li>The pieces cannot jump over each other and they may not be moved diagonally.</li>
           <li>The playing pieces cannot move over or jump over the two lakes in the center of the battlefield.</li>
+          <li>If your move is an attacking move it is highlighted with different colour than that of free move</li>
           <li>'Scout' is an exception to the above rules of movement. It can jump over an unlimited number of empty fields but not over lake or any of the other moving pieces. They can also not move diagonally. Scouts are the only pieces that can launch an attack from a sizeable distance.</li>
         </ul>
       </p>
       <p id="attacking">Attacking : </p>
       <p>
+        <img src="../img/help/whileAttack.png" alt="whileAttack" class="helpImg">
         <img src="../img/help/troopsLost.png" alt="troopsLost" class="helpImg">
         <img src="../img/help/troopsCaptured.png" alt="troopsCaptured" class="helpImg">
       </p>
@@ -103,6 +152,8 @@
         Only Miner can diffuse the Bomb and the Bomb is removed from the battlefield.</li>
       </ul>
     </div>
+    <img src="../img/help/victory.png" alt="victory" class="end">
+    <img src="../img/help/defeat.png" alt="defeat" class="end">
     <button id="bottomButton" type="button" onclick="window.location.href='/'">Home</button>
   </body>
 </html>

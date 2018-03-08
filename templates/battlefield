@@ -83,8 +83,8 @@
     </div>
   </div>
   <div class="surrender">
-    <img id="win" src="img/end/victory.png" alt="">
-    <div id="surrender">
+    <img id="win" class="stamp" src="img/end/victory.png" alt="">
+    <div id="surrender" class="stamp">
       opponent has surrendered!
     </div>
   </div>

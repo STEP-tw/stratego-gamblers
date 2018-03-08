@@ -127,13 +127,13 @@ class Game {
     let battlefieldPos = this.battlefield.getBattlefieldFor(playerId);
     let revealPiece = this.battlefield.getRevealPiece(playerId);
     let turnMsg = this.getTurnMessage(playerId);
-    let status = this.getGameStatus();      
+    let status = this.getGameStatus();
     let killedPieces = this.players.getKilledPieces();
     let boardInfo = {
       'battlefield': battlefieldPos,
-      'turnMsg': turnMsg,      
+      'turnMsg': turnMsg,
       'killedPieces': killedPieces,
-      'status': status      
+      'status': status
     };
     return boardInfo;
   }
@@ -163,7 +163,7 @@ class Game {
     this.updateTimeStamp();
   }
   updateTimeStamp(){
-    this.timeStamp = new Date().getTime()+1000;
+    this.timeStamp = new Date().getTime()+2000;
   }
   isBoardUpdated(){
     let timeStamp = new Date().getTime();

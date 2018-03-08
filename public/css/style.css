@@ -260,7 +260,7 @@ button:focus {
   margin-top: 14.5%;
   margin-left: 41.15%;
   width: 350px;
-  height: 400px;  
+  height: 400px;
 }
 
 .stamp{
@@ -302,11 +302,11 @@ button:focus {
   position: relative;
   margin: auto;
   margin-top: -6%;
-  margin-left: 27%;
+  margin-left: 33.2%;
   text-align: center;
   font-size: 30px;
   color: #210402;
-  width: 34%;
+  width: 32%;
   background-color: rgb(156, 131, 69);
   padding: 1%;
 }

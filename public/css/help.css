@@ -17,7 +17,7 @@ body {
   width: 25%;
 }
 
-#preparations, #outline, #moving, #attacking {
+#preparations, #outline, #moving, #attacking, #game-type {
   font-size: 35px;
 }
 
@@ -48,7 +48,7 @@ body {
 #bottomButton {
   font-family: 'Alegreya', serif;
   font-size: 30px;
-  margin-left: 45%;
+  margin-left: 47.1%;
   height: 50px;
   border-radius: 7px;
   border-color: #8d6e1c;
@@ -61,8 +61,19 @@ body {
   margin-bottom: 0px;
 }
 
-.helpImg {
+.helpImg, .gameType {
   margin-left: 180px;
+  border: 2px solid #ccc01e9c;
+}
+
+.end {
+  margin-left: 225px;
+  border: 2px solid #ccc01e9c;
+}
+
+.playing-pieces{
+  height: 80px;
+  width: 80px;
 }
 
 li,p {
