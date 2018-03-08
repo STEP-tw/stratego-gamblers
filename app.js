@@ -1,4 +1,5 @@
 const express = require('express');
+let dbManager = require("./src/lib/dbManager");
 const fs = require('fs');
 const cookieParser = require('cookie-parser');
 const app = express();
@@ -120,8 +121,23 @@ const validatePlayerStatus = function (req, res, next) {
 };
 
 const saveSetup = function (req,res,next) {
-  console.log(req.body);
-  res.end();
+  let game = req.app.game;
+  let name=req.body.setupName;
+  delete req.body.setupName;
+  let setup=JSON.stringify(req.body);
+  let type =game.getGameType();
+  let client = req.getClient();
+  let attributes = ["mode","name","setup"];
+  let values = [type,name,setup];
+  let insertqry = dbManager.makeInsertQuery('setups',attributes,values);
+  client.query(insertqry,(err,resp)=>{
+    if(err){
+      console.log(err);
+      return res.status(500).send();
+    }
+    console.log(resp);
+    res.end();
+  });
 };
 
 const invalidUrlsBeforeSetup = ['/play', '/battlefield',
