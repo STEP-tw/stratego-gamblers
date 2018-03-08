@@ -22,7 +22,8 @@
     "no-unmodified-loop-condition": 2,
     "curly": 2,
     "max-len": ["error", {
-      "code": 80
+      "code": 80,
+      "ignoreStrings":true
     }],
     "max-depth": 2,
     "max-lines": ["error", {
