@@ -391,7 +391,7 @@ const updateBattleMoves = (revealPiece,killedPieces,updatedLocs) => {
     updateBattlePosition(killedPieces,updatedLocs);
     hideBattlePiece(updatedLocs);
     removeSword(killedPieces);
-  },2000);
+  },1000);
 };
 
 const isGameOver = (status) => {
@@ -431,7 +431,7 @@ let interval;
 const initiatePolling = function(myArmy,oppArmy){
   const applyChanges = function(){
     if(this.responseText){
-      let gameData = JSON.parse(this.responseText); 
+      let gameData = JSON.parse(this.responseText);
       updateChanges(gameData,myArmy,oppArmy);
     }
   };
