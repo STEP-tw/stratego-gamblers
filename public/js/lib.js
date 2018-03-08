@@ -43,7 +43,7 @@ const drawBaseGrid = (row) => {
 const ready = (url) => {
   let postData = fetchBattleField();
   if(notDeployedFullArmy(postData)){
-    return notifyPlayer("setup full army");
+    return notifyPlayer("please deploy full army");
   }
   let reqListener = function() {
     if(this.status==200){
@@ -52,7 +52,7 @@ const ready = (url) => {
       removeEventListener(ready, "click", "ready");
       return;
     }
-    notifyPlayer("setup full army");
+    notifyPlayer("please deploy full army");
   };
   doXhr(url, 'POST', reqListener, postData);
 };

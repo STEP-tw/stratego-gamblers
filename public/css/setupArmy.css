@@ -174,7 +174,7 @@ td {
   color: #a78d43;
 }
 
-#ready {
+#ready, #random, #save-setup {
   font-family: 'Alegreya', serif;
   font-size: 40px;
   text-transform: uppercase;
@@ -187,22 +187,14 @@ td {
   cursor: pointer;
 }
 
-#random {
-  font-family: 'Alegreya', serif;
-  font-size: 25px;
-  text-transform: uppercase;
-  margin-left: 27%;
+#random, #save-setup {
+  font-size: 20px;
   margin-bottom: 10px;
-  width: 45%;
-  height: 35%;
-  background-color: rgb(156, 131, 69);
+  height: 30%;
   border-radius: 12px;
-  border: none;
-  cursor: pointer;
 }
 
-
-#ready:hover,#random:hover {
+#ready:hover, #random:hover, #save-setup:hover {
   background-color: #BC8B2D;
   box-shadow: 0px 0px 10px 0px #BC8B2D;
 }

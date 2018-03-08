@@ -119,6 +119,10 @@ const validatePlayerStatus = function (req, res, next) {
   }
 };
 
+const saveSetup = function (req,res,next) {
+  console.log(req.body);
+  res.end();
+};
 
 const invalidUrlsBeforeSetup = ['/play', '/battlefield',
   '/selectedLoc','/leave','/revealedBattlefield',
@@ -154,4 +158,5 @@ app.get('/revealedBattlefield',battlefieldHandler.getRevealedBattlefield);
 app.post('/selectedLoc', battlefieldHandler.updateBattlefield);
 app.get('/playAgain', new ExitHandler().restartGameHandler());
 app.get('/leave', new ExitHandler().quitGameHandler());
+app.post('/saveSetup',saveSetup);
 module.exports = app;

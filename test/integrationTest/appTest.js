@@ -30,7 +30,7 @@ describe('app', () => {
   describe("GET /createGame", () => {
     it("responds with sharing key", done => {
       request(app)
-        .post("/createGame")        
+        .post("/createGame")
         .send('name=ravi&type=quick')
         .expect(200)
         .expect(/[\d]/)
@@ -40,7 +40,7 @@ describe('app', () => {
     it("should not allow to create game with invalid name", done =>{
       request(app)
         .post("/createGame")
-        .send('name=ra$%^vi&type=quick')        
+        .send('name=ra$%^vi&type=quick')
         .expect(400)
         .end(done);
     });
@@ -64,7 +64,7 @@ describe('app', () => {
     it("should return without response if game is not available", done => {
       request(app)
         .get('/hasOpponentJoined')
-        .set('cookie','gameId=10')        
+        .set('cookie','gameId=10')
         .expect(302)
         .expect('location','/')
         .end(done);
@@ -86,7 +86,7 @@ describe('app', () => {
         .expect(404)
         .end(done);
     });
-    beforeEach(() => {    
+    beforeEach(() => {
       app.game.addPlayer("player2" ,'1234','blue');
     });
     it("redirect valid joining player to battlefield", done => {
@@ -102,7 +102,7 @@ describe('app', () => {
         .post("/joinGame")
         .send("name=ankur&gameId=2")
         .expect(400)
-        .expect('Inavlid Player Name or Game Id')        
+        .expect('Inavlid Player Name or Game Id')
         .end(done);
     });
     it("redirect third joining player to home", done => {
@@ -119,7 +119,7 @@ describe('app', () => {
         .post("/joinGame")
         .send("name=  &gameId=1")
         .expect(400)
-        .expect('Inavlid Player Name or Game Id')        
+        .expect('Inavlid Player Name or Game Id')
         .end(done);
     });
   });
@@ -250,6 +250,20 @@ describe('app', () => {
         .get('/army')
         .set('cookie','gameId=1')
         .expect({'2': 2, '3': 2, '9': 1, '10': 1, 'F': 1, 'B': 2, 'S': 1} )
+        .expect(200)
+        .end(done);
+    });
+  });
+  describe('POST /saveSetup', () => {
+    beforeEach(()=>{
+      app.game.addPlayer("player1", 12345, 'red');
+      app.game.addPlayer("player2", 123456, 'blue');
+    });
+    it('should save the setup details', (done) => {
+      request(app)
+        .post('/saveSetup')
+        .set('cookie','gameId=1')
+        .send('4=3&9=2&12=3&13=S&15=F&20=B&21=9&25=B&31=2&36=10&')
         .expect(200)
         .end(done);
     });

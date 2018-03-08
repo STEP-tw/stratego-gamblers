@@ -11,7 +11,7 @@ const drop = (event) => {
   if (target.tagName == "IMG") {
     let parent = target.parentNode;
     let previousPieceParent = imgTodrop.parentNode;
-    parent.replaceChild(imgTodrop,target);
+    parent.replaceChild(imgTodrop, target);
     previousPieceParent.appendChild(target);
     return;
   }
@@ -32,8 +32,8 @@ const removeDraggable = () => {
   let battleField = getElement("grid");
   grid.childNodes.forEach(function(row) {
     row.childNodes.forEach(function(cell) {
-      cell.removeEventListener('drop',drop,false);
-      if(cell.hasChildNodes()){
+      cell.removeEventListener('drop', drop, false);
+      if (cell.hasChildNodes()) {
         cell.childNodes[0].removeEventListener('dragstart', drag, false);
       }
     });
@@ -84,12 +84,12 @@ const setImageAttributes = (img, src, id, height, width) => {
 };
 
 const incrementId = function(id) {
-  let next = +(id.split('_').join(''))+1;
-  next = next<10 ? `0${next}` : next.toString();
+  let next = +(id.split('_').join('')) + 1;
+  next = next < 10 ? `0${next}` : next.toString();
   return next.split('').join('_');
 };
 
-const getBaseGridIds = function(initialId,armyLength) {
+const getBaseGridIds = function(initialId, armyLength) {
   let ids = [initialId];
   for (let index = 1; index < armyLength; index++) {
     initialId = incrementId(initialId);
@@ -109,16 +109,16 @@ const appendImage = (baseCell, id, imgSrcDirectory) => {
   basePosition.appendChild(img);
 };
 
-const appendPiecesToBase = (army,imgSrcDirectory) => {
+const appendPiecesToBase = (army, imgSrcDirectory) => {
   let baseGrid = getElement("base-army-table");
   let initialId = baseGrid.childNodes[1].childNodes[0].id;
-  let baseCells = getBaseGridIds(initialId,army.length);
+  let baseCells = getBaseGridIds(initialId, army.length);
   baseCells.forEach((element, index) => {
     appendImage(element, army[index], imgSrcDirectory);
   });
 };
 
-const getInitChildId = (army)=>{
+const getInitChildId = (army) => {
   let ids = {
     redArmy: getElement('grid').lastChild.firstChild.id,
     blueArmy: getElement('grid').childNodes[1].firstChild.id
@@ -126,13 +126,13 @@ const getInitChildId = (army)=>{
   return ids[army];
 };
 
-const fetchArmyFromBase = function(){
+const fetchArmyFromBase = function() {
   let army = [];
   let baseArmy = [...getElement('base-army-table').childNodes];
   baseArmy.shift();
-  baseArmy.forEach(row=>{
-    row.childNodes.forEach(td=>{
-      if(td.hasChildNodes()){
+  baseArmy.forEach(row => {
+    row.childNodes.forEach(td => {
+      if (td.hasChildNodes()) {
         army.push(td.firstChild.id);
         td.firstChild.remove();
       }
@@ -141,13 +141,13 @@ const fetchArmyFromBase = function(){
   return army;
 };
 
-const getFreeHomeLand = ()=>{
+const getFreeHomeLand = () => {
   let grid = [...getElement('grid').childNodes];
   let homeLand = [];
   grid.shift();
-  grid.forEach(row=>{
-    row.childNodes.forEach(td=>{
-      if(!td.hasChildNodes()){
+  grid.forEach(row => {
+    row.childNodes.forEach(td => {
+      if (!td.hasChildNodes()) {
         homeLand.push(td.id);
       }
     });
@@ -158,12 +158,12 @@ const getFreeHomeLand = ()=>{
 const appendPiecesToHome = (imgSrcDirectory) => {
   let army = fetchArmyFromBase();
   let freeLand = getFreeHomeLand();
-  let randomNumber,position;
+  let randomNumber, position;
   army.forEach((piece) => {
-    randomNumber = Math.floor(Math.random()*(freeLand.length-1));
-    position=freeLand[randomNumber];
+    randomNumber = Math.floor(Math.random() * (freeLand.length - 1));
+    position = freeLand[randomNumber];
     appendImage(position, piece, imgSrcDirectory);
-    freeLand.splice(randomNumber,1);
+    freeLand.splice(randomNumber, 1);
   });
   getElement('random').style.display = 'none';
 };
@@ -184,7 +184,7 @@ const fetchCellId = (cell) => {
 const fetchBattleField = () => {
   let fetchedDetails = "";
   let battleField = getElement("grid");
-  grid.childNodes.forEach(function(row) {
+  battleField.childNodes.forEach(function(row) {
     row.childNodes.forEach(function(cell) {
       fetchedDetails += fetchCellId(cell);
     });
@@ -208,7 +208,7 @@ const removeEventListener = (listner, type, elementID) => {
 
 const getOpponentStatus = function() {
   let reqListener = function() {
-    if(this.status==202){
+    if (this.status == 202) {
       notifyPlayer("Waiting for opponent to be ready");
       return;
     }
@@ -221,7 +221,7 @@ const getOpponentStatus = function() {
   let interval = setInterval(callBack, 1000);
 };
 
-const getPiecesList = function(piecesWithQty){
+const getPiecesList = function(piecesWithQty) {
   let army = [];
   for (let rank in piecesWithQty) {
     let quantity = piecesWithQty[rank];
@@ -232,7 +232,39 @@ const getPiecesList = function(piecesWithQty){
 
 const notDeployedFullArmy = (pieceAndLocation) => {
   let base = getElement('base-army-table');
-  let armyStrength = (base.childNodes.length-1)*10;
+  let armyStrength = (base.childNodes.length - 1) * 10;
   let numberOfPlayingPiece = pieceAndLocation.split('&').length - 1;
   return numberOfPlayingPiece != armyStrength;
+};
+
+const generatePieceLocPair = (cell, index) => {
+  if (!cell.hasChildNodes()) {
+    return "";
+  }
+  let piece = cell.firstChild;
+  let pieceID = piece.id;
+  return `${index}=${pieceID}&`;
+};
+
+const fetchHomeLand = () => {
+  let fetchedDetails = "";
+  let homeLand = getElement("grid");
+  let index = 1;
+  homeLand.childNodes.forEach(function(row) {
+    row.childNodes.forEach(function(cell) {
+      fetchedDetails += generatePieceLocPair(cell, index);
+      index++;
+    });
+  });
+  return fetchedDetails;
+};
+
+const saveSetup = () => {
+  let homeLand = fetchHomeLand();
+  if (notDeployedFullArmy(homeLand)) {
+    notifyPlayer('please deploy full army');
+  } else {
+    doXhr('/saveSetup', 'POST', null, homeLand);
+    document.querySelector('#save-setup').style.display = 'none';
+  }
 };

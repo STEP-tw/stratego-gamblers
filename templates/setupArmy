@@ -108,7 +108,8 @@
         </div>
       </div>
       <div class="ready">
-        <button id="random" type="button" onclick="appendPiecesToHome('{{team}}Army')">random-setup</button>
+        <button id="save-setup" type="button" name="button" onclick="saveSetup()">save setup</button>
+        <button id="random" type="button" onclick="appendPiecesToHome('{{team}}Army')">random setup</button>
         <button id="ready" type="button" name="button">ready</button>
       </div>
     </div>
