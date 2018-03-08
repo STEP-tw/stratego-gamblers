@@ -23,7 +23,7 @@ const loadGame = function(req,res,next){
 };
 
 const checkForGame = function(req,res,next){
-  let game = req.app.game;  
+  let game = req.app.game;
   if(!game){
     res.redirect('/');
     return;
@@ -42,7 +42,7 @@ const checkForSetup = function (req, res, next) {
 
 const checkForGameInPlay = function(req,res,next){
   let game = req.app.game;
-  let previousUrl = req.cookies.previousUrl;  
+  let previousUrl = req.cookies.previousUrl;
   if (game.areBothPlayerReady()){
     res.redirect(previousUrl);
     return;
@@ -74,7 +74,7 @@ const setupArmy = function(req, res) {
   let setupTemp = req.app.fs.readFileSync('./templates/setupArmy', 'utf8');
   let game = req.app.game;
   let sessionId = req.cookies.sessionId;
-  let playerId = game.getPlayerIndexBy(sessionId);  
+  let playerId = game.getPlayerIndexBy(sessionId);
   let teamColor = game.getPlayerColorBy(playerId);
   setupTemp = setupTemp.replace(/{{team}}/g,teamColor);
   let name = game.getPlayerName(teamColor);
@@ -125,7 +125,7 @@ const invalidUrlsBeforeSetup = ['/play', '/battlefield',
   '/battlefieldChanges','/selectedLoc','/playAgain'];
 
 const invalidUrlsAfterSetup = ['/setupArmy','/isOpponentReady','/army',
-  '/setup/player/:playerId','/createGame','/joinGame']; 
+  '/setup/player/:playerId','/createGame','/joinGame'];
 
 app.use(['/setupArmy','/play'],loadPreviousUrl);
 app.use(log());
@@ -139,7 +139,7 @@ app.post("/createGame", new CreateGameHandler().getRequestHandler());
 app.post("/joinGame", new JoinGameHandler().getRequestHandler());
 app.use(checkForGame);
 app.use(invalidUrlsBeforeSetup, checkForSetup);
-app.use(invalidUrlsAfterSetup, checkForGameInPlay);
+// app.use(invalidUrlsAfterSetup, checkForGameInPlay);
 app.get('/setupArmy', setupArmy);
 app.get('/hasOpponentJoined', haveBothPlayersJoined);
 app.get('/isOpponentReady', sendOpponentStatus);
