@@ -108,11 +108,22 @@
         </div>
       </div>
       <div class="ready">
-        <button id="save-setup" type="button" name="button" onclick="saveSetup()">save setup</button>
+        <button id="save-setup" type="button" name="button" onclick="showPopup()">save setup</button>
         <button id="random" type="button" onclick="appendPiecesToHome('{{team}}Army')">random setup</button>
         <button id="ready" type="button" name="button">ready</button>
       </div>
     </div>
+  </div>
+
+  <div class="save-setup-popup overflow-model">
+    <div class="popupContent">
+    <span id="setup-name-para">setup name : </span>
+    <input id="setup-name" type="text">
+    <div class="buttons">
+      <button id="save-setup-button" type="button" onclick="saveSetup()">save</button>
+      <button id="close-setup-popup" type="button" onclick="hidePopup()">cancel</button>
+    </div>
+  </div>
   </div>
 
 </body>

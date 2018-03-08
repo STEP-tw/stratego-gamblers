@@ -261,10 +261,25 @@ const fetchHomeLand = () => {
 
 const saveSetup = () => {
   let homeLand = fetchHomeLand();
-  if (notDeployedFullArmy(homeLand)) {
-    notifyPlayer('please deploy full army');
-  } else {
-    doXhr('/saveSetup', 'POST', null, homeLand);
+  let setupName = document.getElementById('setup-name').value;
+  setupName = setupName.trim();
+  if(setupName.match(/(^[a-z])\w*$/gi) && setupName){
+    let postData = homeLand + `setupName=${setupName}`;
+    doXhr('/saveSetup', 'POST', ()=>{}, postData);
     document.querySelector('#save-setup').style.display = 'none';
+    hidePopup();
   }
+};
+
+const showPopup = () => {
+  let homeLand = fetchHomeLand();
+  if (notDeployedFullArmy(homeLand)) {
+    notifyPlayer('deploy full army');
+  } else {
+    document.querySelector('.save-setup-popup').style.display = 'block';
+  }
+};
+
+const hidePopup = () => {
+  document.querySelector('.save-setup-popup').style.display = 'none';
 };

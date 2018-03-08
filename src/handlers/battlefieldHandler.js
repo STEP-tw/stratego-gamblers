@@ -24,9 +24,9 @@ class BattlefieldHandler {
     res.status(206).send('pieces or location missing!');
   }
   getBattlefield(req,res){
-    let sessionId = req.cookies.sessionId;    
+    let sessionId = req.cookies.sessionId;
     let boardInfo = sendData(req.app.game,req.cookies.sessionId,'getBoard');
-    boardInfo.status = getStatusMsg(sessionId,boardInfo.status);    
+    boardInfo.status = getStatusMsg(sessionId,boardInfo.status);
     res.json(boardInfo);
   }
   updateBattlefield(req,res){
@@ -49,7 +49,7 @@ class BattlefieldHandler {
   getBattlefieldChanges(req,res){
     let sessionId = req.cookies.sessionId;
     let game = req.app.game;
-    if(!game.isBoardUpdated()){  
+    if(!game.isBoardUpdated()){
       res.end();
       return;
     }
