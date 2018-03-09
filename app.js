@@ -144,6 +144,19 @@ const getAllSetupName = function(req,res){
   });
 };
 
+const renderSetup = (req,res)=>{
+  let setupId = req.body.id;
+  let client = req.app.getClient();
+  let attributes = ['setup'];
+  let condition=`index=${setupId}`;
+  let query = dbManager.makeRetrieveQueryOf('setups',condition,attributes);
+  client.query(query).then((resp)=>{
+    res.send(resp.rows[0]);
+  }).catch((err)=>{
+    res.status(500).send();
+  });
+};
+
 const invalidUrlsBeforeSetup = ['/play', '/battlefield',
   '/selectedLoc','/leave','/revealedBattlefield',
   '/battlefieldChanges','/selectedLoc','/playAgain'];
@@ -183,4 +196,5 @@ app.get('/playAgain', new ExitHandler().restartGameHandler());
 app.get('/leave', new ExitHandler().quitGameHandler());
 app.post('/saveSetup',saveSetup);
 app.get('/setupNames',getAllSetupName);
+app.post('/loadSetup',renderSetup);
 module.exports = app;
