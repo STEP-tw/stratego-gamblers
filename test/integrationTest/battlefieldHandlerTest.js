@@ -22,8 +22,17 @@ describe('BattleFieldHandler', () => {
       request(app)
         .get('/battlefield')
         .set('cookie',['sessionId=12345','gameId=1'])
+        .set('accept','*/*')
         .expect(200)
         .expect(/"3_2":"2","3_9":"B","9_2":"O","9_9":"O"/)
+        .end(done);
+    });
+    it('should redirect to previous url when not requested with AJAX', (done) => {
+      request(app)
+        .get('/battlefield')
+        .set('cookie',['sessionId=12345','gameId=1','previousUrl=/play'])
+        .expect(302)
+        .expect('Location','/play')
         .end(done);
     });
   });
@@ -58,9 +67,9 @@ describe('BattleFieldHandler', () => {
   describe('/battlefieldChanges',()=>{
     describe('game in play',()=>{
       it('should reponse with changes which are currently made', (done) => {
-        app.game.timeStamp = new Date().getTime()+1000;      
+        app.game.timeStamp = new Date().getTime()+1000;
         request(app)
-          .get('/battlefieldChanges')   
+          .get('/battlefieldChanges')
           .set('cookie',['sessionId=12345','gameId=1'])
           .expect(200)
           .expect(/updatedLocs/)
@@ -78,7 +87,7 @@ describe('BattleFieldHandler', () => {
       });
       it('should respond with revealed piece', (done) => {
         app.game.timeStamp = new Date().getTime()+1000;
-        app.game.battlefield.revealPieces = 
+        app.game.battlefield.revealPieces =
         {0:{pos:'3_2',pieceId:'2'},1:{pos:'9_2',pieceId:'2'}};
         request(app)
           .get('/battlefieldChanges')
@@ -111,7 +120,7 @@ describe('BattleFieldHandler', () => {
           .end(done);
       });
       it('should respond with surrender when a player leave the game',(done)=>{
-        app.game.gameOver = 'quit';       
+        app.game.gameOver = 'quit';
         request(app)
           .get('/battlefieldChanges')
           .set('cookie',['sessionId=123456','gameId=1'])

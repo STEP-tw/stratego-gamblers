@@ -284,7 +284,7 @@ const updateKilledPieceCount = function(killedPieces){
   let capturedTroops = document.getElementById('troops-captured');
   killedPieces.forEach(killedPiece=>{
     let piece = document.getElementById(killedPiece);
-    let extraClasses = ['start-move','animation-fade-out','last-move'];
+    let extraClasses = ['start-move','animation-fade-out','last-move','opponent'];
     let pieceClasses = piece.className.split(' ');
     let pieceClass = pieceClasses.find(pClass=>{
       return !extraClasses.includes(pClass);
@@ -308,7 +308,7 @@ const updateBattlePosition = function(killedPiecesPos,movePositions){
   document.getElementById(killPiecePos).removeAttribute('class');
   if(killPiecePos == movePositions[1]){
     let pieceClass = document.getElementById(movePositions[0]).classList[0];
-    addToClassList(killPiecePos,pieceClass);
+    pieceClass && addToClassList(killPiecePos,pieceClass);
     removeFromClassList(killPiecePos,'start-move');
     document.getElementById(movePositions[0]).removeAttribute('class');
   }

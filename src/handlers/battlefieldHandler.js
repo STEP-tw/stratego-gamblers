@@ -23,11 +23,16 @@ class BattlefieldHandler {
     }
     res.status(206).send('pieces or location missing!');
   }
-  getBattlefield(req,res){
-    let sessionId = req.cookies.sessionId;
-    let boardInfo = sendData(req.app.game,req.cookies.sessionId,'getBoard');
-    boardInfo.status = getStatusMsg(sessionId,boardInfo.status);
-    res.json(boardInfo);
+  getBattlefield(req,res,next){
+    if(req.headers.accept=='*/*'){
+      let sessionId = req.cookies.sessionId;
+      let boardInfo = sendData(req.app.game,req.cookies.sessionId,'getBoard');
+      boardInfo.status = getStatusMsg(sessionId,boardInfo.status);
+      res.json(boardInfo);
+      return;
+    }
+    let previousUrl = req.cookies.previousUrl;
+    res.redirect(previousUrl);
   }
   updateBattlefield(req,res){
     let game = req.app.game;
