@@ -326,3 +326,15 @@ const showLoadSetupPopup = () => {
 const hideLoadSetupPopup = () => {
   hidePopup('load-setup-popup');
 };
+
+const loadSelectedSetup = () =>{
+  let dropdown = document.querySelector('.dropdown-button');
+  let id = dropdown.options[dropdown.selectedIndex].id;
+  let loadSetup = function(){
+    if(this.status==200 && this.responseText){
+      let setup = JSON.parse(this.responseText);
+    }
+  };
+  doXhr('/loadSetup','POST',loadSetup,`id=${id}`);
+  hideLoadSetupPopup();
+};

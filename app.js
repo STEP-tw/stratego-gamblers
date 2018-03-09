@@ -151,7 +151,7 @@ const renderSetup = (req,res)=>{
   let condition=`index=${setupId}`;
   let query = dbManager.makeRetrieveQueryOf('setups',condition,attributes);
   client.query(query).then((resp)=>{
-    res.send(resp.rows[0]);
+    res.send(resp.rows[0].setup);
   }).catch((err)=>{
     res.status(500).send();
   });
