@@ -298,8 +298,29 @@ const hideSaveSetupPopup = () => {
   hidePopup('save-setup-popup');
 };
 
+const removeAllChild = function(node){
+  while (node.hasChildNodes()) {
+    node.removeChild(node.lastChild);
+  }
+};
+
+const showSetups = function(){
+  if(this.status==200){
+    let dropdown = document.querySelector('.dropdown-button');
+    removeAllChild(dropdown);
+    let allSetups = JSON.parse(this.responseText);
+    allSetups.forEach((setup)=>{
+      let option = document.createElement('option');
+      option.id = setup.index;
+      option.innerText = setup.name;
+      dropdown.appendChild(option);
+    });
+  }
+};
+
 const showLoadSetupPopup = () => {
   showPopup('load-setup-popup');
+  doXhr('/setupNames','GET',showSetups,'');
 };
 
 const hideLoadSetupPopup = () => {
