@@ -10,10 +10,12 @@
   <script src="js/{{team}}Setup.js" charset="utf-8"></script>
   <link href="https://fonts.googleapis.com/css?family=Alegreya" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Alegreya+Sans" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=UnifrakturCook:700" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <script defer src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
 </head>
 
 <body oncontextmenu="return false">
-
   <div class="player-details">
     <div class="game-logo">
       <img id="logo" src="img/background/logo.png">
@@ -107,23 +109,44 @@
           <span id="msg-content-para"></span>
         </div>
       </div>
-      <div class="ready">
-        <button id="save-setup" type="button" name="button" onclick="showPopup()">save setup</button>
-        <button id="random" type="button" onclick="appendPiecesToHome('{{team}}Army')">random setup</button>
-        <button id="ready" type="button" name="button">ready</button>
+      <div class="all-buttons">
+        <div class="setup-buttons">
+          <button id="save-setup" type="button" name="button" onclick="showSaveSetupPopup()">save setup</button>
+          <button id="load-setup" type="button" name="button" onclick="showLoadSetupPopup()">load setup</button>
+          <button id="random" type="button" onclick="appendPiecesToHome('{{team}}Army')">random setup</button>
+        </div>
+        <div class="ready">
+          <button id="ready" type="button" name="button">ready</button>
+        </div>
       </div>
     </div>
   </div>
 
   <div class="save-setup-popup overflow-model">
     <div class="popupContent">
-    <span id="setup-name-para">setup name : </span>
-    <input id="setup-name" type="text">
-    <div class="buttons">
-      <button id="save-setup-button" type="button" onclick="saveSetup()">save</button>
-      <button id="close-setup-popup" type="button" onclick="hidePopup()">cancel</button>
+      <span id="setup-name-para">setup name : </span>
+      <input id="setup-name" type="text">
+      <div class="buttons">
+        <button id="save-setup-button" type="button" onclick="saveSetup()">save</button>
+        <button id="close-save-setup-popup" type="button" onclick="hideSaveSetupPopup()">cancel</button>
+      </div>
     </div>
   </div>
+
+
+  <div class="load-setup-popup overflow-model">
+    <div class="popupContent">
+      <div class="close">
+        <a id="close-popup-button" onclick="hideLoadSetupPopup()"><i class="fa fa-times"></i></a>
+      </div>
+      <div class="dropdown">
+        <select class="dropdown-button" name="selectedSetup">
+        </select>
+      </div>
+      <div class="load-button">
+        <button id="load-setup-button" type="button" name="button" onclick="loadSelectedSetup()">load setup</button>
+      </div>
+    </div>
   </div>
 
 </body>

@@ -271,7 +271,7 @@ const saveSetup = () => {
   }
 };
 
-const showPopup = () => {
+const showSaveSetupPopup = () => {
   let homeLand = fetchHomeLand();
   if (notDeployedFullArmy(homeLand)) {
     notifyPlayer('Deploy your full army');
@@ -280,6 +280,14 @@ const showPopup = () => {
   }
 };
 
-const hidePopup = () => {
+const hideSaveSetupPopup = () => {
   document.querySelector('.save-setup-popup').style.display = 'none';
+};
+
+const showLoadSetupPopup = () => {
+  document.querySelector('.load-setup-popup').style.display = 'block';
+};
+
+const hideLoadSetupPopup = () => {
+  document.querySelector('.load-setup-popup').style.display = 'none';
 };
