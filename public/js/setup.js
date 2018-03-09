@@ -331,6 +331,7 @@ const hideLoadSetupPopup = () => {
   hidePopup('load-setup-popup');
 };
 
+<<<<<<< HEAD
 const loadToHomeLand = (setup,imgSrcDirectory) => {
   let grid = [...getElement('grid').childNodes];
   grid.shift();
@@ -370,6 +371,16 @@ const loadSelectedSetup = (imgSrcDirectory) =>{
     }
   };
   let id = dropdown.options[dropdown.selectedIndex].id;
+=======
+const loadSelectedSetup = () =>{
+  let dropdown = document.querySelector('.dropdown-button');
+  let id = dropdown.options[dropdown.selectedIndex].id;
+  let loadSetup = function(){
+    if(this.status==200 && this.responseText){
+      let setup = JSON.parse(this.responseText);
+    }
+  };
+>>>>>>> [#69] Ashish/Rahul - load setup details from database when given setup index.
   doXhr('/loadSetup','POST',loadSetup,`id=${id}`);
   hideLoadSetupPopup();
 };
