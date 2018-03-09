@@ -11,7 +11,7 @@ let dbManager = {
     }else {
       attributes='*';
     }
-    let selectQuery = `select ${attributes} from step_example.${tableName}`;
+    let selectQuery = `select ${attributes} from ${tableName}`;
     let whereClause = ` where ${condition};`;
     return selectQuery + whereClause;
   },

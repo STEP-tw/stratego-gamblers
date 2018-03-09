@@ -148,7 +148,7 @@
         </select>
       </div>
       <div class="load-button">
-        <button id="load-setup-button" type="button" name="button" onclick="loadSelectedSetup()">load setup</button>
+        <button id="load-setup-button" type="button" name="button" onclick="loadSelectedSetup('{{team}}Army')">load setup</button>
       </div>
     </div>
   </div>

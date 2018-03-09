@@ -327,14 +327,45 @@ const hideLoadSetupPopup = () => {
   hidePopup('load-setup-popup');
 };
 
-const loadSelectedSetup = () =>{
+const loadToHomeLand = (setup,imgSrcDirectory) => {
+  let grid = [...getElement('grid').childNodes];
+  grid.shift();
+  let locations = Object.keys(setup);
+  let index=1,loc=0;
+  grid.forEach((rows)=>{
+    rows.childNodes.forEach((td)=>{
+      if(index==locations[loc]){
+        appendImage(td.id,setup[index], imgSrcDirectory);
+        loc++;
+      }
+      index++;
+    });
+  });
+};
+
+const clearHomeLand = ()=>{
+  let homeLand = [...getElement('grid').childNodes];
+  homeLand.shift();
+  homeLand.forEach(row => {
+    row.childNodes.forEach(td => {
+      if (td.hasChildNodes()) {
+        td.firstChild.remove();
+      }
+    });
+  });
+};
+
+const loadSelectedSetup = (imgSrcDirectory) =>{
   let dropdown = document.querySelector('.dropdown-button');
-  let id = dropdown.options[dropdown.selectedIndex].id;
   let loadSetup = function(){
     if(this.status==200 && this.responseText){
       let setup = JSON.parse(this.responseText);
+      fetchArmyFromBase();
+      clearHomeLand();
+      loadToHomeLand(setup,imgSrcDirectory);
     }
   };
+  let id = dropdown.options[dropdown.selectedIndex].id;
   doXhr('/loadSetup','POST',loadSetup,`id=${id}`);
   hideLoadSetupPopup();
 };
