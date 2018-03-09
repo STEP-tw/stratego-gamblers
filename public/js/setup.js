@@ -321,7 +321,10 @@ const showSetups = function(){
 const showLoadSetupPopup = () => {
   showPopup('load-setup-popup');
   doXhr('/setupNames','GET',showSetups,'');
+<<<<<<< HEAD
 
+=======
+>>>>>>> [#69] Ashish/Rahul - added functionality to display available setup name to player.
 };
 
 const hideLoadSetupPopup = () => {
