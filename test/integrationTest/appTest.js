@@ -5,7 +5,7 @@ const app = require("../../app.js");
 app.sessions = new Sessions(()=>1234);
 app.getClient = ()=>{
   return {
-    query:function(){
+    query:function(callback){
       this.catch=()=>{};
       return this;
     }
@@ -274,6 +274,15 @@ describe('app', () => {
         .set('cookie','gameId=1')
         .send('4=3&9=2&12=3&13=S&15=F&20=B&21=9&25=B&31=2&36=10&')
         .expect(200)
+        .end(done);
+    });
+  });
+  describe.skip('GET /setupNames', () => {
+    it('should give back all the setup for given game type', (done) => {
+      request(app)
+        .get('/setupNames')
+        .set('cookie','gameId=1')
+        .expect(500)
         .end(done);
     });
   });

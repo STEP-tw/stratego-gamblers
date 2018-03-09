@@ -124,11 +124,24 @@ const saveSetup = function (req,res,next) {
   let gameType = req.app.game.getGameType();
   let client = req.app.getClient();
   let insertqry = lib.getInsertQuery(req.body,gameType);
-  if(dbManager.executeQuery(client,insertqry)){
+  if(dbManager.executeInsertQuery(client,insertqry)){
     res.end();
     return;
   }
   res.status(500).send();
+};
+
+const getAllSetupName = function(req,res){
+  let gameType = req.app.game.getGameType();
+  let client = req.app.getClient();
+  let attributes = ['index','name'];
+  let condition=`mode='${gameType}'`;
+  let query = dbManager.makeRetrieveQueryOf('setups',condition,attributes);
+  client.query(query).then((resp)=>{
+    res.send(resp.rows);
+  }).catch((err)=>{
+    res.status(500).send();
+  });
 };
 
 const invalidUrlsBeforeSetup = ['/play', '/battlefield',
@@ -169,4 +182,5 @@ app.post('/selectedLoc', battlefieldHandler.updateBattlefield);
 app.get('/playAgain', new ExitHandler().restartGameHandler());
 app.get('/leave', new ExitHandler().quitGameHandler());
 app.post('/saveSetup',saveSetup);
+app.get('/setupNames',getAllSetupName);
 module.exports = app;
