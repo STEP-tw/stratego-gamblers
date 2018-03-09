@@ -52,6 +52,15 @@ const checkForGameInPlay = function(req,res,next){
   next();
 };
 
+const checkForAjaxRequest = function(req,res,next){
+  if(req.headers.accept=='*/*'){
+    next();
+    return;
+  }
+  let previousUrl = req.cookies.previousUrl;
+  res.redirect(previousUrl);
+};
+
 const haveBothPlayersJoined = function(req, res) {
   let game = req.app.game;
   res.send(game.haveBothPlayersJoined());
@@ -129,6 +138,9 @@ const invalidUrlsBeforeSetup = ['/play', '/battlefield',
 const invalidUrlsAfterSetup = ['/setupArmy','/army',
   '/setup/player/:playerId','/createGame','/joinGame'];
 
+const ajaxRequest = ['/battlefield','/battlefieldChanges',
+  '/army','/revealedBattlefield'];
+
 app.use(['/setupArmy','/play'],loadPreviousUrl);
 app.use(log());
 app.use(express.urlencoded({
@@ -142,6 +154,7 @@ app.post("/joinGame", new JoinGameHandler().getRequestHandler());
 app.use(checkForGame);
 app.use(invalidUrlsBeforeSetup, checkForSetup);
 app.use(invalidUrlsAfterSetup, checkForGameInPlay);
+app.use(ajaxRequest,checkForAjaxRequest);
 app.get('/setupArmy', setupArmy);
 app.get('/hasOpponentJoined', haveBothPlayersJoined);
 app.get('/isOpponentReady', sendOpponentStatus);

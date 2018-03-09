@@ -256,6 +256,7 @@ describe('app', () => {
     it('should provide army strength details', (done) => {
       request(app)
         .get('/army')
+        .set('accept','*/*')
         .set('cookie','gameId=1')
         .expect({'2': 2, '3': 2, '9': 1, '10': 1, 'F': 1, 'B': 2, 'S': 1} )
         .expect(200)

@@ -70,6 +70,7 @@ describe('BattleFieldHandler', () => {
         app.game.timeStamp = new Date().getTime()+1000;
         request(app)
           .get('/battlefieldChanges')
+          .set('accept','*/*')
           .set('cookie',['sessionId=12345','gameId=1'])
           .expect(200)
           .expect(/updatedLocs/)
@@ -80,6 +81,7 @@ describe('BattleFieldHandler', () => {
         app.game.timeStamp = new Date().getTime()-1000;
         request(app)
           .get('/battlefieldChanges')
+          .set('accept','*/*')
           .set('cookie',['sessionId=12345','gameId=1'])
           .expect(200)
           .expect('')
@@ -91,6 +93,7 @@ describe('BattleFieldHandler', () => {
         {0:{pos:'3_2',pieceId:'2'},1:{pos:'9_2',pieceId:'2'}};
         request(app)
           .get('/battlefieldChanges')
+          .set('accept','*/*')
           .set('cookie',['sessionId=12345','gameId=1'])
           .expect(200)
           .expect(/"loc":"9_2","pieceId":"O_2"/)
@@ -106,6 +109,7 @@ describe('BattleFieldHandler', () => {
       it('should respond with win status when game is over', (done) => {
         request(app)
           .get('/battlefieldChanges')
+          .set('accept','*/*')
           .set('cookie',['sessionId=12345','gameId=1'])
           .expect(200)
           .expect(/"gameOver":true,"winner":"win"/)
@@ -114,6 +118,7 @@ describe('BattleFieldHandler', () => {
       it('should respond with lost status when game is over', (done) => {
         request(app)
           .get('/battlefieldChanges')
+          .set('accept','*/*')
           .set('cookie',['sessionId=123456','gameId=1'])
           .expect(200)
           .expect(/"gameOver":true,"winner":"lose"/)
@@ -123,6 +128,7 @@ describe('BattleFieldHandler', () => {
         app.game.gameOver = 'quit';
         request(app)
           .get('/battlefieldChanges')
+          .set('accept','*/*')
           .set('cookie',['sessionId=123456','gameId=1'])
           .expect(200)
           .expect(/"gameOver":"quit","winner":"surrender"/)
@@ -135,6 +141,7 @@ describe('BattleFieldHandler', () => {
       app.game.gameOver=true;
       request(app)
         .get('/revealedBattlefield')
+        .set('accept','*/*')
         .set('cookie',['sessionId=12345','gameId=1'])
         .expect(200)
         .expect(/"3_2":"2","3_9":"B","9_2":"O_2","9_9":"O_B"/)
@@ -143,6 +150,7 @@ describe('BattleFieldHandler', () => {
     it('should redirect to previous url if game is not over',(done)=>{
       request(app)
         .get('/revealedBattlefield')
+        .set('accept','*/*')
         .set('cookie',['sessionId=12345','gameId=1', 'previousUrl=/play'])
         .expect(302)
         .expect('location','/play')
