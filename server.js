@@ -3,7 +3,6 @@ const getReqestHandler = require('./src/routing');
 const PORT = process.env.PORT || 8230;
 const pg = require('pg');
 let connectionString = process.env.DATABASE_URL;
-console.log(connectionString);
 const client = new pg.Client(connectionString);
 client.connect().then(()=>{
   const requestHandler = getReqestHandler(client);

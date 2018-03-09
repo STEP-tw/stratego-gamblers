@@ -163,7 +163,7 @@ class Game {
     this.updateTimeStamp();
   }
   updateTimeStamp(){
-    this.timeStamp = new Date().getTime()+1500;
+    this.timeStamp = new Date().getTime()+1100;
   }
   isBoardUpdated(){
     let timeStamp = new Date().getTime();

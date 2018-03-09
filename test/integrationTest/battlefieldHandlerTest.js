@@ -123,11 +123,20 @@ describe('BattleFieldHandler', () => {
   });
   describe('revealedBattlefield', () => {
     it('should return complete revealed battlefield',(done)=>{
+      app.game.gameOver=true;
       request(app)
         .get('/revealedBattlefield')
         .set('cookie',['sessionId=12345','gameId=1'])
         .expect(200)
         .expect(/"3_2":"2","3_9":"B","9_2":"O_2","9_9":"O_B"/)
+        .end(done);
+    });
+    it('should redirect to previous url if game is not over',(done)=>{
+      request(app)
+        .get('/revealedBattlefield')
+        .set('cookie',['sessionId=12345','gameId=1', 'previousUrl=/play'])
+        .expect(302)
+        .expect('location','/play')
         .end(done);
     });
   });

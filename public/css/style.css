@@ -327,7 +327,7 @@ button:focus {
 
 
 .animation-fade-out {
-  animation: fadeOut 3s;
+  animation: fadeOut 1s;
 }
 
 @keyframes fadeOut {

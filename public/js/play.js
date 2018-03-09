@@ -284,12 +284,16 @@ const updateKilledPieceCount = function(killedPieces){
   let capturedTroops = document.getElementById('troops-captured');
   killedPieces.forEach(killedPiece=>{
     let piece = document.getElementById(killedPiece);
-    let pieceClass = piece.className.split(' ')[0];
+    let extraClasses = ['start-move','animation-fade-out','last-move'];
+    let pieceClasses = piece.className.split(' ');
+    let pieceClass = pieceClasses.find(pClass=>{
+      return !extraClasses.includes(pClass);
+    });
     if(pieceClass.endsWith('-O')){
       updateTroops(pieceClass,capturedTroops);
       return;
     }
-    updateTroops(pieceClass,lostTroop);
+    pieceClass && updateTroops(pieceClass,lostTroop);
   });
 };
 

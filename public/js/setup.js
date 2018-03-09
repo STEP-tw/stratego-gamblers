@@ -274,7 +274,7 @@ const saveSetup = () => {
 const showPopup = () => {
   let homeLand = fetchHomeLand();
   if (notDeployedFullArmy(homeLand)) {
-    notifyPlayer('deploy full army');
+    notifyPlayer('Deploy your full army');
   } else {
     document.querySelector('.save-setup-popup').style.display = 'block';
   }

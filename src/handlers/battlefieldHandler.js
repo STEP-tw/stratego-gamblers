@@ -58,8 +58,14 @@ class BattlefieldHandler {
     res.send(gameChanges);
   }
   getRevealedBattlefield(req,res){
-    let battlefield = sendData(req.app.game,req.cookies.sessionId,'reveal');
-    res.json(battlefield);
+    let game = req.app.game;
+    if(game.isOver()){
+      let battlefield = sendData(game,req.cookies.sessionId,'reveal');
+      res.json(battlefield);
+      return;
+    }
+    let previousUrl = req.cookies.previousUrl;
+    res.redirect(previousUrl);
   }
 }
 module.exports = BattlefieldHandler;

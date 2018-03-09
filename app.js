@@ -62,16 +62,6 @@ const sendArmyDetails = function(req,res){
   res.json(game.getArmy());
 };
 
-const checkIfAlreadySetup = function(req,res,next){
-  let game = req.app.game;
-  let previousUrl = req.cookies.previousUrl;
-  if(game.areBothPlayerReady()){
-    res.redirect(previousUrl);
-    return;
-  }
-  next();
-};
-
 const setupArmy = function(req, res) {
   let setupTemp = req.app.fs.readFileSync('./templates/setupArmy', 'utf8');
   let game = req.app.game;
@@ -136,7 +126,7 @@ const invalidUrlsBeforeSetup = ['/play', '/battlefield',
   '/selectedLoc','/leave','/revealedBattlefield',
   '/battlefieldChanges','/selectedLoc','/playAgain'];
 
-const invalidUrlsAfterSetup = ['/setupArmy','/isOpponentReady','/army',
+const invalidUrlsAfterSetup = ['/setupArmy','/army',
   '/setup/player/:playerId','/createGame','/joinGame'];
 
 app.use(['/setupArmy','/play'],loadPreviousUrl);
@@ -151,11 +141,10 @@ app.post("/createGame", new CreateGameHandler().getRequestHandler());
 app.post("/joinGame", new JoinGameHandler().getRequestHandler());
 app.use(checkForGame);
 app.use(invalidUrlsBeforeSetup, checkForSetup);
-// app.use(invalidUrlsAfterSetup, checkForGameInPlay);
+app.use(invalidUrlsAfterSetup, checkForGameInPlay);
 app.get('/setupArmy', setupArmy);
 app.get('/hasOpponentJoined', haveBothPlayersJoined);
 app.get('/isOpponentReady', sendOpponentStatus);
-app.use(['/setup/player/:playerId','/setupArmy'],checkIfAlreadySetup);
 app.post('/setup/player/:playerId', battlefieldHandler.setBattlefield);
 app.get('/army',sendArmyDetails);
 app.use('/play', validatePlayerStatus);
