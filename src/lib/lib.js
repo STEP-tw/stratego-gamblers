@@ -1,3 +1,5 @@
+const dbManager=require('./dbManager.js');
+
 exports.getFrequency = list=>{
   let frequencies = {};
   for(let index=0;index<list.length;index++){
@@ -62,4 +64,13 @@ exports.getPath = (init,stat,final,factor)=>{
     allPos.push(`${init}_${stat}`);
   }
   return allPos;
+};
+
+exports.getInsertQuery=(reqBody,gameType)=>{
+  let name=reqBody.setupName;
+  delete reqBody.setupName;
+  let setup=JSON.stringify(reqBody);
+  let attributes = ["mode","name","setup"];
+  let values = [gameType,name,setup];
+  return dbManager.makeInsertQuery('setups',attributes,values);
 };

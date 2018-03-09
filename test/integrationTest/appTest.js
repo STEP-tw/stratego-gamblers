@@ -3,6 +3,14 @@ const request = require("supertest");
 const Sessions = require("../../src/models/sessions.js");
 const app = require("../../app.js");
 app.sessions = new Sessions(()=>1234);
+app.getClient = ()=>{
+  return {
+    query:function(){
+      this.catch=()=>{};
+      return this;
+    }
+  };
+};
 const Game = require("../../src/models/game");
 const GamesHandler = require('../../src/handlers/gamesHandler.js');
 
@@ -264,7 +272,7 @@ describe('app', () => {
         .post('/saveSetup')
         .set('cookie','gameId=1')
         .send('4=3&9=2&12=3&13=S&15=F&20=B&21=9&25=B&31=2&36=10&')
-        .expect(500)
+        .expect(200)
         .end(done);
     });
   });

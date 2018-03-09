@@ -1,5 +1,4 @@
 const express = require('express');
-let dbManager = require("./src/lib/dbManager");
 const fs = require('fs');
 const cookieParser = require('cookie-parser');
 const app = express();
@@ -11,6 +10,8 @@ const BattlefieldHandler = require('./src/handlers/battlefieldHandler.js');
 const ExitHandler = require('./src/handlers/exitHandler.js');
 const battlefieldHandler = new BattlefieldHandler();
 const GamesHandler = require('./src/handlers/gamesHandler.js');
+const dbManager = require('./src/lib/dbManager.js');
+const lib = require('./src/lib/lib.js');
 
 app.fs = fs;
 app.sessions = new Sessions();
@@ -121,23 +122,14 @@ const validatePlayerStatus = function (req, res, next) {
 };
 
 const saveSetup = function (req,res,next) {
-  let game = req.app.game;
-  let name=req.body.setupName;
-  delete req.body.setupName;
-  let setup=JSON.stringify(req.body);
-  let type =game.getGameType();
-  let client = req.getClient();
-  let attributes = ["mode","name","setup"];
-  let values = [type,name,setup];
-  let insertqry = dbManager.makeInsertQuery('setups',attributes,values);
-  client.query(insertqry,(err,resp)=>{
-    if(err){
-      console.log(err);
-      return res.status(500).send();
-    }
-    console.log(resp);
+  let gameType = req.app.game.getGameType();
+  let client = req.app.getClient();
+  let insertqry = lib.getInsertQuery(req.body,gameType);
+  if(dbManager.executeQuery(client,insertqry)){
     res.end();
-  });
+    return;
+  }
+  res.status(500).send();
 };
 
 const invalidUrlsBeforeSetup = ['/play', '/battlefield',

@@ -7,6 +7,14 @@ let dbManager = {
   },
   makeRetrieveQueryOf(tableName,condition){
     return `select * from ${tableName} where ${condition};`;
+  },
+  executeQuery(client,query){
+    let status = true;
+    client.query(query).catch((err)=>{
+      console.log(err);
+      status = false;
+    });
+    return status;
   }
 };
 module.exports = dbManager;
