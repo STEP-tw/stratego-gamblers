@@ -112,7 +112,7 @@
       <div class="all-buttons">
         <div class="setup-buttons">
           <div class="remove-and-random">
-            <button id="remove-all" type="button" name="button" onclick="removeAllPieces()">remove all</button>
+            <button id="remove-all" type="button" name="button" onclick="removeAllPieces('{{team}}Army')">remove all</button>
             <button id="random-setup" type="button" onclick="appendPiecesToHome('{{team}}Army')">random setup</button>
           </div>
           <div class="save-and-load">
