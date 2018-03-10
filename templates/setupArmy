@@ -111,9 +111,14 @@
       </div>
       <div class="all-buttons">
         <div class="setup-buttons">
-          <button id="save-setup" type="button" name="button" onclick="showSaveSetupPopup()">save setup</button>
-          <button id="load-setup" type="button" name="button" onclick="showLoadSetupPopup()">load setup</button>
-          <button id="random" type="button" onclick="appendPiecesToHome('{{team}}Army')">random setup</button>
+          <div class="remove-and-random">
+            <button id="remove-all" type="button" name="button" onclick="removeAllPieces()">remove all</button>
+            <button id="random-setup" type="button" onclick="appendPiecesToHome('{{team}}Army')">random setup</button>
+          </div>
+          <div class="save-and-load">
+            <button id="save-setup" type="button" name="button" onclick="showSaveSetupPopup()">save setup</button>
+            <button id="load-setup" type="button" name="button" onclick="showLoadSetupPopup()">load setup</button>
+          </div>
         </div>
         <div class="ready">
           <button id="ready" type="button" name="button">ready</button>

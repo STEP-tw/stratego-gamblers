@@ -155,6 +155,12 @@ const getFreeHomeLand = () => {
   return homeLand;
 };
 
+const disableButton = (id)=>{
+  let button = getElement(id);
+  button.disabled = true;
+  button.style["pointer-events"]="none";
+};
+
 const appendPiecesToHome = (imgSrcDirectory) => {
   let army = fetchArmyFromBase();
   let freeLand = getFreeHomeLand();
@@ -165,7 +171,7 @@ const appendPiecesToHome = (imgSrcDirectory) => {
     appendImage(position, piece, imgSrcDirectory);
     freeLand.splice(randomNumber, 1);
   });
-  getElement('random').style.display = 'none';
+  disableButton('random-setup');
 };
 
 const notifyPlayer = (message) => {
@@ -259,6 +265,14 @@ const fetchHomeLand = () => {
   return fetchedDetails;
 };
 
+const showPopup = (id) => {
+  document.querySelector(`.${id}`).style.display = 'block';
+};
+
+const hidePopup = (id) => {
+  document.querySelector(`.${id}`).style.display = 'none';
+};
+
 const saveSetup = () => {
   let homeLand = fetchHomeLand();
   let setupName = document.getElementById('setup-name').value;
@@ -266,8 +280,8 @@ const saveSetup = () => {
   if(setupName.match(/(^[a-z])\w*$/gi) && setupName){
     let postData = homeLand + `setupName=${setupName}`;
     doXhr('/saveSetup', 'POST', ()=>{}, postData);
-    document.querySelector('#save-setup').style.display = 'none';
-    hidePopup();
+    disableButton('save-setup');
+    hidePopup('save-setup-popup');
   }
 };
 
@@ -276,18 +290,18 @@ const showSaveSetupPopup = () => {
   if (notDeployedFullArmy(homeLand)) {
     notifyPlayer('Deploy your full army');
   } else {
-    document.querySelector('.save-setup-popup').style.display = 'block';
+    showPopup('save-setup-popup');
   }
 };
 
 const hideSaveSetupPopup = () => {
-  document.querySelector('.save-setup-popup').style.display = 'none';
+  hidePopup('save-setup-popup');
 };
 
 const showLoadSetupPopup = () => {
-  document.querySelector('.load-setup-popup').style.display = 'block';
+  showPopup('load-setup-popup');
 };
 
 const hideLoadSetupPopup = () => {
-  document.querySelector('.load-setup-popup').style.display = 'none';
+  hidePopup('load-setup-popup');
 };

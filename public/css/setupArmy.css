@@ -116,7 +116,7 @@ td {
   height: 100%;
 }
 
-.piece-description, .msg, .ready {
+.piece-description, .msg {
   margin: auto;
   width: 85%;
   height: 40%;
@@ -124,17 +124,18 @@ td {
 
 .msg {
   margin-top: -10%;
-  height: 30%;
+  height: 20%;
 }
 
 .all-buttons {
   display: flex;
   flex-wrap: wrap;
-  margin-top: -15%;
-  height: 25%;
+  margin-top: -10%;
+  width: 100%;
+  height: 30%;
 }
 
-.piece-content {
+.piece-content,.msg-content {
   margin: 0% 5%;
   width: 90%;
   height: 70%;
@@ -150,11 +151,8 @@ td {
 
 .msg-content {
   text-align: center;
-  padding-top: 7%;
-  margin: 3% 5%;
-  width: 90%;
-  height: 30%;
-  border: 1px solid #a78d4359;
+  padding-top: 3%;
+  height: 45%;
 }
 
 #piece-title {
@@ -180,34 +178,44 @@ td {
 
 .setup-buttons {
   display: flex;
-  margin: auto;
-  margin-left: 7.5%;
+  flex-wrap: wrap;
+  height: 50%;
   width: 100%;
 }
 
-#ready,#random, #save-setup, #load-setup {
+.ready {
+  width: 50%;
+}
+
+.remove-and-random, .save-and-load {
+  display: flex;
+  width: 80%;
+  margin: auto;
+}
+
+#ready, #remove-all, #random-setup, #save-setup, #load-setup {
   font-family: 'Alegreya', serif;
-  font-size: 40px;
+  font-size: 20px;
   text-transform: uppercase;
-  margin-left: 30%;
+  margin: auto;
   width: 40%;
-  height: 80%;
+  height: 50%;
   background-color: rgb(156, 131, 69);
-  border-radius: 18px;
+  border-radius: 6px;
   border: none;
   cursor: pointer;
 }
 
-#random, #save-setup, #load-setup {
-  font-size: 20px;
-  margin: 0% 2%;
-  margin-left: 0%;
-  width: auto;
-  height: 40%;
-  border-radius: 6px;
+#ready {
+  font-size: 40px;
+  margin: auto;
+  margin-left: 70%;
+  width: 60%;
+  height: 80%;
+  border-radius: 18px;
 }
 
-#ready:hover, #random:hover, #save-setup:hover, #load-setup:hover {
+#ready:hover, #remove-all:hover, #random-setup:hover, #save-setup:hover, #load-setup:hover {
   background-color: #BC8B2D;
   box-shadow: 0px 0px 10px 0px #BC8B2D;
 }
