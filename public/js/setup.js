@@ -83,21 +83,6 @@ const setImageAttributes = (img, src, id, height, width) => {
   return img;
 };
 
-const incrementId = function(id) {
-  let next = +(id.split('_').join('')) + 1;
-  next = next < 10 ? `0${next}` : next.toString();
-  return next.split('').join('_');
-};
-
-const getBaseGridIds = function(initialId, armyLength) {
-  let ids = [initialId];
-  for (let index = 1; index < armyLength; index++) {
-    initialId = incrementId(initialId);
-    ids.push(initialId);
-  }
-  return ids;
-};
-
 const appendImage = (baseCell, id, imgSrcDirectory) => {
   let basePosition = getElement(baseCell);
   let image = document.createElement("img");
@@ -110,20 +95,10 @@ const appendImage = (baseCell, id, imgSrcDirectory) => {
 };
 
 const appendPiecesToBase = (army, imgSrcDirectory) => {
-  let baseGrid = getElement("base-army-table");
-  let initialId = baseGrid.childNodes[1].childNodes[0].id;
-  let baseCells = getBaseGridIds(initialId, army.length);
+  let baseCells = getFreeLocFrom('base-army-table');
   baseCells.forEach((element, index) => {
     appendImage(element, army[index], imgSrcDirectory);
   });
-};
-
-const getInitChildId = (army) => {
-  let ids = {
-    redArmy: getElement('grid').lastChild.firstChild.id,
-    blueArmy: getElement('grid').childNodes[1].firstChild.id
-  };
-  return ids[army];
 };
 
 const fetchArmyFrom = function(id) {
@@ -141,8 +116,8 @@ const fetchArmyFrom = function(id) {
   return army;
 };
 
-const getFreeHomeLand = () => {
-  let grid = [...getElement('grid').childNodes];
+const getFreeLocFrom = (id) => {
+  let grid = [...getElement(id).childNodes];
   let homeLand = [];
   grid.shift();
   grid.forEach(row => {
@@ -173,7 +148,7 @@ const enableButton = (id) => {
 
 const appendPiecesToHome = (imgSrcDirectory) => {
   let army = fetchArmyFrom('base-army-table');
-  let freeLand = getFreeHomeLand();
+  let freeLand = getFreeLocFrom('grid');
   let randomNumber, position;
   army.forEach((piece) => {
     randomNumber = Math.floor(Math.random() * (freeLand.length - 1));
@@ -283,13 +258,20 @@ const hidePopup = (id) => {
   document.querySelector(`.${id}`).style.display = 'none';
 };
 
+const respondToSaveSetup = function(){
+  if(this.status==200){
+    return notifyPlayer('Your setup has been saved');
+  }
+  notifyPlayer('Sorry we are unable to save setup');
+};
+
 const saveSetup = () => {
   let homeLand = fetchHomeLand();
   let setupName = document.getElementById('setup-name').value;
   setupName = setupName.trim();
   if(setupName.match(/(^[a-z])\w*$/gi) && setupName){
     let postData = homeLand + `setupName=${setupName}`;
-    doXhr('/saveSetup', 'POST', ()=>{}, postData);
+    doXhr('/saveSetup', 'POST', respondToSaveSetup, postData);
     disableButton('save-setup');
     hidePopup('save-setup-popup');
   }
@@ -360,6 +342,7 @@ const loadSelectedSetup = (imgSrcDirectory) =>{
       let setup = JSON.parse(this.responseText);
       fetchArmyFrom('base-army-table');
       loadToHomeLand(setup,imgSrcDirectory);
+      disableButton('random-setup');
     }
   };
   let id = dropdown.options[dropdown.selectedIndex].id;
