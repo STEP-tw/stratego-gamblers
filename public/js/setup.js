@@ -321,6 +321,7 @@ const showSetups = function(){
 const showLoadSetupPopup = () => {
   showPopup('load-setup-popup');
   doXhr('/setupNames','GET',showSetups,'');
+
 };
 
 const hideLoadSetupPopup = () => {

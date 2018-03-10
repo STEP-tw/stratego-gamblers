@@ -284,7 +284,7 @@ const updateKilledPieceCount = function(killedPieces){
   let capturedTroops = document.getElementById('troops-captured');
   killedPieces.forEach(killedPiece=>{
     let piece = document.getElementById(killedPiece);
-    let extraClasses = ['start-move','animation-fade-out','last-move','opponent'];
+    let extraClasses = ['start-move','animation-fade-out','last-move','opponent','free-move'];
     let pieceClasses = piece.className.split(' ');
     let pieceClass = pieceClasses.find(pClass=>{
       return !extraClasses.includes(pClass);
