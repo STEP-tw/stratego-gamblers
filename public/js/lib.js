@@ -12,7 +12,6 @@ const removeFromClassList = (id,className) =>{
   document.getElementById(id).classList.remove(className);
 };
 
-
 const doXhr = function(url, method, reqListener, data) {
   let xhr = new XMLHttpRequest();
   xhr.open(method, url);
@@ -50,6 +49,10 @@ const ready = (url) => {
       removeDraggable();
       getOpponentStatus();
       removeEventListener(ready, "click", "ready");
+      disableButton('save-setup');
+      disableButton('load-setup');
+      disableButton('remove-all');
+      disableButton('random-setup');
       return;
     }
     notifyPlayer("Deploy your full army");

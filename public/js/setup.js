@@ -126,9 +126,9 @@ const getInitChildId = (army) => {
   return ids[army];
 };
 
-const fetchArmyFromBase = function() {
+const fetchArmyFrom = function(id) {
   let army = [];
-  let baseArmy = [...getElement('base-army-table').childNodes];
+  let baseArmy = [...getElement(id).childNodes];
   baseArmy.shift();
   baseArmy.forEach(row => {
     row.childNodes.forEach(td => {
@@ -158,11 +158,21 @@ const getFreeHomeLand = () => {
 const disableButton = (id)=>{
   let button = getElement(id);
   button.disabled = true;
+  button.style.backgroundColor = "rgb(88, 76, 45)";
+  button.style.color = "rgb(34, 32, 24)";
   button.style["pointer-events"]="none";
 };
 
+const enableButton = (id) => {
+  let button = getElement(id);
+  button.disabled = false;
+  button.style.backgroundColor = "rgb(156, 131, 69)";
+  button.style.color = "black";
+  button.style["pointer-events"]="initial";
+};
+
 const appendPiecesToHome = (imgSrcDirectory) => {
-  let army = fetchArmyFromBase();
+  let army = fetchArmyFrom('base-army-table');
   let freeLand = getFreeHomeLand();
   let randomNumber, position;
   army.forEach((piece) => {
@@ -343,29 +353,23 @@ const loadToHomeLand = (setup,imgSrcDirectory) => {
   });
 };
 
-const clearHomeLand = ()=>{
-  let homeLand = [...getElement('grid').childNodes];
-  homeLand.shift();
-  homeLand.forEach(row => {
-    row.childNodes.forEach(td => {
-      if (td.hasChildNodes()) {
-        td.firstChild.remove();
-      }
-    });
-  });
-};
-
 const loadSelectedSetup = (imgSrcDirectory) =>{
   let dropdown = document.querySelector('.dropdown-button');
   let loadSetup = function(){
     if(this.status==200 && this.responseText){
       let setup = JSON.parse(this.responseText);
-      fetchArmyFromBase();
-      clearHomeLand();
+      fetchArmyFrom('base-army-table');
       loadToHomeLand(setup,imgSrcDirectory);
     }
   };
   let id = dropdown.options[dropdown.selectedIndex].id;
   doXhr('/loadSetup','POST',loadSetup,`id=${id}`);
   hideLoadSetupPopup();
+};
+
+const removeAllPieces = (imgSrcDirectory) =>{
+  let army = fetchArmyFrom('grid');
+  appendPiecesToBase(army,imgSrcDirectory);
+  enableButton('random-setup');
+  enableButton('save-setup');
 };
