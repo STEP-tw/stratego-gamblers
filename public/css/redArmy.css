@@ -47,12 +47,6 @@
   border: none;
 }
 
-/* 
-'O_4':'sergeant-O',
-    'O_5':'lieutenant-O',
-    'O_6':'captain-O',
-    'O_7':'major-O',
-    'O_8':'colonel-O', */
 .sergeant {
   cursor: pointer;
   background-size: 60px 60px;
@@ -82,8 +76,6 @@
   background-size: 60px 60px;
   background-image: url("../img/redArmy/8.png");
 }
-
-
 
 .opponent {
   cursor: pointer;

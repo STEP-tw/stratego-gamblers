@@ -151,8 +151,8 @@ td {
 
 .msg-content {
   text-align: center;
-  padding-top: 3%;
-  height: 45%;
+  padding-top: 5%;
+  height: 40%;
 }
 
 #piece-title {
@@ -272,12 +272,12 @@ button:focus {
 
 #setup-name-para {
   margin: auto;
-  margin-top: 10.5%;
+  margin-top: 5%;
 }
 
 .popupContent input {
   margin: auto;
-  margin-top: 10%;
+  margin-top: 4.5%;
   margin-left: -10%;
   width: 50%;
   height: 10%;
@@ -296,12 +296,13 @@ button:focus {
 }
 
 .close {
-  margin-left: 95%;
+  margin-left: 94%;
+  margin-top: 1%;
   cursor: pointer;
 }
 
-#close-load-setup-popup {
-  font-size: 100px;
+#close-popup-button {
+  font-size: 20px;
 }
 
 .dropdown {
@@ -314,14 +315,12 @@ button:focus {
 
 .dropdown-button {
   text-align: center;
-  text-transform: uppercase;
   font-family: 'Alegreya', serif;
   margin-top: 5%;
   margin-left: 10%;
   font-size: 20px;
   width: 80%;
   height: 60%;
-  color: black;
   cursor: pointer;
   border: none;
   background-color: rgb(156, 131, 69);
@@ -341,9 +340,21 @@ button:focus {
   height: 30%;
 }
 
-#load-setup-button {
-  margin-left: 10%;
-  width: 80%;
-  height: 60%;
+#save-setup-button, #load-setup-button {
+  text-transform: uppercase;
   border-radius: 6px;
+}
+
+#save-setup-button:hover, #load-setup-button:hover {
+  background-color: #BC8B2D;
+  box-shadow: 0px 0px 10px 0px #BC8B2D;
+}
+
+#save-setup-button:focus, #load-setup-button:focus {
+  outline: 0;
+}
+
+#load-setup-button {
+  width: 100%;
+  height: 60%;
 }

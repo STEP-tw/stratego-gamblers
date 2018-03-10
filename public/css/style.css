@@ -325,12 +325,11 @@ button:focus {
   font: 35px Arial, sans-serif;
 }
 
-
 .animation-fade-out {
-  animation: fadeOut 2s;
+  animation: fadeOut 1s;
 }
 
 @keyframes fadeOut {
   from { opacity:1; }
   to { opacity:0; }
-  }
+}

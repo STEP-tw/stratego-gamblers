@@ -112,7 +112,7 @@
       <div class="all-buttons">
         <div class="setup-buttons">
           <div class="remove-and-random">
-            <button id="remove-all" type="button" name="button" onclick="removeAllPieces('{{team}}Army')">remove all</button>
+            <button id="remove-all" type="button" name="button" onclick="removeAllPieces()">remove all</button>
             <button id="random-setup" type="button" onclick="appendPiecesToHome('{{team}}Army')">random setup</button>
           </div>
           <div class="save-and-load">
@@ -129,14 +129,17 @@
 
   <div class="save-setup-popup overflow-model">
     <div class="popupContent">
+      <div class="close">
+        <a id="close-popup-button" onclick="hideSaveSetupPopup()"><i class="fa fa-times"></i></a>
+      </div>
       <span id="setup-name-para">setup name : </span>
       <input id="setup-name" type="text">
       <div class="buttons">
         <button id="save-setup-button" type="button" onclick="saveSetup()">save</button>
-        <button id="close-save-setup-popup" type="button" onclick="hideSaveSetupPopup()">cancel</button>
       </div>
     </div>
   </div>
+
 
   <div class="load-setup-popup overflow-model">
     <div class="popupContent">
@@ -148,7 +151,7 @@
         </select>
       </div>
       <div class="load-button">
-        <button id="load-setup-button" type="button" name="button" onclick="loadSelectedSetup('{{team}}Army')">load setup</button>
+        <button id="load-setup-button" type="button" name="button" onclick="loadSelectedSetup()">load setup</button>
       </div>
     </div>
   </div>
