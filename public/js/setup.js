@@ -339,6 +339,7 @@ const loadSelectedSetup = (imgSrcDirectory) =>{
   let dropdown = document.querySelector('.dropdown-button');
   let loadSetup = function(){
     if(this.status==200 && this.responseText){
+      fetchArmyFrom('grid');
       let setup = JSON.parse(this.responseText);
       fetchArmyFrom('base-army-table');
       loadToHomeLand(setup,imgSrcDirectory);
