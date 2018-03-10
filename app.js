@@ -124,11 +124,12 @@ const saveSetup = function (req,res,next) {
   let gameType = req.app.game.getGameType();
   let client = req.app.getClient();
   let insertqry = lib.getInsertQuery(req.body,gameType);
-  if(dbManager.executeInsertQuery(client,insertqry)){
-    res.end();
+  client.query(insertqry).then((resp)=>{
+    res.status(200).end();
     return;
-  }
-  res.status(500).send();
+  }).catch((err)=>{
+    res.status(500).send();
+  });
 };
 
 const getAllSetupName = function(req,res){

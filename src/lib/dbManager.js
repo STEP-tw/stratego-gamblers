@@ -14,14 +14,6 @@ let dbManager = {
     let selectQuery = `select ${attributes} from ${tableName}`;
     let whereClause = ` where ${condition};`;
     return selectQuery + whereClause;
-  },
-  executeInsertQuery(client,query){
-    let status = true;
-    client.query(query).catch((err)=>{
-      console.log(err);
-      status = false;
-    });
-    return status;
-  },
+  }
 };
 module.exports = dbManager;
