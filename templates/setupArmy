@@ -134,6 +134,9 @@
       </div>
       <span id="setup-name-para">setup name : </span>
       <input id="setup-name" type="text">
+      <div class="error-msg">
+        <span id="error-msg">PLEASE ENTER VALID SETUP NAME</span>
+      </div>
       <div class="buttons">
         <button id="save-setup-button" type="button" onclick="saveSetup()">save</button>
       </div>

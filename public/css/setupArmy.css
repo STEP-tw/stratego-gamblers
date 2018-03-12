@@ -258,13 +258,13 @@ button:focus {
   padding: 0;
   outline: 0;
   width: 500px;
-  height: 200px;
+  height: 220px;
   border-radius: 10px;
 }
 
 .popupContent>.buttons {
   width: 60%;
-  height: 50%;
+  height: 30%;
   padding: 4%;
   display: flex;
   margin: auto;
@@ -354,7 +354,22 @@ button:focus {
   outline: 0;
 }
 
+#save-setup-button {
+  margin-top: -5px;
+  width: 40%;
+  height: 60%;
+}
+
 #load-setup-button {
   width: 100%;
   height: 60%;
+}
+
+.error-msg {
+  margin: auto;
+  margin-top: 20px;
+  visibility: hidden;
+  height: 30px;
+  text-align: center;
+  color: red;
 }

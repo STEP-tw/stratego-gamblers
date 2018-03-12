@@ -266,9 +266,11 @@ const hidePopup = (id) => {
 
 const respondToSaveSetup = function(){
   if(this.status==200){
+    disableButton('save-setup');
     return notifyPlayer('Your setup has been saved');
   }
-  notifyPlayer('Sorry we are unable to save setup');
+  let msg = 'this setup name already exists, please enter another setup name';
+  notifyPlayer(msg);
 };
 
 const saveSetup = () => {
@@ -278,8 +280,9 @@ const saveSetup = () => {
   if(setupName.match(/(^[a-z])\w*$/gi) && setupName){
     let postData = homeLand + `setupName=${setupName}`;
     doXhr('/saveSetup', 'POST', respondToSaveSetup, postData);
-    disableButton('save-setup');
     hidePopup('save-setup-popup');
+  }else{
+    getElement('error-msg').style.visibility = 'visible';
   }
 };
 
@@ -288,6 +291,7 @@ const showSaveSetupPopup = () => {
   if (notDeployedFullArmy(homeLand)) {
     notifyPlayer('Deploy your full army');
   } else {
+    getElement('error-msg').style.visibility = 'hidden';
     showPopup('save-setup-popup');
   }
 };
