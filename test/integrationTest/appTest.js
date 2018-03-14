@@ -3,14 +3,7 @@ const request = require("supertest");
 const Sessions = require("../../src/models/sessions.js");
 const app = require("../../app.js");
 app.sessions = new Sessions(()=>1234);
-app.getClient = ()=>{
-  return {
-    query:function(callback){
-      this.catch=()=>{};
-      return this;
-    }
-  };
-};
+
 const Game = require("../../src/models/game");
 const GamesHandler = require('../../src/handlers/gamesHandler.js');
 
@@ -260,29 +253,6 @@ describe('app', () => {
         .set('cookie','gameId=1')
         .expect({'2': 2, '3': 2, '9': 1, '10': 1, 'F': 1, 'B': 2, 'S': 1} )
         .expect(200)
-        .end(done);
-    });
-  });
-  describe.skip('POST /saveSetup', () => {
-    beforeEach(()=>{
-      app.game.addPlayer("player1", 12345, 'red');
-      app.game.addPlayer("player2", 123456, 'blue');
-    });
-    it('should save the setup details', (done) => {
-      request(app)
-        .post('/saveSetup')
-        .set('cookie','gameId=1')
-        .send('4=3&9=2&12=3&13=S&15=F&20=B&21=9&25=B&31=2&36=10&')
-        .expect(500)
-        .end(done);
-    });
-  });
-  describe.skip('GET /setupNames', () => {
-    it('should give back all the setup for given game type', (done) => {
-      request(app)
-        .get('/setupNames')
-        .set('cookie','gameId=1')
-        .expect(500)
         .end(done);
     });
   });

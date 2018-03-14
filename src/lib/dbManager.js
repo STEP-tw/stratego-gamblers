@@ -14,6 +14,13 @@ let dbManager = {
     let selectQuery = `select ${attributes} from ${tableName}`;
     let whereClause = ` where ${condition};`;
     return selectQuery + whereClause;
+  },
+  executeQuery(client,query,resolver,rejected){
+    client.query(query).then((resp)=>{
+      resolver(resp);
+    }).catch((err)=>{
+      rejected(err);
+    });
   }
 };
 module.exports = dbManager;

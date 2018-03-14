@@ -65,12 +65,3 @@ exports.getPath = (init,stat,final,factor)=>{
   }
   return allPos;
 };
-
-exports.getInsertQuery=(reqBody,gameType)=>{
-  let name=reqBody.setupName;
-  delete reqBody.setupName;
-  let setup=JSON.stringify(reqBody);
-  let attributes = ["mode","name","setup"];
-  let values = [gameType,name,setup];
-  return dbManager.makeInsertQuery('setups',attributes,values);
-};
