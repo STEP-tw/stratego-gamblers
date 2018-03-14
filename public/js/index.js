@@ -91,8 +91,3 @@ const closePopup = function(){
   document.getElementById('bluebutton').style.visibility = 'visible';
   document.getElementById('helpButton').style.visibility = 'visible';
 };
-
-const showSignupPopup = () => {
-  document.querySelector('.login-form').style.display = 'none';
-  document.querySelector('.sign-up-form').style.display = 'block';
-};

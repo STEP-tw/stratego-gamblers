@@ -5,7 +5,7 @@ html, body {
 body {
   font-family: 'Alegreya', serif;
   text-transform: uppercase;
-  background-image: url("../img/background/background.png");
+  background-image: url("../img/background/backgroundArmy.png");
   background-size: 100% 100%;
   background-attachment: fixed;
 }
@@ -45,17 +45,25 @@ body {
   padding: 20px 20px 0px 20px;
 }
 
+#sign-up-form {
+  padding-top: 10px;
+}
+
 input:not([type="button"]) {
   font-size: 18px;
   padding: 5px 0;
   color: rgb(156, 131, 69);
   appearance: none;
-  font-family: 'Alegreya', serif;
+  font-family: 'Alegreya Sans', sans-serif;
   -webkit-appearance: none;
   outline: 0;
   border: none;
   background: none;
   border-bottom: 1px solid rgb(156, 131, 69);
+}
+
+#sign-up-form input:not([type="button"]) {
+  padding: 3px 0px;
 }
 
 input:not([type="button"]):hover {
@@ -137,4 +145,10 @@ input[type="button"]:focus {
 
 .popupContent {
   animation: animatezoom 0.6s;
+}
+
+#close-popup-button {
+  margin-left: 100%;
+  font-size: 20px;
+  color: #EDC35A;
 }

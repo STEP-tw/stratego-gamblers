@@ -8,7 +8,8 @@
   <link href="https://fonts.googleapis.com/css?family=Alegreya" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=UnifrakturCook:700" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Bellefair" rel="stylesheet">
-  <script type="text/javascript" src="./js/index.js" charset="utf-8"></script>
+  <link href="https://fonts.googleapis.com/css?family=Alegreya+Sans" rel="stylesheet">
+  <script type="text/javascript" src="./js/login.js" charset="utf-8"></script>
   <script defer src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
 </head>
 
@@ -25,11 +26,11 @@
       <section class="fieldset">
         <div class="form-input">
           <label for="userName">username</label>
-          <input id="userName" type="text" name="username" value="" />
+          <input type="text" name="username" value="" />
         </div>
         <div class="form-input">
           <label for="password">password</label>
-          <input type="password" id="password" name="password" value="" />
+          <input type="password" name="password" value="" />
         </div>
         <input onclick="login()" type="button" value="Login">
       </section>
@@ -44,22 +45,25 @@
 
   <div class="sign-up-form overflow-model popupContent">
     <div id="sign-up-form">
+      <div class="close">
+        <a id="close-popup-button" href="login.html"><i class="fa fa-times"></i></a>
+      </div>
       <section class="fieldset">
         <div class="form-input">
           <label for="name">name</label>
-          <input id="name" type="text" name="name" value="" />
+          <input type="text" name="name" value="" />
         </div>
         <div class="form-input">
           <label for="userName">username</label>
-          <input id="userName" type="text" name="username" value="" />
+          <input type="text" name="username" value="" />
         </div>
         <div class="form-input">
           <label for="password">password</label>
-          <input type="password" id="password" name="password" value="" />
+          <input type="password" name="password" value="" />
         </div>
         <div class="form-input">
           <label for="password">confirm password</label>
-          <input type="password" id="password" name="password" value="" />
+          <input type="password" name="confirmPassword" value="" />
         </div>
         <input onclick="signup()" type="button" value="create account">
       </section>
