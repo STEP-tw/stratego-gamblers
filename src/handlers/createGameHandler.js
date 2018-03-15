@@ -11,7 +11,7 @@ class CreateGameHandler {
       return;
     }
     if(!this.isValidName(playerName)){
-      res.status(400).send('Inavlid Player Name');
+      res.status(400).send('Invalid Player Name');
       return;
     }
     let gameId = randomIdGenerator();
