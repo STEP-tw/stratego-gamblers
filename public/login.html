@@ -22,7 +22,7 @@
   </div>
 
   <div class="login-form">
-    <div id="login-form">
+    <form id="login-form" method="POST" action="/login">
       <section class="fieldset">
         <div class="form-input">
           <label for="userName">username</label>
@@ -32,9 +32,9 @@
           <label for="password">password</label>
           <input type="password" name="password" value="" />
         </div>
-        <input onclick="login()" type="button" value="Login">
+        <input type="submit" value="Login">
       </section>
-    </div>
+    </form>
 
     <div class="sign-up">
       <span>New to Stratego ?</span>

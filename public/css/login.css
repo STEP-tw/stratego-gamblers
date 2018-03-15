@@ -52,7 +52,6 @@ body {
 input:not([type="button"]) {
   font-size: 18px;
   padding: 5px 0;
-  color: rgb(156, 131, 69);
   appearance: none;
   font-family: 'Alegreya Sans', sans-serif;
   -webkit-appearance: none;
@@ -86,7 +85,7 @@ input:not([type="button"]):focus {
   color: rgb(156, 131, 69);
 }
 
-input[type="button"] {
+input[type="button"],input[type="submit"] {
   font-size: 20px;
   background: rgb(156, 131, 69);
   font-family: 'Alegreya', serif;
@@ -103,11 +102,11 @@ input[type="button"] {
   margin-top: 20px;
 }
 
-input[type="button"]:hover {
+input[type="button"]:hover, input[type="submit"]:hover {
   background-color: #caaa5a;
 }
 
-input[type="button"]:focus {
+input[type="button"]:focus, input[type="submit"]:focus {
   outline: 0;
 }
 

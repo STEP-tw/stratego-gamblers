@@ -39,5 +39,5 @@ const signup = () => {
     return;
   }
   let err = document.querySelector('.error-msg');
-  err.innerHTML = 'Password doesn\'t match'; 
+  err.innerHTML = 'Password doesn\'t match';
 };
