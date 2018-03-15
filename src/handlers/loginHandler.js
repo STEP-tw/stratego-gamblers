@@ -10,7 +10,7 @@ class LoginHandler {
     let client = req.app.getClient();
     let resolver = function(resp){
       if(resp.rows.length < 1){
-        res.status(404).end('not found');
+        res.redirect('/login.html');
         return;
       }
       res.redirect('/index.html');
