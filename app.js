@@ -137,6 +137,7 @@ app.use(express.urlencoded({
 app.use(cookieParser());
 app.use(loadGame);
 app.use(express.static('public'));
+app.post('/signup',new DbHandler().signup);
 app.post("/createGame", new CreateGameHandler().getRequestHandler());
 app.post("/joinGame", new JoinGameHandler().getRequestHandler());
 app.use(checkForGame);

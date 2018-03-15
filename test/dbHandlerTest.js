@@ -34,13 +34,13 @@ describe.skip('description', () => {
         .send('4=3&9=2&12=3&13=S&15=F&20=B&21=9&25=B&31=2&36=10&setupName=new')
         .expect(200)
         .end(done);
-    });
-    it('should respond with 500 when setup data is invalid', (done) => {
+    }); 
+    it('should respond with 406 when setup data is invalid', (done) => {
       request(app)
         .post('/saveSetup')
         .set('cookie','gameId=1')
         .send('4=3&9=2&12=3&13=S&15=F&20=B&21=9&25=B&31=2&36=10&setupName=new')
-        .expect(500)
+        .expect(406)
         .end(done);
     });
   });
@@ -50,13 +50,13 @@ describe.skip('description', () => {
       request(app)
         .get('/setupNames')
         .set('cookie','gameId=1')
-        .expect(500)
+        .expect(406)
         .end(done);
     });
     it('should give back all the setup for given game type', (done) => {
       request(app)
         .get('/setupNames')
-        .set('cookie','gameId=1')
+        .set('cookie','gameId=10')
         .expect(200)
         .end(done);
     });
@@ -67,16 +67,16 @@ describe.skip('description', () => {
         .post('/loadSetup')
         .set('accept','*/*')
         .set('cookie','gameId=1')
-        .send('id=35')
+        .send('id=1')
         .expect(200)
         .end(done);
     });
-    it('should respond with 500 when given setup is not present', (done) => {
+    it('should respond with 406 when given setup is not present', (done) => {
       request(app)
         .post('/loadSetup')
         .set('cookie','gameId=1')
         .send('id=-1')
-        .expect(500)
+        .expect(406)
         .end(done);
     });
   });
