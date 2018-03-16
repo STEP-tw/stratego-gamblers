@@ -3,7 +3,8 @@ class CreateGameHandler {
   constructor() {
   }
   execute(req, res) {
-    let playerName = req.cookies.name;
+    let playerName = req.cookies.username;
+    res.clearCookie("username");
     let playerId = req.cookies.sessionId;
     let type = req.body.type;
     if(!type){

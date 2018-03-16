@@ -19,7 +19,7 @@ class Players {
   }
   getOpponentNameBy(color){
     let player = this.players.find(player=>player.color!=color);
-    return player.name; 
+    return player.name;
   }
   getPlayerByName(name){
     return this.players.find(player=>player.name==name);

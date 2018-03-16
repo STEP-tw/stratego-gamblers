@@ -269,18 +269,37 @@ const respondToSaveSetup = function(){
     disableButton('save-setup');
     return notifyPlayer('Your setup has been saved');
   }
-  let msg = 'this setup name already exists, please enter another setup name';
-  notifyPlayer(msg);
+};
+
+const isSetupNameExist = function(allSetups,setupName) {
+  return allSetups.find((setup)=>{
+    return setup.name==setupName;
+  });
+};
+
+const isNewSetup = function(setupName) {
+  let saveNewSetup = function() {
+    if(this.status==200){
+      let allSetups = JSON.parse(this.responseText);
+      if(!isSetupNameExist(allSetups,setupName)){
+        let homeLand = fetchHomeLand();
+        let postData = homeLand + `setupName=${setupName}`;
+        doXhr('/saveSetup', 'POST', respondToSaveSetup, postData);
+        hidePopup('save-setup-popup');
+        return;
+      }
+      getElement('error-msg').innerText = "Setup name already exist";
+      getElement('error-msg').style.visibility = 'visible';
+    }
+  };
+  doXhr('/setupNames','GET',saveNewSetup,'');
 };
 
 const saveSetup = () => {
-  let homeLand = fetchHomeLand();
   let setupName = document.getElementById('setup-name').value;
   setupName = setupName.trim();
   if(setupName.match(/(^[a-z])\w*$/gi) && setupName){
-    let postData = homeLand + `setupName=${setupName}`;
-    doXhr('/saveSetup', 'POST', respondToSaveSetup, postData);
-    hidePopup('save-setup-popup');
+    isNewSetup(setupName);
   }else{
     getElement('error-msg').style.visibility = 'visible';
   }

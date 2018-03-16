@@ -8,16 +8,17 @@ class LoginHandler {
     let condition = `username = '${username}' and password = '${password}'`;
     let query = dbManager.makeRetrieveQueryOf('users',condition);
     let client = req.app.getClient();
-    
+
     let resolver = function(resp){
       if(resp.rows.length < 1){
         res.redirect('/index.html');
         return;
       }
-      let sessionId = req.app.sessions.createSession(username);      
+      let sessionId = req.app.sessions.createSession(username);
       res.cookie('sessionId',sessionId);
-      let name = resp.rows[0].name;     
+      let name = resp.rows[0].name;
       res.cookie('name',name);
+      res.cookie('username',username);
       res.redirect('/home.html');
     };
     let rejected = () => {

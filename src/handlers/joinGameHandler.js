@@ -3,9 +3,10 @@ class JoinGameHandler {
   execute(req, res) {
     let gamesHandler = req.app.gamesHandler;
     let gameId = req.body.gameId;
-    let playerName = req.cookies.name;
+    let playerName = req.cookies.username;
+    res.clearCookie("username");
     if(!gameId){
-      res.status(404).end();      
+      res.status(404).end();
       return;
     }
     if(!gamesHandler.doesGameExists(gameId)){
@@ -13,10 +14,10 @@ class JoinGameHandler {
       return;
     }
     let game = gamesHandler.getGame(gameId);
-    let playerId = req.cookies.sessionId;    
+    let playerId = req.cookies.sessionId;
     if (!game.haveBothPlayersJoined()) {
       game.addPlayer(playerName,playerId,'blue');
-      res.cookie('gameId',gameId);      
+      res.cookie('gameId',gameId);
       res.redirect('/setupArmy');
       return;
     }

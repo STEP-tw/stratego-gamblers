@@ -26,7 +26,7 @@ const loadGame = function(req,res,next){
 
 const checkForAlreadyLoggedin = function(req,res,next){
   let isIndexUrl = ()=>['/','/index.html'].includes(req.url);
-  if(isIndexUrl() && req.cookies.sessionId && req.cookies.name){ 
+  if(isIndexUrl() && req.cookies.sessionId && req.cookies.name){
     res.redirect('/home.html');
     return;
   }

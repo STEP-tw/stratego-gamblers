@@ -1,19 +1,27 @@
 const dbManager = require('../lib/dbManager.js');
 
-const getInsertQuery = (reqBody,gameType)=>{
+const getPlayerName = function(game,sessionId){
+  let playerId = game.getPlayerIndexBy(sessionId);
+  let teamColor = game.getPlayerColorBy(playerId);
+  return game.getPlayerName(teamColor);
+};
+const getInsertQuery = (reqBody,gameType,userName)=>{
   let name=reqBody.setupName;
   delete reqBody.setupName;
   let setup=JSON.stringify(reqBody);
-  let attributes = ["mode","name","setup"];
-  let values = [gameType,name,setup];
+  let attributes = ["mode","name","setup","owner"];
+  let values = [gameType,name,setup,userName];
   return dbManager.makeInsertQuery('setups',attributes,values);
 };
 class DbHandler{
   constructor(){}
   saveSetup(req,res) {
+    let game = req.app.game;
     let gameType = req.app.game.getGameType();
     let client = req.app.getClient();
-    let insertqry = getInsertQuery(req.body,gameType);
+    let sessionId = req.cookies.sessionId;
+    let userName = getPlayerName(game,sessionId);
+    let insertqry = getInsertQuery(req.body,gameType,userName);
     let resolver = function(data) {
       res.status(200).send("Ok");
     };
@@ -23,10 +31,13 @@ class DbHandler{
     dbManager.executeQuery(client,insertqry,resolver,rejected);
   }
   getAllSetupName(req,res){
+    let game = req.app.game;
     let gameType = req.app.game.getGameType();
     let client = req.app.getClient();
+    let sessionId = req.cookies.sessionId;
+    let userName = getPlayerName(game,sessionId);
     let attributes = ['index','name'];
-    let condition=`mode='${gameType}'`;
+    let condition=`mode='${gameType}' and owner='${userName}'`;
     let query = dbManager.makeRetrieveQueryOf('setups',condition,attributes);
     let resolver = function(data) {
       res.status(200).send(data.rows);
