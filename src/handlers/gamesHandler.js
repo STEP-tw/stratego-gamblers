@@ -1,3 +1,4 @@
+const randomIdGenerator = require('../lib/utils.js').randomIdGenerator;
 class GamesHandler {
   constructor(){
     this.games={};
@@ -13,6 +14,13 @@ class GamesHandler {
   }
   deleteGame(gameId){
     delete this.games[gameId];
+  }
+  getGameId(){
+    let gameId = randomIdGenerator();
+    while(this.doesGameExists(gameId)){
+      gameId = randomIdGenerator();
+    }
+    return gameId;
   }
 }
 

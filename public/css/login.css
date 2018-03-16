@@ -110,6 +110,11 @@ input[type="button"]:focus, input[type="submit"]:focus {
   outline: 0;
 }
 
+input[type="text"], input[type="password"] {
+  color: rgb(156, 131, 69);
+}
+
+
 .sign-up {
   display: inline;
   margin-left: 25%;

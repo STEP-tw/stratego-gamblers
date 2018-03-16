@@ -40,13 +40,9 @@ const showGameId = function() {
 };
 
 const startGame = function() {
-  let name = document.getElementsByName("name")[0].value;
   let type = document.querySelector('input[name="gameMode"]:checked').value;
-  name = name.trim();
-  let postData = `name=${name}&type=${type}`;
-  if (name) {
-    createRequest(showGameId, `/createGame`, postData, "POST");
-  }
+  let postData = `type=${type}`;
+  createRequest(showGameId, `/createGame`, postData, "POST");
 };
 
 const showError = function(){
@@ -62,13 +58,9 @@ const showError = function(){
 };
 
 const joinGame = function(){
-  let name = document.getElementsByName("name")[1].value;
   let gameId = document.getElementsByName("gameid")[0].value;
-  name = name.trim();
-  let postData = `name=${name}&gameId=${gameId}`;
-  if (name) {
-    createRequest(showError, `/joinGame`, postData, "POST");
-  }
+  let postData = `gameId=${gameId}`;
+  createRequest(showError, `/joinGame`, postData, "POST");
 };
 
 const redirectToSetupPage = function () {
@@ -90,4 +82,8 @@ const closePopup = function(){
   document.getElementById('redbutton').style.visibility = 'visible';
   document.getElementById('bluebutton').style.visibility = 'visible';
   document.getElementById('helpButton').style.visibility = 'visible';
+};
+
+const logout = function(){
+  window.location.href = '/logout';
 };

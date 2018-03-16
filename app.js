@@ -24,6 +24,15 @@ const loadGame = function(req,res,next){
   next();
 };
 
+const checkForAlreadyLoggedin = function(req,res,next){
+  let isIndexUrl = ()=>['/','/index.html'].includes(req.url);
+  if(isIndexUrl() && req.cookies.sessionId && req.cookies.name){ 
+    res.redirect('/home.html');
+    return;
+  }
+  next();
+};
+
 const checkForGame = function(req,res,next){
   let game = req.app.game;
   if(!game){
@@ -120,6 +129,14 @@ const validatePlayerStatus = function (req, res, next) {
   }
 };
 
+const logout = function(req,res) {
+  res.clearCookie("sessionId");
+  res.clearCookie("name");
+  res.clearCookie("gameId");
+  res.clearCookie("previousUrl");
+  res.redirect("/");
+};
+
 const invalidUrlsBeforeSetup = ['/play', '/battlefield',
   '/selectedLoc','/leave','/revealedBattlefield',
   '/battlefieldChanges','/selectedLoc','/playAgain'];
@@ -136,10 +153,12 @@ app.use(express.urlencoded({
   extended: false
 }));
 app.use(cookieParser());
+app.use(checkForAlreadyLoggedin);
 app.use(loadGame);
 app.use(express.static('public'));
 app.post('/signup',new DbHandler().signup);
 app.post("/login", new LoginHandler().getRequestHandler());
+app.get("/logout",logout);
 app.post("/createGame", new CreateGameHandler().getRequestHandler());
 app.post("/joinGame", new JoinGameHandler().getRequestHandler());
 app.use(checkForGame);

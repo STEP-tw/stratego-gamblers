@@ -23,7 +23,6 @@ class ExitHandler {
     res.redirect('/');
   }
   clearCookies(req,res){
-    res.clearCookie('sessionId');
     res.clearCookie('gameId'); 
   }
   restartGameHandler(){

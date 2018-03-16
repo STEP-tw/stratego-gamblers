@@ -17,7 +17,7 @@ const login = () => {
 
 const signedup = function(){
   if(this.status == 200){
-    window.location.href = '/login.html';
+    window.location.href = '/index.html';
     return;
   }
   let err = document.querySelector('.error-msg');

@@ -9,10 +9,10 @@ let client = new pg.Client(connectionString);
 // client.connect();
 let app = getRequestHandler(client);
 describe('Login Handler', () => {
-  describe('GET /login.html',()=>{
+  describe('GET /index.html',()=>{
     it('should serve login page', (done) => {
       request(app)
-        .get('/login.html')
+        .get('/index.html')
         .expect(200)
         .expect(/Login/)
         .end(done);

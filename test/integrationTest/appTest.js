@@ -17,10 +17,10 @@ describe('app', () => {
     app.gamesHandler.createNewGame(1,game);
     app.game = app.gamesHandler.getGame(1);
   });
-  describe("GET /index.html", () => {
+  describe("GET /home.html", () => {
     it("responds with home page", done => {
       request(app)
-        .get("/index.html")
+        .get("/home.html")
         .expect(200)
         .expect(/Create Game/)
         .expect(/Join Game/)
@@ -32,23 +32,16 @@ describe('app', () => {
     it("responds with sharing key", done => {
       request(app)
         .post("/createGame")
-        .send('name=ravi&type=quick')
+        .send('type=quick')
         .expect(200)
         .expect(/[\d]/)
         .expect("Content-Type", "text/html; charset=utf-8")
         .end(done);
     });
-    it("should not allow to create game with invalid name", done =>{
-      request(app)
-        .post("/createGame")
-        .send('name=ra$%^vi&type=quick')
-        .expect(400)
-        .end(done);
-    });
     it("should not allow to create game without name and game type", done =>{
       request(app)
         .post("/createGame")
-        .send('name=ravi')
+        .send('type=')
         .expect(404)
         .end(done);
     });
@@ -75,15 +68,15 @@ describe('app', () => {
     it("redirect joining player to home if gameId is incorrect ", done => {
       request(app)
         .post("/joinGame")
-        .send("name=ankur&gameId=10")
+        .send("gameId=10")
         .expect(400)
-        .expect('Inavlid Player Name or Game Id')
+        .expect('Inavlid Game Id')
         .end(done);
     });
     it("should not allow to join game without name and game id", done =>{
       request(app)
         .post("/joinGame")
-        .send('name=ravi')
+        .send('gameId=')
         .expect(404)
         .end(done);
     });
@@ -103,7 +96,7 @@ describe('app', () => {
         .post("/joinGame")
         .send("name=ankur&gameId=2")
         .expect(400)
-        .expect('Inavlid Player Name or Game Id')
+        .expect('Inavlid Game Id')
         .end(done);
     });
     it("redirect third joining player to home", done => {
@@ -113,14 +106,6 @@ describe('app', () => {
         .send("name=ankur&gameId=1")
         .expect(302)
         .expect("Location","/")
-        .end(done);
-    });
-    it("redirect joining player with white spaces as name to home", done => {
-      request(app)
-        .post("/joinGame")
-        .send("name=  &gameId=1")
-        .expect(400)
-        .expect('Inavlid Player Name or Game Id')
         .end(done);
     });
   });
@@ -220,7 +205,7 @@ describe('app', () => {
         app.game.gameOver = true;
         request(app)
           .get('/playAgain')
-          .set('cookie', ['sessionId=123456','gameId=1'])
+          .set('cookie', ['sessionId=123456','gameId=1','name=pranoyk'])
           .expect('Location','/')
           .expect(302)
           .end(done);
@@ -253,6 +238,32 @@ describe('app', () => {
         .set('cookie','gameId=1')
         .expect({'2': 2, '3': 2, '9': 1, '10': 1, 'F': 1, 'B': 2, 'S': 1} )
         .expect(200)
+        .end(done);
+    });
+  });
+  describe('GET /logout', () => {
+    it('should redirect to login page',(done)=>{
+      request(app)
+        .get('/logout')
+        .expect(302)
+        .expect('location','/')
+        .end(done);
+    });
+  });
+  describe('GET /', ()=> {
+    it('should redirect to login page if sessionId is not available',(done)=>{
+      request(app)
+        .get('/')
+        .expect(200)
+        .expect(/username/)
+        .end(done);
+    });
+    it('should redirect to home page if sessionId is available',(done)=>{
+      request(app)
+        .get('/')
+        .set('cookie',['sessionId=12345','name=pranoyk'])
+        .expect(302)
+        .expect('location','/home.html')
         .end(done);
     });
   });

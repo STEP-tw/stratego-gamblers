@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+  <title>Stratego
+  </title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script type="text/javascript" src="/js/index.js" defer></script>
+  <link rel="stylesheet" href="/css/index.css">
+  <link href="https://fonts.googleapis.com/css?family=Alegreya" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=UnifrakturCook:700" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Bellefair" rel="stylesheet">
+  <script defer src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
+</head>
+
+<body oncontextmenu="return false">
+
+  <img id="logo" src="../img/background/logo.png">
+
+  <div class="column-middle">
+
+    <button id="redbutton" onclick="getForm('create')">Create Game</button>
+    <button id="bluebutton" onclick="getForm('join')">Join Game</button>
+    <button id="helpButton" onclick="showHelp()">Help</button>
+    <button id="logoutButton" onclick="logout()">Logout</button>
+
+
+    <div id="create" class="popup-form">
+      <div class="close">
+        <a id="close-popup-button" href="home.html"><i class="fa fa-times"></i></a>
+      </div>
+        <p class="mode"><input type="radio" name="gameMode" value="quick" checked>QUICK GAME
+        <input type="radio" name="gameMode" value="full">FULL GAME</p>
+        <p class ='errorMsg' id = "creationError"></p>
+        <button type="submit" value="Create Game" id="create-red-button" onclick="startGame()">Create Game</button>
+    </div>
+
+    <div id="join" class="popup-form">
+      <div class="close">
+        <a id="close-popup-button" href="home.html"><i class="fa fa-times"></i></a>
+      </div>
+      <input type="text" id="gameid" placeholder="Enter sharing key" name="gameid" required>
+      <p class ='errorMsg'  id = "joiningError"></p>
+      <button type="submit" value="Start Battle" id="create-red-button" onclick="joinGame()">Start Battle</button>
+    </div>
+
+  </div>
+
+  <div id="help">
+    <object id="help-popup" type="" data="help.html">
+    </object>
+  </div>
+
+</body>
+
+</html>

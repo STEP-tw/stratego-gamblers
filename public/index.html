@@ -1,55 +1,73 @@
 <!DOCTYPE html>
-
 <html>
 
 <head>
-  <title>Stratego
-  </title>
+  <title>Stratego</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <script type="text/javascript" src="/js/index.js" defer></script>
-  <link rel="stylesheet" href="/css/index.css">
+  <link rel="stylesheet" href="./css/login.css">
   <link href="https://fonts.googleapis.com/css?family=Alegreya" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=UnifrakturCook:700" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Bellefair" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Alegreya+Sans" rel="stylesheet">
+  <script type="text/javascript" src="./js/login.js" charset="utf-8"></script>
   <script defer src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
 </head>
 
-<body oncontextmenu="return false">
+<body>
 
-  <img id="logo" src="../img/background/logo.png">
+  <img id="logo" src="./img/background/logo.png">
 
-  <div class="column-middle">
+  <div class="error-msg">
+    <span id="error-msg"></span>
+  </div>
 
-    <button id="redbutton" onclick="getForm('create')">Create Game</button>
-    <button id="bluebutton" onclick="getForm('join')">Join Game</button>
-    <button id="helpButton" onclick="showHelp()">Help</button>
+  <div class="login-form">
+    <section class="fieldset">
+    <form id="login-form" method="POST" action="/login">
+        <div class="form-input">
+          <label for="userName">username</label>
+          <input type="text" name="username" value="" />
+        </div>
+        <div class="form-input">
+          <label for="password">password</label>
+          <input type="password" name="password" value="" />
+        </div>
+        <input type="submit" value="Login">
+    </form>
+  </section>
 
-    <div id="create" class="popup-form">
-      <div class="close">
-        <a id="close-popup-button" href="index.html"><i class="fa fa-times"></i></a>
-      </div>
-        <input pattern="[A-Za-z]+" type="text" placeholder="Enter your name" id="name" name="name" required>
-        <p class="mode"><input type="radio" name="gameMode" value="quick" checked>QUICK GAME
-        <input type="radio" name="gameMode" value="full">FULL GAME</p>
-        <p class ='errorMsg' id = "creationError"></p>
-        <button type="submit" value="Create Game" id="create-red-button" onclick="startGame()">Create Game</button>
-    </div>
-
-    <div id="join" class="popup-form">
-      <div class="close">
-        <a id="close-popup-button" href="index.html"><i class="fa fa-times"></i></a>
-      </div>
-      <input pattern="[A-Za-z]+" type="text" id="name" placeholder="Enter Your Name" name="name" required>
-      <input type="text" id="gameid" placeholder="Enter sharing key" name="gameid" required>
-      <p class ='errorMsg'  id = "joiningError"></p>
-      <button type="submit" value="Start Battle" id="create-red-button" onclick="joinGame()">Start Battle</button>
+    <div class="sign-up">
+      <span>New to Stratego ?</span>
+      <span id="go-to-sign-up" onclick="showSignupPopup()">Create an account</span>
     </div>
 
   </div>
 
-  <div id="help">
-    <object id="help-popup" type="" data="help.html">
-    </object>
+  <div class="sign-up-form overflow-model popupContent">
+    <div id="sign-up-form">
+      <div class="close">
+        <a id="close-popup-button" href="index.html"><i class="fa fa-times"></i></a>
+      </div>
+      <section class="fieldset">
+        <div class="form-input">
+          <label for="name">name</label>
+          <input type="text" name="name" value="" />
+        </div>
+        <div class="form-input">
+          <label for="userName">username</label>
+          <input type="text" name="username" value="" />
+        </div>
+        <div class="form-input">
+          <label for="password">password</label>
+          <input type="password" name="password" value="" />
+        </div>
+        <div class="form-input">
+          <label for="password">confirm password</label>
+          <input type="password" name="confirmPassword" value="" />
+        </div>
+        <input onclick="signup()" type="button" value="create account">
+      </section>
+    </div>
   </div>
 
 </body>
