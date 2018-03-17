@@ -6,10 +6,15 @@ body {
   background-image: url("../img/background/background.png");
 }
 
+.top-div {
+  margin-top: 2%;
+  height: 400px;
+}
+
 #logo {
-  height: 50%;
+  height: 65%;
   width: 50%;
-  margin: 5% 23%;
+  margin: 3% 23% 0% 24%;
 }
 
 #redbutton, #bluebutton, #helpButton {
@@ -148,4 +153,15 @@ font-size: larger;
 .mode{
   font-size: 30px;
   color: #EDC35A;
+}
+
+#logoutButton {
+  margin-left: 93%;
+  font-size: 30px;
+  font-family: 'Alegreya', serif;
+  background: none;
+  border: none;
+  color: #EDC35A;
+  cursor: pointer;
+  text-decoration: underline;
 }
