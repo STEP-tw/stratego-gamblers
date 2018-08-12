@@ -5,7 +5,7 @@ const getPlayerName = function(game,sessionId){
   let teamColor = game.getPlayerColorBy(playerId);
   return game.getPlayerName(teamColor);
 };
-const getInsertQuery = (reqBody,gameType,userName)=>{
+const getInsertSetupQuery = (reqBody,gameType,userName)=>{
   let name=reqBody.setupName;
   delete reqBody.setupName;
   let setup=JSON.stringify(reqBody);
@@ -21,11 +21,12 @@ class DbHandler{
     let client = req.app.getClient();
     let sessionId = req.cookies.sessionId;
     let userName = getPlayerName(game,sessionId);
-    let insertqry = getInsertQuery(req.body,gameType,userName);
+    let insertqry = getInsertSetupQuery(req.body,gameType,userName);
     let resolver = function(data) {
       res.status(200).send("Ok");
     };
     let rejected = function(error) {
+      console.log(error);
       res.status(406).end();
     };
     dbManager.executeQuery(client,insertqry,resolver,rejected);
